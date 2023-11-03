@@ -1,0 +1,18 @@
+name: "refactoring"
+description: "코드를 이렇게 수정할려고 합니다 🥊"
+labels: 리펙토링
+body:
+
+  - type: textarea
+    attributes:
+      label: 설명
+      description: |
+        이 코드보다는 이 코드가 좀 더 효율적인 것 같습니다! 🤓
+      placeholder: |
+        이 코드는 메모리 릭이 발생합니다. 😭
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        더 문제가 있을까요? 🤔
+

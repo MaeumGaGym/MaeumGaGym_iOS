@@ -1,0 +1,17 @@
+name: "function"
+description: "이 기능을 추가할려고 합니다. 💪🏿"
+labels: 기능
+body:
+
+  - type: textarea
+    attributes:
+      label: 이것도 설명해주시면 좋겠습니다!
+      description: |
+        [Explain] 어떤 기능을 말씀하시는 건가요? 🥴
+      placeholder: |
+        사용자에 편리성을 위해서 만보기 기능을 추가하겠습니다.
+  - type: textarea
+    attributes:
+      label: 추가사항
+      description: |
+        [추가사항] 조금 더 구체적으로 알려주시겠어요? 🏃🏿‍♂️
