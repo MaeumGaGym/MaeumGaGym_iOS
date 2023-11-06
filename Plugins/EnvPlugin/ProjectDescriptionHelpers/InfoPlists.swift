@@ -33,7 +33,6 @@ public extension Project {
         "App Transport Security Settings": ["Allow Arbitrary Loads": true],
         "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
         "ITSAppUsesNonExemptEncryption": false,
-        "UIUserInterfaceStyle": "Dark",
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
@@ -76,7 +75,7 @@ public extension Project {
       "App Transport Security Settings": ["Allow Arbitrary Loads": true],
       "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
       "ITSAppUsesNonExemptEncryption": false,
-      "UIUserInterfaceStyle": "Dark",
+//      "UIUserInterfaceStyle": "Dark",
       "CFBundleURLTypes": [
           [
               "CFBundleTypeRole": "Editor",
