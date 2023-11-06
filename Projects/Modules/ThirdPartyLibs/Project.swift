@@ -9,7 +9,8 @@ let project = Project.makeModule(
         .SPM.RxCocoa,
         .SPM.RxSwift,
         .SPM.RxRelay,
-        .SPM.SnpKit,
-        .SPM.Then
+        .SPM.SnapKit,
+        .SPM.Then,
+        .SPM.Swinject
     ]
 )
