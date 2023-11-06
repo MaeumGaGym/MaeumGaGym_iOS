@@ -1,11 +1,5 @@
-//
-//  SceneDelegate.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by 양수빈 on 2022/10/01.
-//
-
 import UIKit
+import DSKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,8 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
-        let vc = UIViewController()
-        vc.view.backgroundColor = .gray
+        let vc = DesignSystemViewController()
         window?.rootViewController = UINavigationController(rootViewController: vc)
         window?.makeKeyAndVisible()
     }

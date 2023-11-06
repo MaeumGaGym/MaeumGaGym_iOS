@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by 양수빈 on 2022/10/01.
-//
-
 import UIKit
 
 @main

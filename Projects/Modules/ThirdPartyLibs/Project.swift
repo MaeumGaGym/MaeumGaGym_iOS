@@ -11,6 +11,7 @@ let project = Project.makeModule(
         .SPM.RxRelay,
         .SPM.SnapKit,
         .SPM.Then,
-        .SPM.Swinject
+        .SPM.Swinject,
+        .SPM.RxFlow
     ]
 )
