@@ -18,20 +18,19 @@ open class MaeumGaGymAuthButton: UIButton {
     }
 
     public init(
-        image: UIImage? = nil,
+        type: AuthLogoType,
         title: String? = nil,
         spacing: CGFloat = 8.0,
-        backgorundColor: UIColor?,
-        ridus: Double? = 8.0,
-        titleColor: UIColor?
+        radius: Double? = 8.0,
+        titleColor: UIColor? = nil
     ) {
         super.init(frame: .zero)
 
-        self.textLabel.text = title
-        self.iconImageView.image = image
-        self.backgroundColor = backgorundColor
-        self.layer.cornerRadius = ridus ?? 8
-        self.textLabel.textColor = titleColor
+        self.textLabel.text = type.logoTitle
+        self.iconImageView.image = type.imageLogo
+        self.backgroundColor = type.backgroundColor
+        self.layer.cornerRadius = radius ?? 8
+        self.textLabel.textColor = type.titleColor
         setupViews()
     }
 
