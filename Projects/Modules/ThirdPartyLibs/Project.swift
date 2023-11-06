@@ -10,5 +10,9 @@ let project = Project.makeModule(
 //        .SPM.Kingfisher,
 //        .SPM.Then,
 //        .SPM.lottie
+        
+        .SPM.RxCocoa,
+        .SPM.RxSwift,
+        .SPM.RxRelay
     ]
 )
