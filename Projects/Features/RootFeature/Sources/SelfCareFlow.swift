@@ -13,7 +13,7 @@ class SelfCareFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "SelfCare", image: UIImage(systemName: "gearshape"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "SelfCare", image: UIImage(systemName: "bolt.horizontal.fill"), selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 

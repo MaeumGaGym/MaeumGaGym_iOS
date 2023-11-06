@@ -13,7 +13,7 @@ class PostureFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "Posture", image: UIImage(systemName: "chart.bar"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "Posture", image: UIImage(systemName: "person.fill.and.arrow.left.and.arrow.right"), selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 
