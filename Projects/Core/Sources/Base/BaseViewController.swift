@@ -3,15 +3,17 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-open class BaseViewController: UIViewController {
-    public let disposeBag = DisposeBag()
-    
-    public init() {
-        super.init(nibName: nil, bundle: nil)
+open class BaseViewController<T>: UIViewController {
+    public let viewModel: T
+    public var disposeBag = DisposeBag()
+    let bounds = UIScreen.main.bounds
+
+    public init(_ viewModel: T) {
+        self.viewModel = viewModel
+        super .init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
-    required public init?(coder aDecoder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -74,5 +76,9 @@ open class BaseViewController: UIViewController {
 
     open func hideEmptyStateView() {
         // 빈 상태 뷰를 숨기는 함수이며 데이터가 로드되어서 빈 상태가 아닌 경우 다시 호출됩니다
+    }
+    
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
