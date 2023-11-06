@@ -1,43 +1,24 @@
-//
-//  HomeFlow.swift
-//  RootFeatureTests
-//
-//  Created by 박준하 on 11/6/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
-
-import Foundation
-import RxFlow
 import UIKit
-import Core
+import RxFlow
+import RxSwift
+import RxCocoa
 import HomeFeature
 
-class HomeFlow: Flow {
-
-    var root: Presentable {
+public class HomeFlow: Flow {
+    public var root: Presentable {
         return self.rootViewController
     }
 
-    private lazy var rootViewController: UINavigationController = {
-        let viewController = UINavigationController()
-        return viewController
-    }()
+    private let rootViewController = UINavigationController()
 
-    init() {}
-
-    func navigate(to step: Step) -> FlowContributors {
-        guard let step = step as? AppStep else { return .none }
-        switch step {
-        case .homeIsRequired:
-            return self.navigateToHome()
-        case .loginIsRequired:
-            return .end(forwardToParentFlowWithStep: AppStep.loginIsRequired)
-        }
-    }
-    
-    private func navigateToHome() -> FlowContributors {
+    init() {
         let viewController = HomeViewController()
-        self.rootViewController.setViewControllers([viewController], animated: false)
-        return .one(flowContributor: .contribute(withNext: viewController))
+        viewController.view.backgroundColor = .white
+        viewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "person"), selectedImage: nil)
+        rootViewController.setViewControllers([viewController], animated: false)
+    }
+
+    public func navigate(to step: Step) -> FlowContributors {
+        return .none
     }
 }
