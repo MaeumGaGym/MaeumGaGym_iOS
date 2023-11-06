@@ -8,5 +8,6 @@ open class BaseViewModel {
     public var steps = PublishRelay<Step>()
     
     public init() {
-      }
+        
+    }
 }
