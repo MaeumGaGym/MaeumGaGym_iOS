@@ -19,10 +19,8 @@ open class MaeumGaGymAuthButton: UIButton {
 
     public init(
         type: AuthLogoType,
-        title: String? = nil,
         spacing: CGFloat = 8.0,
-        radius: Double? = 8.0,
-        titleColor: UIColor? = nil
+        radius: Double? = 8.0
     ) {
         super.init(frame: .zero)
 
