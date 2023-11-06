@@ -6,7 +6,6 @@ let project = Project.makeModule(
     name: "PostureFeature",
     targets: [.unitTest, .staticFramework, .demo, .interface],
     internalDependencies: [
-
     ],
     interfaceDependencies: [
         .Features.BaseFeatureDependency

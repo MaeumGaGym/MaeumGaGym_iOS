@@ -19,7 +19,8 @@ public extension Gym {
 
     static let domain = Gym.project(target: "Domain", path: .domain)
     
-    static let core = Gym.project(target: "Core", path: .core)
+    static let core = Gym.project(target: "Core", path: .core)    
+    
 }
 
 // MARK: - Modules
@@ -32,6 +33,11 @@ public extension Gym.Modules {
     static let thirdPartyLibs = Gym.project(target: "ThirdPartyLibs", path: .relativeToModules("ThirdPartyLibs"))
     
     static let testCore = Gym.project(target: "TestCore", path: .relativeToModules("TestCore"))
+    
+    static let tokenManager = Gym.project(target: "TokenManager", path: .relativeToModules("TokenManager"))
+    
+    static let csLogger = Gym.project(target: "CSLogger", path: .relativeToModules("CSLogger"))
+
 }
 
 // MARK: - Features

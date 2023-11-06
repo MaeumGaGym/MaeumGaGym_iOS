@@ -5,7 +5,7 @@ public extension Project {
         "CFBundleShortVersionString": "1.0.0",
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
-        "CFBundleIdentifier": "com.maeumgajim-stamp-iOS.release",
+        "CFBundleIdentifier": "com.maeumGaGym-stamp-iOS.release",
         "CFBundleDisplayName": "Maeumgajim",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
@@ -20,6 +20,15 @@ public extension Project {
             ]
         ],
         "UIAppFonts": [
+                "Item 0": "Pretendard-Black.otf",
+                "Item 1": "Pretendard-Bold.otf",
+                "Item 2": "Pretendard-ExtraBold.otf",
+                "Item 3": "Pretendard-ExtraLight.otf",
+                "Item 4": "Pretendard-Light.otf",
+                "Item 5": "Pretendard-Medium.otf",
+                "Item 6": "Pretendard-Regular.otf",
+                "Item 7": "Pretendard-SemiBold.otf",
+                "Item 8": "Pretendard-Thin.otf"
         ],
         "App Transport Security Settings": ["Allow Arbitrary Loads": true],
         "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
@@ -28,8 +37,8 @@ public extension Project {
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
-                "CFBundleURLName": "maeumgajim-makers",
-                "CFBundleURLSchemes": ["maeumgajim-makers"]
+                "CFBundleURLName": "maeumGaGym-makers",
+                "CFBundleURLSchemes": ["maeumGaGym-makers"]
             ]
         ],
         "UIBackgroundModes": ["remote-notification"]
@@ -39,8 +48,8 @@ public extension Project {
       "CFBundleShortVersionString": "1.0.0",
       "CFBundleDevelopmentRegion": "ko",
       "CFBundleVersion": "1",
-      "CFBundleIdentifier": "com.maeumgajim-stamp-iOS.test",
-      "CFBundleDisplayName": "Maeumgajim-Test",
+      "CFBundleIdentifier": "com.maeumGaGym-stamp-iOS.test",
+      "CFBundleDisplayName": "maeumGaGym-Test",
       "UILaunchStoryboardName": "LaunchScreen",
       "UIApplicationSceneManifest": [
           "UIApplicationSupportsMultipleScenes": false,
@@ -54,6 +63,15 @@ public extension Project {
           ]
       ],
       "UIAppFonts": [
+        "Item 0": "Pretendard-Black.otf",
+        "Item 1": "Pretendard-Bold.otf",
+        "Item 2": "Pretendard-ExtraBold.otf",
+        "Item 3": "Pretendard-ExtraLight.otf",
+        "Item 4": "Pretendard-Light.otf",
+        "Item 5": "Pretendard-Medium.otf",
+        "Item 6": "Pretendard-Regular.otf",
+        "Item 7": "Pretendard-SemiBold.otf",
+        "Item 8": "Pretendard-Thin.otf"
       ],
       "App Transport Security Settings": ["Allow Arbitrary Loads": true],
       "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
@@ -62,8 +80,8 @@ public extension Project {
       "CFBundleURLTypes": [
           [
               "CFBundleTypeRole": "Editor",
-              "CFBundleURLName": "maeumgajim-makers",
-              "CFBundleURLSchemes": ["maeumgajim-makers"]
+              "CFBundleURLName": "maeumGaGym-makers",
+              "CFBundleURLSchemes": ["maeumGaGym-makers"]
           ]
       ],
       "UIBackgroundModes": ["remote-notification"]
