@@ -1,8 +1,7 @@
 import UIKit
 
 fileprivate enum DesignSystemType: String, CaseIterable {
-    case authButton
-    case certificationButton
+    case button
 }
 
 public class DesignSystemViewController: UITableViewController {
@@ -36,16 +35,10 @@ public class DesignSystemViewController: UITableViewController {
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let designSystem = self.designSystems[indexPath.item]
         switch designSystem {
-        case .authButton:
+        case .button:
             print("커스텀 버튼")
-            self.navigationController?.pushViewController(AuthButtonViewController(), animated: true)
-            break
-        case .certificationButton:
-            print("커스텀 버튼")
-            self.navigationController?.pushViewController(CertificationButtonViewController(), animated: true)
+            self.navigationController?.pushViewController(ButtonViewController(), animated: true)
             break
         }
     }
 }
-
-
