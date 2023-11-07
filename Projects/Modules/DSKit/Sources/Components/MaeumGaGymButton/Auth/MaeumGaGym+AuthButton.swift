@@ -1,6 +1,6 @@
 import UIKit
 import RxSwift
-import RxCocoa
+import RxCocoaRuntime
 import Then
 import SnapKit
 import Core
