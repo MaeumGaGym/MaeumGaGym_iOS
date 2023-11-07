@@ -6,6 +6,7 @@ public extension Gym {
         public struct Posture {}
         public struct Home {}
         public struct SelfCare {}
+        public struct Pickle {}
         public struct Shop {}
     }
     
@@ -73,6 +74,13 @@ public extension Gym.Features.Home {
 
 public extension Gym.Features.SelfCare {
     static let group = "SelfCare"
+    
+    static let Feature = Gym.Features.project(name: "Feature", group: group)
+    static let Interface = Gym.project(target: "\(group)FeatureInterface", path: .relativeToFeature("\(group)Feature"))
+}
+
+public extension Gym.Features.Pickle {
+    static let group = "Pickle"
     
     static let Feature = Gym.Features.project(name: "Feature", group: group)
     static let Interface = Gym.project(target: "\(group)FeatureInterface", path: .relativeToFeature("\(group)Feature"))
