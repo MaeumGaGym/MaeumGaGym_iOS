@@ -9,8 +9,8 @@ public class ButtonViewController: UIViewController {
     var googleButton = MaeumGaGymAuthButton(type: .google)
     var appleButton = MaeumGaGymAuthButton(type: .apple)
     
-    let certificationButton1 = CertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
-    let certificationButton2 = CertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
+    let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
+    let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
     public override func viewDidLoad() {
         super.viewDidLoad()
