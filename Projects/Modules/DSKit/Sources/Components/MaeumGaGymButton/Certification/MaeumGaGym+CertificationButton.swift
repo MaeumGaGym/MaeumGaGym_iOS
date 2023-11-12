@@ -5,7 +5,7 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class CertificationButton: UIButton {
+open class MaeumGaGymCertificationButton: UIButton {
 
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
