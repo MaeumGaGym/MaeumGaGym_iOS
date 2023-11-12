@@ -31,11 +31,11 @@ public enum AuthLogoType: String, RawRepresentable {
     public var backgroundColor: UIColor? {
         switch self {
         case .kakao:
-            return DSKitAsset.Colors.yellow400.color
+            return DSKitAsset.Colors.gray50.color
         case .google:
             return DSKitAsset.Colors.gray50.color
         case .apple:
-            return UIColor.black
+            return DSKitAsset.Colors.gray50.color
         }
     }
     
@@ -46,7 +46,7 @@ public enum AuthLogoType: String, RawRepresentable {
         case .google:
             return UIColor.black
         case .apple:
-            return UIColor.white
+            return UIColor.black
         }
     }
 }
