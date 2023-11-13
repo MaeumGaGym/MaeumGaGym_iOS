@@ -5,28 +5,62 @@ import Then
 
 public class TextFieldViewController: UIViewController {
     
-    private let authTextField = AuthTextField(placeholder: "이메일을 입력하세요")
-    
+    private let nicknameTF = AuthTextField(placeholder: "닉네임")
+    private let passwordTF = AuthTextField(placeholder: "비밀번호")
+    private let emailTF = AuthTextField(placeholder: "이메일")
+    private let certificationTF = AuthTextField(placeholder: "인증번호")
+
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        authTextField.useShowHideButton = false
-        authTextField.useTimer = true
-        authTextField._timerState.accept(.started)
+        nicknameTF.useShowHideButton = false
+
+        passwordTF.useShowHideButton = true
+        passwordTF.isTextHidden = true
+        
+        
+        emailTF.useShowHideButton = false
+        
+        certificationTF.useShowHideButton = false
+        certificationTF.useTimer = true
+        certificationTF._timerState.accept(.started)
         
         layout()
     }
-
+    
     func layout() {
         [
-            authTextField,
+            nicknameTF,
+            passwordTF,
+            emailTF,
+            certificationTF,
         ].forEach { view.addSubview($0) }
         
-        authTextField.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-            $0.width.equalTo(353.0)
+        nicknameTF.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(58.0)
+        }
+        
+        passwordTF.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.top.equalTo(nicknameTF.snp.bottom).offset(40.0)
+            $0.height.equalTo(58.0)
+        }
+        
+        emailTF.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.top.equalTo(passwordTF.snp.bottom).offset(40.0)
+            $0.height.equalTo(58.0)
+        }
+        
+        certificationTF.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.top.equalTo(emailTF.snp.bottom).offset(40.0)
+            $0.height.equalTo(58.0)
         }
     }
-
+    
 }
