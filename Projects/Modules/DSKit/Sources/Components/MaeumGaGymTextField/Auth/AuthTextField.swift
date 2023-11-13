@@ -1,4 +1,3 @@
-
 import UIKit
 import Then
 import SnapKit
@@ -22,14 +21,14 @@ open class AuthTextField: UITextField {
     public var timerState: Driver<TimerState> {
         return _timerState.asDriver(onErrorJustReturn: .stopped)
     }
-    
+        
     private let placeholderLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
         $0.textColor = DSKitAsset.Colors.gray200.color
     }
     
     private let underlineView = UIView().then {
-        $0.backgroundColor = UIColor.black
+        $0.backgroundColor = DSKitAsset.Colors.gray900.color
     }
     
     private let errorLabel = UILabel().then {
@@ -37,22 +36,22 @@ open class AuthTextField: UITextField {
         $0.textColor = DSKitAsset.Colors.red500.color
         $0.isHidden = true
     }
-    
+
     private let showHideButton = UIButton().then {
         $0.setImage(DSKitAsset.Assets.eyeOff.image, for: .normal)
         $0.setImage(DSKitAsset.Assets.eye.image, for: .selected)
-        $0.tintColor = .gray
+        $0.tintColor = DSKitAsset.Colors.gray900.color
         $0.contentMode = .scaleAspectFit
     }
-    
+
     private var timerLabel = UILabel().then {
         $0.text = "03:00"
         $0.textColor = DSKitAsset.Colors.gray200.color
         $0.font = UIFont.Pretendard.titleMedium
     }
-    
+
     private let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
-    
+
     public var showError: Bool = false {
         didSet {
             errorLabel.isHidden = !showError
@@ -63,19 +62,19 @@ open class AuthTextField: UITextField {
             textColor = showError ? UIColor.red : UIColor.black
         }
     }
-    
+
     public var errorMessage: String? {
         didSet {
             errorLabel.text = errorMessage
         }
     }
-    
+
     public var useShowHideButton: Bool = true {
         didSet {
             showHideButton.isHidden = !useShowHideButton
         }
     }
-    
+
     public var isTextHidden: Bool = false {
         didSet {
             if isSecureTextEntry && !isTextHidden {
@@ -87,7 +86,7 @@ open class AuthTextField: UITextField {
             }
         }
     }
-    
+
     public var useTimer: Bool = false {
         didSet {
             if useTimer {
@@ -95,7 +94,7 @@ open class AuthTextField: UITextField {
             }
         }
     }
-    
+
     public var emailErrorType: TextFieldErrorType.Email? {
         didSet {
             if let errorType = emailErrorType {
@@ -200,6 +199,8 @@ open class AuthTextField: UITextField {
             .drive(with: self, onNext: { owner, state in
                 owner.setupTimer(state: state)
             })
+
+        self.tintColor = .black
     }
     
     private func configure() {
@@ -282,9 +283,10 @@ open class AuthTextField: UITextField {
         timerLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(-8)
+            $0.width.equalTo(66)
+            $0.height.equalTo(30)
         }
-        
-        rightView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 20))
+
         rightViewMode = .always
     }
 }
@@ -292,7 +294,7 @@ open class AuthTextField: UITextField {
 extension AuthTextField: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.3) {
-            self.placeholderLabel.font = UIFont.systemFont(ofSize: 12)
+            self.placeholderLabel.font = UIFont.Pretendard.bodySmall
             self.placeholderLabel.snp.updateConstraints {
                 $0.bottom.equalTo(self.underlineView.snp.top).offset(-(self.placeholderLabel.frame.size.height + 4))
             }
@@ -303,7 +305,7 @@ extension AuthTextField: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text == "" {
             UIView.animate(withDuration: 0.3) {
-                self.placeholderLabel.font = UIFont.systemFont(ofSize: 16)
+                self.placeholderLabel.font = UIFont.Pretendard.bodyMedium
                 self.placeholderLabel.snp.updateConstraints {
                     $0.bottom.equalTo(self.underlineView.snp.top).offset(-4)
                 }
