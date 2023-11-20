@@ -37,5 +37,17 @@ extension UIFont {
         @nonobjc public static var bodySmall: UIFont {
             return DSKitFontFamily.Pretendard.regular.font(size: 14.0)
         }
+        
+        @nonobjc public static var labelLarge: UIFont {
+            return DSKitFontFamily.Pretendard.medium.font(size: 20.0)
+        }
+        
+        @nonobjc public static var labelMedium: UIFont {
+            return DSKitFontFamily.Pretendard.medium.font(size: 16.0)
+        }
+        
+        @nonobjc public static var labelSmall: UIFont {
+            return DSKitFontFamily.Pretendard.medium.font(size: 14.0)
+        }
      }
 }
