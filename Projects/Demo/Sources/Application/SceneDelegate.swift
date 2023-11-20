@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window?.rootViewController = root
         }
 
-        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: AppStep.tabBarIsRequired))
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: AppStep.startRequired))
 
         window?.makeKeyAndVisible()
     }
