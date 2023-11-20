@@ -1,2 +1,2 @@
 # MaeumGajim_iOS
-v0.0.0.7
+v0.0.0.8
