@@ -7,4 +7,5 @@ public enum AppStep: Step {
     case postureIsRequired
     case selfCareIsRequired
     case shopIsRequired
+    case startRequired
 }
