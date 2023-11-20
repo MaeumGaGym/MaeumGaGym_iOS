@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: "AuthFeature",
+    name: "PickleFeature",
     targets: [.unitTest, .staticFramework, .demo, .interface],
     internalDependencies: [
         
