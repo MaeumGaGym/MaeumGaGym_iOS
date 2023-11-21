@@ -108,7 +108,6 @@ public extension Project {
             projectTargets.append(target)
         }
         
-        
         if targets.contains(.unitTest) {
             let deps: [TargetDependency] = [.target(name: name)]
             
