@@ -1,9 +1,11 @@
 import UIKit
+import DSKit
 
 fileprivate enum DesignSystemType: String, CaseIterable {
     case button
     case textField
     case UILabel
+    case line
 }
 
 public class DesignSystemViewController: UITableViewController {
@@ -49,7 +51,12 @@ public class DesignSystemViewController: UITableViewController {
             print("커스텀 UILabel")
             self.navigationController?.pushViewController(UILabelViewController(), animated: true)
             break
+        case .line:
+            print("커스텀 line")
+            self.navigationController?.pushViewController(LineViewController(), animated: true)
+            break
         }
+        
         
     }
 }
