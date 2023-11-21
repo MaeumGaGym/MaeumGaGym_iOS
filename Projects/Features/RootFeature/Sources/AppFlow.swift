@@ -23,8 +23,6 @@ public class AppFlow: Flow {
         switch step {
         case .tabBarIsRequired:
             return navigateToTabBarScreen()
-        case .startRequired:
-            return navigateToStartScreen()
         default:
             return .none
         }
@@ -46,14 +44,6 @@ public class AppFlow: Flow {
             .contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired)),
             .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired))
         ])
-    }
-
-    private func navigateToStartScreen() -> FlowContributors {
-        let startFlow = StartFlow()
-        Flows.whenReady(flow1: startFlow) { [unowned self] startRoot in
-            self.rootViewController.present(startRoot, animated: true)
-        }
-        return .one(flowContributor: .contribute(withNextPresentable: startFlow, withNextStepper: OneStepper(withSingleStep: AppStep.startRequired)))
     }
 
     public init() {
