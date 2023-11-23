@@ -39,7 +39,6 @@ public class PickleViewController: UIViewController {
             "3",
             "4",
             "5",
-            "7"
         ]
             .enumerated()
             .map { idx, url -> PickleItems in
@@ -90,7 +89,6 @@ public class PickleViewController: UIViewController {
     @objc private func insertButtonTapped() {
         let items: [PickleItems] = [
             PickleItems(idx: "11", url: createLocalUrl(for: "6", ofType: "mov"), isMuted: false, name: "이재하"),
-            PickleItems(idx: "11", url: createLocalUrl(for: "7", ofType: "mov"), isMuted: false, name: "이재하")
         ]
         reelsView.insert(items: items)
     }
