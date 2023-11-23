@@ -2,7 +2,7 @@ import Foundation
 
 public struct Pickle {
     public enum ReuseIdentifier: String {
-        case defualt = "VideoReelsBase"
+        case defualt = "PickleBase"
     }
     
     enum FetchResponse {

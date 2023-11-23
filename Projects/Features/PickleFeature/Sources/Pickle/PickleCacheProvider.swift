@@ -19,6 +19,6 @@ public final class PickleCacheProvider {
     }
     
     deinit {
-        print("deinit: VideoReelsCacheProvider")
+        print("deinit: PickleCacheProvider")
     }
 }
