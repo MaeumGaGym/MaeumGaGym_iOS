@@ -62,8 +62,8 @@ public class PickleViewController: UIViewController {
 //        contentView.addArrangedSubview(moveButton)
 //        contentView.addArrangedSubview(insertButton)
         
-        reelsView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
+        reelsView.snp.makeConstraints {
+            $0.edges.equalTo(view)
         }
         
 //        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)

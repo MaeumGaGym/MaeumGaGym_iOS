@@ -45,25 +45,25 @@ public class PickleCell: PickleCollectionViewCell {
             $0.leading.equalToSuperview().offset(30.0)
         }
         
-        contentStackView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-100.0)
-            make.trailing.equalToSuperview().offset(-15)
+        contentStackView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-100.0)
+            $0.trailing.equalToSuperview().offset(-15)
         }
         
-        hartButton.snp.makeConstraints { make in
-            make.bottom.equalTo(commentButton.snp.top).offset(-24)
+        hartButton.snp.makeConstraints {
+            $0.bottom.equalTo(commentButton.snp.top).offset(-24)
         }
         
-        commentButton.snp.makeConstraints { make in
-            make.bottom.equalTo(shareButton.snp.top).offset(-24)
+        commentButton.snp.makeConstraints {
+            $0.bottom.equalTo(shareButton.snp.top).offset(-24)
         }
         
-        shareButton.snp.makeConstraints { make in
-            make.bottom.equalTo(dotButton.snp.top).offset(-24)
+        shareButton.snp.makeConstraints {
+            $0.bottom.equalTo(dotButton.snp.top).offset(-24)
         }
         
-        dotButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
+        dotButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
         }
         
         hartButton.addTarget(self, action: #selector(hartButtonTapped), for: .touchUpInside)
