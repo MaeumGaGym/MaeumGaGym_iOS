@@ -13,23 +13,18 @@ public class PickleViewController: UIViewController {
         return view
     }()
     
-    private let contentView = UIStackView().then {
-        $0.axis = .vertical
-    }
-    
-    private let deleteButton = UIButton().then {
-        $0.setTitle("Delete", for: .normal)
-    }
-    
-    private let moveButton = UIButton().then {
-        $0.setTitle("Move", for: .normal)
-    }
-    
-    private let insertButton = UIButton().then {
-        $0.setTitle("Insert", for: .normal)
-    }
-    
-    private let hartButton = MaeumGaGymOpaqueIconButton(type: .hart)
+//    private let deleteButton = UIButton().then {
+//        $0.setTitle("Delete", for: .normal)
+//    }
+//    
+//    private let moveButton = UIButton().then {
+//        $0.setTitle("Move", for: .normal)
+//    }
+//    
+//    private let insertButton = UIButton().then {
+//        $0.setTitle("Insert", for: .normal)
+//    }
+//
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +35,12 @@ public class PickleViewController: UIViewController {
             "2",
             "3",
             "4",
+            "7",
+            "7",
+            "7",
+            "7",
+            "7",
+            "7",
             "5",
         ]
             .enumerated()
@@ -57,47 +58,35 @@ public class PickleViewController: UIViewController {
         
     private func setup() {
         view.addSubview(reelsView)
-        view.addSubview(contentView)
-        contentView.addArrangedSubview(deleteButton)
-        contentView.addArrangedSubview(moveButton)
-        contentView.addArrangedSubview(insertButton)
-        contentView.addArrangedSubview(hartButton)
+//        contentView.addArrangedSubview(deleteButton)
+//        contentView.addArrangedSubview(moveButton)
+//        contentView.addArrangedSubview(insertButton)
         
         reelsView.snp.makeConstraints { make in
             make.edges.equalTo(view)
         }
         
-        contentView.snp.makeConstraints { make in
-            make.centerY.equalTo(view)
-            make.right.equalTo(view).offset(-15)
-        }
-        
-        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        moveButton.addTarget(self, action: #selector(moveButtonTapped), for: .touchUpInside)
-        insertButton.addTarget(self, action: #selector(insertButtonTapped), for: .touchUpInside)
-        hartButton.addTarget(self, action: #selector(hartButtonTapped), for: .touchUpInside)
+//        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+//        moveButton.addTarget(self, action: #selector(moveButtonTapped), for: .touchUpInside)
+//        insertButton.addTarget(self, action: #selector(insertButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func deleteButtonTapped() {
-        var idxs = Set<String>()
-        idxs.insert("2")
-        reelsView.delete(idxs: idxs)
-    }
-    
-    @objc private func moveButtonTapped() {
-        reelsView.moveToPage(0, animated: true)
-    }
-    
-    @objc private func insertButtonTapped() {
-        let items: [PickleItems] = [
-            PickleItems(idx: "11", url: createLocalUrl(for: "6", ofType: "mov"), isMuted: false, name: "이재하"),
-        ]
-        reelsView.insert(items: items)
-    }
-    
-    @objc private func hartButtonTapped() {
-        reelsView.moveToPage(0, animated: true)
-    }
+//    @objc private func deleteButtonTapped() {
+//        var idxs = Set<String>()
+//        idxs.insert("2")
+//        reelsView.delete(idxs: idxs)
+//    }
+//    
+//    @objc private func moveButtonTapped() {
+//        reelsView.moveToPage(0, animated: true)
+//    }
+//    
+//    @objc private func insertButtonTapped() {
+//        let items: [PickleItems] = [
+//            PickleItems(idx: "11", url: createLocalUrl(for: "6", ofType: "mov"), isMuted: false, name: "이재하"),
+//        ]
+//        reelsView.insert(items: items)
+//    }
     
     private func createLocalUrl(for filename: String, ofType: String) -> URL? {
         let fileManager = FileManager.default
