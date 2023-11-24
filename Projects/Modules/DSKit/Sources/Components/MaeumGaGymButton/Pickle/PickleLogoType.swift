@@ -30,13 +30,13 @@ public enum PickleLogoType: String, RawRepresentable {
     public var titleColor: UIColor? {
         switch self {
         case .hart:
-            return UIColor.black
+            return UIColor.white
         case .comment:
-            return UIColor.black
+            return UIColor.white
         case .share:
-            return UIColor.black
+            return UIColor.white
         case .dots:
-            return UIColor.black
+            return UIColor.white
         }
     }
 }

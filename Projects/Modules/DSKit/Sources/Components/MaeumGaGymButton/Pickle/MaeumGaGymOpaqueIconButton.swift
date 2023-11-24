@@ -7,9 +7,7 @@ import Core
 
 open class MaeumGaGymOpaqueIconButton: UIButton {
 
-    private let iconOpaqueBackgroudView = UIView().then {
-        $0.backgroundColor = .red
-    }
+    private let iconOpaqueBackgroudView = UIView()
 
     private let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -28,16 +26,27 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
         likeCount: Int? = 12000
     ) {
         super.init(frame: .zero)
+        
+        self.isUserInteractionEnabled = true
 
         self.iconImageView.image = type.imageLogo
         self.likeCountLabel.textColor = type.titleColor
         self.backgroundColor = .clear
         iconOpaqueBackgroudView.backgroundColor = type.backgroundColor
+
         iconOpaqueBackgroudView.layer.cornerRadius = CGFloat(radius ?? 8)
         setupViews()
 
-        if type != .share && type != .dots {
+        if type != .dots {
             setLikeCount(likeCount ?? 0)
+        }
+        
+        if type == .share {
+            likeCountLabel.text = "공유"
+        }
+        
+        for subview in subviews {
+            subview.isUserInteractionEnabled = false
         }
     }
 
@@ -50,18 +59,21 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
 
         self.iconOpaqueBackgroudView.snp.makeConstraints {
             $0.height.width.equalTo(48.0)
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
 
         self.iconImageView.snp.makeConstraints {
             $0.centerX.equalTo(iconOpaqueBackgroudView.snp.centerX)
             $0.centerY.equalTo(iconOpaqueBackgroudView.snp.centerY)
+            $0.width.height.equalTo(24.0)
         }
 
         if !likeCountLabel.isHidden {
             self.likeCountLabel.snp.makeConstraints {
                 $0.top.equalTo(iconOpaqueBackgroudView.snp.bottom).offset(4.0)
                 $0.centerX.equalToSuperview()
+                $0.bottom.equalToSuperview()
             }
         }
 
