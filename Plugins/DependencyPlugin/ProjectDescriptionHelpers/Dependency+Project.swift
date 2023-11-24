@@ -39,6 +39,7 @@ public extension Gym.Modules {
     
     static let csLogger = Gym.project(target: "CSLogger", path: .relativeToModules("CSLogger"))
 
+    static let pickle = Gym.project(target: "Pickle", path: .relativeToModules("Pickle"))
 }
 
 // MARK: - Features
