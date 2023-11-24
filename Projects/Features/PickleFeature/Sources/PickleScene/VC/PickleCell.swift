@@ -2,14 +2,17 @@ import UIKit
 import PickleFeatureInterface
 import SnapKit
 import Then
+import DSKit
 import Core
+import RxSwift
+import Pickle
 
 public class PickleCell: PickleCollectionViewCell {
     
     private let nameLabel = UILabel().then {
         $0.textColor = .white
     }
-    
+        
     public override func addSubViews() {
         super.addSubViews()
         
@@ -20,7 +23,7 @@ public class PickleCell: PickleCollectionViewCell {
         super.makeConstraints()
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(50.0)
+            $0.top.equalTo(contentView).offset(30.0)
             $0.leading.equalToSuperview().offset(30.0)
         }
     }

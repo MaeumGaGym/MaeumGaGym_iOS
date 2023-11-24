@@ -1,9 +1,9 @@
 import UIKit
-import PickleFeature
-import PickleFeatureInterface
 import AVKit
 import SnapKit
 import Then
+import DSKit
+import Pickle
 
 public class PickleViewController: UIViewController {
     
@@ -29,6 +29,8 @@ public class PickleViewController: UIViewController {
         $0.setTitle("Insert", for: .normal)
     }
     
+    private let hartButton = MaeumGaGymOpaqueIconButton(type: .hart)
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
@@ -52,15 +54,14 @@ public class PickleViewController: UIViewController {
         
         self.reelsView.reloadAll(items: items)
     }
-    
-    // MARK: - Setup
-    
+        
     private func setup() {
         view.addSubview(reelsView)
         view.addSubview(contentView)
         contentView.addArrangedSubview(deleteButton)
         contentView.addArrangedSubview(moveButton)
         contentView.addArrangedSubview(insertButton)
+        contentView.addArrangedSubview(hartButton)
         
         reelsView.snp.makeConstraints { make in
             make.edges.equalTo(view)
@@ -74,6 +75,7 @@ public class PickleViewController: UIViewController {
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         moveButton.addTarget(self, action: #selector(moveButtonTapped), for: .touchUpInside)
         insertButton.addTarget(self, action: #selector(insertButtonTapped), for: .touchUpInside)
+        hartButton.addTarget(self, action: #selector(hartButtonTapped), for: .touchUpInside)
     }
     
     @objc private func deleteButtonTapped() {
@@ -91,6 +93,10 @@ public class PickleViewController: UIViewController {
             PickleItems(idx: "11", url: createLocalUrl(for: "6", ofType: "mov"), isMuted: false, name: "이재하"),
         ]
         reelsView.insert(items: items)
+    }
+    
+    @objc private func hartButtonTapped() {
+        reelsView.moveToPage(0, animated: true)
     }
     
     private func createLocalUrl(for filename: String, ofType: String) -> URL? {

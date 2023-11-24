@@ -1,5 +1,6 @@
 import Foundation
 import PickleFeatureInterface
+import Pickle
 
 public struct PickleItems: PickleItem {
     public var idx: String

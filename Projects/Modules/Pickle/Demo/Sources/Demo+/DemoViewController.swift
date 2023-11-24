@@ -1,6 +1,8 @@
 import UIKit
+import SnapKit
+import Then
 
-public class ViewController: UIViewController {
+public class DemoViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()

@@ -22,6 +22,9 @@ public class ButtonViewController: UIViewController {
         view.backgroundColor = .white
         
         layout()
+        
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        kakaoButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     func layout() {
@@ -88,4 +91,13 @@ public class ButtonViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
     }
+    
+    @objc func shareButtonTapped() {
+          let alertController = UIAlertController(title: "Share Button Tapped", message: "Implement your share functionality here", preferredStyle: .alert)
+          
+          let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+          alertController.addAction(okAction)
+          
+          present(alertController, animated: true, completion: nil)
+      }
 }
