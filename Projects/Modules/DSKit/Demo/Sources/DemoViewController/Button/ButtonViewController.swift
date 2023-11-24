@@ -23,8 +23,7 @@ public class ButtonViewController: UIViewController {
         
         layout()
         
-        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
-        kakaoButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        hartButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     func layout() {
@@ -74,26 +73,34 @@ public class ButtonViewController: UIViewController {
         hartButton.snp.makeConstraints {
             $0.top.equalTo(certificationButton2.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
         
         commentButton.snp.makeConstraints {
             $0.top.equalTo(hartButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
         
         dotsButton.snp.makeConstraints {
             $0.top.equalTo(commentButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
         
         shareButton.snp.makeConstraints {
             $0.top.equalTo(dotsButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
     }
     
     @objc func shareButtonTapped() {
-          let alertController = UIAlertController(title: "Share Button Tapped", message: "Implement your share functionality here", preferredStyle: .alert)
+          let alertController = UIAlertController(title: "hartButton Button Tapped", message: "Implement your share functionality here", preferredStyle: .alert)
           
           let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
           alertController.addAction(okAction)
