@@ -12,18 +12,13 @@ public class ButtonViewController: UIViewController {
     let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
     let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
-    var hartButton = MaeumGaGymOpaqueIconButton(type: .hart, likeCount: 12003)
-    var commentButton = MaeumGaGymOpaqueIconButton(type: .comment, likeCount: 1200)
-    var dotsButton = MaeumGaGymOpaqueIconButton(type: .dots)
-    var shareButton = MaeumGaGymOpaqueIconButton(type: .share)
+    let checkButton = MaeumGaGymCheckButton(text: "확인")
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         layout()
-        
-        hartButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     func layout() {
@@ -33,10 +28,7 @@ public class ButtonViewController: UIViewController {
             appleButton,
             certificationButton1,
             certificationButton2,
-            hartButton,
-            commentButton,
-            dotsButton,
-            shareButton
+            checkButton
         ].forEach { view.addSubview($0) }
 
         kakaoButton.snp.makeConstraints {
@@ -70,41 +62,9 @@ public class ButtonViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        hartButton.snp.makeConstraints {
-            $0.top.equalTo(certificationButton2.snp.bottom).offset(20.0)
+        checkButton.snp.makeConstraints {
+            $0.top.equalTo(certificationButton1.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(70.0)
-            $0.width.equalTo(48.0)
-        }
-        
-        commentButton.snp.makeConstraints {
-            $0.top.equalTo(hartButton.snp.bottom).offset(20.0)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(70.0)
-            $0.width.equalTo(48.0)
-        }
-        
-        dotsButton.snp.makeConstraints {
-            $0.top.equalTo(commentButton.snp.bottom).offset(20.0)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(70.0)
-            $0.width.equalTo(48.0)
-        }
-        
-        shareButton.snp.makeConstraints {
-            $0.top.equalTo(dotsButton.snp.bottom).offset(20.0)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(70.0)
-            $0.width.equalTo(48.0)
         }
     }
-    
-    @objc func shareButtonTapped() {
-          let alertController = UIAlertController(title: "hartButton Button Tapped", message: "Implement your share functionality here", preferredStyle: .alert)
-          
-          let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-          alertController.addAction(okAction)
-          
-          present(alertController, animated: true, completion: nil)
-      }
 }

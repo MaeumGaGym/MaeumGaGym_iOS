@@ -47,3 +47,4 @@ open class MaeumGaGymCheckButton: UIButton {
         }
     }
 }
+
