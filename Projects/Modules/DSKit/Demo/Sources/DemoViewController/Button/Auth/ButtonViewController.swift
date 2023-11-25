@@ -12,6 +12,8 @@ public class ButtonViewController: UIViewController {
     let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
     let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
+    let checkButton = MaeumGaGymCheckButton(text: "확인")
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -25,7 +27,8 @@ public class ButtonViewController: UIViewController {
             googleButton,
             appleButton,
             certificationButton1,
-            certificationButton2
+            certificationButton2,
+            checkButton
         ].forEach { view.addSubview($0) }
 
         kakaoButton.snp.makeConstraints {
@@ -55,6 +58,11 @@ public class ButtonViewController: UIViewController {
         }
         
         certificationButton2.snp.makeConstraints {
+            $0.top.equalTo(certificationButton1.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        checkButton.snp.makeConstraints {
             $0.top.equalTo(certificationButton1.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
         }
