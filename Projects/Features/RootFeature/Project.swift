@@ -10,6 +10,7 @@ let project = Project.makeModule(
         .Features.Auth.Feature,
         .Features.Posture.Feature,
         .Features.SelfCare.Feature,
-        .Features.Shop.Feature
+        .Features.Shop.Feature,
+        .Features.Pickle.Feature
     ]
 )

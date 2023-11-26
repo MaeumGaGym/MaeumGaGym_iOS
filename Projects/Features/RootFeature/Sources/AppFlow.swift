@@ -33,16 +33,18 @@ public class AppFlow: Flow {
         let postureFlow = PostureFlow()
         let selfCareFlow = SelfCareFlow()
         let shopFlow = ShopFlow()
+        let pickleFlow = PickleFlow()
 
-        Flows.whenReady(flow1: homeFlow, flow2: postureFlow, flow3: selfCareFlow, flow4: shopFlow) { [unowned self] homeRoot, postureRoot, selfCareRoot, shopRoot in
-            self.rootViewController.viewControllers = [homeRoot, postureRoot, selfCareRoot, shopRoot]
+        Flows.whenReady(flow1: homeFlow, flow2: postureFlow, flow3: selfCareFlow, flow4: shopFlow, flow5: pickleFlow) { [unowned self] homeRoot, postureRoot, selfCareRoot, shopRoot, pickleRoot in
+            self.rootViewController.viewControllers = [homeRoot, postureRoot, selfCareRoot, shopRoot, pickleRoot]
         }
 
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeIsRequired)),
             .contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: AppStep.postureIsRequired)),
             .contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired)),
-            .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired))
+            .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired)),
+            .contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: AppStep.pickleRequired)),
         ])
     }
 
