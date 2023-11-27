@@ -17,6 +17,8 @@ public class ButtonViewController: UIViewController {
     var dotsButton = MaeumGaGymOpaqueIconButton(type: .dots)
     var shareButton = MaeumGaGymOpaqueIconButton(type: .share)
     
+    var checkButton = MaeumGaGymCheckButton(text: "asdf")
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -34,11 +36,12 @@ public class ButtonViewController: UIViewController {
             hartButton,
             commentButton,
             dotsButton,
-            shareButton
+            shareButton,
+            checkButton
         ].forEach { view.addSubview($0) }
 
         kakaoButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(view.snp.width).offset(-40.0)
             $0.height.equalTo(64.0)
@@ -86,6 +89,13 @@ public class ButtonViewController: UIViewController {
         shareButton.snp.makeConstraints {
             $0.top.equalTo(dotsButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+        }
+        
+        checkButton.snp.makeConstraints {
+            $0.top.equalTo(shareButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
     }
 }
