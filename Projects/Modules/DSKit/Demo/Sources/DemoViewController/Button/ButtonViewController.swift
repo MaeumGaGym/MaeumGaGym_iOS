@@ -12,11 +12,16 @@ public class ButtonViewController: UIViewController {
     let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
     let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
-    let checkButton = MaeumGaGymCheckButton(text: "확인")
+    var hartButton = MaeumGaGymOpaqueIconButton(type: .hart, likeCount: 12003)
+    var commentButton = MaeumGaGymOpaqueIconButton(type: .comment, likeCount: 1200)
+    var dotsButton = MaeumGaGymOpaqueIconButton(type: .dots)
+    var shareButton = MaeumGaGymOpaqueIconButton(type: .share)
+    
+    var checkButton = MaeumGaGymCheckButton(text: "asdf")
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         
         layout()
     }
@@ -28,11 +33,15 @@ public class ButtonViewController: UIViewController {
             appleButton,
             certificationButton1,
             certificationButton2,
+            hartButton,
+            commentButton,
+            dotsButton,
+            shareButton,
             checkButton
         ].forEach { view.addSubview($0) }
 
         kakaoButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(view.snp.width).offset(-40.0)
             $0.height.equalTo(64.0)
@@ -62,9 +71,31 @@ public class ButtonViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        checkButton.snp.makeConstraints {
-            $0.top.equalTo(certificationButton1.snp.bottom).offset(20.0)
+        hartButton.snp.makeConstraints {
+            $0.top.equalTo(certificationButton2.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
+        }
+        
+        commentButton.snp.makeConstraints {
+            $0.top.equalTo(hartButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        dotsButton.snp.makeConstraints {
+            $0.top.equalTo(commentButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        shareButton.snp.makeConstraints {
+            $0.top.equalTo(dotsButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        checkButton.snp.makeConstraints {
+            $0.top.equalTo(shareButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(70.0)
+            $0.width.equalTo(48.0)
         }
     }
 }
