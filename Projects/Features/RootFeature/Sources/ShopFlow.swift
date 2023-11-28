@@ -13,7 +13,7 @@ class ShopFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "Shop", image: UIImage(systemName: "cart"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "cart"), selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 

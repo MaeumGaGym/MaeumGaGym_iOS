@@ -1,4 +1,5 @@
 import UIKit
+import AuthFeatureInterface
 import RxFlow
 import Core
 import AuthFeature
@@ -26,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UINavigationController(rootViewController: StartViewController(StartViewModel()))
+        window?.rootViewController = UINavigationController(rootViewController: AgreeViewController(AgreeViewModel()))
         window?.makeKeyAndVisible()
     }
 }
