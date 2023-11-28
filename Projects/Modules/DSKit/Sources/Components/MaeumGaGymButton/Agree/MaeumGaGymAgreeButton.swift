@@ -46,7 +46,7 @@ open class MaeumGaGymAgreeButton: UIButton {
         super.init(frame: .zero)
 
         
-        self.textLabel.text = text
+        self.textLabel.text = text.message
         self.textLabel.font = font
 
         switch chooseType {
