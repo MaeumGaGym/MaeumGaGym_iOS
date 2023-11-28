@@ -34,10 +34,7 @@ open class MaeumGaGymAgreeButton: UIButton {
         $0.isHidden = false
     }
     
-    private let readMoreLine = MaeumGaGymLine(
-        lineColor: DSKitAsset.Colors.gray300.color,
-        lineWidth: 64.0, lineHeight: 1.0
-    )
+    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
         
     public init (
         text: agreeButtonTextType,
@@ -47,8 +44,9 @@ open class MaeumGaGymAgreeButton: UIButton {
         chooseType: Bool? = false
     ) {
         super.init(frame: .zero)
+
         
-        self.textLabel.text = text.message
+        self.textLabel.text = text
         self.textLabel.font = font
 
         switch chooseType {
