@@ -34,18 +34,23 @@ open class MaeumGaGymAgreeButton: UIButton {
         $0.isHidden = false
     }
     
-    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
+    private let readMoreLine = MaeumGaGymLine(
+        lineColor: DSKitAsset.Colors.gray300.color,
+        lineWidth: 64.0, lineHeight: 1.0
+    )
         
     public init (
-        text: String,
+        text: agreeButtonTextType,
         font: UIFont? = UIFont.Pretendard.bodyMedium,
         type: Int? = 1,
         readMoreType: Bool? = false,
         chooseType: Bool? = false
     ) {
         super.init(frame: .zero)
-
         
+        self.textLabel.text = text.message
+        self.textLabel.font = font
+
         switch chooseType {
         case true:
             chooseLabel.isHidden = false
@@ -69,9 +74,7 @@ open class MaeumGaGymAgreeButton: UIButton {
         default:
             break
         }
-        
-        self.textLabel.text = text
-        self.textLabel.font = font
+
         switch type {
         case 1: 
             break
@@ -156,5 +159,23 @@ open class MaeumGaGymAgreeButton: UIButton {
             .subscribe(onNext: {
                 print("자세히 보기 클릭 됨")
             }).disposed(by: disposeBag)
+    }
+    
+    public func editButtonType(text: String, readMoreType: Bool? = false) {
+        
+        self.textLabel.text = text
+        
+        switch readMoreType {
+        case true:
+            readMore.isHidden = false
+            readMoreLine.isHidden = false
+            break
+        case false:
+            readMore.isHidden = true
+            readMoreLine.isHidden = true
+            break
+        default:
+            break
+        }
     }
 }
