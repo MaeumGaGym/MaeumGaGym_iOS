@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "BlackPeople.png",
+      "filename" : "muscle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "BlackPeople@2x.png",
+      "filename" : "muscle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "BlackPeople@3x.png",
+      "filename" : "muscle@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
