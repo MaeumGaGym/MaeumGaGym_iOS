@@ -9,7 +9,7 @@ open class UILabelViewController: UIViewController {
     
     private let textInformation = MaeumGaGymAuthUILabel(text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
     
-    let agreeTermsUIView = MaeumGaGymAgreeUIView()
+    let agreeTermsUIView = MaeumGaGymAgreeView(firstAgreeText: .privacyAgreeText, secondAgreeText: .termsAgreeText, thirdAgreeText: .ageAgreeText, fourthAgreeText: .marketingAgreeText)
     
     open override func viewDidLoad() {
         super.viewDidLoad()
