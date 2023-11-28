@@ -2,6 +2,7 @@ import UIKit
 import RxFlow
 import RxSwift
 import RxCocoa
+import DSKit
 
 class SelfCareFlow: Flow {
     var root: Presentable {
@@ -13,7 +14,7 @@ class SelfCareFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "SelfCare", image: UIImage(systemName: "bolt.horizontal.fill"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: nil, image: DSKitAsset.Assets.whiteMuscle.image, selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 
