@@ -1,4 +1,5 @@
 import UIKit
+import DSKit
 import RxFlow
 import RxSwift
 import RxCocoa
@@ -13,7 +14,7 @@ class PostureFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "Posture", image: UIImage(systemName: "person.fill.and.arrow.left.and.arrow.right"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: nil, image: DSKitAsset.Assets.maeumGaGymBlackPeople.image, selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 

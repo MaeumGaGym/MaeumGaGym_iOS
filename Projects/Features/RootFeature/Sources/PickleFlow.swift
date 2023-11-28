@@ -3,6 +3,7 @@ import PickleFeature
 import RxFlow
 import RxSwift
 import RxCocoa
+import DSKit
 
 class PickleFlow: Flow {
     var root: Presentable {
@@ -14,8 +15,9 @@ class PickleFlow: Flow {
     init() {
         let viewController = PickleViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "Pickle", image: UIImage(systemName: "ipodtouch"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: nil, image: DSKitAsset.Assets.whitePickle.image, selectedImage: nil)
         rootViewController.setViewControllers([viewController], animated: false)
+        viewController.view.tintColor = .white
     }
 
     func navigate(to step: Step) -> FlowContributors {

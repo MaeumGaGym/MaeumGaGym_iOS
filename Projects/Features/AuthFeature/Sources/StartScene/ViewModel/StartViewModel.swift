@@ -4,7 +4,7 @@ import RxCocoa
 import RxSwift
 import Core
 
-public class StartViewModel: BaseViewModel, Stepper {
+open class StartViewModel: BaseViewModel {
     
     public struct Input {
         let kakaoButtonTap: Observable<Void>
@@ -18,7 +18,7 @@ public class StartViewModel: BaseViewModel, Stepper {
         let appleClickedMessage: Driver<String>
     }
     
-    public func transform(input: Input) -> Output {
+    public func transform(_ input: Input) -> Output {
         let kakaoClickedMessage = input.kakaoButtonTap.map {
             return "카카오버튼 클릭"
         }

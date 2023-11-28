@@ -9,4 +9,6 @@ public enum AppStep: Step {
     case shopIsRequired
     case startRequired
     case pickleRequired
+    
+    case otherDestination
 }
