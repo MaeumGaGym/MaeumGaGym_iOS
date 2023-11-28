@@ -9,6 +9,8 @@ open class UILabelViewController: UIViewController {
     
     private let textInformation = MaeumGaGymAuthUILabel(text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
     
+    let agreeTermsUIView = MaeumGaGymAgreeUIView()
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -20,6 +22,7 @@ open class UILabelViewController: UIViewController {
         [
             telUILabel,
             textInformation,
+            agreeTermsUIView
         ].forEach { view.addSubview($0) }
         
         telUILabel.snp.makeConstraints {
@@ -32,6 +35,11 @@ open class UILabelViewController: UIViewController {
             $0.top.equalTo(telUILabel.snp.bottom).offset(8.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalTo(287.0)
+        }
+        
+        agreeTermsUIView.snp.makeConstraints {
+            $0.top.equalTo(textInformation.snp.bottom).offset(20.0)
+            $0.leading.equalToSuperview().offset(20.0)
         }
     }
 }
