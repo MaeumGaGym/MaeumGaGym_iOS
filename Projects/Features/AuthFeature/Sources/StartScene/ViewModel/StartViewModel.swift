@@ -40,4 +40,8 @@ open class StartViewModel: BaseViewModel {
             appleClickedMessage: appleClickedMessage
         )
     }
+    
+    public init() {
+        
+    }
 }
