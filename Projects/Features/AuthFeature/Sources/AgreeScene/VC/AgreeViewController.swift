@@ -6,6 +6,15 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
+import CSLogger
+
+public enum AgreementButtonType {
+    case allAgree
+    case requiredFirst
+    case requiredSecond
+    case requiredThird
+    case notRequiredFourth
+}
 
 public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
@@ -65,65 +74,76 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
     }
     
     public func subscribe() {
-        
-        let input = AgreeViewModel.Input(allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(), firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(), secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(), thirdAgreeButtonTap: agreeTermsView.thirdAgreeButton.rx.tap.asSignal(), fourthAgreeButtonTap: agreeTermsView.fourthAgreeButton.rx.tap.asSignal(), nextButtonTap: checkButton.rx.tap.asSignal())
-        
+        let input = AgreeViewModel.Input(
+            allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(),
+            firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(),
+            secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(),
+            thirdAgreeButtonTap: agreeTermsView.thirdAgreeButton.rx.tap.asSignal(),
+            fourthAgreeButtonTap: agreeTermsView.fourthAgreeButton.rx.tap.asSignal(),
+            nextButtonTap: checkButton.rx.tap.asSignal()
+        )
+
         let output = viewModel.transform(input)
-        print(output)
+
+        output.allAgreeButtonClickedMessage
+            .drive(onNext: { [weak self] message in
+                print(message)
+                self?.agreeTermsView.setAllAgreeButtonState(!(self?.agreeTermsView.allAgreeButtonState ?? false))
+            })
+            .disposed(by: disposeBag)
+
+        let agreeButtons = [
+            output.firstAgreeButtonClickedMessage,
+            output.secondAgreeButtonClickedMessage,
+            output.thirdAgreeButtonClickedMessage,
+            output.fourthAgreeButtonClickedMessage
+        ]
         
-//        Observable<AgreementButtonType>.merge([
-//            agreeTermsUIView.allAgreeButton.rx.tap.map { _ in .allAgree },
-//            agreeTermsUIView.firstAgreeButton.rx.tap.map { _ in .requiredFirst },
-//            agreeTermsUIView.secondAgreeButton.rx.tap.map { _ in .requiredSecond },
-//            agreeTermsUIView.thirdAgreeButton.rx.tap.map { _ in .requiredThird },
-//            agreeTermsUIView.fourthAgreeButton.rx.tap.map { _ in .notRequiredFourth }
-//        ])
-//        .bind(to: viewModel.)
-//        
-//        
-//        let allAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let firstAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let secondAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let thirdAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let fourthAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        
-//        input.buttonTapped
-//            .bind { type in
-//                switch type {
-//                case .allAgree:
-//                    let preValue = allAgreeIsSelected.value
-//                    [allAgreeIsSelected,
-//                     firstAgreeIsSelected,
-//                     secondAgreeIsSelected,
-//                     secondAgreeIsSelected,
-//                     fourthAgreeIsSelected]
-//                        .forEach { $0.accept(!preValue) }
-//                case .requiredFirst:
-//                    firstAgreeIsSelected.accept(!firstAgreeIsSelected.value)
-//                case .requiredSecond:
-//                    secondAgreeIsSelected.accept(!secondAgreeIsSelected.value)
-//                case .requiredThird:
-//                    thirdAgreeIsSelected.accept(!thirdAgreeIsSelected.value)
-//                case .notRequiredFourth:
-//                    fourthAgreeIsSelected.accept(!fourthAgreeIsSelected.value)
-//                    }
-//            }
-//            .disposed(by: disposeBag)
-//        
-//        Observable.combineLatest(
-//            firstAgreeIsSelected,
-//            secondAgreeIsSelected,
-//            thirdAgreeIsSelected,
-//            fourthAgreeIsSelected)
-//        { $0 && $1 && $2 && $3 }
-//        .bind(to: allAgreeIsSelected)
-//        .disposed(by: disposeBag)
-//
-//        let nextButtonIsEnable = Observable.combineLatest(
-//            firstAgreeIsSelected,
-//            secondAgreeIsSelected,
-//            fourthAgreeIsSelected)
-//            { $0 && $1 && $2 }
+        agreeButtons.forEach { buttonOutput in
+            buttonOutput
+                .drive(onNext: { [weak self] message in
+                    print(message)
+                    self?.agreeTermsView.updateAllAgreeButtonState()
+                })
+                .disposed(by: disposeBag)
+        }
+        
+        output.firstAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                print("First Agree Button Clicked: \(message)")
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+            })
+            .disposed(by: disposeBag)
+
+        output.secondAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                print("Second Agree Button Clicked: \(message)")
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+            })
+            .disposed(by: disposeBag)
+
+        output.thirdAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                print("Third Agree Button Clicked: \(message)")
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+            })
+            .disposed(by: disposeBag)
+
+        
+        output.fourthAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                print("Fourth Agree Button Clicked: \(message)")
+            })
+            .disposed(by: disposeBag)
+        
+        output.nextButtonClicked
+            .drive(onNext: { message in
+                print("Next Button Clicked: \(message)")
+            })
+            .disposed(by: disposeBag)
     }
-   
 }
+
