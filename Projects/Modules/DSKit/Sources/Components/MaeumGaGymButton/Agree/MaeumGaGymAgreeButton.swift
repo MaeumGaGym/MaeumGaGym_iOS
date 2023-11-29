@@ -131,13 +131,11 @@ open class MaeumGaGymAgreeButton: UIButton {
     public func buttonYesChecked() {
         checked = true
         iconImageView.image = DSKitAsset.Assets.yesCheck.image
-        print("MaeumGaGymAgreeButton 버튼 활성화")
     }
     
     public func buttonNoChecked() {
         checked = false
         iconImageView.image = DSKitAsset.Assets.noCheck.image
-        print("MaeumGaGymAgreeButton 버튼 비활성화")
     }
     
     private func buttonTapped() {
