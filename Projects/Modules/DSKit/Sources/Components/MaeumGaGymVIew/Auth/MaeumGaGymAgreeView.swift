@@ -88,4 +88,49 @@ open class MaeumGaGymAgreeView: UIView {
             $0.centerX.equalToSuperview()
         }
     }
+    
+    public var allAgreeButtonState: Bool {
+        return firstAgreeButton.checked &&
+               secondAgreeButton.checked &&
+               thirdAgreeButton.checked &&
+               fourthAgreeButton.checked
+    }
+
+    public func setAllAgreeButtonState(_ isEnabled: Bool) {
+        allAgreeButton.checked = isEnabled
+        if isEnabled {
+            firstAgreeButton.buttonYesChecked()
+            secondAgreeButton.buttonYesChecked()
+            thirdAgreeButton.buttonYesChecked()
+            fourthAgreeButton.buttonYesChecked()
+            updateAllAgreeButtonState()
+        } else {
+            firstAgreeButton.buttonNoChecked()
+            secondAgreeButton.buttonNoChecked()
+            thirdAgreeButton.buttonNoChecked()
+            fourthAgreeButton.buttonNoChecked()
+            updateAllAgreeButtonState()
+        }
+    }
+
+    public func updateAllAgreeButtonState() {        
+        if allAgreeButtonState == true {
+            allAgreeButton.buttonYesChecked()
+        } else {
+            allAgreeButton.buttonNoChecked()
+        }
+    }
+    
+    public func buttonActivationChecked(button: MaeumGaGymCheckButton) -> Bool {
+        let shouldActivateButton = firstAgreeButton.checked &&
+                                   secondAgreeButton.checked &&
+                                   thirdAgreeButton.checked &&
+                                   !fourthAgreeButton.checked
+
+        button.isEnabled = shouldActivateButton
+        button.backgroundColor = shouldActivateButton ? DSKitAsset.Colors.blue500.color : DSKitAsset.Colors.gray400.color
+        button.textLabel.textColor = shouldActivateButton ? .white : DSKitAsset.Colors.gray200.color
+
+        return shouldActivateButton
+    }
 }
