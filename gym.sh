@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# maeumGajim.sh
+# gym.sh
 
 if [ "$1" = "generate" ]; then
     echo "프로젝트를 준비 중입니다. (헬스장 입장 중...💪)"
@@ -32,5 +32,5 @@ elif [ "$1" = "fetch" ]; then
         echo "⚠️ ↑↑↑↑↑ 위 에러를 고려해주세요 ↑↑↑↑↑ ⚠️"
     fi
 else
-    echo "사용법: ./maeumGajim.sh generate 또는 ./maeumGajim.sh clean 또는 ./maeumGajim.sh edit 또는 ./maeumGajim.sh fetch"
+    echo "사용법: ./gym.sh generate 또는 ./gym.sh clean 또는 ./gym.sh edit 또는 ./gym.sh fetch"
 fi
