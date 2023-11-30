@@ -102,7 +102,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         agreeButtons.forEach { buttonOutput in
             buttonOutput
                 .drive(onNext: { [weak self] message in
-                    print(message)
                     self?.agreeTermsView.updateAllAgreeButtonState()
                 })
                 .disposed(by: disposeBag)
@@ -110,7 +109,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         
         output.firstAgreeButtonClickedMessage
             .drive(onNext: { message in
-                print("First Agree Button Clicked: \(message)")
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
             })
@@ -118,7 +116,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
         output.secondAgreeButtonClickedMessage
             .drive(onNext: { message in
-                print("Second Agree Button Clicked: \(message)")
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
             })
@@ -126,7 +123,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
         output.thirdAgreeButtonClickedMessage
             .drive(onNext: { message in
-                print("Third Agree Button Clicked: \(message)")
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
             })
