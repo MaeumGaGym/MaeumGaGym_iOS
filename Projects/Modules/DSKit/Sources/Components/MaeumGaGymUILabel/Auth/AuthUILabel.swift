@@ -60,6 +60,4 @@ open class MaeumGaGymAuthUILabel: UILabel {
             $0.edges.equalToSuperview()
         }
     }
-    
-    
 }
