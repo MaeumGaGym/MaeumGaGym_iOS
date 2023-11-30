@@ -21,47 +21,28 @@ public class AgreeViewModel: BaseViewModel {
         let secondAgreeButtonClickedMessage: Driver<String>
         let thirdAgreeButtonClickedMessage: Driver<String>
         let fourthAgreeButtonClickedMessage: Driver<String>
-        let nextButtonClickedMessage: Driver<String>
+        let nextButtonClicked: Driver<Bool>
     }
-    
+
+    public init() {
+
+    }
+
     public func transform(_ input: Input) -> Output {
-        let allAgreeClickedMessage = input.allAgreeButtonTap.map {
-            return "전체 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
-        let firstAgreeClickedMessage = input.firstAgreeButtonTap.map {
-            return "구글버튼 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
-        let secondAgreeClickedMessage = input.secondAgreeButtonTap.map {
-            return "애플버튼 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
-        let thirdAgreeClickedMessage = input.thirdAgreeButtonTap.map {
-            return "전체 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
-        let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map {
-            return "구글버튼 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
-        let nextClickedMessage = input.nextButtonTap.map {
-            return "애플버튼 클릭"
-        }
-        .asDriver(onErrorJustReturn: "")
-        
+        let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asDriver(onErrorJustReturn: "")
+        let firstAgreeClickedMessage = input.firstAgreeButtonTap.map { "첫 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
+        let secondAgreeClickedMessage = input.secondAgreeButtonTap.map { "두 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
+        let thirdAgreeClickedMessage = input.thirdAgreeButtonTap.map { "세 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
+        let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map { "네 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
+        let nextButtonClicked = input.nextButtonTap.map { true }.asDriver(onErrorJustReturn: false)
+
         return Output(
-            allAgreeButtonClickedMessage: allAgreeClickedMessage, firstAgreeButtonClickedMessage: firstAgreeClickedMessage, secondAgreeButtonClickedMessage: secondAgreeClickedMessage, thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage, fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage, nextButtonClickedMessage: nextClickedMessage
+            allAgreeButtonClickedMessage: allAgreeClickedMessage,
+            firstAgreeButtonClickedMessage: firstAgreeClickedMessage,
+            secondAgreeButtonClickedMessage: secondAgreeClickedMessage,
+            thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage,
+            fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage,
+            nextButtonClicked: nextButtonClicked
         )
     }
-    
-    public init() {
-        
-    }
-    
 }

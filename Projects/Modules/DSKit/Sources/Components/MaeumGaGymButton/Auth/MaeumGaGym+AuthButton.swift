@@ -7,11 +7,11 @@ import Core
 
 open class MaeumGaGymAuthButton: UIButton {
 
-    private let iconImageView = UIImageView().then {
+    public let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
 
-    private let textLabel = UILabel().then {
+    public let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.bodyMedium

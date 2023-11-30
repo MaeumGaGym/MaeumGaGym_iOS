@@ -1,5 +1,4 @@
 import UIKit
-import DSKit
 import RxSwift
 import RxCocoaRuntime
 import Then
@@ -8,14 +7,14 @@ import Core
 
 open class MaeumGaGymCheckButton: UIButton {
     
-    private let textLabel = UILabel().then {
+    public let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.labelLarge
     }
     
     public init (
-        text: String,
+        text: String? = "",
         radius: Double? = 8.0,
         textColor: UIColor? = DSKitAsset.Colors.gray200.color,
         backColor: UIColor? =  DSKitAsset.Colors.gray400.color

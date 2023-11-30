@@ -6,20 +6,20 @@ import RxCocoa
 
 open class MaeumGaGymAgreeButton: UIButton {
     
-    let isChecked = BehaviorRelay<Bool>(value: false)
+//    public let isChecked = BehaviorRelay<Bool>(value: false)
     
-    var checked: Bool = false
-    let disposeBag = DisposeBag()
+    public var checked: Bool = false
+    public let disposeBag = DisposeBag()
     
-    private let iconImageView = UIImageView().then {
+    public let iconImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.noCheck.image
     }
     
-    private let textLabel = UILabel().then {
+    public let textLabel = UILabel().then {
         $0.numberOfLines = 1
     }
     
-    private let chooseLabel = UILabel().then {
+    public let chooseLabel = UILabel().then {
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.bodyMedium
         $0.textColor = DSKitAsset.Colors.gray400.color
@@ -27,14 +27,14 @@ open class MaeumGaGymAgreeButton: UIButton {
         $0.isHidden = true
     }
     
-    private let readMore = UIButton().then {
+    public let readMore = UIButton().then {
         $0.setTitle("자세히 보기", for: .normal)
         $0.titleLabel?.font = UIFont.Pretendard.labelSmall
         $0.setTitleColor(DSKitAsset.Colors.gray300.color, for: .normal)
         $0.isHidden = false
     }
     
-    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
+    public let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
         
     public init (
         text: agreeButtonTextType,
@@ -131,13 +131,11 @@ open class MaeumGaGymAgreeButton: UIButton {
     public func buttonYesChecked() {
         checked = true
         iconImageView.image = DSKitAsset.Assets.yesCheck.image
-        print("MaeumGaGymAgreeButton 버튼 활성화")
     }
     
     public func buttonNoChecked() {
         checked = false
         iconImageView.image = DSKitAsset.Assets.noCheck.image
-        print("MaeumGaGymAgreeButton 버튼 비활성화")
     }
     
     private func buttonTapped() {

@@ -6,6 +6,7 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
+import CSLogger
 
 public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
@@ -15,29 +16,28 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         AppStep.homeIsRequired
     }
 
-    private let agreeLabel = MaeumGaGymAuthUILabel(text: "약관동의", font: UIFont.Pretendard.titleLarge)
+    private let agreeLabel = MaeumGaGymAuthUILabel(
+        text: "약관동의",
+        font: UIFont.Pretendard.titleLarge
+    )
 
-    private let textInformation = MaeumGaGymAuthUILabel(text: "서비스 이용을 위해 필수 약관동의가 필요해요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
+    private let textInformation = MaeumGaGymAuthUILabel(
+        text: "서비스 이용을 위해 필수 약관동의가 필요해요.",
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray600.color
+    )
 
-    let agreeTermsView = MaeumGaGymAgreeView(firstAgreeText: .privacyAgreeText, secondAgreeText: .termsAgreeText, thirdAgreeText: .ageAgreeText, fourthAgreeText: .marketingAgreeText)
+    private let agreeTermsView = MaeumGaGymAgreeView(
+        firstAgreeText: .privacyAgreeText,
+        secondAgreeText: .termsAgreeText,
+        thirdAgreeText: .ageAgreeText,
+        fourthAgreeText: .marketingAgreeText
+    )
 
-    var checkButton = MaeumGaGymCheckButton(text: "확인")
-
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        layout()
-        subscribe()
-    }
+    private var checkButton = MaeumGaGymCheckButton(text: "확인")
     
     public override func layout() {
-         [
-            agreeLabel,
-            textInformation,
-            agreeTermsView,
-            checkButton
-         ].forEach { view.addSubview($0) }
+        self.view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])
         
         agreeLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
@@ -64,66 +64,79 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         }
     }
     
-    public func subscribe() {
+    public override func bindViewModel() {
+        super.bindViewModel()
         
-        let input = AgreeViewModel.Input(allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(), firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(), secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(), thirdAgreeButtonTap: agreeTermsView.thirdAgreeButton.rx.tap.asSignal(), fourthAgreeButtonTap: agreeTermsView.fourthAgreeButton.rx.tap.asSignal(), nextButtonTap: checkButton.rx.tap.asSignal())
-        
+        let input = AgreeViewModel.Input(
+            allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(),
+            firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(),
+            secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(),
+            thirdAgreeButtonTap: agreeTermsView.thirdAgreeButton.rx.tap.asSignal(),
+            fourthAgreeButtonTap: agreeTermsView.fourthAgreeButton.rx.tap.asSignal(),
+            nextButtonTap: checkButton.rx.tap.asSignal()
+        )
+
         let output = viewModel.transform(input)
-        print(output)
+
+        output.allAgreeButtonClickedMessage
+            .drive(onNext: { [weak self] message in
+                print(message)
+                self?.agreeTermsView.setAllAgreeButtonState(!(self?.agreeTermsView.allAgreeButtonState ?? false))
+            })
+            .disposed(by: disposeBag)
+
+        let agreeButtons = [
+            output.firstAgreeButtonClickedMessage,
+            output.secondAgreeButtonClickedMessage,
+            output.thirdAgreeButtonClickedMessage,
+            output.fourthAgreeButtonClickedMessage
+        ]
         
-//        Observable<AgreementButtonType>.merge([
-//            agreeTermsUIView.allAgreeButton.rx.tap.map { _ in .allAgree },
-//            agreeTermsUIView.firstAgreeButton.rx.tap.map { _ in .requiredFirst },
-//            agreeTermsUIView.secondAgreeButton.rx.tap.map { _ in .requiredSecond },
-//            agreeTermsUIView.thirdAgreeButton.rx.tap.map { _ in .requiredThird },
-//            agreeTermsUIView.fourthAgreeButton.rx.tap.map { _ in .notRequiredFourth }
-//        ])
-//        .bind(to: viewModel.)
-//        
-//        
-//        let allAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let firstAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let secondAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let thirdAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        let fourthAgreeIsSelected = BehaviorRelay<Bool>(value: false)
-//        
-//        input.buttonTapped
-//            .bind { type in
-//                switch type {
-//                case .allAgree:
-//                    let preValue = allAgreeIsSelected.value
-//                    [allAgreeIsSelected,
-//                     firstAgreeIsSelected,
-//                     secondAgreeIsSelected,
-//                     secondAgreeIsSelected,
-//                     fourthAgreeIsSelected]
-//                        .forEach { $0.accept(!preValue) }
-//                case .requiredFirst:
-//                    firstAgreeIsSelected.accept(!firstAgreeIsSelected.value)
-//                case .requiredSecond:
-//                    secondAgreeIsSelected.accept(!secondAgreeIsSelected.value)
-//                case .requiredThird:
-//                    thirdAgreeIsSelected.accept(!thirdAgreeIsSelected.value)
-//                case .notRequiredFourth:
-//                    fourthAgreeIsSelected.accept(!fourthAgreeIsSelected.value)
-//                    }
-//            }
-//            .disposed(by: disposeBag)
-//        
-//        Observable.combineLatest(
-//            firstAgreeIsSelected,
-//            secondAgreeIsSelected,
-//            thirdAgreeIsSelected,
-//            fourthAgreeIsSelected)
-//        { $0 && $1 && $2 && $3 }
-//        .bind(to: allAgreeIsSelected)
-//        .disposed(by: disposeBag)
-//
-//        let nextButtonIsEnable = Observable.combineLatest(
-//            firstAgreeIsSelected,
-//            secondAgreeIsSelected,
-//            fourthAgreeIsSelected)
-//            { $0 && $1 && $2 }
+        agreeButtons.forEach { buttonOutput in
+            buttonOutput
+                .drive(onNext: { [weak self] message in
+                    self?.agreeTermsView.updateAllAgreeButtonState()
+                    Logger.verbose(message)
+                })
+                .disposed(by: disposeBag)
+        }
+        
+        output.firstAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
+            })
+            .disposed(by: disposeBag)
+
+        output.secondAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
+            })
+            .disposed(by: disposeBag)
+
+        output.thirdAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                self.agreeTermsView.updateAllAgreeButtonState()
+                _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
+            })
+            .disposed(by: disposeBag)
+
+        
+        output.fourthAgreeButtonClickedMessage
+            .drive(onNext: { message in
+                Logger.verbose(message)
+            })
+            .disposed(by: disposeBag)
+        
+        output.nextButtonClicked
+            .drive(onNext: { message in
+                Logger.verbose(message)
+            })
+            .disposed(by: disposeBag)
     }
-   
 }
+
