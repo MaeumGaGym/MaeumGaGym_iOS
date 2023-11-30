@@ -8,14 +8,6 @@ import RxSwift
 import DSKit
 import CSLogger
 
-public enum AgreementButtonType {
-    case allAgree
-    case requiredFirst
-    case requiredSecond
-    case requiredThird
-    case notRequiredFourth
-}
-
 public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
     public var steps = PublishRelay<Step>()
@@ -24,29 +16,28 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         AppStep.homeIsRequired
     }
 
-    private let agreeLabel = MaeumGaGymAuthUILabel(text: "약관동의", font: UIFont.Pretendard.titleLarge)
+    private let agreeLabel = MaeumGaGymAuthUILabel(
+        text: "약관동의",
+        font: UIFont.Pretendard.titleLarge
+    )
 
-    private let textInformation = MaeumGaGymAuthUILabel(text: "서비스 이용을 위해 필수 약관동의가 필요해요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
+    private let textInformation = MaeumGaGymAuthUILabel(
+        text: "서비스 이용을 위해 필수 약관동의가 필요해요.",
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray600.color
+    )
 
-    let agreeTermsView = MaeumGaGymAgreeView(firstAgreeText: .privacyAgreeText, secondAgreeText: .termsAgreeText, thirdAgreeText: .ageAgreeText, fourthAgreeText: .marketingAgreeText)
+    private let agreeTermsView = MaeumGaGymAgreeView(
+        firstAgreeText: .privacyAgreeText,
+        secondAgreeText: .termsAgreeText,
+        thirdAgreeText: .ageAgreeText,
+        fourthAgreeText: .marketingAgreeText
+    )
 
-    var checkButton = MaeumGaGymCheckButton(text: "확인")
-
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        layout()
-        subscribe()
-    }
+    private var checkButton = MaeumGaGymCheckButton(text: "확인")
     
     public override func layout() {
-         [
-            agreeLabel,
-            textInformation,
-            agreeTermsView,
-            checkButton
-         ].forEach { view.addSubview($0) }
+        self.view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])
         
         agreeLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
@@ -73,7 +64,9 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         }
     }
     
-    public func subscribe() {
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
         let input = AgreeViewModel.Input(
             allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(),
             firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(),
