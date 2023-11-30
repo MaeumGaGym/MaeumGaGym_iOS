@@ -36,21 +36,9 @@ public class StartViewController: BaseViewController<StartViewModel> {
     private var appleButton = MaeumGaGymAuthButton(type: .apple)
     
     
-    public override func attribute() {
-        super.attribute()
-        self.view.backgroundColor = .systemBackground
-    }
-    
     public override func layout() {
         super.layout()
-        
-        [
-            mainTitle,
-            subTitle,
-            googleButton,
-            kakaoButton,
-            appleButton
-        ].forEach { view.addSubview($0) }
+        self.view.addSubviews([mainTitle, subTitle, googleButton, kakaoButton, appleButton])
         
         mainTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
