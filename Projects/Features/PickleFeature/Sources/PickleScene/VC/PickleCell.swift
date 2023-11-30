@@ -25,16 +25,8 @@ public class PickleCell: PickleCollectionViewCell {
     public override func addSubViews() {
         super.addSubViews()
         
-        self.contentView.addSubview(self.nameLabel)
-        self.contentView.addSubview(contentStackView)
-        
-        self.contentView.addSubview(self.nameLabel)
-        self.contentView.addSubview(contentStackView)
-        
-        contentStackView.addArrangedSubview(hartButton)
-        contentStackView.addArrangedSubview(commentButton)
-        contentStackView.addArrangedSubview(shareButton)
-        contentStackView.addArrangedSubview(dotButton)
+        self.contentView.addSubviews([nameLabel, contentStackView, nameLabel, contentStackView])
+        self.contentStackView.addArrangedSubviews(hartButton, commentButton, shareButton, dotButton)
     }
     
     public override func makeConstraints() {

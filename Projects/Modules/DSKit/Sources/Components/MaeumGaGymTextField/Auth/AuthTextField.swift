@@ -4,7 +4,6 @@ import SnapKit
 import Core
 import RxSwift
 import RxCocoa
-import DSKit
 
 public enum TimerState { case started, stopped }
 
