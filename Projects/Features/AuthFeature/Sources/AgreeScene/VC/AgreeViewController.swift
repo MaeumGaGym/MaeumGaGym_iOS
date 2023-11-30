@@ -103,6 +103,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             buttonOutput
                 .drive(onNext: { [weak self] message in
                     self?.agreeTermsView.updateAllAgreeButtonState()
+                    Logger.verbose(message)
                 })
                 .disposed(by: disposeBag)
         }
@@ -111,6 +112,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
             })
             .disposed(by: disposeBag)
 
@@ -118,6 +120,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
             })
             .disposed(by: disposeBag)
 
@@ -125,19 +128,20 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                Logger.verbose(message)
             })
             .disposed(by: disposeBag)
 
         
         output.fourthAgreeButtonClickedMessage
             .drive(onNext: { message in
-                print("Fourth Agree Button Clicked: \(message)")
+                Logger.verbose(message)
             })
             .disposed(by: disposeBag)
         
         output.nextButtonClicked
             .drive(onNext: { message in
-                print("Next Button Clicked: \(message)")
+                Logger.verbose(message)
             })
             .disposed(by: disposeBag)
     }
