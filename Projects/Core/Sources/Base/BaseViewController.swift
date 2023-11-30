@@ -27,7 +27,7 @@ open class BaseViewController<T>: UIViewController {
     }
     
     open func attribute() {
-        // 속성을 정의 하는 곳
+        view.backgroundColor = .white
     }
 
     open func layout() {
