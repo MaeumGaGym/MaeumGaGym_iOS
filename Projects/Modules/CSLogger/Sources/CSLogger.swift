@@ -2,9 +2,8 @@ import UIKit
 
 public final class Logger {
     
-    // MARK: - Properties
     private static let dateFormatter = DateFormatter()
-    private static var dateFormat: String = "yyyyMMdd-HHmm-ss"
+    private static var dateFormat: String = "yyyy년/MM월/dd일-HH:mm:ss초"
     
     private static var saveFileNum: Int = 10
     private static var filename: String = ""
@@ -36,9 +35,6 @@ public final class Logger {
         return dateNow
     }
     
-    // MARK: - Functions
-    
-    /// 설정 메소드.
     public static func configure(
         fileName: String? = nil,
         saveFileNum: Int? = nil,
@@ -47,23 +43,18 @@ public final class Logger {
         saveLevel: Level = .verbose,
         printLevel: Level = .verbose
     ) {
-        // 디렉토리 설정
         self.logsDirectoryURL = logsDirectoryURL ?? self.logsDirectoryURL
         
         if !fileManager.fileExists(atPath: self.logsDirectoryURL.path) {
             try? fileManager.createDirectory(at: self.logsDirectoryURL, withIntermediateDirectories: true)
         }
         
-        // 파일 이름 설정
         self.filename = "\(time).log"
         
-        // 파일 저장 개수 설정
         self.saveFileNum = saveFileNum ?? self.saveFileNum
         
-        // DateFormat 설정
         self.dateFormat = dateFormat ?? self.dateFormat
         
-        // 경로에 파일 saveFileNum개 이상일 경우 삭제해주는 로직
         guard let fileNames = try? fileManager.contentsOfDirectory(atPath: self.logsDirectoryURL.path) else {
             return
         }
@@ -75,7 +66,6 @@ public final class Logger {
     }
     
     
-    // MARK: - 사용자가 사용하게 될 메소드
     /// 📢 [VERBOSE]
     public static func verbose(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
@@ -104,7 +94,7 @@ public final class Logger {
     }
     
     
-    /// 🚨 [ERROR]
+    /// 🔥 [ERROR]
     public static func error(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -112,31 +102,35 @@ public final class Logger {
             saveLog(items, level: Level.warning, file: file, function: function, line: line, threadName: tempThreadName)
         }
     }
+    
+    /// 🎮 [TEST]
+    public static func test(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
+        let tempThreadName = threadName
+        loggingQueue.sync {
+            printLog(items, level: Level.test, file: file, function: function, line: line, threadName: tempThreadName)
+            saveLog(items, level: Level.test, file: file, function: function, line: line, threadName: tempThreadName)
+        }
+    }
 }
 
 
-// MARK: - Private
 extension Logger {
     
-    // MARK: - Save
     private static func saveLog(_ items: Any, level: Level, file: String, function: String, line: Int, threadName: String) {
         
-        // 활성화하지 않을 레벨이면 저장 x
         if !isSavable(level: level) { return }
         
-        // log 폴더 없을 경우 생성
         if !fileManager.fileExists(atPath: logsDirectoryURL.path) {
             try? fileManager.createDirectory(at: logsDirectoryURL, withIntermediateDirectories: true)
         }
         
-        // 현재까지 로그 받아오기 & 알맞은 format으로 변환
         var stringToWrite = ""
         if let items = items as? [Any] {
             stringToWrite = getInfos(items, level: level, file: file, function: function, line: line, threadName: threadName)
         } else {
             stringToWrite = getInfo(items, level: level, file: file, function: function, line: line, threadName: threadName)
         }
-        // 저장
+
         save(saveString: stringToWrite)
     }
     
@@ -160,14 +154,10 @@ extension Logger {
         let contents = try? String(contentsOf: fileUrl)
         return contents
     }
-    
-    // MARK: - Print
-    
-    /// Any 타입으로 개발자가 description을 넣고싶다면 items에 String을 넣고, struct나 struct의 배열을 넣고 싶어도 동일하게 받아서 분기처리를 해주도록 함.
+        
     private static func printLog(_ items: Any, level: Level, file: String, function: String, line: Int, threadName: String) {
         #if DEBUG
         
-        // 활성화하지 않을 레벨이면 저장 x
         if !isprintable(level: level) { return }
         
         if isArray(items) {
@@ -204,7 +194,6 @@ extension Logger {
         return ret
     }
     
-    /// 처음 8자리를 비교하는 비교 연산자
     private static func compareFirstEightCharacters(str1: String, str2: String) throws -> Bool {
         guard let firstSix1 = str1.components(separatedBy: "-").first else { return false }
         guard let firstSix2 = str2.components(separatedBy: "-").first else { return true}
@@ -260,6 +249,8 @@ extension Logger {
             return true
         case (.error, _):
             return false
+        case (.test, _):
+            return false
         }
 
     }
@@ -267,9 +258,6 @@ extension Logger {
 }
 
 extension Logger {
-    
-    /// 객체가 배열인지 단일 타입인지 확인하는 메소드
-    /// 배열일 경우 true, 단일 타입일 경우 false 반환
     private static func isArray<T>(_ value: T) -> Bool {
         let mirror = Mirror(reflecting: value)
         return mirror.displayStyle == .collection
