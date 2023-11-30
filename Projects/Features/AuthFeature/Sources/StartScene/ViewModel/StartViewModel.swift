@@ -4,7 +4,7 @@ import RxCocoa
 import RxSwift
 import Core
 
-open class StartViewModel: BaseViewModel {
+public class StartViewModel: BaseViewModel {
     
     public struct Input {
         let kakaoButtonTap: Observable<Void>
