@@ -1,5 +1,4 @@
 import XCTest
-@testable import DSKitDemo
 @testable import DSKit
 
 class MaeumGaGymAuthButtonTests: XCTestCase {
