@@ -10,7 +10,7 @@ jobs:
       uses: sarisia/actions-status-discord@v1
       with:
         title: "りょういき てんきあ むりょうくうしょ (영역 전개 무량공처)"
-        content: "<@1154312160575500298>"
+        content: "@iOS"
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
         color: FF0000
         image: "https://media.tenor.com/LGCS8U0fTFkAAAAC/gojo-satoru-jjk.gif"
