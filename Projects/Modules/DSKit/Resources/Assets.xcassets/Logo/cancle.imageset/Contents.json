@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "eye-off.png",
+      "filename" : "cancle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "cancle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "cancle@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -15,16 +15,7 @@ public class TextFieldViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        nicknameTF.useShowHideButton = false
-
-        passwordTF.useShowHideButton = true
-        passwordTF.isTextHidden = true
-        
-        
-        emailTF.useShowHideButton = false
-        
-        certificationTF.useShowHideButton = false
-        certificationTF.useTimer = true
+        nicknameTF.showError = true
         certificationTF._timerState.accept(.started)
         
         layout()
