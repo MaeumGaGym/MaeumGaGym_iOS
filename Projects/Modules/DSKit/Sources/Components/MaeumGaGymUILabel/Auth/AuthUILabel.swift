@@ -5,7 +5,7 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymAuthUILabel: UILabel {
+open class MaeumGaGymAuthLabel: UILabel {
     
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
