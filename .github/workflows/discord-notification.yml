@@ -1,0 +1,14 @@
+name: Discord Notification
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Discord Webhook Action
+      uses: sarisia/actions-status-discord@v1
+      with:
+        title: "PR 리뷰해줘!!!!"
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        color: FF0000
