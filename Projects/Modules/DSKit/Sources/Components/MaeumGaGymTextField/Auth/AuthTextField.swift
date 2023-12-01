@@ -8,45 +8,43 @@ import RxCocoa
 public enum TimerState { case started, stopped }
 
 open class AuthTextField: UITextField {
-    
+
     private let disposeBag = DisposeBag()
     private var countdownDisposable: Disposable?
-    
+
     private var countdownTimer: Timer?
     private var remainingSeconds = 180
-        
+
     public let _timerState = BehaviorRelay<TimerState>(value: .stopped)
-    
+
     public var timerState: Driver<TimerState> {
         return _timerState.asDriver(onErrorJustReturn: .stopped)
     }
-        
+
     private let placeholderLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textColor = DSKitAsset.Colors.gray200.color
+        $0.font = UIFont.Pretendard.bodyLarge
+        $0.textColor = DSKitAsset.Colors.gray400.color
     }
-    
+
     private let underlineView = UIView().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray900.color
+        $0.backgroundColor = DSKitAsset.Colors.gray400.color
     }
-    
+
     private let errorLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodySmall
+        $0.font = UIFont.Pretendard.bodyTiny
         $0.textColor = DSKitAsset.Colors.red500.color
         $0.isHidden = true
     }
 
-    private let showHideButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.eyeOff.image, for: .normal)
-        $0.setImage(DSKitAsset.Assets.eye.image, for: .selected)
-        $0.tintColor = DSKitAsset.Colors.gray900.color
-        $0.contentMode = .scaleAspectFit
+    private let cancelButton = UIButton().then {
+        $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
+        $0.isHidden = true
     }
 
     private var timerLabel = UILabel().then {
         $0.text = "03:00"
-        $0.textColor = DSKitAsset.Colors.gray200.color
-        $0.font = UIFont.Pretendard.titleMedium
+        $0.textColor = DSKitAsset.Colors.blue500.color
+        $0.font = UIFont.Pretendard.labelMedium
     }
 
     private let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
@@ -55,34 +53,13 @@ open class AuthTextField: UITextField {
         didSet {
             errorLabel.isHidden = !showError
             underlineView.backgroundColor = showError ? UIColor.red : UIColor.black
-            placeholderLabel.textColor = showError ? UIColor.red : UIColor.gray
-            showHideButton.tintColor = showError ? UIColor.red : UIColor.black
-            timerLabel.textColor = showError ? UIColor.red : UIColor.blue
-            textColor = showError ? UIColor.red : UIColor.black
+            errorLabel.textColor = showError ? UIColor.red : UIColor.black
         }
     }
 
     public var errorMessage: String? {
         didSet {
             errorLabel.text = errorMessage
-        }
-    }
-
-    public var useShowHideButton: Bool = true {
-        didSet {
-            showHideButton.isHidden = !useShowHideButton
-        }
-    }
-
-    public var isTextHidden: Bool = false {
-        didSet {
-            if isSecureTextEntry && !isTextHidden {
-                showHideButton.isSelected = true
-                isSecureTextEntry = false
-            } else if isTextHidden {
-                isSecureTextEntry = true
-                showHideButton.isSelected = false
-            }
         }
     }
 
@@ -193,27 +170,26 @@ open class AuthTextField: UITextField {
     private func setupUI() {
         configure()
         delegate = self
+
+        self.tintColor = .black
         
         _ = timerState
             .drive(with: self, onNext: { owner, state in
                 owner.setupTimer(state: state)
             })
-
-        self.tintColor = .black
     }
     
     private func configure() {
         addSubview(placeholderLabel)
         addSubview(underlineView)
-        addSubview(showHideButton)
         addSubview(errorLabel)
-        
+
         placeholderLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(underlineView.snp.top).offset(-8)
+            $0.bottom.equalTo(underlineView.snp.top).offset(-8.0)
             $0.height.equalToSuperview().multipliedBy(0.7)
         }
-        
+
         underlineView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
@@ -222,28 +198,8 @@ open class AuthTextField: UITextField {
         
         errorLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(underlineView.snp.bottom).offset(4)
+            $0.top.equalTo(underlineView.snp.bottom).offset(8.0)
         }
-        
-        if useShowHideButton {
-            addSubview(showHideButton)
-            showHideButton.snp.makeConstraints {
-                $0.trailing.equalToSuperview()
-                $0.centerY.equalToSuperview()
-                $0.width.height.equalTo(20)
-            }
-            
-            rightView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
-            rightViewMode = .always
-        } else {
-            rightView = nil
-            rightViewMode = .never
-        }
-    }
-    
-    private func togglePasswordVisibility() {
-        isTextHidden.toggle()
-        print("asdf")
     }
     
     private func setupTimer(state: TimerState) {
@@ -319,9 +275,6 @@ extension AuthTextField: UITextFieldDelegate {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first {
             let location = touch.location(in: self)
-            if showHideButton.frame.contains(location) {
-                togglePasswordVisibility()
-            }
         }
     }
 }
