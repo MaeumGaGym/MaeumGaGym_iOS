@@ -16,12 +16,12 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         AppStep.homeIsRequired
     }
 
-    private let agreeLabel = MaeumGaGymAuthUILabel(
+    private let agreeLabel = MaeumGaGymAuthLabel(
         text: "약관동의",
         font: UIFont.Pretendard.titleLarge
     )
 
-    private let textInformation = MaeumGaGymAuthUILabel(
+    private let textInformation = MaeumGaGymAuthLabel(
         text: "서비스 이용을 위해 필수 약관동의가 필요해요.",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color

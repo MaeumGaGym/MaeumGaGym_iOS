@@ -41,7 +41,6 @@ open class MaeumGaGymCheckButton: UIButton {
         }
         
         snp.makeConstraints {
-            $0.width.equalTo(390.0)
             $0.height.equalTo(58.0)
         }
     }

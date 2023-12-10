@@ -3,11 +3,11 @@ import DSKit
 import SnapKit
 import Then
 
-open class UILabelViewController: UIViewController {
+open class LabelViewController: UIViewController {
     
-    private let telUILabel = MaeumGaGymAuthUILabel(text: "휴대폰 번호", font: UIFont.Pretendard.titleLarge)
+    private let telUILabel = MaeumGaGymAuthLabel(text: "휴대폰 번호", font: UIFont.Pretendard.titleLarge)
     
-    private let textInformation = MaeumGaGymAuthUILabel(text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
+    private let textInformation = MaeumGaGymAuthLabel(text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
     
     let agreeTermsUIView = MaeumGaGymAgreeView(firstAgreeText: .privacyAgreeText, secondAgreeText: .termsAgreeText, thirdAgreeText: .ageAgreeText, fourthAgreeText: .marketingAgreeText)
     

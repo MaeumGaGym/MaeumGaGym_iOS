@@ -5,7 +5,7 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymAuthUILabel: UILabel {
+open class MaeumGaGymAuthLabel: UILabel {
     
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
@@ -17,7 +17,7 @@ open class MaeumGaGymAuthUILabel: UILabel {
     
     public init(
         text: String,
-        font: UIFont? = UIFont.Pretendard.titleMedium,
+        font: UIFont? = UIFont.Pretendard.titleLarge,
         textColor: UIColor? = .black
     ) {
         super.init(frame: .zero)

@@ -49,7 +49,7 @@ public class DesignSystemViewController: UITableViewController {
             break
         case .UILabel:
             print("커스텀 UILabel")
-            self.navigationController?.pushViewController(UILabelViewController(), animated: true)
+            self.navigationController?.pushViewController(LabelViewController(), animated: true)
             break
         case .line:
             print("커스텀 line")
