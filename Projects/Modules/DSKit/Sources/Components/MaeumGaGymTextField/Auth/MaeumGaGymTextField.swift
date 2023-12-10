@@ -24,10 +24,6 @@ open class MaeumGaGymTextField: UITextField {
         $0.isHidden = true
     }
 
-    private let cancelButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
-        $0.isHidden = true
-    }
 
     public var showError: Bool = false {
         didSet {
@@ -75,11 +71,11 @@ open class MaeumGaGymTextField: UITextField {
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
-        
     }
     
     private func setupUI() {
         configure()
+
         delegate = self
 
         self.tintColor = .black
@@ -89,7 +85,7 @@ open class MaeumGaGymTextField: UITextField {
         addSubview(placeholderLabel)
         addSubview(underlineView)
         addSubview(errorLabel)
-
+        
         placeholderLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(underlineView.snp.top).offset(-8.0)
@@ -97,7 +93,8 @@ open class MaeumGaGymTextField: UITextField {
         }
 
         underlineView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(390.0)
             $0.bottom.equalToSuperview()
             $0.height.equalTo(1)
         }
@@ -106,14 +103,14 @@ open class MaeumGaGymTextField: UITextField {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(underlineView.snp.bottom).offset(8.0)
         }
+        
     }
-
-    
 }
 
 extension MaeumGaGymTextField: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         UIView.animate(withDuration: 0.3) {
+            
             self.underlineView.backgroundColor = DSKitAsset.Colors.blue500.color
             self.placeholderLabel.font = UIFont.Pretendard.bodySmall
             self.placeholderLabel.snp.updateConstraints {
@@ -134,14 +131,12 @@ extension MaeumGaGymTextField: UITextFieldDelegate {
                 self.layoutIfNeeded()
             }
         }
-
-
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first {
-            let location = touch.location(in: self)
+            _ = touch.location(in: self)
         }
     }
 }
