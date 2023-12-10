@@ -16,14 +16,13 @@ open class MaeumGaGymCertificationButton: UIButton {
 
     public init(
         text: String,
-        font: UIFont? = UIFont.Pretendard.bodyMedium,
+        font: UIFont? = UIFont.Pretendard.labelSmall,
         textColor: UIColor? = .black,
         radius: Double? = 8.0
     ) {
         super.init(frame: .zero)
 
         setupUI(text: text, font: font, textColor: textColor, radius: radius)
-        bindTextChanges()
     }
 
     required public init?(coder: NSCoder) {
@@ -48,11 +47,11 @@ open class MaeumGaGymCertificationButton: UIButton {
                 snp.makeConstraints {
                     $0.height.equalTo(30)
                 }
-            case UIFont.Pretendard.bodyMedium:
+            case UIFont.Pretendard.labelSmall:
                 topBottomInset = 8
-                leftRightInset = 16
+                leftRightInset = 12
                 snp.makeConstraints {
-                    $0.height.equalTo(36)
+                    $0.height.equalTo(34)
                 }
             default:
                 break
@@ -77,24 +76,15 @@ open class MaeumGaGymCertificationButton: UIButton {
 
         let textWidth = textLabel.intrinsicContentSize.width
         snp.makeConstraints {
-            $0.width.equalTo(textWidth + 2 * (contentEdgeInsets.left + contentEdgeInsets.right))
+            $0.width.equalTo(textWidth + 1 * (contentEdgeInsets.left + contentEdgeInsets.right))
         }
-    }
-
-    private func bindTextChanges() {
-        rx.observe(String.self, "currentTitle")
-            .compactMap { $0 }
-            .subscribe(onNext: { [weak self] text in
-                self?.updateButtonWidth(for: text)
-            })
-            .disposed(by: disposeBag)
     }
 
     private func updateButtonWidth(for text: String) {
         let textWidth = text.size(withAttributes: [.font: textLabel.font ?? UIFont.Pretendard.bodyMedium]).width
 
-        snp.updateConstraints { make in
-            make.width.equalTo(textWidth + 2 * (contentEdgeInsets.left + contentEdgeInsets.right))
+        snp.updateConstraints {
+            $0.width.equalTo(textWidth + 1 * (contentEdgeInsets.left + contentEdgeInsets.right))
         }
     }
 
