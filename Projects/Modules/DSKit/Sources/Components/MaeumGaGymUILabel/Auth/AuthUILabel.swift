@@ -17,7 +17,7 @@ open class MaeumGaGymAuthLabel: UILabel {
     
     public init(
         text: String,
-        font: UIFont? = UIFont.Pretendard.titleMedium,
+        font: UIFont? = UIFont.Pretendard.titleLarge,
         textColor: UIColor? = .black
     ) {
         super.init(frame: .zero)
