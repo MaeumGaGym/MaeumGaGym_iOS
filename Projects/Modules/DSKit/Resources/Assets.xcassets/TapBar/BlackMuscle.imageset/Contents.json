@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MaeumGaGymBlackPeople.png",
+      "filename" : "BlackMuscle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MaeumGaGymBlackPeople@2x.png",
+      "filename" : "BlackMuscle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MaeumGaGymBlackPeople@3x.png",
+      "filename" : "BlackMuscle@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

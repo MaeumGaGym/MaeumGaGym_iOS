@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MaeumGaGymBlackPeople.png",
+      "filename" : "BlueShop.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MaeumGaGymBlackPeople@2x.png",
+      "filename" : "BlueShop@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MaeumGaGymBlackPeople@3x.png",
+      "filename" : "BlueShop@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
