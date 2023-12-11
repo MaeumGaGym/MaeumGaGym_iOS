@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "WhiteHome.png",
+      "filename" : "BlueHome.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "WhiteHome@2x.png",
+      "filename" : "BlueHome@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "WhiteHome@3x.png",
+      "filename" : "BlueHome@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

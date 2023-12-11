@@ -7,8 +7,6 @@ import Core
 
 open class MaeumGaGymOpaqueIconButton: UIButton {
 
-    private let iconOpaqueBackgroudView = UIView()
-
     private let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
@@ -32,9 +30,7 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
         self.iconImageView.image = type.imageLogo
         self.likeCountLabel.textColor = type.titleColor
         self.backgroundColor = .clear
-        iconOpaqueBackgroudView.backgroundColor = type.backgroundColor
-
-        iconOpaqueBackgroudView.layer.cornerRadius = CGFloat(radius ?? 8)
+        
         setupViews()
 
         if type != .dots {
@@ -55,23 +51,17 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
     }
 
     private func setupViews() {
-        [iconOpaqueBackgroudView, iconImageView, likeCountLabel].forEach { self.addSubview($0)}
-
-        self.iconOpaqueBackgroudView.snp.makeConstraints {
-            $0.height.width.equalTo(48.0)
-            $0.top.equalToSuperview()
-            $0.centerX.equalToSuperview()
-        }
+        [iconImageView, likeCountLabel].forEach { self.addSubview($0)}
 
         self.iconImageView.snp.makeConstraints {
-            $0.centerX.equalTo(iconOpaqueBackgroudView.snp.centerX)
-            $0.centerY.equalTo(iconOpaqueBackgroudView.snp.centerY)
-            $0.width.height.equalTo(24.0)
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(35.0)
         }
 
         if !likeCountLabel.isHidden {
             self.likeCountLabel.snp.makeConstraints {
-                $0.top.equalTo(iconOpaqueBackgroudView.snp.bottom).offset(4.0)
+                $0.top.equalTo(iconImageView.snp.bottom).offset(4.0)
                 $0.centerX.equalToSuperview()
                 $0.bottom.equalToSuperview()
             }

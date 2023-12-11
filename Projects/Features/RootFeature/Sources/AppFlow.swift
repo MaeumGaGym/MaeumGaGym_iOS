@@ -4,6 +4,7 @@ import RxCocoa
 import RxSwift
 import Core
 import UIKit
+import DSKit
 
 public class AppFlow: Flow {
     
@@ -13,7 +14,7 @@ public class AppFlow: Flow {
 
     private lazy var rootViewController: UITabBarController = {
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.tintColor = UIColor.black
+        tabBarController.tabBar.tintColor = DSKitAsset.Colors.blue500.color
         return tabBarController
     }()
 
@@ -31,20 +32,20 @@ public class AppFlow: Flow {
     private func navigateToTabBarScreen() -> FlowContributors {
         let homeFlow = HomeFlow()
         let postureFlow = PostureFlow()
-        let selfCareFlow = SelfCareFlow()
         let shopFlow = ShopFlow()
         let pickleFlow = PickleFlow()
+        let selfCareFlow = SelfCareFlow()
 
-        Flows.whenReady(flow1: homeFlow, flow2: postureFlow, flow3: selfCareFlow, flow4: pickleFlow, flow5: shopFlow) { [unowned self] homeRoot, postureRoot, selfCareRoot, pickleRoot, shopRoot in
-            self.rootViewController.viewControllers = [homeRoot, postureRoot, selfCareRoot, pickleRoot, shopRoot]
+        Flows.whenReady(flow1: homeFlow, flow2: postureFlow, flow3: shopFlow, flow4: pickleFlow, flow5: selfCareFlow) { [unowned self] homeRoot, postureRoot, shopRoot, pickleRoot, selfCareRoot in
+            self.rootViewController.viewControllers = [homeRoot, postureRoot, shopRoot, pickleRoot, selfCareRoot]
         }
 
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeIsRequired)),
             .contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: AppStep.postureIsRequired)),
-            .contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired)),
+            .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired)),
             .contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: AppStep.pickleRequired)),
-            .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired))
+            .contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired))
         ])
     }
 
