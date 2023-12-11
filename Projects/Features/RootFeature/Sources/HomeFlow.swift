@@ -16,7 +16,7 @@ public class HomeFlow: Flow {
     init() {
         let viewController = HomeViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: nil, image: DSKitAsset.Assets.whiteHome.image, selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "홈", image: DSKitAsset.Assets.blackHome.image, selectedImage: DSKitAsset.Assets.blueHome.image)
         
         rootViewController.setViewControllers([viewController], animated: false)
     }

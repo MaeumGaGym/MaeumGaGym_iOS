@@ -15,9 +15,8 @@ class PickleFlow: Flow {
     init() {
         let viewController = PickleViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: nil, image: DSKitAsset.Assets.whitePickle.image, selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "피클", image: DSKitAsset.Assets.blackPickle.image, selectedImage: DSKitAsset.Assets.bluePickle.image)
         rootViewController.setViewControllers([viewController], animated: false)
-        viewController.view.tintColor = .white
     }
 
     func navigate(to step: Step) -> FlowContributors {

@@ -2,6 +2,7 @@ import UIKit
 import RxFlow
 import RxSwift
 import RxCocoa
+import DSKit
 
 class ShopFlow: Flow {
     var root: Presentable {
@@ -13,7 +14,7 @@ class ShopFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "cart"), selectedImage: nil)
+        viewController.tabBarItem = UITabBarItem(title: "샵", image: DSKitAsset.Assets.blackShop.image, selectedImage: DSKitAsset.Assets.blueShop.image)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 
