@@ -6,6 +6,7 @@ fileprivate enum DesignSystemType: String, CaseIterable {
     case textField
     case UILabel
     case line
+    case profile
 }
 
 public class DesignSystemViewController: UITableViewController {
@@ -55,6 +56,9 @@ public class DesignSystemViewController: UITableViewController {
             print("커스텀 line")
             self.navigationController?.pushViewController(LineViewController(), animated: true)
             break
+        case .profile:
+            print("커스텀 프로필")
+            self.navigationController?.pushViewController(ProfileViewController(), animated: true)
         }
         
         
