@@ -13,14 +13,10 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
     public let iconView: UIView?
     
     public static var defaultContentColor = UIColor { trait in
-        #if os(visionOS)
-        return .label
-        #else
         switch trait.userInterfaceStyle {
         case .dark: return UIColor(red: 127 / 255, green: 127 / 255, blue: 129 / 255, alpha: 1)
         default: return UIColor(red: 88 / 255, green: 87 / 255, blue: 88 / 255, alpha: 1)
         }
-        #endif
     }
     
     fileprivate weak var viewForPresent: UIView?
@@ -134,9 +130,7 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
             let tapGesterRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
             addGestureRecognizer(tapGesterRecognizer)
         }
-        
-        // Present
-        
+                
         haptic?.impact()
         
         UIView.animate(withDuration: presentDismissDuration, animations: {
@@ -151,7 +145,6 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
             
             if self.dismissInTime {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.duration) {
-                    // If dismiss manually no need call original completion.
                     if self.alpha != 0 {
                         self.dismiss()
                     }
