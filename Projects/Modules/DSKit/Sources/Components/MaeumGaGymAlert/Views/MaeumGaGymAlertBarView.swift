@@ -1,8 +1,7 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 13, visionOS 1, *)
-public class AlertAppleMusic17View: UIView, AlertViewProtocol, AlertViewInternalDismissProtocol {
+public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInternalDismissProtocol {
     
     open var dismissByTap: Bool = true
     open var dismissInTime: Bool = true

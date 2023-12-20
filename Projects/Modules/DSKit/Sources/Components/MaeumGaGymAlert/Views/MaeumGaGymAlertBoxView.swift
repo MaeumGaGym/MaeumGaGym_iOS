@@ -2,7 +2,7 @@ import UIKit
 import Core
 
 @available(iOS 13, *)
-public class AlertAppleMusic16View: UIView, AlertViewProtocol {
+public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
     
     open var dismissByTap: Bool = true
     open var dismissInTime: Bool = true
@@ -24,7 +24,7 @@ public class AlertAppleMusic16View: UIView, AlertViewProtocol {
     fileprivate var presentDismissDuration: TimeInterval = 0.2
     fileprivate var presentDismissScale: CGFloat = 0.8
     
-    fileprivate var completion: (()->Void)? = nil
+    fileprivate var completion: ( () -> Void )? = nil
     
     private lazy var backgroundView: UIVisualEffectView = {
         let view: UIVisualEffectView = {
