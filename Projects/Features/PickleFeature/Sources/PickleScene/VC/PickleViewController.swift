@@ -13,23 +13,10 @@ public class PickleViewController: UIViewController {
         return view
     }()
     
-//    private let deleteButton = UIButton().then {
-//        $0.setTitle("Delete", for: .normal)
-//    }
-//    
-//    private let moveButton = UIButton().then {
-//        $0.setTitle("Move", for: .normal)
-//    }
-//    
-//    private let insertButton = UIButton().then {
-//        $0.setTitle("Insert", for: .normal)
-//    }
-//
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
-        
+
         let items = [
             "1",
             "2",
@@ -58,35 +45,11 @@ public class PickleViewController: UIViewController {
         
     private func setup() {
         view.addSubview(reelsView)
-//        contentView.addArrangedSubview(deleteButton)
-//        contentView.addArrangedSubview(moveButton)
-//        contentView.addArrangedSubview(insertButton)
         
         reelsView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
-        
-//        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-//        moveButton.addTarget(self, action: #selector(moveButtonTapped), for: .touchUpInside)
-//        insertButton.addTarget(self, action: #selector(insertButtonTapped), for: .touchUpInside)
     }
-    
-//    @objc private func deleteButtonTapped() {
-//        var idxs = Set<String>()
-//        idxs.insert("2")
-//        reelsView.delete(idxs: idxs)
-//    }
-//    
-//    @objc private func moveButtonTapped() {
-//        reelsView.moveToPage(0, animated: true)
-//    }
-//    
-//    @objc private func insertButtonTapped() {
-//        let items: [PickleItems] = [
-//            PickleItems(idx: "11", url: createLocalUrl(for: "6", ofType: "mov"), isMuted: false, name: "이재하"),
-//        ]
-//        reelsView.insert(items: items)
-//    }
     
     private func createLocalUrl(for filename: String, ofType: String) -> URL? {
         let fileManager = FileManager.default
