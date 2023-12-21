@@ -4,7 +4,7 @@ import Then
 
 public class AlertViewController: UIViewController {
     
-    let alertView1 = MaeumGaGymAlertBarView(title: "링크가 복사되었어요.", subtitle: nil, icon: .done)
+    let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "링크가 복사되었어요.")
     let alertView2 = MaeumGaGymAlertBoxView(title: "알려주셔서 고마워요", subtitle: nil, icon: .done)
     
     public override func viewDidLoad() {
