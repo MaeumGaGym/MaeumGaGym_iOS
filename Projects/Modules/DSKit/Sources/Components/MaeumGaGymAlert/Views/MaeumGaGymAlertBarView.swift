@@ -1,5 +1,4 @@
 import UIKit
-import SwiftUI
 
 public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInternalDismissProtocol {
     
