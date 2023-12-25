@@ -32,24 +32,20 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
     }()
 
     public init(title: String?) {
-        if let title = title {
-            let label = UILabel()
-            label.font = UIFont.preferredFont(forTextStyle: .body, weight: .semibold, addPoints: -2)
-            label.numberOfLines = 0
+        titleLabel = UILabel().then {
+            $0.font = UIFont.preferredFont(forTextStyle: .body, weight: .semibold, addPoints: -2)
+            $0.numberOfLines = 0
             let style = NSMutableParagraphStyle()
             style.lineSpacing = 3
             style.alignment = .left
-            label.attributedText = NSAttributedString(string: title, attributes: [.paragraphStyle: style])
-            titleLabel = label
-        } else {
-            self.titleLabel = nil
+            $0.attributedText = NSAttributedString(string: title ?? "", attributes: [.paragraphStyle: style])
         }
 
         self.titleLabel?.textColor = Self.defaultContentColor
 
         super.init(frame: .zero)
 
-        preservesSuperviewLayoutMargins = false
+        preservesSuperviewLayoutMargins = false //슈퍼뷰의 여백을 묻는 코드 //기본 false //나중에 프레임이 딱 맞아야하는 상황을 위해 사용
         insetsLayoutMarginsFromSafeArea = false
 
         backgroundColor = .clear
@@ -60,10 +56,9 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         }
 
         layer.masksToBounds = true
-        layer.cornerRadius = 14
+        layer.cornerRadius = 8
         layer.cornerCurve = .continuous
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -71,7 +66,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
     open func present(on view: UIView, completion: (() -> Void)? = nil) {
         self.viewForPresent = view
         self.completion = completion
-        viewForPresent?.addSubview(self)
+        viewForPresent?.addSubview(self) // 현재 뷰의 추가하는 코드
         guard let viewForPresent = viewForPresent else { return }
 
         alpha = 0
@@ -79,20 +74,18 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         center.x = viewForPresent.frame.midX
         frame.origin.y = viewForPresent.safeAreaInsets.top
 
-        transform = transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
+        transform = transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale) // 지정된 비율로 축소 시키는 코드
 
-        if dismissByTap {
+        if dismissByTap { // 클릭하면 내려가도록 설명
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
             addGestureRecognizer(tapGestureRecognizer)
         }
-
-        haptic?.impact()
-
+        
         UIView.animate(withDuration: presentDismissDuration, animations: {
-            self.alpha = 1
-            self.transform = CGAffineTransform.identity
+            self.alpha = 1 // 뷰가 나타나는 효과
+            self.transform = CGAffineTransform.identity //원래 크기로 만드는 코드
         }, completion: { [weak self] finished in
-            guard let self = self else { return }
+            guard let self = self else { return } // 메모리 안전성
 
             if self.dismissInTime {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.duration) {
@@ -113,7 +106,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
             self.alpha = 0
             self.transform = self.transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
         }, completion: { [weak self] finished in
-            self?.removeFromSuperview()
+            self?.removeFromSuperview() // 뷰에서 삭제 시키는 코드
             customCompletion?()
         })
     }
