@@ -13,6 +13,12 @@ public class PickleCell: PickleCollectionViewCell {
 //        $0.textColor = .white
 //    }
     
+    let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "링크가 복사되었어요").then {
+        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+        $0.titleLabel?.textColor = .white
+        $0.backgroundColor = DSKitAsset.Colors.gray800.color
+    }
+    
     private let contentStackView = UIStackView().then {
         $0.axis = .vertical
     }
@@ -83,6 +89,7 @@ public class PickleCell: PickleCollectionViewCell {
     
     @objc private func hartButtonTapped() {
         print("하트 하트")
+        alertView1.present(on: self)
     }
     
     @objc private func commentButtonTapped() {
