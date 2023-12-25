@@ -1,4 +1,6 @@
 import UIKit
+import SnapKit
+import Then
 
 public protocol MaeumGaGymBottomSheetViewDelegate {
     func didMove(to percentage: Float)
@@ -9,6 +11,12 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     public var tableView: UITableView {
         return rootViewController.tableView
     }
+    
+    private let dragIndicatorView = UIView().then {
+        $0.backgroundColor = .red
+        $0.layer.cornerRadius = 2
+    }
+    
     public let rootViewController = MaeumGaGymBottomSheetRootViewController()
     
     public var state: MaeumGaGymBottomSheetViewState = .collapsed {
@@ -67,14 +75,23 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func show(in parentView: UIView, initial state: MaeumGaGymBottomSheetViewState) {
+    public func show(in parentView: UIView, initialState: MaeumGaGymBottomSheetViewState) {
         view.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(view)
-        
-        let initialConstant = constant(of: state)
+
+        let initialConstant = constant(of: initialState)
         bottomConstraint = view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor, constant: initialConstant)
         let fullHeight = height(of: .fullyExpanded)
         heightConstraint = view.heightAnchor.constraint(equalToConstant: fullHeight)
+
+        view.addSubview(dragIndicatorView)
+        dragIndicatorView.snp.makeConstraints {
+            $0.width.equalTo(64)
+            $0.height.equalTo(dragIndicatorView.layer.cornerRadius * 2)
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.bottom.equalTo(view.snp.top).offset(10)
+        }
+
         NSLayoutConstraint.activate(
             NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": view as Any]) +
             [bottomConstraint, heightConstraint]
