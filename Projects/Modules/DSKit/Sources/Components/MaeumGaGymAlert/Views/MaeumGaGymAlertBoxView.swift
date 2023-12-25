@@ -24,7 +24,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
     fileprivate var presentDismissDuration: TimeInterval = 0.2
     fileprivate var presentDismissScale: CGFloat = 0.8
     
-    fileprivate var completion: ( () -> Void )? = nil
+    fileprivate var completion: (() -> Void)? = nil
     
     private lazy var backgroundView: UIVisualEffectView = {
         let view: UIVisualEffectView = {
@@ -132,9 +132,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
             let tapGesterRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
             addGestureRecognizer(tapGesterRecognizer)
         }
-        
-        // Present
-        
+                
         haptic?.impact()
         
         UIView.animate(withDuration: presentDismissDuration, animations: {
@@ -149,7 +147,6 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
             
             if self.dismissInTime {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.duration) {
-                    // If dismiss manually no need call original completion.
                     if self.alpha != 0 {
                         self.dismiss()
                     }

@@ -1,8 +1,9 @@
 import UIKit
 import Core
+import DSKit
 
 public final class PickleView: UIView {
-    
+
     private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = UIScreen.main.bounds.size
@@ -58,7 +59,7 @@ public final class PickleView: UIView {
         super.init(frame: .zero)
         self.manager.delegate = self
         self.collectionView.delegate = self
-        self.collectionView.dataSource = self.manager
+        self.collectionView.dataSource = self.manager        
     }
     
     required init?(coder: NSCoder) {
