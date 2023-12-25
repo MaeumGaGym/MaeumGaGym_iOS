@@ -1,4 +1,5 @@
 import UIKit
+import Then
 
 public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewInternalDismissProtocol {
 
@@ -6,6 +7,8 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
     open var dismissInTime: Bool = true
     open var duration: TimeInterval = 1.5
     open var haptic: AlertHaptic? = nil
+    
+    private let fixedHeight: CGFloat = 42.0
 
     public let titleLabel: UILabel?
 
@@ -17,7 +20,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
     }
 
     fileprivate weak var viewForPresent: UIView?
-    fileprivate var presentDismissDuration: TimeInterval = 0.2
+    fileprivate var presentDismissDuration: TimeInterval = 0.5
     fileprivate var presentDismissScale: CGFloat = 0.8
 
     fileprivate var completion: (()->Void)? = nil
@@ -65,7 +68,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func present(on view: UIView, completion: (()->Void)? = nil) {
+    open func present(on view: UIView, completion: (() -> Void)? = nil) {
         self.viewForPresent = view
         self.completion = completion
         viewForPresent?.addSubview(self)
@@ -74,13 +77,13 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         alpha = 0
         sizeToFit()
         center.x = viewForPresent.frame.midX
-        frame.origin.y = viewForPresent.frame.height - viewForPresent.safeAreaInsets.bottom - frame.height - 64
+        frame.origin.y = viewForPresent.safeAreaInsets.top
 
         transform = transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
 
         if dismissByTap {
-            let tapGesterRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
-            addGestureRecognizer(tapGesterRecognizer)
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+            addGestureRecognizer(tapGestureRecognizer)
         }
 
         haptic?.impact()
@@ -119,43 +122,36 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         super.layoutSubviews()
         guard self.transform == .identity else { return }
         backgroundView.frame = self.bounds
+        center.x = viewForPresent?.frame.midX ?? 0
+        
         layout(maxWidth: frame.width)
     }
 
     public override func sizeThatFits(_ size: CGSize) -> CGSize {
-        layout(maxWidth: nil)
+        let fixedWidth: CGFloat = 390.0
+        let fixedHeight: CGFloat = 42.0
+        layout(maxWidth: fixedWidth)
 
         let maxX = subviews.sorted(by: { $0.frame.maxX > $1.frame.maxX }).first?.frame.maxX ?? .zero
         let currentNeedWidth = maxX + layoutMargins.right
 
-        let maxWidth = {
-            if let viewForPresent = self.viewForPresent {
-                return min(viewForPresent.frame.width * 0.8, 270)
-            } else {
-                return 270
-            }
-        }()
-
-        let usingWidth = min(currentNeedWidth, maxWidth)
+        let usingWidth = min(currentNeedWidth, fixedWidth)
         layout(maxWidth: usingWidth)
-        let height = titleLabel?.frame.maxY ?? .zero
+        let height = fixedHeight
         return .init(width: usingWidth, height: height + layoutMargins.bottom)
     }
 
     private func layout(maxWidth: CGFloat?) {
-        if let maxWidth = maxWidth {
-            let labelWidth = maxWidth - layoutMargins.left - layoutMargins.right
-            titleLabel?.frame = .init(
-                x: layoutMargins.left,
-                y: layoutMargins.top,
-                width: labelWidth,
-                height: titleLabel?.frame.height ?? .zero
-            )
-            titleLabel?.sizeToFit()
-        } else {
-            titleLabel?.sizeToFit()
-            titleLabel?.frame.origin.x = layoutMargins.left
-            titleLabel?.frame.origin.y = layoutMargins.top
-        }
+        let leadingMargin: CGFloat = 0.0
+        let trailingMargin: CGFloat = 24.0
+
+        let availableWidth = maxWidth ?? 390.0
+        let labelWidth = availableWidth - leadingMargin - trailingMargin
+        titleLabel?.frame = CGRect(
+            x: leadingMargin + layoutMargins.left,
+            y: layoutMargins.top - 3,
+            width: labelWidth,
+            height: fixedHeight
+        )
     }
 }
