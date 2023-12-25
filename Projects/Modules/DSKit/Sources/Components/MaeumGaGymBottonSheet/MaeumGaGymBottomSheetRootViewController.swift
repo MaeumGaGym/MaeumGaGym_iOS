@@ -1,11 +1,12 @@
 import UIKit
+import SnapKit
 
 public final class MaeumGaGymBottomSheetRootViewController: UIViewController {
     
     public let tableView = UITableView()
     private var isFirstTimeAppear = true
-    
-    override public func loadView() {
+
+        override public func loadView() {
         view = tableView
     }
     
@@ -15,7 +16,6 @@ public final class MaeumGaGymBottomSheetRootViewController: UIViewController {
     
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let selectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedRow, animated: true)
         }
@@ -25,7 +25,6 @@ public final class MaeumGaGymBottomSheetRootViewController: UIViewController {
             tableView.setContentOffset(CGPoint(x: 0, y: -topOffset), animated: false)
             isFirstTimeAppear = false
         }
-        
     }
 }
 
