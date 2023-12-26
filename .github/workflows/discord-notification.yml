@@ -1,0 +1,17 @@
+name: Discord Notification
+on:
+  pull_request:
+    branches: [ "main", "develop" ]
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Discord Webhook Action
+      uses: sarisia/actions-status-discord@v1
+      with:
+        title: 🔀 Pull Request 🔀
+        description: "# りょういき てんきあ むりょうくうしょ (영역 전개 무량공처)"
+        content: "<@&1154312160575500298>"
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        color: FF0000
+        image: ${{ secrets.IMAGE_URL }}
