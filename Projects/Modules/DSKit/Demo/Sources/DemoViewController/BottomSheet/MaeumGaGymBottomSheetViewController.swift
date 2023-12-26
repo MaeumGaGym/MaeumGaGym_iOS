@@ -13,7 +13,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     }
     
     private let dragIndicatorView = UIView().then {
-        $0.backgroundColor = .red
+        $0.backgroundColor = DSKitAsset.Colors.gray700.color
         $0.layer.cornerRadius = 2
     }
     
@@ -47,6 +47,8 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     
     public init(type: MaeumGaGymBottomSheetType) {
         super.init(navigationBarClass: NavigationBar.self, toolbarClass: nil)
+        
+        tableView.separatorStyle = .none
         
         switch type {
         case .plain:

@@ -5,13 +5,14 @@ public final class MaeumGaGymBottomSheetRootViewController: UIViewController {
     
     public let tableView = UITableView()
     private var isFirstTimeAppear = true
-
-        override public func loadView() {
+    
+    override public func loadView() {
         view = tableView
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        tableView.backgroundColor = DSKitAsset.Colors.gray900.color
     }
     
     override public func viewDidAppear(_ animated: Bool) {
