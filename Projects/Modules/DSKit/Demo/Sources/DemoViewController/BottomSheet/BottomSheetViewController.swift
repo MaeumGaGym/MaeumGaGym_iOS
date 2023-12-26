@@ -1,29 +1,43 @@
 import UIKit
+import DSKit
+
+struct BottomSheetItem {
+    let icon: UIImage
+    let title: String
+}
+
 
 public class BottomSheetViewController: UIViewController {
 
     private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
         if #available(iOS 11.0, *) {
-            return MaeumGaGymBottomSheetViewController(type: .navigation(title: "ㅅ"))
+            return MaeumGaGymBottomSheetViewController(type: .plain)
         } else {
             return MaeumGaGymBottomSheetViewController(type: .plain)
         }
     }()
+    
+    private var bottomSheetItems: [BottomSheetItem] = []
 
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .lightGray
+        
+        bottomSheetItems = [
+             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
+         ]
 
         bottomSheetViewController.bottomSheetDelegate = self
 
         let tableView = bottomSheetViewController.tableView
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
 
         addChild(bottomSheetViewController)
-        bottomSheetViewController.show(in: view, initial: .collapsed)
+        bottomSheetViewController.show(in: view, initialState: .collapsed)
         bottomSheetViewController.didMove(toParent: self)
 
         let bottomSheetView = bottomSheetViewController.view
@@ -48,15 +62,19 @@ extension BottomSheetViewController : MaeumGaGymBottomSheetViewDelegate {
 extension BottomSheetViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return bottomSheetItems.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.row + 1)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
+
+        let item = bottomSheetItems[indexPath.row]
+        cell.iconImage.image = item.icon
+        cell.title.text = item.title
+
         return cell
     }
-
+    
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if bottomSheetViewController.isNavigationBarHidden {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -67,5 +85,9 @@ extension BottomSheetViewController : UITableViewDataSource, UITableViewDelegate
         vc.title = cell?.textLabel?.text
         vc.view.backgroundColor = .white
         bottomSheetViewController.show(vc, sender: self)
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 52.0
     }
 }
