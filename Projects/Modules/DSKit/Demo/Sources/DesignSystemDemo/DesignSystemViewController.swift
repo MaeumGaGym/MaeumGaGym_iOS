@@ -7,6 +7,8 @@ fileprivate enum DesignSystemType: String, CaseIterable {
     case UILabel
     case line
     case profile
+    case alert
+    case bottomSheet
 }
 
 public class DesignSystemViewController: UITableViewController {
@@ -59,8 +61,12 @@ public class DesignSystemViewController: UITableViewController {
         case .profile:
             print("커스텀 프로필")
             self.navigationController?.pushViewController(ProfileViewController(), animated: true)
+        case .alert:
+            print("커스텀 알럿")
+            self.navigationController?.pushViewController(AlertViewController(), animated: true)
+        case .bottomSheet:
+            print("커스텀 바텀시트")
+            self.navigationController?.pushViewController(BottomSheetViewController(), animated: true)
         }
-        
-        
     }
 }

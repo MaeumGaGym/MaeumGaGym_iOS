@@ -13,7 +13,7 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
 
     private let likeCountLabel = UILabel().then {
         $0.textAlignment = .center
-        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.font = UIFont.Pretendard.bodySmall
         $0.textColor = .white
     }
 
@@ -56,19 +56,19 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
         self.iconImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(35.0)
+            $0.width.height.equalTo(40.0)
         }
 
         if !likeCountLabel.isHidden {
             self.likeCountLabel.snp.makeConstraints {
                 $0.top.equalTo(iconImageView.snp.bottom).offset(4.0)
                 $0.centerX.equalToSuperview()
-                $0.bottom.equalToSuperview()
+                $0.bottom.equalToSuperview().offset(2)
             }
         }
 
         self.snp.makeConstraints {
-            $0.height.equalTo(likeCountLabel.isHidden ? 48.0 : 70.0)
+            $0.height.equalTo(likeCountLabel.isHidden ? 50.0 : 70.0)
         }
     }
 

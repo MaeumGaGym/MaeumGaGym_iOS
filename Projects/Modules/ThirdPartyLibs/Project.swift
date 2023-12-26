@@ -7,11 +7,14 @@ let project = Project.makeModule(
     targets: [.dynamicFramework],
     externalDependencies: [
         .SPM.RxCocoa,
+        .SPM.RxFlow,
         .SPM.RxSwift,
-        .SPM.RxRelay,
         .SPM.SnapKit,
         .SPM.Then,
         .SPM.Swinject,
-        .SPM.RxFlow
+        .SPM.Moya,
+        .SPM.RxMoya,
+        .SPM.Lottie,
+        .SPM.kingfisher
     ]
 )
