@@ -24,7 +24,7 @@ open class MaeumGaGymCheckButton: UIButton {
         textLabel.text = text
         backgroundColor = backColor
         textLabel.textColor = textColor
-        layer.cornerRadius = radius ?? 8
+        self.makeRounded(radius: radius ?? 8)
         setupUI()
         
     }
