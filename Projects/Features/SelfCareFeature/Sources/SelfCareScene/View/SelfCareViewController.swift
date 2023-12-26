@@ -1,5 +1,7 @@
 import UIKit
+import SelfCareFeatureInterface
 import DSKit
+import Core
 
 public class SelfCareViewController: UIViewController {
 
@@ -7,6 +9,10 @@ public class SelfCareViewController: UIViewController {
     private let textInformation = MaeumGaGymAuthLabel(text: "오늘의 운동을 완료하고,\n내 모습을 사진으로 남겨보세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
     
     let cameraButton = MaeumGaGymCheckButton(text: "오늘의 사진 올리기", textColor: .white, backColor: DSKitAsset.Colors.blue500.color)
+    
+    private var emptyView = AlbumEmptyView(viewType: .album).then {
+        $0.isHidden = true
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
