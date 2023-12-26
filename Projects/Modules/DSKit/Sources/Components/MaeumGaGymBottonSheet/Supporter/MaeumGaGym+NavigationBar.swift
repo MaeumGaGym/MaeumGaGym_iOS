@@ -2,8 +2,8 @@ import UIKit
 
 public final class NavigationBar: UINavigationBar {
     
-    var navigationController : UINavigationController? = nil
-    var type : MaeumGaGymBottomSheetType = .plain
+    var navigationController: UINavigationController? = nil
+    var type: MaeumGaGymBottomSheetType = .plain
     
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
