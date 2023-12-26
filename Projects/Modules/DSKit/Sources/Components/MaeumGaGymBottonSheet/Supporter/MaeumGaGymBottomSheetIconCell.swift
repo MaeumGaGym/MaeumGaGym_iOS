@@ -4,15 +4,13 @@ import Then
 
 public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
     
-    static let identifier = "MaeumGaGymBottomSheetIconCell"
+    public static let identifier = "MaeumGaGymBottomSheetIconCell"
     
     public var iconImage = UIImageView().then {
-        $0.image = UIImage(named: "icon")
         $0.tintColor = .white
     }
 
     public var title = UILabel().then {
-        $0.text = "상어상어"
         $0.textColor = UIColor.white
         $0.font = UIFont.Pretendard.labelLarge
     }
@@ -20,8 +18,8 @@ public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        layout()
         self.backgroundColor = DSKitAsset.Colors.gray900.color
+        layout()
     }
     
     required init?(coder: NSCoder) {
@@ -33,9 +31,9 @@ public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
         contentView.addSubview(title)
         
         iconImage.snp.makeConstraints {
-            $0.leading.top.equalTo(5)
+            $0.leading.equalToSuperview().offset(20.0)
             $0.centerY.equalToSuperview()
-            $0.size.width.height.equalTo(28.0)
+            $0.width.height.equalTo(28.0)
         }
         
         title.snp.makeConstraints {
