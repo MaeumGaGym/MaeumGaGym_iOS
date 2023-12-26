@@ -7,7 +7,8 @@ public protocol MaeumGaGymBottomSheetViewDelegate {
 }
 
 public final class MaeumGaGymBottomSheetViewController: UINavigationController {
-    
+    public let rootViewController = MaeumGaGymBottomSheetRootViewController()
+
     public var tableView: UITableView {
         return rootViewController.tableView
     }
@@ -16,9 +17,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         $0.backgroundColor = DSKitAsset.Colors.gray700.color
         $0.layer.cornerRadius = 2
     }
-    
-    public let rootViewController = MaeumGaGymBottomSheetRootViewController()
-    
+        
     public var state: MaeumGaGymBottomSheetViewState = .collapsed {
         didSet {
             let scrollView = (topViewController?.view as? UIScrollView)
@@ -33,7 +32,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         }
     }
     
-    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 6, 4 / 10, 9 / 10)
+    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 6, 4 / 10, 6 / 7)
     public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate? = nil
     
     private lazy var size: CGSize = {
@@ -86,18 +85,18 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         let fullHeight = height(of: .fullyExpanded)
         heightConstraint = view.heightAnchor.constraint(equalToConstant: fullHeight)
 
+        NSLayoutConstraint.activate(
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": view as Any]) +
+                [bottomConstraint, heightConstraint]
+        )
+
         view.addSubview(dragIndicatorView)
         dragIndicatorView.snp.makeConstraints {
             $0.width.equalTo(64)
-            $0.height.equalTo(dragIndicatorView.layer.cornerRadius * 2)
+            $0.height.equalTo(dragIndicatorView.layer.cornerRadius * 2.5)
             $0.centerX.equalTo(view.snp.centerX)
-            $0.bottom.equalTo(view.snp.top).offset(10)
+            $0.top.equalTo(view.snp.top).offset(10)
         }
-
-        NSLayoutConstraint.activate(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": view as Any]) +
-            [bottomConstraint, heightConstraint]
-        )
     }
     
     override public func viewDidLoad() {
