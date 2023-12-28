@@ -72,7 +72,7 @@ public class DesignSystemViewController: UITableViewController {
         case .emptyView:
             print("커스텀 EmptyView")
             self.navigationController?.pushViewController(EmptyViewController(), animated: true)
-        case .view
+        case .view:
             print("커스텀 view")
             self.navigationController?
                 .pushViewController(ToggleViewController(), animated: true)
