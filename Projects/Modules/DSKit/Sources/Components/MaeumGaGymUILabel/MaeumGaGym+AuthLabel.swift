@@ -8,8 +8,8 @@ import RxCocoa
 open class MaeumGaGymAuthLabel: UILabel {
     
     private let textLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.numberOfLines = 2
         $0.backgroundColor = .clear
     }
     
@@ -35,22 +35,9 @@ open class MaeumGaGymAuthLabel: UILabel {
   
         if let font = font {
             textLabel.font = font
-            switch font {
-            case UIFont.Pretendard.titleLarge:
-                snp.makeConstraints {
-                    $0.height.equalTo(48)
-                }
-            case UIFont.Pretendard.bodyMedium:
-                snp.makeConstraints {
-                    $0.height.equalTo(20)
-                }
-            default:
-                break
-            }
         }
-            
-        setupConstraints()
         
+        setupConstraints()
     }
     
     private func setupConstraints() {
@@ -58,6 +45,17 @@ open class MaeumGaGymAuthLabel: UILabel {
 
         textLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        snp.makeConstraints {
+            switch textLabel.font {
+            case UIFont.Pretendard.titleLarge:
+                $0.height.equalTo(48)
+            case UIFont.Pretendard.bodyMedium:
+                $0.height.equalTo(50)
+            default:
+                break
+            }
         }
     }
 }

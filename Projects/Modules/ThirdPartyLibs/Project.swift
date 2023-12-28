@@ -15,6 +15,7 @@ let project = Project.makeModule(
         .SPM.Moya,
         .SPM.RxMoya,
         .SPM.Lottie,
-        .SPM.kingfisher
+        .SPM.kingfisher,
+        .SPM.MindGymKit
     ]
 )

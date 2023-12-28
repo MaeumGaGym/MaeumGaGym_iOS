@@ -1,0 +1,60 @@
+//
+//  UICollectionView+Utils.swift
+//  Core
+//
+//  Created by 박준하 on 12/26/23.
+//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
+//
+
+import UIKit
+
+protocol NibLoadable: AnyObject {
+    static var nibName: String { get }
+}
+
+public protocol ReusableCell {
+    static var reuseIdentifier: String { get }
+}
+
+public extension ReusableCell {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+extension NibLoadable where Self: UIView {
+    static var nibName: String {
+        return NSStringFromClass(self).components(separatedBy: ".").last!
+    }
+}
+
+
+public extension UICollectionView {
+    
+    func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Unable Dequeue Reusable")
+        }
+        
+        return cell
+    }
+    
+    func dequeueReusableView<T: UICollectionReusableView>(_: T.Type, indexPath: IndexPath, kind: String) -> T {
+        guard let view = dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: T.className, for: indexPath as IndexPath) as? T else {
+            fatalError("Unable Dequeue Reusable")
+        }
+                
+        return view
+        }
+    
+    func register<T: UICollectionViewCell>(_: T.Type) {
+        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+    }
+    
+    func registerReusableView<T: UICollectionReusableView>(_: T.Type, kind: String) {
+        register(T.self, forSupplementaryViewOfKind: kind, withReuseIdentifier: T.className)
+    }
+}
+
+extension UICollectionViewCell: NibLoadable { }
+extension UICollectionViewCell: ReusableCell { }

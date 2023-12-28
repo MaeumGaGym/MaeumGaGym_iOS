@@ -9,6 +9,7 @@ fileprivate enum DesignSystemType: String, CaseIterable {
     case profile
     case alert
     case bottomSheet
+    case emptyView
 }
 
 public class DesignSystemViewController: UITableViewController {
@@ -67,6 +68,9 @@ public class DesignSystemViewController: UITableViewController {
         case .bottomSheet:
             print("커스텀 바텀시트")
             self.navigationController?.pushViewController(BottomSheetViewController(), animated: true)
+        case .emptyView:
+            print("커스텀 EmptyView")
+            self.navigationController?.pushViewController(EmptyViewController(), animated: true)
         }
     }
 }
