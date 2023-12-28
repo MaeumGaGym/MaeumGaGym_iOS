@@ -11,8 +11,8 @@ public class TextFieldViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    private let nicknameLabel = MaeumGaGymAuthLabel(text: "닉네임")
-    private let nicknameInfo = MaeumGaGymAuthLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
+    private let nicknameLabel = MaeumGaGymLabel(text: "닉네임")
+    private let nicknameInfo = MaeumGaGymLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
     
     
     private let cancelButton = UIButton().then {
