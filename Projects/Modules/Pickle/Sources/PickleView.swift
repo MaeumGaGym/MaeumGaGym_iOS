@@ -1,6 +1,5 @@
 import UIKit
 import Core
-import DSKit
 
 public final class PickleView: UIView {
 
