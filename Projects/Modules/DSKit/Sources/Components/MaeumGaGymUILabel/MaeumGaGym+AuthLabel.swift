@@ -51,8 +51,13 @@ open class MaeumGaGymAuthLabel: UILabel {
             switch textLabel.font {
             case UIFont.Pretendard.titleLarge:
                 $0.height.equalTo(48)
+            case UIFont.Pretendard.titleMedium:
+                $0.height.equalTo(32.0)
             case UIFont.Pretendard.bodyMedium:
                 $0.height.equalTo(50)
+            case UIFont.Pretendard.bodyMedium2:
+                $0.height.equalTo(20)
+                $0.width.equalTo(330.0)
             default:
                 break
             }
