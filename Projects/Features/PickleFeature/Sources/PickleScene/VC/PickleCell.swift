@@ -9,22 +9,18 @@ import Pickle
 
 public class PickleCell: PickleCollectionViewCell {
     
-//    private let nameLabel = UILabel().then {
-//        $0.textColor = .white
-//    }
-    
     let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "링크가 복사되었어요").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
     }
     
+    let pickleInfoView = PickleInfoView()
+    
     private let contentStackView = UIStackView().then {
         $0.axis = .vertical
     }
-    
-//    private var userProfile = UserProfileView(userName: "박준하")
-    
+        
     private let hartButton = MaeumGaGymOpaqueIconButton(type: .hart)
     private let commentButton = MaeumGaGymOpaqueIconButton(type: .comment)
     private let shareButton = MaeumGaGymOpaqueIconButton(type: .share)
@@ -34,6 +30,7 @@ public class PickleCell: PickleCollectionViewCell {
         super.addSubViews()
         
 //        self.contentView.addSubview(userProfile)
+        self.contentView.addSubview(pickleInfoView)
         self.contentView.addSubviews([contentStackView, contentStackView])
         self.contentStackView.addArrangedSubviews(hartButton, commentButton, shareButton, dotButton)
     }
@@ -41,16 +38,17 @@ public class PickleCell: PickleCollectionViewCell {
     public override func makeConstraints() {
         super.makeConstraints()
         
-//        nameLabel.snp.makeConstraints {
-//            $0.top.equalTo(contentView).offset(30.0)
-//            $0.leading.equalToSuperview().offset(30.0)
-//        }
-        
-        contentStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-100.0)
-            $0.trailing.equalToSuperview().offset(-15)
+        pickleInfoView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.height.equalTo(180.0)
+            $0.bottom.equalToSuperview().offset(-90.0)
         }
         
+        contentStackView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-105.0)
+            $0.trailing.equalToSuperview().offset(-15)
+        }
+//        
 //        userProfile.snp.makeConstraints {
 //            $0.bottom.equalToSuperview().offset(-100.0)
 //            $0.leading.equalToSuperview()
