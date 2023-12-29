@@ -80,7 +80,6 @@ public final class PickleView: UIView {
     }
     
     // MARK: - Functions
-    
     public func register<T: PickleCollectionViewCell>(_ ofType: T.Type, itemType: PickleItem.Type) {
         self.collectionView.register(T.self, forCellWithReuseIdentifier: itemType.identifier)
         self.manager.register(identifier: itemType.identifier)
