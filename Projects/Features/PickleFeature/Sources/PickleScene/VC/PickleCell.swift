@@ -8,7 +8,7 @@ import RxSwift
 import Pickle
 
 public class PickleCell: PickleCollectionViewCell {
-    
+        
     let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "링크가 복사되었어요").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
@@ -48,11 +48,6 @@ public class PickleCell: PickleCollectionViewCell {
             $0.bottom.equalToSuperview().offset(-105.0)
             $0.trailing.equalToSuperview().offset(-15)
         }
-//        
-//        userProfile.snp.makeConstraints {
-//            $0.bottom.equalToSuperview().offset(-100.0)
-//            $0.leading.equalToSuperview()
-//        }
         
         hartButton.snp.makeConstraints {
             $0.bottom.equalTo(commentButton.snp.top).offset(-24)
@@ -79,10 +74,6 @@ public class PickleCell: PickleCollectionViewCell {
     public override func configure(item: PickleItem) {
         super.configure(item: item)
         print("🖤 item: \(item)")
-        
-//        if let reelsItem = item as? PickleItems {
-//            self.nameLabel.text = reelsItem.name
-//        }
     }
     
     @objc private func hartButtonTapped() {
