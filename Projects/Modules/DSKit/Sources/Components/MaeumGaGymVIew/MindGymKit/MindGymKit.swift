@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 
 public protocol TimerControl {
+    var timeUpdate: Observable<String> { get }
     func start()
     func stop()
     func reset()
