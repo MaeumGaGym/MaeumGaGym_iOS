@@ -10,7 +10,7 @@ open class MaeumGaGymLabel: UILabel {
     private let disposeBag = DisposeBag()
     
     private let textLabel = UILabel().then {
-        $0.textAlignment = .left
+        $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.backgroundColor = .clear
     }
@@ -18,18 +18,26 @@ open class MaeumGaGymLabel: UILabel {
     public init(
         text: String,
         font: UIFont? = UIFont.Pretendard.titleLarge,
-        textColor: UIColor? = .black
+        textColor: UIColor? = .black,
+        isCenter: Bool? = true
     ) {
         super.init(frame: .zero)
         
-        setupUI(text: text, font: font, textColor: textColor)
+        setupUI(text: text, font: font, textColor: textColor, isCencter: isCenter ?? true)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI(text: String, font: UIFont?, textColor: UIColor?) {
+    private func setupUI(text: String, font: UIFont?, textColor: UIColor?, isCencter: Bool) {
+        
+        if isCencter == true {
+            textLabel.textAlignment = .center
+        } else {
+            textLabel.textAlignment = .left
+        }
+        
         textLabel.text = text
         textLabel.textColor = textColor
   
