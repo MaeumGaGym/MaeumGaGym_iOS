@@ -12,6 +12,11 @@ struct BottomSheetItem {
     let title: String
 }
 
+struct ShereBottomSheetItem {
+    let icon: UIImage
+    let title: String
+}
+
 public class PickleCell: PickleCollectionViewCell {
     
     private let disposeBag = DisposeBag()
@@ -19,6 +24,12 @@ public class PickleCell: PickleCollectionViewCell {
     public static let identifier = "PickleCell"
         
     let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
+        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+        $0.titleLabel?.textColor = .white
+        $0.backgroundColor = DSKitAsset.Colors.gray800.color
+    }
+    
+    let alertView2 = MaeumGaGymAlertOnlyTitleView(title: "아직 개발 중 입니다!!").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
@@ -43,10 +54,20 @@ public class PickleCell: PickleCollectionViewCell {
         }
     }()
     
+    private let shareBottomSheetViewController: MaeumGaGymBottomSheetViewController = {
+        if #available(iOS 11.0, *) {
+            return MaeumGaGymBottomSheetViewController(type: .plain)
+        } else {
+            return MaeumGaGymBottomSheetViewController(type: .plain)
+        }
+    }()
+    
+    private var shareOverlayView: UIView?
+    
     private var overlayView: UIView?
     
     private var bottomSheetItems: [BottomSheetItem] = []
-    
+    private var shereBottomSheetItems: [ShereBottomSheetItem] = []
     
     public override func addSubViews() {
         super.addSubViews()
@@ -59,12 +80,20 @@ public class PickleCell: PickleCollectionViewCell {
              BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고")
          ]
         
+        shereBottomSheetItems = []
+        
         bottomSheetViewController.bottomSheetDelegate = self
-
+        shareBottomSheetViewController.bottomSheetDelegate = self
+        
         let tableView = bottomSheetViewController.tableView
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
+        
+        let shareTableView = shareBottomSheetViewController.tableView
+        shareTableView.dataSource = self
+        shareTableView.delegate = self
+        shareTableView.register(MaeumGaGymShareCell.self, forCellReuseIdentifier: MaeumGaGymShareCell.identifier)
     }
     
     public override func makeConstraints() {
@@ -133,6 +162,43 @@ public class PickleCell: PickleCollectionViewCell {
     
     @objc private func shareButtonTapped() {
         print("공유 공유")
+        alertView2.present(on: self)
+//        let shareTableView = shareBottomSheetViewController.tableView
+//        shareTableView.dataSource = self
+//        shareTableView.delegate = self
+//        shareTableView.register(MaeumGaGymShareCell.self, forCellReuseIdentifier: MaeumGaGymShareCell.identifier)
+//        
+//        guard let tabBarController = self.findViewController()?.tabBarController else {
+//             return
+//         }
+//
+//        shareOverlayView = UIView(frame: UIScreen.main.bounds)
+//        shareOverlayView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+//        shareOverlayView?.alpha = 0.0
+//        shareOverlayView?.isUserInteractionEnabled = true
+//         self.findViewController()?.view.addSubview(shareOverlayView!)
+//
+//         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideBottomSheet2))
+//        shareOverlayView?.addGestureRecognizer(tapGestureRecognizer)
+//
+//         UIView.animate(withDuration: 0.3) {
+//             self.shareOverlayView?.alpha = 1.0
+//         }
+//
+//         tabBarController.addChild(self.shareBottomSheetViewController)
+//         self.shareBottomSheetViewController.show(in: tabBarController.view, initialState: .collapsed)
+//         self.shareBottomSheetViewController.didMove(toParent: tabBarController)
+//
+//         let shareBottomSheetView = self.shareBottomSheetViewController.view
+//        shareBottomSheetView?.layer.shadowColor = UIColor.blue.cgColor
+//        shareBottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
+//        shareBottomSheetView?.layer.shadowRadius = 5
+//        shareBottomSheetView?.layer.shadowOpacity = 0.5
+    }
+
+    
+    @objc private func dotButtonTapped() {
+        print("나머지 나머지")
         guard let tabBarController = self.findViewController()?.tabBarController else {
             return
         }
@@ -160,11 +226,6 @@ public class PickleCell: PickleCollectionViewCell {
         bottomSheetView?.layer.shadowRadius = 5
         bottomSheetView?.layer.shadowOpacity = 0.5
     }
-
-    
-    @objc private func dotButtonTapped() {
-        print("나머지 나머지")
-    }
     
     @objc private func hideBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
@@ -174,11 +235,24 @@ public class PickleCell: PickleCollectionViewCell {
             self.bottomSheetViewController.hideBottomSheet()
         }
     }
+    
+    @objc private func hideBottomSheet2() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.shareOverlayView?.alpha = 0.0
+        }) { (_) in
+            self.shareOverlayView?.removeFromSuperview()
+            self.shareBottomSheetViewController.hideBottomSheet()
+        }
+    }
 
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        if let touch = touches.first, touch.view == overlayView {
-            hideBottomSheet()
+        if let touch = touches.first, touch.view == overlayView || touch.view == shareOverlayView {
+            if self == overlayView {
+                hideBottomSheet()
+            } else {
+                hideBottomSheet2()
+            }
         }
     }
 }
@@ -186,16 +260,33 @@ public class PickleCell: PickleCollectionViewCell {
 extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bottomSheetItems.count
+        if tableView == bottomSheetViewController.tableView {
+            return bottomSheetItems.count
+        } else if tableView == shareBottomSheetViewController.tableView {
+            return shereBottomSheetItems.count
+        }
+        return 0
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
+        let cell: UITableViewCell
 
-        let item = bottomSheetItems[indexPath.row]
-        cell.iconImage.image = item.icon
-        cell.title.text = item.title
+        if tableView == bottomSheetViewController.tableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
 
+            let item = bottomSheetItems[indexPath.row]
+            cell.iconImage.image = item.icon
+            cell.title.text = item.title
+
+            return cell
+            
+        } else if tableView == shareBottomSheetViewController.tableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymShareCell.identifier, for: indexPath) as! MaeumGaGymShareCell
+            let item = shereBottomSheetItems[indexPath.row]
+             return cell
+        } else {
+            cell = UITableViewCell()
+        }
         return cell
     }
     
@@ -209,6 +300,17 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
         vc.title = cell?.textLabel?.text
         vc.view.backgroundColor = .white
         bottomSheetViewController.show(vc, sender: self)
+        
+        if shareBottomSheetViewController.isNavigationBarHidden {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
+        let cell2 = tableView.cellForRow(at: indexPath)
+        vc.title = cell?.textLabel?.text
+        vc.view.backgroundColor = .white
+        shareBottomSheetViewController.show(vc, sender: self
+        )
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
