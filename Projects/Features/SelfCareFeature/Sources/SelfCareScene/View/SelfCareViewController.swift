@@ -5,8 +5,8 @@ import Core
 
 public class SelfCareViewController: UIViewController {
 
-    private let telUILabel = MaeumGaGymAuthLabel(text: "오운완", font: UIFont.Pretendard.titleLarge)
-    private let textInformation = MaeumGaGymAuthLabel(text: "오늘의 운동을 완료하고,\n내 모습을 사진으로 남겨보세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
+    private let telUILabel = MaeumGaGymLabel(text: "오운완", font: UIFont.Pretendard.titleLarge)
+    private let textInformation = MaeumGaGymLabel(text: "오늘의 운동을 완료하고,\n내 모습을 사진으로 남겨보세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
     
     let cameraButton = MaeumGaGymCheckButton(text: "오늘의 사진 올리기", textColor: .white, backColor: DSKitAsset.Colors.blue500.color)
 
