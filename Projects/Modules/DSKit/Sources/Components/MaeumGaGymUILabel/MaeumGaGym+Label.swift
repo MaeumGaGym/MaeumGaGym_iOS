@@ -5,15 +5,15 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymAuthLabel: UILabel {
+open class MaeumGaGymLabel: UILabel {
+    
+    private let disposeBag = DisposeBag()
     
     private let textLabel = UILabel().then {
         $0.textAlignment = .left
-        $0.numberOfLines = 2
+        $0.numberOfLines = 1
         $0.backgroundColor = .clear
     }
-    
-    private let disposeBag = DisposeBag()
     
     public init(
         text: String,
@@ -53,6 +53,14 @@ open class MaeumGaGymAuthLabel: UILabel {
                 $0.height.equalTo(48)
             case UIFont.Pretendard.bodyMedium:
                 $0.height.equalTo(50)
+            case UIFont.Pretendard.light:
+                $0.height.equalTo(64.0)
+            case UIFont.Pretendard.bodyLarge:
+                $0.height.equalTo(24.0)
+            case UIFont.Pretendard.titleMedium:
+                $0.height.equalTo(32.0)
+            case UIFont.Pretendard.labelMedium:
+                $0.height.equalTo(20.0)
             default:
                 break
             }

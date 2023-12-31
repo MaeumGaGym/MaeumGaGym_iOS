@@ -1,4 +1,5 @@
 import UIKit
+import SelfCareFeature
 import RxFlow
 import RxSwift
 import RxCocoa
@@ -12,7 +13,7 @@ class SelfCareFlow: Flow {
     private let rootViewController = UINavigationController()
 
     init() {
-        let viewController = UIViewController()
+        let viewController = SelfCareViewController()
         viewController.view.backgroundColor = .white
         viewController.tabBarItem = UITabBarItem(title: "자기관리", image: DSKitAsset.Assets.blackMuscle.image, selectedImage: DSKitAsset.Assets.blueMuscle.image)
         rootViewController.setViewControllers([viewController], animated: false)

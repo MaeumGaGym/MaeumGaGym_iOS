@@ -6,7 +6,6 @@ struct BottomSheetItem {
     let title: String
 }
 
-
 public class BottomSheetViewController: UIViewController {
 
     private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
