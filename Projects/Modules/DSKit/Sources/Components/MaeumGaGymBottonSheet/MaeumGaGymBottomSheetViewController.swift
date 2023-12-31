@@ -32,7 +32,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         }
     }
     
-    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 6, 4 / 10, 6 / 7)
+    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 10, 4 / 10, 6 / 7)
     public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate? = nil
     
     private lazy var size: CGSize = {
@@ -75,7 +75,6 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     public func show(in parentView: UIView, initialState: MaeumGaGymBottomSheetViewState) {
         view.translatesAutoresizingMaskIntoConstraints = false
         parentView.addSubview(view)
@@ -96,6 +95,18 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
             $0.height.equalTo(dragIndicatorView.layer.cornerRadius * 2.5)
             $0.centerX.equalTo(view.snp.centerX)
             $0.top.equalTo(view.snp.top).offset(10)
+        }
+
+        view.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
+
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+        }) { _ in
+        }
+
+        view.alpha = 0.0
+        UIView.animate(withDuration: 0.3) {
+            self.view.alpha = 1.0
         }
     }
     
@@ -218,6 +229,16 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
             }
         }
         lastTranslation = translation
+    }
+    
+    public func hideBottomSheet(completion: (() -> Void)? = nil) {
+        state = .collapsed
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            self.view.superview?.layoutIfNeeded()
+            self.view.removeFromSuperview()
+        }) { (isFinished) in
+            completion?()
+        }
     }
 }
 
