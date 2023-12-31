@@ -35,15 +35,15 @@ public class PickleCell: PickleCollectionViewCell {
     private let shareButton = MaeumGaGymOpaqueIconButton(type: .share)
     private let dotButton = MaeumGaGymOpaqueIconButton(type: .dots)
 //    
-//    private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
-//        if #available(iOS 11.0, *) {
-//            return MaeumGaGymBottomSheetViewController(type: .plain)
-//        } else {
-//            return MaeumGaGymBottomSheetViewController(type: .plain)
-//        }
-//    }()
-//    
-//    private var bottomSheetItems: [BottomSheetItem] = []
+    private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
+        if #available(iOS 11.0, *) {
+            return MaeumGaGymBottomSheetViewController(type: .plain)
+        } else {
+            return MaeumGaGymBottomSheetViewController(type: .plain)
+        }
+    }()
+    
+    private var bottomSheetItems: [BottomSheetItem] = []
     
     
     public override func addSubViews() {
@@ -54,17 +54,17 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
         
-//        bottomSheetItems = [
-//             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
-//             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
-//         ]
-//        
-//        bottomSheetViewController.bottomSheetDelegate = self
-//
-//        let tableView = bottomSheetViewController.tableView
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
+        bottomSheetItems = [
+             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
+         ]
+        
+        bottomSheetViewController.bottomSheetDelegate = self
+
+        let tableView = bottomSheetViewController.tableView
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
     }
     
     public override func makeConstraints() {
@@ -128,19 +128,18 @@ public class PickleCell: PickleCollectionViewCell {
     
     @objc private func commentButtonTapped() {
         print("댓글 댓글")
-//        guard let tabBarController = self.tabBarController else {
-//            return
-//        }
-//        
-//        tabBarController.addChild(self.bottomSheetViewController)
-//        self.bottomSheetViewController.show(in: tabBarController.view, initialState: .collapsed)
-//        self.bottomSheetViewController.didMove(toParent: tabBarController)
-//        
-//        let bottomSheetView = self.bottomSheetViewController.view
-//        bottomSheetView?.layer.shadowColor = UIColor.black.cgColor
-//        bottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
-//        bottomSheetView?.layer.shadowRadius = 5
-//        bottomSheetView?.layer.shadowOpacity = 0.5
+        guard let tabBarController = self.findViewController()?.tabBarController else {
+            return
+        }
+        tabBarController.addChild(self.bottomSheetViewController)
+        self.bottomSheetViewController.show(in: tabBarController.view, initialState: .collapsed)
+        self.bottomSheetViewController.didMove(toParent: tabBarController)
+        
+        let bottomSheetView = self.bottomSheetViewController.view
+        bottomSheetView?.layer.shadowColor = UIColor.red.cgColor
+        bottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
+        bottomSheetView?.layer.shadowRadius = 5
+        bottomSheetView?.layer.shadowOpacity = 0.5
     }
     
     @objc private func shareButtonTapped() {
@@ -152,41 +151,41 @@ public class PickleCell: PickleCollectionViewCell {
     }
 }
 
-//extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
-//
-//    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return bottomSheetItems.count
-//    }
-//
-//    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
-//
-//        let item = bottomSheetItems[indexPath.row]
-//        cell.iconImage.image = item.icon
-//        cell.title.text = item.title
-//
-//        return cell
-//    }
-//    
-//    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if bottomSheetViewController.isNavigationBarHidden {
-//            tableView.deselectRow(at: indexPath, animated: true)
-//            return
-//        }
-//        let vc = UIViewController()
-//        let cell = tableView.cellForRow(at: indexPath)
-//        vc.title = cell?.textLabel?.text
-//        vc.view.backgroundColor = .white
-//        bottomSheetViewController.show(vc, sender: self)
-//    }
-//    
-//    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 52.0
-//    }
-//}
-//
-//extension PickleCell: MaeumGaGymBottomSheetViewDelegate {
-//
-//    public func didMove(to percentage: Float) {
-//    }
-//}
+extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return bottomSheetItems.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
+
+        let item = bottomSheetItems[indexPath.row]
+        cell.iconImage.image = item.icon
+        cell.title.text = item.title
+
+        return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if bottomSheetViewController.isNavigationBarHidden {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        let vc = UIViewController()
+        let cell = tableView.cellForRow(at: indexPath)
+        vc.title = cell?.textLabel?.text
+        vc.view.backgroundColor = .white
+        bottomSheetViewController.show(vc, sender: self)
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 52.0
+    }
+}
+
+extension PickleCell: MaeumGaGymBottomSheetViewDelegate {
+
+    public func didMove(to percentage: Float) {
+    }
+}
