@@ -18,11 +18,11 @@ public class PickleCell: PickleCollectionViewCell {
     
     public static let identifier = "PickleCell"
         
-//    let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "링크가 복사되었어요").then {
-//        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
-//        $0.titleLabel?.textColor = .white
-//        $0.backgroundColor = DSKitAsset.Colors.gray800.color
-//    }
+    let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
+        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+        $0.titleLabel?.textColor = .white
+        $0.backgroundColor = DSKitAsset.Colors.gray800.color
+    }
     
     private var pickleInfoView = PickleInfoView()
     
@@ -34,7 +34,7 @@ public class PickleCell: PickleCollectionViewCell {
     private let commentButton = MaeumGaGymOpaqueIconButton(type: .comment)
     private let shareButton = MaeumGaGymOpaqueIconButton(type: .share)
     private let dotButton = MaeumGaGymOpaqueIconButton(type: .dots)
-//    
+
     private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
         if #available(iOS 11.0, *) {
             return MaeumGaGymBottomSheetViewController(type: .plain)
@@ -42,6 +42,8 @@ public class PickleCell: PickleCollectionViewCell {
             return MaeumGaGymBottomSheetViewController(type: .plain)
         }
     }()
+    
+    private var overlayView: UIView?
     
     private var bottomSheetItems: [BottomSheetItem] = []
     
@@ -53,10 +55,8 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentView.addSubviews([contentStackView, contentStackView])
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
-        
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
-             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고")
          ]
         
         bottomSheetViewController.bottomSheetDelegate = self
@@ -128,26 +128,58 @@ public class PickleCell: PickleCollectionViewCell {
     
     @objc private func commentButtonTapped() {
         print("댓글 댓글")
+        alertView1.present(on: self)
+    }
+    
+    @objc private func shareButtonTapped() {
+        print("공유 공유")
         guard let tabBarController = self.findViewController()?.tabBarController else {
             return
         }
+
+        overlayView = UIView(frame: UIScreen.main.bounds)
+        overlayView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        overlayView?.alpha = 0.0
+        overlayView?.isUserInteractionEnabled = true
+        self.findViewController()?.view.addSubview(overlayView!)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideBottomSheet))
+        overlayView?.addGestureRecognizer(tapGestureRecognizer)
+
+        UIView.animate(withDuration: 0.3) {
+            self.overlayView?.alpha = 1.0
+        }
+
         tabBarController.addChild(self.bottomSheetViewController)
         self.bottomSheetViewController.show(in: tabBarController.view, initialState: .collapsed)
         self.bottomSheetViewController.didMove(toParent: tabBarController)
-        
+
         let bottomSheetView = self.bottomSheetViewController.view
         bottomSheetView?.layer.shadowColor = UIColor.red.cgColor
         bottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         bottomSheetView?.layer.shadowRadius = 5
         bottomSheetView?.layer.shadowOpacity = 0.5
     }
-    
-    @objc private func shareButtonTapped() {
-        print("공유 공유")
-    }
+
     
     @objc private func dotButtonTapped() {
         print("나머지 나머지")
+    }
+    
+    @objc private func hideBottomSheet() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.overlayView?.alpha = 0.0
+        }) { (_) in
+            self.overlayView?.removeFromSuperview()
+            self.bottomSheetViewController.hideBottomSheet()
+        }
+    }
+
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if let touch = touches.first, touch.view == overlayView {
+            hideBottomSheet()
+        }
     }
 }
 
