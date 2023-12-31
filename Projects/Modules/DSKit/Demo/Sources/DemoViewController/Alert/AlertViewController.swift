@@ -11,7 +11,7 @@ public class AlertViewController: UIViewController {
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
     }
     
-    let alertView2 = MaeumGaGymAlertBoxView(title: "링크가 복사되었어요", subtitle: nil, icon: .done).then {
+    let alertView2 = MaeumGaGymAlertBoxView(title: "링크가 복사되었어요", subtitle: nil, icon: .error).then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .black
         $0.backgroundColor = .gray
