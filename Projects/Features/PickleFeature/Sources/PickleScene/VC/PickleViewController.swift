@@ -12,8 +12,9 @@ public class PickleViewController: UIViewController {
         view.register(PickleCell.self, itemType: PickleItems.self)
         return view
     }()
-    
+  
     public override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.setup()
 
@@ -34,9 +35,13 @@ public class PickleViewController: UIViewController {
             .map { idx, url -> PickleItems in
                 return .init(
                     idx: "\(idx)",
-                    url: self.createLocalUrl(for: url, ofType: "mov"),
-                    isMuted: false,
-                    name: "\(idx) 영상"
+                    url: self.createLocalUrl(for: url, ofType: "mov"), isMuted: false,
+                    name: "\(idx) 영상",
+                    userName: "박준하",
+                    mainTitle: "상괘한 날씨의 오늘",
+                    subTitle: "날씨가 정말 좋네요. 오늘은 정말 산책하기 좋은날인 것 같아요!",
+                    hartCount: 10,
+                    commentCount: 5
                 )
             }
         
@@ -45,7 +50,7 @@ public class PickleViewController: UIViewController {
         
     private func setup() {
         view.addSubview(reelsView)
-        
+                
         reelsView.snp.makeConstraints {
             $0.edges.equalTo(view)
         }
