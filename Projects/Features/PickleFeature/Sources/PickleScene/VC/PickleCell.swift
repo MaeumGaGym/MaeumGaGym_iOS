@@ -65,11 +65,6 @@ public class PickleCell: PickleCollectionViewCell {
 //        tableView.dataSource = self
 //        tableView.delegate = self
 //        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
-        heartButton.rx.tap
-                .subscribe(onNext: { [weak self] in
-                    self?.hartButtonTapped()
-                })
-                .disposed(by: disposeBag)
     }
     
     public override func makeConstraints() {
@@ -102,14 +97,15 @@ public class PickleCell: PickleCollectionViewCell {
             $0.bottom.equalToSuperview()
         }
         
-//        heartButton.addTarget(self, action: #selector(hartButtonTapped), for: .touchUpInside)
         commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         dotButton.addTarget(self, action: #selector(dotButtonTapped), for: .touchUpInside)
         
-        heartButton.setImage(DSKitAsset.Assets.heart.image, for: .normal)
-        heartButton.setImage(DSKitAsset.Assets.redHaert.image, for: .selected)
-        heartButton.addTarget(self, action: #selector(hartButtonTapped), for: .touchUpInside)
+        heartButton.rx.tap
+                .subscribe(onNext: { [weak self] in
+                    self?.hartButtonTapped()
+                })
+                .disposed(by: disposeBag)
     }
     
     public override func configure(item: PickleItem) {
@@ -117,9 +113,17 @@ public class PickleCell: PickleCollectionViewCell {
         print("🖤 item: \(item)")
     }
     
-    @objc private func hartButtonTapped() {
+    private func hartButtonTapped() {
         print("하트 하트")
         heartButton.isSelected.toggle()
+        
+        if heartButton.isSelected {
+            heartButton.pickleLogoTypeEdit(type: .redHart)
+            print("눌림")
+        } else {
+            heartButton.pickleLogoTypeEdit(type: .hart)
+            print("다시 눌림")
+        }
     }
     
     @objc private func commentButtonTapped() {

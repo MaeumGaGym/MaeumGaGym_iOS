@@ -45,7 +45,7 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
             subview.isUserInteractionEnabled = false
         }
     }
-
+    
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,6 +74,11 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
 
     public func setLikeCount(_ count: Int) {
         likeCountLabel.text = formattedLikeCount(count)
+    }
+    
+    public func pickleLogoTypeEdit(type: PickleLogoType) {
+        self.iconImageView.image = type.imageLogo
+        self.likeCountLabel.textColor = type.titleColor
     }
 
     private func formattedLikeCount(_ count: Int) -> String {
