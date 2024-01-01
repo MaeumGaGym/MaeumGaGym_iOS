@@ -32,7 +32,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         }
     }
     
-    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 10, 4 / 10, 6 / 7)
+    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 7, 4 / 10, 6 / 7)
     public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate? = nil
     
     private lazy var size: CGSize = {

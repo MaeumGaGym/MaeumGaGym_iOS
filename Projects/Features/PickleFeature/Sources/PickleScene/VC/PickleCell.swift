@@ -77,7 +77,8 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고"),
+             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "삭제")
          ]
         
         shereBottomSheetItems = []
@@ -309,8 +310,7 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
         let cell2 = tableView.cellForRow(at: indexPath)
         vc.title = cell?.textLabel?.text
         vc.view.backgroundColor = .white
-        shareBottomSheetViewController.show(vc, sender: self
-        )
+        shareBottomSheetViewController.show(vc, sender: self)
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

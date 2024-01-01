@@ -37,6 +37,10 @@ open class MaeumGaGymOpaqueIconButton: UIButton {
             setLikeCount(likeCount ?? 0)
         }
         
+        if type == .comment {
+            setLikeCount(0)
+        }
+        
         if type == .share {
             likeCountLabel.text = "공유"
         }
