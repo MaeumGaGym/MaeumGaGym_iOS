@@ -34,6 +34,10 @@ extension UIFont {
             return DSKitFontFamily.Pretendard.regular.font(size: 16.0)
         }
         
+        @nonobjc public static var bodyMedium2: UIFont {
+            return DSKitFontFamily.Pretendard.regular.font(size: 18.0)
+        }
+        
         @nonobjc public static var bodySmall: UIFont {
             return DSKitFontFamily.Pretendard.regular.font(size: 14.0)
         }
@@ -52,6 +56,10 @@ extension UIFont {
         
         @nonobjc public static var labelSmall: UIFont {
             return DSKitFontFamily.Pretendard.medium.font(size: 14.0)
+        }
+        
+        @nonobjc public static var light: UIFont {
+            return DSKitFontFamily.Pretendard.light.font(size: 64.0)
         }
      }
 }

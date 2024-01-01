@@ -1,8 +1,12 @@
 {
   "data" : [
     {
-      "filename" : "3.mp4",
+      "filename" : "3 1.mp4",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "3.mp4",
+      "idiom" : "iphone"
     }
   ],
   "info" : {

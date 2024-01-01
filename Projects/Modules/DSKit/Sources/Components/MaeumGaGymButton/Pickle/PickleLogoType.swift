@@ -6,6 +6,7 @@ public enum PickleLogoType: String, RawRepresentable {
     case comment
     case share
     case dots
+    case redHart
     
     public var imageLogo: UIImage? {
         switch self {
@@ -17,12 +18,14 @@ public enum PickleLogoType: String, RawRepresentable {
             return DSKitAsset.Assets.share.image
         case .dots:
             return DSKitAsset.Assets.dots.image
+        case .redHart:
+            return DSKitAsset.Assets.redHaert.image
         }
     }
 
     public var backgroundColor: UIColor? {
         switch self {
-        case .hart, .comment, .share, .dots:
+        case .hart, .comment, .share, .dots, .redHart:
             return DSKitAsset.Colors.gray50.color.withAlphaComponent(0.12)
         }
     }
@@ -36,6 +39,8 @@ public enum PickleLogoType: String, RawRepresentable {
         case .share:
             return UIColor.white
         case .dots:
+            return UIColor.white
+        case .redHart:
             return UIColor.white
         }
     }
