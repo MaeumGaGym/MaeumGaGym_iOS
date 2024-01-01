@@ -44,10 +44,26 @@ public class BottomSheetViewController: UIViewController {
         bottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         bottomSheetView?.layer.shadowRadius = 5
         bottomSheetView?.layer.shadowOpacity = 0.5
+        
+        let hideButton = UIButton(type: .system)
+         hideButton.setTitle("Hide BottomSheet", for: .normal)
+         hideButton.addTarget(self, action: #selector(hideBottomSheet), for: .touchUpInside)
+
+         view.addSubview(hideButton)
+         hideButton.snp.makeConstraints {
+             $0.centerX.equalTo(view.snp.centerX)
+             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+         }
     }
 
     @objc private func expand() {
         bottomSheetViewController.state = .partiallyExpanded
+    }
+    
+    @objc private func hideBottomSheet() {
+        bottomSheetViewController.hideBottomSheet {
+            print("BottomSheet 숨김")
+        }
     }
 }
 

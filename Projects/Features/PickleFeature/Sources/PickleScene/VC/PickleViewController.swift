@@ -22,30 +22,24 @@ public class PickleViewController: UIViewController {
             "1",
             "2",
             "3",
-            "4",
-            "7",
-            "7",
-            "7",
-            "7",
-            "7",
-            "7",
-            "5",
+            "4"
         ]
             .enumerated()
             .map { idx, url -> PickleItems in
                 return .init(
                     idx: "\(idx)",
-                    url: self.createLocalUrl(for: url, ofType: "mov"), isMuted: false,
+                    url: self.createLocalUrl(for: url, ofType: "mp4"), isMuted: false,
                     name: "\(idx) 영상",
                     userName: "박준하",
-                    mainTitle: "상괘한 날씨의 오늘",
-                    subTitle: "날씨가 정말 좋네요. 오늘은 정말 산책하기 좋은날인 것 같아요!",
+                    mainTitle: "마음가짐 테스트 영상",
+                    subTitle: "오늘도 열심히 헬스하러 헬스장을 가보는 것은 어떻까요?",
                     hartCount: 10,
                     commentCount: 5
                 )
             }
         
         self.reelsView.reloadAll(items: items)
+        
     }
         
     private func setup() {
