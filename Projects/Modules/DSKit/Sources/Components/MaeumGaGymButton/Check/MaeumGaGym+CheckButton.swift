@@ -5,9 +5,9 @@ import Then
 import SnapKit
 import Core
 
-open class MaeumGaGymCheckButton: UIButton {
+open class MaeumGaGymCheckButton: BaseButton {
     
-    public let textLabel = UILabel().then {
+    public var textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.labelLarge
@@ -21,20 +21,18 @@ open class MaeumGaGymCheckButton: UIButton {
     ) {
         
         super.init(frame: .zero)
-        textLabel.text = text
-        backgroundColor = backColor
-        textLabel.textColor = textColor
-        self.makeRounded(radius: radius ?? 8)
-        setupUI()
-        
+
+        setupUI(text: text, radius: radius, textColor: textColor, backColor: backColor)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
-        addSubview(textLabel)
+    open override func layout() {
+        super.layout()
+        
+        self.addSubview(textLabel)
         
         textLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
@@ -43,5 +41,17 @@ open class MaeumGaGymCheckButton: UIButton {
         snp.makeConstraints {
             $0.height.equalTo(58.0)
         }
+    }
+    
+    private func setupUI(
+        text: String?,
+        radius: Double?,
+        textColor: UIColor?,
+        backColor: UIColor?
+    ) {
+        textLabel.text = text
+        backgroundColor = backColor
+        textLabel.textColor = textColor
+        self.makeRounded(radius: radius ?? 8)
     }
 }
