@@ -1,17 +1,16 @@
 import UIKit
 import RxSwift
-import RxCocoaRuntime
 import Then
 import SnapKit
 import Core
 
 open class MaeumGaGymAuthButton: UIButton {
 
-    public let iconImageView = UIImageView().then {
+    private let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
 
-    public let textLabel = UILabel().then {
+    private let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.bodyMedium
