@@ -8,8 +8,6 @@ open class MaeumGaGymToggleButton: UIButton {
     
     public let disposeBag = DisposeBag()
     
-    
-    
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
@@ -18,7 +16,6 @@ open class MaeumGaGymToggleButton: UIButton {
         $0.backgroundColor = .clear
     }
     
-        
     public init (
         type: ToggleButtonType,
         radius: Double? = 20.0

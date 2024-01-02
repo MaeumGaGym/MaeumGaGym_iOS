@@ -24,8 +24,8 @@ public class BottomSheetViewController: UIViewController {
         view.backgroundColor = .lightGray
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
-             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "삭제")
          ]
 
         bottomSheetViewController.bottomSheetDelegate = self
@@ -85,7 +85,7 @@ extension BottomSheetViewController : UITableViewDataSource, UITableViewDelegate
 
         let item = bottomSheetItems[indexPath.row]
         cell.iconImage.image = item.icon
-        cell.title.text = item.title
+        cell.mainTitle.text = item.title
 
         return cell
     }
