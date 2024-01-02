@@ -24,7 +24,6 @@ open class MaeumGaGymTextField: UITextField {
         $0.isHidden = true
     }
 
-
     public var showError: Bool = false {
         didSet {
             errorLabel.isHidden = !showError
