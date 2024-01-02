@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import Then
+import Core
 
 public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
     
@@ -10,7 +11,7 @@ public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
         $0.tintColor = .white
     }
 
-    public var title = UILabel().then {
+    public var mainTitle = UILabel().then {
         $0.textColor = UIColor.white
         $0.font = UIFont.Pretendard.labelLarge
     }
@@ -27,20 +28,23 @@ public class MaeumGaGymBottomSheetIconCell: UITableViewCell {
     }
     
     private func layout() {
-        contentView.addSubview(iconImage)
-        contentView.addSubview(title)
-        
+        contentView.addSubviews([iconImage, mainTitle])
+
         iconImage.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20.0)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(28.0)
         }
         
-        title.snp.makeConstraints {
+        mainTitle.snp.makeConstraints {
             $0.leading.equalTo(iconImage.snp.trailing).offset(24.0)
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(-5)
         }
     }
     
+    public func setup(image: UIImage, text: String) {
+        self.iconImage.image = image
+        self.mainTitle.text = text
+    }
 }
