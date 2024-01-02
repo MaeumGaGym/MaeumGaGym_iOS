@@ -2,51 +2,42 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import Core
 
-open class MaeumGaGymTimerButton: UIButton {
-    
+public class MaeumGaGymTimerButton: BaseButton {
+
     public let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
-    
-    public init(
-        type: TimerButtonType,
-        radius: Double? = 34.0
-    ) {
+
+    private let defaultRadius: Double = 34.0
+
+    public init(type: TimerButtonType, radius: Double? = nil) {
         super.init(frame: .zero)
-        
-        self.iconImageView.image = type.imageLogo
-        self.backgroundColor = type.backgroundColor
-        self.layer.cornerRadius = radius ?? 34.0
-        self.layer.borderColor = DSKitAsset.Colors.blue500.color.cgColor
-        self.layer.borderWidth = 1
-        
-        switch radius {
-        case 34.0:
-            snp.makeConstraints {
-                $0.width.height.equalTo(68.0)
-            }
-            break
-        case 40.0:
-            snp.makeConstraints {
-                $0.width.height.equalTo(80.0)
-            }
-            break
-        default:
-            break
-        }
-        
-        setupViews()
+        setupUI(type: type, radius: radius ?? defaultRadius)
+        setupLayout(radius: radius)
     }
-    
+
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setupViews() {
-        addSubview(iconImageView)
-        
-        iconImageView.snp.makeConstraints {
+
+    private func setupUI(type: TimerButtonType, radius: Double) {
+        self.iconImageView.image = type.imageLogo
+        self.backgroundColor = type.backgroundColor
+        self.layer.cornerRadius = radius
+        self.layer.borderColor = DSKitAsset.Colors.blue500.color.cgColor
+        self.layer.borderWidth = 1
+    }
+
+    private func setupLayout(radius: Double?) {
+        let buttonRadius = radius ?? defaultRadius
+        self.snp.makeConstraints {
+            $0.width.height.equalTo(buttonRadius * 2)
+        }
+
+        self.addSubview(iconImageView)
+        self.iconImageView.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
         }
     }
