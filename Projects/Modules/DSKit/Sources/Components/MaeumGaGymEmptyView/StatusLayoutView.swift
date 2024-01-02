@@ -1,24 +1,19 @@
-//
-//  StatusLayoutView.swift
-//  DSKit
-//
-//  Created by 박준하 on 12/26/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 import Foundation
 import SnapKit
 import Then
+import Core
 
 public class StatusLayoutView: UIView {
     
-    let imageView = UIImageView().then {
+    private let imageView = UIImageView().then {
         $0.adjustsImageSizeForAccessibilityContentSizeCategory = true
         $0.contentMode = .scaleAspectFill
+        $0.tintColor = .black
+
     }
 
-    let messageLabel = UILabel().then {
+    private let messageLabel = UILabel().then {
         $0.textColor = .red
         $0.numberOfLines = 0
         $0.textAlignment = .center
@@ -29,16 +24,11 @@ public class StatusLayoutView: UIView {
     public init(message: String, image: UIImage) {
         super.init(frame: .zero)
         
-        let emptyimage: UIImage = image
-
-        emptyimage.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = .red
-        imageView.image = emptyimage
+        self.addSubviews([imageView, messageLabel])
+        
+        imageView.image = image
         messageLabel.text = message
-        
-        self.addSubview(imageView)
-        self.addSubview(messageLabel)
-        
+                
         imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-80.0)
             $0.centerX.equalToSuperview()

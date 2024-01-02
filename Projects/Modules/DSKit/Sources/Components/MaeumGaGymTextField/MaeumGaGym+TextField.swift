@@ -38,7 +38,6 @@ open class MaeumGaGymTextField: UITextField {
             errorLabel.text = errorMessage
         }
     }
-
   
     public var nameErrorType: TextFieldErrorType.Name? {
         didSet {

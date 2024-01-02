@@ -1,10 +1,3 @@
-//
-//  MaeumGaGym+Label.swift
-//  DSKit
-//
-//  Created by 박준하 on 12/31/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
 import UIKit
 import Then
 import SnapKit
