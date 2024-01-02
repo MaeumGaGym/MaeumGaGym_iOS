@@ -77,8 +77,8 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고"),
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "신고"),
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "삭제")
          ]
         
         shereBottomSheetItems = []
