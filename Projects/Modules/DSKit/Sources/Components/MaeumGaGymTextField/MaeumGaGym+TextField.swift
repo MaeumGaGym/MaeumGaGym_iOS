@@ -24,7 +24,6 @@ open class MaeumGaGymTextField: UITextField {
         $0.isHidden = true
     }
 
-
     public var showError: Bool = false {
         didSet {
             errorLabel.isHidden = !showError
@@ -38,7 +37,6 @@ open class MaeumGaGymTextField: UITextField {
             errorLabel.text = errorMessage
         }
     }
-
   
     public var nameErrorType: TextFieldErrorType.Name? {
         didSet {

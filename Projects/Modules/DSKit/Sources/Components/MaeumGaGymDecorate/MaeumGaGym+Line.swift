@@ -1,8 +1,9 @@
 import UIKit
 import Then
 import SnapKit
+import Core
 
-open class MaeumGaGymLine: UIView {
+open class MaeumGaGymLine: BaseView {
     private let lineView = UIView()
     
     public init(
@@ -12,23 +13,32 @@ open class MaeumGaGymLine: UIView {
     ) {
         super.init(frame: .zero)
         
-        lineView.backgroundColor = lineColor
-        snp.makeConstraints {
-            $0.width.equalTo(lineWidth!)
-            $0.height.equalTo(lineHeight!)
-        }
-        
-        setupContraints()
+        setupUI(lineColor: lineColor, lineWidth: lineWidth, lineHeight: lineHeight)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupContraints() {
-        addSubview(lineView)
+    
+    public override func layout() {
+        super.layout()
+        
+        self.addSubview(lineView)
         lineView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func setupUI(
+        lineColor: UIColor?,
+        lineWidth: Double?,
+        lineHeight: Double?
+    ) {
+        lineView.backgroundColor = lineColor
+        snp.makeConstraints {
+            $0.width.equalTo(lineWidth!)
+            $0.height.equalTo(lineHeight!)
         }
     }
 }

@@ -77,8 +77,8 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "신고"),
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "신고"),
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "삭제")
          ]
         
         shereBottomSheetItems = []
@@ -276,8 +276,7 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
 
             let item = bottomSheetItems[indexPath.row]
-            cell.iconImage.image = item.icon
-            cell.title.text = item.title
+            cell.setup(image: item.icon, text: item.title)
 
             return cell
             

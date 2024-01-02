@@ -15,7 +15,7 @@ open class MaeumGaGymProfileView: UIView {
     ) {
         self.profileImage = profileImage
         self.profileType = profileType
-        
+
         super.init(frame: .zero)
         
         configureLayout()
@@ -59,6 +59,7 @@ open class MaeumGaGymProfileView: UIView {
                 self.profileImageView.image = customImg
             } else {
                 self.profileImageView.image = DSKitAsset.Assets.basicProfile.image
+                self.backgroundColor = DSKitAsset.Colors.gray50.color
             }
         }
     }

@@ -20,7 +20,6 @@ public class MaeumGaGymProgressBarView: UIView {
         $0.font = UIFont.Pretendard.bodyLarge
         $0.textColor = .black
     }
-    //    MaeumGaGymLabel(text: "ㄴㅇㄹㄴㅇㄹ", font: UIFont.Pretendard.bodyLarge, textColor: .black)
     
     private var timerMainTitle = UILabel().then {
         $0.text = ""

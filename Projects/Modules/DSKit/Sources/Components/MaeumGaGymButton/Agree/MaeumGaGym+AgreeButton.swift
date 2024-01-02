@@ -3,23 +3,21 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import Core
 
-open class MaeumGaGymAgreeButton: UIButton {
-    
-//    public let isChecked = BehaviorRelay<Bool>(value: false)
-    
+open class MaeumGaGymAgreeButton: BaseButton {
+        
     public var checked: Bool = false
-    public let disposeBag = DisposeBag()
     
-    public let iconImageView = UIImageView().then {
+    private var iconImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.noCheck.image
     }
     
-    public let textLabel = UILabel().then {
+    private var textLabel = UILabel().then {
         $0.numberOfLines = 1
     }
     
-    public let chooseLabel = UILabel().then {
+    private let chooseLabel = UILabel().then {
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.bodyMedium
         $0.textColor = DSKitAsset.Colors.gray400.color
@@ -27,14 +25,14 @@ open class MaeumGaGymAgreeButton: UIButton {
         $0.isHidden = true
     }
     
-    public let readMore = UIButton().then {
+    private let readMore = UIButton().then {
         $0.setTitle("자세히 보기", for: .normal)
         $0.titleLabel?.font = UIFont.Pretendard.labelSmall
         $0.setTitleColor(DSKitAsset.Colors.gray300.color, for: .normal)
         $0.isHidden = false
     }
     
-    public let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
+    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
         
     public init (
         text: agreeButtonTextType,
@@ -44,51 +42,20 @@ open class MaeumGaGymAgreeButton: UIButton {
         chooseType: Bool? = false
     ) {
         super.init(frame: .zero)
-
         
-        self.textLabel.text = text.message
-        self.textLabel.font = font
-
-        switch chooseType {
-        case true:
-            chooseLabel.isHidden = false
-            break
-        case false:
-            chooseLabel.isHidden = true
-            break
-        default:
-            break
-        }
-        
-        switch readMoreType {
-        case true:
-            readMore.isHidden = false
-            readMoreLine.isHidden = false
-            break
-        case false:
-            readMore.isHidden = true
-            readMoreLine.isHidden = true
-            break
-        default:
-            break
-        }
-
-        switch type {
-        case 1: 
-            break
-        default:
-            chooseLabel.isHidden = false
-        }
-        
-        setupUI()
-        buttonTapped()
+        setupUI(textType: text,
+                font: font,
+                type: type,
+                readMoreType: readMoreType,
+                chooseType: chooseType)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
+    public override func layout() {
+        super.layout()
         
         self.addSubviews([iconImageView, textLabel, chooseLabel, readMoreLine, readMore])
         
@@ -128,6 +95,11 @@ open class MaeumGaGymAgreeButton: UIButton {
         }
     }
     
+    open override func buttonAction() {
+        super.buttonAction()
+        buttonTapped()
+    }
+    
     public func buttonYesChecked() {
         checked = true
         iconImageView.image = DSKitAsset.Assets.yesCheck.image
@@ -138,17 +110,31 @@ open class MaeumGaGymAgreeButton: UIButton {
         iconImageView.image = DSKitAsset.Assets.noCheck.image
     }
     
+    public func editButtonType(text: String, readMoreType: Bool? = false) {
+        self.textLabel.text = text
+        
+        readMore.isHidden = !(readMoreType ?? true)
+        readMoreLine.isHidden = !(readMoreType ?? true)
+    }
+}
+
+extension MaeumGaGymAgreeButton {
+    private func setupUI(textType: agreeButtonTextType, font: UIFont?, type: Int?, readMoreType: Bool?, chooseType: Bool?) {
+        
+        self.textLabel.text = textType.message
+        self.textLabel.font = font
+        
+        setOptionalViewVisibility(shouldShow: chooseType ?? true)
+
+        if (type != nil) != false {
+            chooseLabel.isHidden = false
+        }
+    }
+    
     private func buttonTapped() {
         rx.tap
             .subscribe(onNext: { [self] in
-                switch checked {
-                case false:
-                    buttonYesChecked()
-                    break
-                case true:
-                    buttonNoChecked()
-                    break
-                }
+                checked ? buttonNoChecked() : buttonYesChecked()
             }).disposed(by: disposeBag)
         
         readMore.rx.tap
@@ -157,21 +143,9 @@ open class MaeumGaGymAgreeButton: UIButton {
             }).disposed(by: disposeBag)
     }
     
-    public func editButtonType(text: String, readMoreType: Bool? = false) {
-        
-        self.textLabel.text = text
-        
-        switch readMoreType {
-        case true:
-            readMore.isHidden = false
-            readMoreLine.isHidden = false
-            break
-        case false:
-            readMore.isHidden = true
-            readMoreLine.isHidden = true
-            break
-        default:
-            break
-        }
+    private func setOptionalViewVisibility(shouldShow: Bool) {
+        chooseLabel.isHidden = !shouldShow
+        readMore.isHidden = !shouldShow
+        readMoreLine.isHidden = !shouldShow
     }
 }
