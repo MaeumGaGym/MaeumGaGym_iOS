@@ -26,7 +26,7 @@ open class MaeumGaGymLine: UIView {
     }
     
     private func setupContraints() {
-        addSubview(lineView)
+        self.addSubview(lineView)
         lineView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
