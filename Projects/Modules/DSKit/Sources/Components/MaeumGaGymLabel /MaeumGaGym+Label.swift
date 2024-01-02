@@ -5,11 +5,9 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymLabel: UILabel {
-    
-    private let disposeBag = DisposeBag()
-    
-    private let textLabel = UILabel().then {
+open class MaeumGaGymLabel: BaseLabel {
+        
+    private var textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.backgroundColor = .clear
@@ -43,19 +41,19 @@ open class MaeumGaGymLabel: UILabel {
   
         if let font = font {
             textLabel.font = font
-        }
-        
-        setupConstraints()
+        }        
     }
     
-    private func setupConstraints() {
-        addSubview(textLabel)
+    public override func layout() {
+        super.layout()
+        
+        self.addSubview(textLabel)
 
-        textLabel.snp.makeConstraints {
+        self.textLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        snp.makeConstraints {
+        self.snp.makeConstraints {
             switch textLabel.font {
             case UIFont.Pretendard.titleLarge:
                 $0.height.equalTo(48)
