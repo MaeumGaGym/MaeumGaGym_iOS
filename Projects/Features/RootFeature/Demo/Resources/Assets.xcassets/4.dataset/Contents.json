@@ -1,0 +1,16 @@
+{
+  "data" : [
+    {
+      "filename" : "4 1.mp4",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "4.mp4",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
