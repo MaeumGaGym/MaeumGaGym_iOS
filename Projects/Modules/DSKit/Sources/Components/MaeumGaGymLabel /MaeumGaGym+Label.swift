@@ -61,7 +61,7 @@ open class MaeumGaGymLabel: BaseLabel {
                 $0.height.equalTo(50)
             case UIFont.Pretendard.bodyMedium2:
                 $0.height.equalTo(20)
-                $0.width.equalTo(330.0)
+                $0.width.equalTo(280.0)
             case UIFont.Pretendard.light:
                 $0.height.equalTo(64.0)
             case UIFont.Pretendard.bodyLarge:
