@@ -7,7 +7,7 @@ final class PickleImagePrefetcher: PicklePrefetcher {
     var completedItems: [Response] = []
     var failedErrors: [Error] = []
     var isTasking: Bool = false
-    var queue: DispatchQueue = .init(label: "video.reels.prefetch")
+    var queue: DispatchQueue = .init(label: "video.pickle.prefetch")
     var pendingQueue: PriorityQueue<PendingItem> = {
         let queue = PriorityQueue<PendingItem> { (lhs: PendingItem, rhs: PendingItem) -> Bool in
             return lhs > rhs
