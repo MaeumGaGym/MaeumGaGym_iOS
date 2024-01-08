@@ -1,9 +1,39 @@
-//
-//  DSAgreeButtonVC.swift
-//  DSKit
-//
-//  Created by 이은호 on 1/8/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
+import DSKit
+import SnapKit
+import Then
 
-import Foundation
+public class DSAgreeButtonVC: UIViewController {
+    
+    var allAgreeButton = MaeumGaGymAgreeButton(text: .allAgreeText)
+    var agreeButton = MaeumGaGymAgreeButton(text: .privacyAgreeText)
+
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        layout()
+    }
+    
+    func layout() {
+        [
+            allAgreeButton,
+            agreeButton
+        ].forEach { view.addSubview($0) }
+
+        allAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(view.snp.width).offset(-40.0)
+        }
+        
+        agreeButton.snp.makeConstraints {
+            $0.top.equalTo(allAgreeButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(view.snp.width).offset(-40.0)
+        }
+    }
+}
+
+
