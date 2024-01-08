@@ -3,7 +3,7 @@ import DSKit
 import SnapKit
 import Then
 
-public class DSAuthButtonViewController: UIViewController {
+public class DSAuthButtonVC: UIViewController {
     
     var kakaoButton = MaeumGaGymAuthButton(type: .kakao)
     var googleButton = MaeumGaGymAuthButton(type: .google)
@@ -11,7 +11,7 @@ public class DSAuthButtonViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
         layout()
     }

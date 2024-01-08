@@ -12,7 +12,7 @@ public class DSTimerButtonVC: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
         layout()
     }
@@ -28,29 +28,25 @@ public class DSTimerButtonVC: UIViewController {
         cancelButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(view.snp.width).offset(-40.0)
-            $0.height.equalTo(64.0)
+            $0.width.height.equalTo(68.0)
         }
         
         restartButton.snp.makeConstraints {
             $0.top.equalTo(cancelButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(view.snp.width).offset(-40.0)
-            $0.height.equalTo(64.0)
+            $0.width.height.equalTo(68.0)
         }
         
         startButton.snp.makeConstraints {
             $0.top.equalTo(restartButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(view.snp.width).offset(-40.0)
-            $0.height.equalTo(64.0)
+            $0.width.height.equalTo(68.0)
         }
         
         stopButton.snp.makeConstraints {
             $0.top.equalTo(startButton.snp.bottom).offset(20.0)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(view.snp.width).offset(-40.0)
-            $0.height.equalTo(64.0)
+            $0.width.height.equalTo(68.0)
         }
     }
 }

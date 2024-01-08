@@ -12,7 +12,7 @@ public class DSIconButtonVC: UIViewController {
         
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
         layout()
     }

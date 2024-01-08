@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import Then
 
-public class DSTimerButtonVC: UIViewController {
+public class DSToggleButtonVC: UIViewController {
     
     var album = MaeumGaGymToggleButton(type: .album)
     var image = MaeumGaGymToggleButton(type: .image)
@@ -12,7 +12,7 @@ public class DSTimerButtonVC: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
         layout()
     }
