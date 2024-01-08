@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 public enum PickleLogoType: String, RawRepresentable {
-    case hart
+    case heart
     case comment
     case share
     case dots
@@ -10,7 +10,7 @@ public enum PickleLogoType: String, RawRepresentable {
     
     public var imageLogo: UIImage? {
         switch self {
-        case .hart:
+        case .heart:
             return DSKitAsset.Assets.heart.image
         case .comment:
             return DSKitAsset.Assets.comment.image
@@ -25,14 +25,14 @@ public enum PickleLogoType: String, RawRepresentable {
 
     public var backgroundColor: UIColor? {
         switch self {
-        case .hart, .comment, .share, .dots, .redHart:
+        case .heart, .comment, .share, .dots, .redHart:
             return DSKitAsset.Colors.gray50.color.withAlphaComponent(0.12)
         }
     }
     
     public var titleColor: UIColor? {
         switch self {
-        case .hart:
+        case .heart:
             return UIColor.white
         case .comment:
             return UIColor.white
