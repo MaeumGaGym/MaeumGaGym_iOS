@@ -22,7 +22,8 @@ public class PickleViewController: UIViewController {
             "1",
             "2",
             "3",
-            "4"
+            "4",
+            "5"
         ]
             .enumerated()
             .map { idx, url -> PickleItems in
@@ -39,7 +40,6 @@ public class PickleViewController: UIViewController {
             }
         
         self.reelsView.reloadAll(items: items)
-        
     }
         
     private func setup() {
