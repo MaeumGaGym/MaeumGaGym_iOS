@@ -9,7 +9,7 @@ open class MaeumGaGymAgreeButton: BaseButton {
         
     public var checked: Bool = false
     
-    private var iconImageView = UIImageView().then {
+    public var iconImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.noCheck.image
     }
     
