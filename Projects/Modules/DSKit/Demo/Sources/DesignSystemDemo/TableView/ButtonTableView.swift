@@ -1,7 +1,14 @@
 import UIKit
+import DSKit
 
 fileprivate enum buttonType: String, CaseIterable {
-    case button
+    case agree
+    case auth
+    case certification
+    case icon
+    case check
+    case timer
+    case toggle
 }
 
 public class ButtonTableViewController: UITableViewController  {
@@ -35,9 +42,33 @@ public class ButtonTableViewController: UITableViewController  {
     public override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let designSystem = self.designSystems[indexPath.item]
         switch designSystem {
-        case .button:
+        case .agree:
             print("커스텀 버튼")
-            self.navigationController?.pushViewController(ButtonViewController(), animated: true)
+            self.navigationController?.pushViewController(DSAgreeButtonVC(), animated: true)
+            break
+        case .auth:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSAuthButtonVC(), animated: true)
+            break
+        case .certification:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSCertificationButtonVC(), animated: true)
+            break
+        case .icon:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSIconButtonVC(), animated: true)
+            break
+        case .check:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSCheckButtonVC(), animated: true)
+            break
+        case .timer:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSTimerButtonVC(), animated: true)
+            break
+        case .toggle:
+            print("커스텀 버튼")
+            self.navigationController?.pushViewController(DSToggleButtonVC(), animated: true)
             break
         }
     }
