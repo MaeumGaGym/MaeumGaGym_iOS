@@ -12,8 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
-        let vc = DesignSystemViewController()
-        window?.rootViewController = UINavigationController(rootViewController: vc)
+        let componentsDemoTableViewController = ComponentsDemoTableViewController()
+        window?.rootViewController = UINavigationController(rootViewController: componentsDemoTableViewController)
         window?.makeKeyAndVisible()
     }
 
