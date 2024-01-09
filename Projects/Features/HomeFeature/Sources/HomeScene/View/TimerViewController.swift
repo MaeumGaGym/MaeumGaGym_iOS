@@ -4,12 +4,11 @@ import Then
 import DSKit
 import RxSwift
 import DSKit
+import Core
 
-public class TimerViewController: UIViewController {
-    
-    let disposeBag = DisposeBag()
-    
-    lazy var toggleView = MaeumGaGymProgressBarView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
+public class TimerViewController: BaseViewController<TimerViewModel> {
+        
+    lazy var progressBarView = MaeumGaGymProgressBarView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
     private let closeButton = MaeumGaGymTimerButton(type: .close)
     private let stopButton = MaeumGaGymTimerButton(type: .stop, radius: 40.0)
@@ -17,51 +16,47 @@ public class TimerViewController: UIViewController {
     private let restartButton = MaeumGaGymTimerButton(type: .restart)
 
     
-//    MaeumGaGymToggleView(width: 430.0, height: 793.0)
-    
-    public override func viewDidLoad() {
-        super.viewDidLoad()
+    public override func attribute() {
         view.backgroundColor = .white
         
-        layout()
-        toggleView.setting(for: 60)
+        progressBarView.setting(for: 60)
         buttonTap()
     }
 
-    func layout() {
+    public override func layout() {
         [
-            toggleView,
+            progressBarView,
             closeButton,
             stopButton,
             startButton,
             restartButton
         ].forEach { view.addSubview($0) }
         
-        toggleView.snp.makeConstraints {
+        progressBarView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(141.0)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(350.0)
         }
         
         closeButton.snp.makeConstraints {
-            $0.top.equalTo(toggleView.snp.bottom).offset(225.0)
+            $0.top.equalTo(progressBarView.snp.bottom).offset(225.0)
             $0.leading.equalToSuperview().offset(83.0)
         }
         
         stopButton.snp.makeConstraints {
-            $0.top.equalTo(toggleView.snp.bottom).offset(219.0)
+            $0.top.equalTo(progressBarView.snp.bottom).offset(219.0)
             $0.leading.equalTo(closeButton.snp.trailing).offset(24.0)
 
         }
         
         startButton.snp.makeConstraints {
-            $0.top.equalTo(toggleView.snp.bottom).offset(219.0)
+            $0.top.equalTo(progressBarView.snp.bottom).offset(219.0)
             $0.leading.equalTo(closeButton.snp.trailing).offset(24.0)
 
         }
         
         restartButton.snp.makeConstraints {
-            $0.top.equalTo(toggleView.snp.bottom).offset(225.0)
+            $0.top.equalTo(progressBarView.snp.bottom).offset(225.0)
             $0.trailing.equalToSuperview().offset(-83.0)
             
         }
@@ -70,7 +65,7 @@ public class TimerViewController: UIViewController {
     private func buttonTap() {
         startButton.rx.tap
             .subscribe(onNext: { [self] in
-                if toggleView.startTimer() {
+                if progressBarView.startTimer() {
                     stopButton.isHidden = false
                     startButton.isHidden = true
                 }
@@ -79,7 +74,7 @@ public class TimerViewController: UIViewController {
         
         stopButton.rx.tap
             .subscribe(onNext: { [self] in
-                toggleView.stopTimer()
+                progressBarView.stopTimer()
                 stopButton.isHidden = true
                 startButton.isHidden = false
             })
@@ -87,7 +82,7 @@ public class TimerViewController: UIViewController {
         
         restartButton.rx.tap
             .subscribe(onNext: { [self] in
-                toggleView.restartTimer()
+                progressBarView.restartTimer()
                 if startButton.isHidden == true {
                     stopButton.isHidden = true
                     startButton.isHidden = false
@@ -96,7 +91,7 @@ public class TimerViewController: UIViewController {
         
         closeButton.rx.tap
             .subscribe(onNext: { [self] in
-                toggleView.closeTimer()
+                progressBarView.closeTimer()
                 if startButton.isHidden == true {
                     stopButton.isHidden = true
                     startButton.isHidden = false
