@@ -36,7 +36,7 @@ public class PickleCell: PickleCollectionViewCell {
         $0.axis = .vertical
     }
         
-    private let heartButton = MaeumGaGymOpaqueIconButton(type: .hart)
+    private let heartButton = MaeumGaGymOpaqueIconButton(type: .heart)
     private let commentButton = MaeumGaGymOpaqueIconButton(type: .comment)
     private let shareButton = MaeumGaGymOpaqueIconButton(type: .share)
     private let dotButton = MaeumGaGymOpaqueIconButton(type: .dots)
@@ -127,7 +127,7 @@ public class PickleCell: PickleCollectionViewCell {
             heartButton.pickleLogoTypeEdit(type: .redHart)
             print("눌림")
         } else {
-            heartButton.pickleLogoTypeEdit(type: .hart)
+            heartButton.pickleLogoTypeEdit(type: .heart)
             print("다시 눌림")
         }
     }
