@@ -12,7 +12,7 @@ fileprivate enum DesignSystemType: String, CaseIterable {
     case emptyView
 }
 
-public class DesignSystemViewController: UITableViewController {
+public class DesignSystemViewController: UITableViewController  {
     
     private var designSystems: [DesignSystemType] = DesignSystemType.allCases
     
@@ -45,7 +45,7 @@ public class DesignSystemViewController: UITableViewController {
         switch designSystem {
         case .button:
             print("커스텀 버튼")
-            self.navigationController?.pushViewController(ButtonViewController(), animated: true)
+            self.navigationController?.pushViewController(ButtonTableViewController(), animated: true)
             break
         case .textField:
             print("커스텀 텍스트 필드")

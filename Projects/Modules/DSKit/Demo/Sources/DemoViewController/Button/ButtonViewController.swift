@@ -12,7 +12,7 @@ public class ButtonViewController: UIViewController {
     let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
     let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
-    var hartButton = MaeumGaGymOpaqueIconButton(type: .hart, likeCount: 12003)
+    var hartButton = MaeumGaGymOpaqueIconButton(type: .heart, likeCount: 12003)
     var commentButton = MaeumGaGymOpaqueIconButton(type: .comment, likeCount: 1200)
     var dotsButton = MaeumGaGymOpaqueIconButton(type: .dots)
     var shareButton = MaeumGaGymOpaqueIconButton(type: .share)
