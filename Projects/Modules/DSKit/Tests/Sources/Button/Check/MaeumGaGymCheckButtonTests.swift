@@ -3,7 +3,7 @@ import DSKit
 
 class MaeumGaGymCheckButtonTests: XCTestCase {
 
-    func testButtonInitialState() {
+    func test_버튼초기상태() {
         let checkButton = MaeumGaGymCheckButton()
 
         XCTAssertEqual(checkButton.textLabel.text, "", "텍스트는 빈 문자열이어야 합니다.")
@@ -12,7 +12,7 @@ class MaeumGaGymCheckButtonTests: XCTestCase {
         XCTAssertEqual(checkButton.layer.cornerRadius, 8.0, "코너 라디우스는 기본값과 일치해야 합니다.")
     }
 
-    func testButtonCustomization() {
+    func test_버튼사용자지정() {
         let text = "확인"
         let radius = 10.0
         let textColor = UIColor.red
