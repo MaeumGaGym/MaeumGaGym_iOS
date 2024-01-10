@@ -31,6 +31,7 @@ public class MaeumGaGymPagingTabBar: UIView {
         
         collectionView.backgroundColor = .systemBackground
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.bounces = false
         
         collectionView.register(MaeumGaGymPagingTabBarCell.self,
                                 forCellWithReuseIdentifier:
@@ -103,6 +104,5 @@ private extension MaeumGaGymPagingTabBar {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
     }
 }
