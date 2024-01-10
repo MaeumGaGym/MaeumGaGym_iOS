@@ -31,12 +31,4 @@ class MaeumGaGymAgreeButtonTests: XCTestCase {
         XCTAssertFalse(agreeButton.checked, "버튼 상태를 선택 취소했을 때 상태를 확인합니다.")
         XCTAssertEqual(agreeButton.iconImageView.image, DSKitAsset.Assets.noCheck.image, "버튼이 다시 비활성화되면 이미지는 'noCheck' 입니다.")
     }
-
-//    func testEditButtonType() {
-//        let newText = "새로운 동의 텍스트"
-//        agreeButton.editButtonType(text: newText, readMoreType: true)
-//
-//        XCTAssertEqual(agreeButton.textLabel.text, newText, "텍스트를 업데이트 했을 때 상태를 확인합니다.")
-//        XCTAssertTrue(agreeButton.readMore.isHidden == false && agreeButton.readMoreLine.isHidden == false, "Read more components should be visible")
-//    }
 }
