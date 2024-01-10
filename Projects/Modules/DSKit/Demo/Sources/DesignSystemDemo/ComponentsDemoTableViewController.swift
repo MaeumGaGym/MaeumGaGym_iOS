@@ -1,6 +1,7 @@
 import UIKit
 import Core
 import CSLogger
+import DSKit
 
 public enum DesignSystemType: String, CaseIterable {
     case button
@@ -11,6 +12,7 @@ public enum DesignSystemType: String, CaseIterable {
     case alert
     case bottomSheet
     case emptyView
+    case pagingTabBar
 }
 
 public class ComponentsDemoTableViewController: BaseDesignSystemTableViewController<DesignSystemType> {
@@ -46,6 +48,9 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
         case .emptyView:
             Logger.verbose("emptyView")
             self.navigationController?.pushVC(EmptyViewController.self)
+        case .pagingTabBar:
+            Logger.verbose("pagingTabBar")
+            self.navigationController?.pushVC(PagingTabBarViewController.self)
         }
     }
 }
