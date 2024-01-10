@@ -19,11 +19,9 @@ public class TextFieldViewController: UIViewController {
         $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
     }
     
-    private let completeButton = MaeumGaGymCheckButton(text: "완료")
+    public let completeButton = MaeumGaGymCheckButton(text: "완료")
     
-    private let nicknameTF = MaeumGaGymTextField(placeholder: "닉네임")
-    
-    
+    public let nicknameTF = MaeumGaGymTextField(placeholder: "닉네임")
     
     public override func viewDidLoad() {
         super.viewDidLoad()

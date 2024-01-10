@@ -8,7 +8,6 @@ public class DSAgreeButtonVC: UIViewController {
     var allAgreeButton = MaeumGaGymAgreeButton(text: .allAgreeText)
     var agreeButton = MaeumGaGymAgreeButton(text: .privacyAgreeText)
 
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
