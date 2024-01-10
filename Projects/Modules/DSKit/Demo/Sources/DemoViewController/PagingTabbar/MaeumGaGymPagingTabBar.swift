@@ -32,16 +32,16 @@ public class MaeumGaGymPagingTabBar: UIView {
         collectionView.backgroundColor = .systemBackground
         collectionView.showsHorizontalScrollIndicator = false
         
-        collectionView.register(MaeumGaGymTabBarCell.self,
+        collectionView.register(MaeumGaGymPagingTabBarCell.self,
                                 forCellWithReuseIdentifier:
-                                    MaeumGaGymTabBarCell.identifier)
+                                    MaeumGaGymPagingTabBarCell.identifier)
         
         collectionView.isScrollEnabled = categoryTitleList.count >= 7
         
          Observable.just(categoryTitleList).bind(to:
             collectionView.rx.items(cellIdentifier:
-                                        MaeumGaGymTabBarCell.identifier,
-                cellType:MaeumGaGymTabBarCell.self)) { (row,title,
+                                        MaeumGaGymPagingTabBarCell.identifier,
+                cellType:MaeumGaGymPagingTabBarCell.self)) { (row,title,
                     cell) in
                 
                 cell.setupView(title:title)
@@ -89,7 +89,7 @@ extension MaeumGaGymPagingTabBar: UICollectionViewDataSource {
         return categoryTitleList.count
     }
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaeumGaGymTabBarCell.identifier, for: indexPath) as? MaeumGaGymTabBarCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaeumGaGymPagingTabBarCell.identifier, for: indexPath) as? MaeumGaGymPagingTabBarCell else { return UICollectionViewCell() }
         
         cell.setupView(title: categoryTitleList[indexPath.row])
         
@@ -103,5 +103,6 @@ private extension MaeumGaGymPagingTabBar {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
     }
 }
