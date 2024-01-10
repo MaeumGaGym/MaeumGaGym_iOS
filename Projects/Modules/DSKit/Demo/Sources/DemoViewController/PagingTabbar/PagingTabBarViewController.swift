@@ -13,9 +13,14 @@ public class PagingTabBarViewController: UIViewController {
     
     private lazy var viewControllers: [UIViewController] = [
         RedViewController(),
+        OrangeViewController(),
+        YellowViewController(),
         GreenViewController(),
         BlueViewController(),
-        BlackViewController()
+        PurpleViewController(),
+        BrownViewController(),
+        BlackViewController(),
+        WhiteViewController()
      ]
      
      private lazy var containerView: UIView = {

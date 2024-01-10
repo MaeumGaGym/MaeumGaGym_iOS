@@ -25,6 +25,24 @@ public class RedViewController: UIViewController {
     }
 }
 
+public class OrangeViewController: UIViewController {
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .orange
+    }
+}
+
+public class YellowViewController: UIViewController {
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .yellow
+    }
+}
+
 public class GreenViewController: UIViewController {
     
     public override func viewDidLoad() {
@@ -43,12 +61,30 @@ public class BlueViewController: UIViewController {
     }
 }
 
+public class PurpleViewController: UIViewController {
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .purple
+    }
+}
+
+public class BrownViewController: UIViewController {
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .brown
+    }
+}
+
 public class BlackViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .black
     }
 }
 
