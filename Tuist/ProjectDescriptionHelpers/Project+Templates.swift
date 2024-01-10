@@ -36,13 +36,13 @@ public extension Project {
                 infoPlist: .extendingDefault(with: infoPlist),
                 sources: ["Sources/**/*.swift"],
                 resources: [.glob(pattern: "Resources/**", excluding: [])],
+                scripts: [.swiftLintScript],
                 dependencies: [
                     internalDependencies,
                     externalDependencies
                 ].flatMap { $0 },
                 settings: .settings(base: settings)
             )
-            
             projectTargets.append(target)
         }
                 
@@ -99,6 +99,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: Project.demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
+                scripts: [.swiftLintScript],
                 dependencies: [
                     deps
                 ].flatMap { $0 },
@@ -120,6 +121,7 @@ public extension Project {
                 infoPlist: .default,
                 sources: ["Tests/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Tests/Resources/**", excluding: [])],
+                scripts: [.swiftLintScript],
                 dependencies: [
                     deps,
                     [
@@ -145,6 +147,7 @@ public extension Project {
                 deploymentTarget: deploymentTarget,
                 infoPlist: .default,
                 sources: ["UITests/Sources/**/*.swift"],
+                scripts: [.swiftLintScript],
                 dependencies: [
                     deps,
                     [
