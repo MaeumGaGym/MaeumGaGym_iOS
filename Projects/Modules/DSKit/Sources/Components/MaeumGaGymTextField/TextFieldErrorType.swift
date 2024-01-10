@@ -10,7 +10,7 @@ public enum TextFieldErrorType {
         case sensitiveInfo // 이름에 민감한 정보 포함
         case reservedWord // 예약어 사용 제한
         
-        var message: String {
+        public var message: String {
             switch self {
             case .tooLong:
                 return "너무 긴 닉네임이에요. (10글자 이하)"
@@ -24,7 +24,7 @@ public enum TextFieldErrorType {
                 return "예약어 사용 제한"
             }
         }
-        var showError: Bool {
+        public var showError: Bool {
             return true
         }
     }

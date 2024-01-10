@@ -6,7 +6,8 @@ let project = Project.makeModule(
     name: "DSKit",
     targets: [.unitTest, .demo, .dynamicFramework],
     internalDependencies: [
-        .core
+        .core,
+        .Modules.csLogger
     ],
     hasResources: true
 )
