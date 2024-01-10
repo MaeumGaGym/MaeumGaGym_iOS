@@ -1,6 +1,7 @@
 import UIKit
 import Then
 import SnapKit
+import DSKit
 
 public class MaeumGaGymPagingTabBarCell: UICollectionViewCell {
     
