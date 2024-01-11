@@ -32,7 +32,10 @@ open class MaeumGaGymAgreeButton: BaseButton {
         $0.isHidden = false
     }
     
-    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 64.0, lineHeight: 1.0)
+    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color,
+                                              lineWidth: 64.0,
+                                              lineHeight: 1.0
+    )
         
     public init (
         text: agreeButtonTextType,
@@ -119,8 +122,12 @@ open class MaeumGaGymAgreeButton: BaseButton {
 }
 
 extension MaeumGaGymAgreeButton {
-    private func setupUI(textType: agreeButtonTextType, font: UIFont?, type: Int?, readMoreType: Bool?, chooseType: Bool?) {
-        
+    private func setupUI(textType: agreeButtonTextType,
+                         font: UIFont?,
+                         type: Int?,
+                         readMoreType: Bool?,
+                         chooseType: Bool?
+    ) {
         self.textLabel.text = textType.message
         self.textLabel.font = font
         

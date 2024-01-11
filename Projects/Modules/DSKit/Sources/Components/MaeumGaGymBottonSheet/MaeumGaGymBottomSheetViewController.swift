@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import Then
 
-public protocol MaeumGaGymBottomSheetViewDelegate {
+public protocol MaeumGaGymBottomSheetViewDelegate: AnyObject {
     func didMove(to percentage: Float)
 }
 
@@ -26,7 +26,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
             bottomSheetDelegate?.didMove(to: 1 - Float(constant(of: state) / constant(of: .collapsed)))
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self.view.superview?.layoutIfNeeded()
-            }) { (isFinished) in
+            }) { _ in
                 scrollView?.decelerationRate = UIScrollView.DecelerationRate.normal
             }
         }
@@ -85,8 +85,10 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         heightConstraint = view.heightAnchor.constraint(equalToConstant: fullHeight)
 
         NSLayoutConstraint.activate(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": view as Any]) +
-                [bottomConstraint, heightConstraint]
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+                                           options: [],
+                                           metrics: nil,
+                                           views: ["view": view as Any]) + [bottomConstraint, heightConstraint]
         )
 
         view.addSubview(dragIndicatorView)
@@ -101,8 +103,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
 
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
             self.view.transform = .identity
-        }) { _ in
-        }
+        })
 
         view.alpha = 0.0
         UIView.animate(withDuration: 0.3) {
@@ -255,7 +256,9 @@ extension MaeumGaGymBottomSheetViewController {
 
 extension MaeumGaGymBottomSheetViewController: UIGestureRecognizerDelegate {
     
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                                  shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
         return true
     }
 }

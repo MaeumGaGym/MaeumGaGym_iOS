@@ -15,7 +15,7 @@ open class MaeumGaGymProfileView: UIView {
     ) {
         self.profileImage = profileImage
         self.profileType = profileType
-
+        
         super.init(frame: .zero)
         
         configureLayout()
@@ -28,7 +28,7 @@ open class MaeumGaGymProfileView: UIView {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         profileImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -44,15 +44,15 @@ open class MaeumGaGymProfileView: UIView {
             make.width.height.equalTo(self.profileType.size)
         }
         
-   }
-   
-   private func configureLayout() {
-       addSubview(profileImageView)
-   }
-
+    }
+    
+    private func configureLayout() {
+        addSubview(profileImageView)
+    }
+    
     public func configureImage(with maeumGaGymProfileImage: MaeumGaGymProfileImage) {
         self.profileImage = maeumGaGymProfileImage
-
+        
         switch maeumGaGymProfileImage.type {
         case .custom:
             if let customImg = maeumGaGymProfileImage.customImage {
@@ -64,4 +64,3 @@ open class MaeumGaGymProfileView: UIView {
         }
     }
 }
-
