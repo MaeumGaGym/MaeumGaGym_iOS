@@ -65,9 +65,9 @@ final class PicklePlayerView: UIView {
     }
     
     private func addObserve(item: AVPlayerItem) {
-        let observer = item.observe(\.status, options: [.old,.new]) { [weak self] (
+        let observer = item.observe(\.status, options: [.old, .new]) { [weak self] (
             item: AVPlayerItem,
-            value: NSKeyValueObservedChange<AVPlayerItem.Status>
+            change: NSKeyValueObservedChange<AVPlayerItem.Status>
         ) in
             guard let `self` = self else {
                 return
@@ -110,7 +110,6 @@ final class PicklePlayerView: UIView {
     }
 }
 
-
 extension PicklePlayerView: MakeLayout {
     func addSubViews() {
         self.addSubview(self.thumnailImageView)
@@ -125,7 +124,6 @@ extension PicklePlayerView: MakeLayout {
         self.thumnailImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
 }
-
 
 extension PicklePlayerView: PickleConfigure {
     func configure(item: PickleItem) {

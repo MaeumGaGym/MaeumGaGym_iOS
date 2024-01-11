@@ -32,7 +32,6 @@ final class PicklePlayerControl {
     }
 }
 
-
 extension PicklePlayerControl: PlayerControl {
     func play(priority: Priority) {
         self.setVideoControl(
