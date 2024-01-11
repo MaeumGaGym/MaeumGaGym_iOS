@@ -137,7 +137,6 @@ extension PickleView: MakeLayout {
     }
 }
 
-
 extension PickleView: UICollectionViewDelegate {
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
@@ -153,8 +152,14 @@ extension PickleView: UICollectionViewDelegate {
         self.manager.pageManager.setPage(offset: scrollView.contentOffset, size: scrollView.bounds.size)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        self.delegate?.willDisyplay(cell: cell, data: self.manager.itemManager.getItem(at: indexPath), page: indexPath.item)
+    public func collectionView(_ collectionView: UICollectionView,
+                               willDisplay cell: UICollectionViewCell,
+                               forItemAt indexPath: IndexPath
+    ) {
+        self.delegate?.willDisyplay(cell: cell,
+                                    data: self.manager.itemManager.getItem(at: indexPath),
+                                    page: indexPath.item
+        )
         
         guard let url = self.manager.itemManager.getItem(at: indexPath)?.url,
               let cell = cell as? PickleCollectionViewCell else {
@@ -168,8 +173,14 @@ extension PickleView: UICollectionViewDelegate {
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        self.delegate?.didEndDisplaying(cell: cell, data: self.manager.itemManager.getItem(at: indexPath), page: indexPath.item)
+    public func collectionView(_ collectionView: UICollectionView,
+                               didEndDisplaying cell: UICollectionViewCell,
+                               forItemAt indexPath: IndexPath
+    ) {
+        self.delegate?.didEndDisplaying(cell: cell,
+                                        data: self.manager.itemManager.getItem(at: indexPath),
+                                        page: indexPath.item
+        )
         
         guard let reelsCell = cell as? PickleCollectionViewCell else {
             return
@@ -185,7 +196,6 @@ extension PickleView: UICollectionViewDelegate {
         self.manager.playerControl.toggle(priority: .low, didSelect: true)
     }
 }
-
 
 extension PickleView: PickleManagerDelegate {
     public func reloadAll() {

@@ -7,7 +7,6 @@ public protocol PickleItem: ReuseIdentifier {
     var isMuted: Bool { get set }
 }
 
-
 public struct PickleBaseItem: PickleItem {
     public var idx: String
     public var url: URL?
