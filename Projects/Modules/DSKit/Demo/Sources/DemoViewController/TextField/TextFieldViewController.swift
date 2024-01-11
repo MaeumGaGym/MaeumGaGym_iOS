@@ -7,13 +7,11 @@ import RxSwift
 public class TextFieldViewController: UIViewController {
     
     private var bottomConstraint: Constraint?
-
     
     let disposeBag = DisposeBag()
     
     private let nicknameLabel = MaeumGaGymLabel(text: "닉네임")
     private let nicknameInfo = MaeumGaGymLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
-    
     
     private let cancelButton = UIButton().then {
         $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
@@ -31,8 +29,12 @@ public class TextFieldViewController: UIViewController {
         cancelButtonTap()
         keyboardBind()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -46,7 +48,6 @@ public class TextFieldViewController: UIViewController {
             cancelButton,
             completeButton
         ].forEach { view.addSubview($0) }
-        
         
         nicknameLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(0.0)
@@ -78,13 +79,16 @@ public class TextFieldViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.leading.equalToSuperview().offset(20.0)
             $0.trailing.equalToSuperview().offset(-20.0)
-
+            
         }
     }
     
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-              let keyboardAnimationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+        guard let keyboardSize = (notification
+            .userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+              let keyboardAnimationDuration = notification
+            .userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
+        else {
             return
         }
         
@@ -114,12 +118,13 @@ public class TextFieldViewController: UIViewController {
         }).disposed(by: disposeBag)
     }
     
-    
     private func keyboardBind() {
-        let keyboardWillShowObservable = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification)
+        let keyboardWillShowObservable = NotificationCenter.default.rx
+            .notification(UIResponder.keyboardWillShowNotification)
             .map { ($0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height ?? 48 }
         
-        let keyboardWillHideObservable = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification)
+        let keyboardWillHideObservable = NotificationCenter.default.rx
+            .notification(UIResponder.keyboardWillHideNotification)
             .map { _ in CGFloat(48) }
         
         Observable.merge(keyboardWillShowObservable)
@@ -138,9 +143,9 @@ public class TextFieldViewController: UIViewController {
             .disposed(by: disposeBag)
         
         Observable.merge(keyboardWillHideObservable)
-            .subscribe(onNext:  { [weak self] height in
+            .subscribe(onNext: { [weak self] height in
                 self?.completeButton.snp.remakeConstraints {
-                    self!.bottomConstraint?.update(offset: -height + 112.0)
+                    self?.bottomConstraint?.update(offset: -height + 112.0)
                     $0.leading.equalToSuperview().offset(20.0)
                     $0.trailing.equalToSuperview().offset(-20.0)
                     $0.width.equalTo(390.0)
@@ -154,15 +159,4 @@ public class TextFieldViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-    
-    //    private func buttonBind() {
-    //        completeButton.rx.tap
-    //            .subscribe(onNext: { [weak self] _ in
-    //                guard let self = self else { return }
-    //                if let nickname = self.nicknameTF.text  {
-    //                    self.listener?.loginButtonDidTap(nickname: nickname)
-    //                }
-    //            })
-    //            .disposed(by: disposeBag)
-    //    }
 }
