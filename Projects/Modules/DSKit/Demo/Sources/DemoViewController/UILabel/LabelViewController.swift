@@ -5,15 +5,34 @@ import Then
 
 open class LabelViewController: UIViewController {
     
-    private let telUILabel = MaeumGaGymLabel(text: "휴대폰 번호", font: UIFont.Pretendard.titleLarge)
+    private let telUILabel = MaeumGaGymLabel(
+        text: "휴대폰 번호",
+        font: UIFont.Pretendard.titleLarge
+    )
     
-    private let textInformation = MaeumGaGymLabel(text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
+    private let textInformation = MaeumGaGymLabel(
+        text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.",
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray600.color
+    )
     
-    private let firstTimerTitle = MaeumGaGymLabel(text: "4분", font: UIFont.Pretendard.bodyLarge, textColor: .black)
+    private let firstTimerTitle = MaeumGaGymLabel(
+        text: "4분",
+        font: UIFont.Pretendard.bodyLarge,
+        textColor: .black
+    )
     
-    private let secondTimerTitle = MaeumGaGymLabel(text: "04 : 00", font: UIFont.Pretendard.light, textColor: .black)
+    private let secondTimerTitle = MaeumGaGymLabel(
+        text: "04 : 00",
+        font: UIFont.Pretendard.light,
+        textColor: .black
+    )
     
-    private let thirdTimerTitle = MaeumGaGymLabel(text: "오전 8:09", font: UIFont.Pretendard.bodyMedium, textColor: .black)
+    private let thirdTimerTitle = MaeumGaGymLabel(
+        text: "오전 8:09",
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: .black
+    )
     
     open override func viewDidLoad() {
         super.viewDidLoad()

@@ -23,7 +23,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
     fileprivate var presentDismissDuration: TimeInterval = 0.5
     fileprivate var presentDismissScale: CGFloat = 0.8
 
-    fileprivate var completion: (()->Void)? = nil
+    fileprivate var completion: (() -> Void)? = nil
 
     private lazy var backgroundView: UIView = {
         let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
@@ -101,7 +101,7 @@ public class MaeumGaGymAlertOnlyTitleView: UIView, AlertViewProtocol, AlertViewI
         self.dismiss(customCompletion: self.completion)
     }
 
-    func dismiss(customCompletion: (()->Void)? = nil) {
+    func dismiss(customCompletion: (() -> Void)? = nil) {
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 0
             self.transform = self.transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)

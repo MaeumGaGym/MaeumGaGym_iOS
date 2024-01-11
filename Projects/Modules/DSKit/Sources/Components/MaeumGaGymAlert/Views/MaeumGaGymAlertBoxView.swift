@@ -117,7 +117,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func present(on view: UIView, completion: (()->Void)? = nil) {
+    open func present(on view: UIView, completion: (() -> Void)? = nil) {
         self.viewForPresent = view
         self.completion = completion
         viewForPresent?.addSubview(self)
@@ -159,7 +159,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         self.dismiss(customCompletion: self.completion)
     }
     
-    func dismiss(customCompletion: (()->Void)? = nil) {
+    func dismiss(customCompletion: (() -> Void)? = nil) {
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 0
             self.transform = self.transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
@@ -220,7 +220,9 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         }
         
         convenience init() {
-            self.init(iconSize: .init(width: 100, height: 100), margins: .init(top: 43, left: 16, bottom: 25, right: 16), spaceBetweenIconAndTitle: 41)
+            self.init(iconSize: .init(width: 100, height: 100),
+                      margins: .init(top: 43, left: 16, bottom: 25, right: 16),
+                      spaceBetweenIconAndTitle: 41)
         }
         
         static func message() -> AlertLayout {

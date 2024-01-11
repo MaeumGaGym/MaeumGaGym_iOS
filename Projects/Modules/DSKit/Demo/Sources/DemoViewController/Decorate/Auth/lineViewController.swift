@@ -2,12 +2,19 @@ import UIKit
 import DSKit
 import SnapKit
 import Then
-import DSKit
 
 open class LineViewController: UIViewController {
     
-    private let decorateLine1 = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray50.color, lineWidth: 390.0, lineHeight: 2.0)
-    private let decorateLine2 = MaeumGaGymLine(lineColor: DSKitAsset.Colors.red700.color, lineWidth: 390.0, lineHeight: 10.0)
+    private let decorateLine1 = MaeumGaGymLine(
+        lineColor: DSKitAsset.Colors.gray50.color,
+        lineWidth: 390.0,
+        lineHeight: 2.0
+    )
+    private let decorateLine2 = MaeumGaGymLine(
+        lineColor: DSKitAsset.Colors.red700.color,
+        lineWidth: 390.0,
+        lineHeight: 10.0
+    )
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +26,7 @@ open class LineViewController: UIViewController {
     func layout() {
         [
             decorateLine1,
-            decorateLine2,
+            decorateLine2
         ].forEach { view.addSubview($0) }
         
         decorateLine1.snp.makeConstraints {
