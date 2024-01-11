@@ -23,11 +23,10 @@ public class ButtonViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         
-        addView()
         layout()
     }
     
-    func addView() {
+    func layout() {
         [
             kakaoButton,
             googleButton,
@@ -40,9 +39,7 @@ public class ButtonViewController: UIViewController {
             shareButton,
             checkButton
         ].forEach { view.addSubview($0) }
-    }
-    
-    func layout() {
+
         kakaoButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
