@@ -1,11 +1,3 @@
-//
-//  PickleInfoView.swift
-//  PickleFeatureInterface
-//
-//  Created by 박준하 on 12/28/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 import SnapKit
 import Then

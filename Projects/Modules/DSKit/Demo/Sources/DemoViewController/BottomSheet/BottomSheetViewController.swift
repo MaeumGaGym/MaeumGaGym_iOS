@@ -8,7 +8,7 @@ struct BottomSheetItem {
 
 public class BottomSheetViewController: UIViewController {
 
-    private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
+    private let bottomSheetViewController: MaeumGaGymBottomSheetViewController = {
         if #available(iOS 11.0, *) {
             return MaeumGaGymBottomSheetViewController(type: .plain)
         } else {
@@ -24,8 +24,8 @@ public class BottomSheetViewController: UIViewController {
         view.backgroundColor = .lightGray
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencilIcon.image, title: "수정"),
-             BottomSheetItem(icon: DSKitAsset.Assets.deleteIcon.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "삭제")
          ]
 
         bottomSheetViewController.bottomSheetDelegate = self
@@ -33,8 +33,10 @@ public class BottomSheetViewController: UIViewController {
         let tableView = bottomSheetViewController.tableView
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
-
+        tableView.register(
+            MaeumGaGymBottomSheetIconCell.self,
+            forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier
+        )
         addChild(bottomSheetViewController)
         bottomSheetViewController.show(in: view, initialState: .collapsed)
         bottomSheetViewController.didMove(toParent: self)
@@ -67,25 +69,28 @@ public class BottomSheetViewController: UIViewController {
     }
 }
 
-extension BottomSheetViewController : MaeumGaGymBottomSheetViewDelegate {
+extension BottomSheetViewController: MaeumGaGymBottomSheetViewDelegate {
 
     public func didMove(to percentage: Float) {
 //        bottomSheetViewController.rootViewController.title = String(format: "didMove to %.1f", percentage)
     }
 }
 
-extension BottomSheetViewController : UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bottomSheetItems.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MaeumGaGymBottomSheetIconCell.identifier,
+            for: indexPath
+        ) as! MaeumGaGymBottomSheetIconCell
 
         let item = bottomSheetItems[indexPath.row]
         cell.iconImage.image = item.icon
-        cell.title.text = item.title
+        cell.mainTitle.text = item.title
 
         return cell
     }

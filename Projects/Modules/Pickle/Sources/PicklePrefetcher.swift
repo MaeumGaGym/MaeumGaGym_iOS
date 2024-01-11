@@ -18,7 +18,6 @@ protocol PicklePrefetcher: AnyObject {
     func load(url: URL, completion: @escaping (Response) -> Void)
 }
 
-
 extension PicklePrefetcher {
     func start() {
         guard !self.isTasking else {
@@ -49,7 +48,6 @@ extension PicklePrefetcher {
     }
 }
 
-
 private extension PicklePrefetcher {
     func next() {
         guard !self.finishedItems, self.isTasking else {
@@ -61,7 +59,7 @@ private extension PicklePrefetcher {
             return
         }
         
-        self.load(url: url){ [weak self] (response: Response) in
+        self.load(url: url) { [weak self] (response: Response) in
             switch response {
             case .success:
                 self?.completedItems.append(response)

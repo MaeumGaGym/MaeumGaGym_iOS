@@ -1,11 +1,10 @@
 import UIKit
 import RxSwift
-import RxCocoaRuntime
 import Then
 import SnapKit
 import Core
 
-open class MaeumGaGymAuthButton: UIButton {
+open class MaeumGaGymAuthButton: BaseButton {
 
     public let iconImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -24,20 +23,16 @@ open class MaeumGaGymAuthButton: UIButton {
     ) {
         super.init(frame: .zero)
 
-        self.textLabel.text = type.logoTitle
-        self.iconImageView.image = type.imageLogo
-        self.backgroundColor = type.backgroundColor
-        self.layer.cornerRadius = radius ?? 8
-        self.textLabel.textColor = type.titleColor
-        setupViews()
+        setupUI(type: type, spacing: spacing, radius: radius)
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    private func setupViews() {
-        [iconImageView, textLabel].forEach { self.addSubview($0)}
+    
+    open override func layout() {
+        super.layout()
+        self.addSubviews([iconImageView, textLabel])
 
         self.iconImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(22)
@@ -50,5 +45,14 @@ open class MaeumGaGymAuthButton: UIButton {
             $0.centerY.equalToSuperview()
         }
     }
+    
+    private func setupUI(type: AuthLogoType,
+                         spacing: CGFloat?,
+                         radius: Double?) {
+        self.textLabel.text = type.logoTitle
+        self.iconImageView.image = type.imageLogo
+        self.backgroundColor = type.backgroundColor
+        self.layer.cornerRadius = radius ?? 8
+        self.textLabel.textColor = type.titleColor
+    }
 }
-

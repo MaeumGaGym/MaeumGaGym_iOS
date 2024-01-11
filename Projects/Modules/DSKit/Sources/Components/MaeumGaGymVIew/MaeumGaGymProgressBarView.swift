@@ -10,7 +10,7 @@ public class MaeumGaGymProgressBarView: UIView {
     private var circleShapeLayer: CAShapeLayer!
     
     private var durationTimer = 0
-    private var initTime:Double = 0.0
+    private var initTime: Double = 0.0
     
     let disposeBag = DisposeBag()
     
@@ -20,7 +20,6 @@ public class MaeumGaGymProgressBarView: UIView {
         $0.font = UIFont.Pretendard.bodyLarge
         $0.textColor = .black
     }
-    //    MaeumGaGymLabel(text: "ㄴㅇㄹㄴㅇㄹ", font: UIFont.Pretendard.bodyLarge, textColor: .black)
     
     private var timerMainTitle = UILabel().then {
         $0.text = ""
@@ -36,13 +35,15 @@ public class MaeumGaGymProgressBarView: UIView {
         $0.textColor = .black
     }
     
-    
     public init(
         center: CGPoint,
         radius: Double,
         color: UIColor
     ) {
-        super.init(frame: CGRect(origin: CGPoint(x: center.x - CGFloat(radius), y: center.y - CGFloat(radius)), size: CGSize(width: radius * 2, height: radius * 2)))
+        super.init(frame: CGRect(
+            origin: CGPoint(x: center.x - CGFloat(radius), y: center.y - CGFloat(radius)),
+            size: CGSize(width: radius * 2, height: radius * 2))
+        )
         
         self.colorCircle = color
         self.radius = radius
@@ -55,8 +56,6 @@ public class MaeumGaGymProgressBarView: UIView {
         self.layer.addSublayer(circleShapeLayer)
         
         layout()
-        
-        
     }
     
     required public init?(coder: NSCoder) {
@@ -100,11 +99,11 @@ public class MaeumGaGymProgressBarView: UIView {
         
         if initTime.truncatingRemainder(dividingBy: 3600) == 0 {
             timerInitTitle.text = "\(Int(time[0]))시간"
-        } else if initTime / 3600 > 1  {
+        } else if initTime / 3600 > 1 {
             timerInitTitle.text = "\(Int(time[0]))시간  \(Int(time[1]))분"
         } else if initTime.truncatingRemainder(dividingBy: 60) == 0 {
             timerInitTitle.text = "\(Int(time[1]))분"
-        } else if initTime / 60 > 1{
+        } else if initTime / 60 > 1 {
             timerInitTitle.text = "\(Int(time[1]))분  \(Int(time[2]))초"
         } else {
             timerInitTitle.text = "\(Int(time[2]))초"
@@ -161,8 +160,7 @@ public class MaeumGaGymProgressBarView: UIView {
     public func startTimer() -> Bool { // 재시작 한뒤 시작되면 카운트다운 label 작동이 안됨
         if durationTimer == 0 {
             return false
-        }
-        else if circleShapeLayer.speed == 0 {
+        } else if circleShapeLayer.speed == 0 {
             resumeAnimation()
             timer.setting(count: Double(durationTimer))
             timer.startTimer()
@@ -174,7 +172,6 @@ public class MaeumGaGymProgressBarView: UIView {
         
         return true
     }
-    
     
     public func stopTimer() {
         pauseAnimation()

@@ -7,7 +7,7 @@ final class PickleImagePrefetcher: PicklePrefetcher {
     var completedItems: [Response] = []
     var failedErrors: [Error] = []
     var isTasking: Bool = false
-    var queue: DispatchQueue = .init(label: "video.reels.prefetch")
+    var queue: DispatchQueue = .init(label: "video.pickle.prefetch")
     var pendingQueue: PriorityQueue<PendingItem> = {
         let queue = PriorityQueue<PendingItem> { (lhs: PendingItem, rhs: PendingItem) -> Bool in
             return lhs > rhs
@@ -36,9 +36,8 @@ final class PickleImagePrefetcher: PicklePrefetcher {
     }
 }
 
-
 private extension AVAsset {
-    func generateThumbnail(completion: @escaping (UIImage?) -> Void) {
+    func generateThumbnail(completion: @escaping (UIImage?) -> Void) { // 썸내일 뽑아오는 코드
         let imageGenerator = AVAssetImageGenerator(asset: self)
         let time = CMTime(seconds: 0.0, preferredTimescale: 600)
         let times = [NSValue(time: time)]
@@ -55,4 +54,3 @@ private extension AVAsset {
         )
     }
 }
-

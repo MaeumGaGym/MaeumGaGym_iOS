@@ -28,7 +28,6 @@ final class PickleCollectionManager: NSObject {
     }
 }
 
-
 extension PickleCollectionManager: PickleManager {
     func register(identifier: String) {
         self.reuseIdentifiers.append(identifier)
@@ -42,11 +41,9 @@ extension PickleCollectionManager: PickleManager {
             self.playerControl.pause(priority: pauseEvent.priority)
         default:
             self.delegate?.recive(event: event)
-            break
         }
     }
 }
-
 
 extension PickleCollectionManager: PlayerControlDelegate {
     func play(priority: Pickle.VideoPriority, didSelect: Bool) {
@@ -61,7 +58,6 @@ extension PickleCollectionManager: PlayerControlDelegate {
         self.delegate?.recive(event: event)
     }
 }
-
 
 extension PickleCollectionManager: ItemManagerDelegate {
     func reloadAll() {
@@ -82,18 +78,22 @@ extension PickleCollectionManager: ItemManagerDelegate {
     }
 }
 
-
 extension PickleCollectionManager: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return Constant.sectionCount
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int
+    ) -> Int {
         return self.itemManager.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         guard let item = self.itemManager.getItem(at: indexPath) else {
             return UICollectionViewCell()
         }

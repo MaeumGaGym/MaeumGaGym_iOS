@@ -9,21 +9,20 @@ open class MaeumGaGymTextField: UITextField {
 
     private let disposeBag = DisposeBag()
 
-    private let placeholderLabel = UILabel().then {
+    public let placeholderLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyLarge
         $0.textColor = DSKitAsset.Colors.gray400.color
     }
 
-    private let underlineView = UIView().then {
+    public let underlineView = UIView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray400.color
     }
 
-    private let errorLabel = UILabel().then {
+    public let errorLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyTiny
         $0.textColor = DSKitAsset.Colors.red500.color
         $0.isHidden = true
     }
-
 
     public var showError: Bool = false {
         didSet {
@@ -38,7 +37,6 @@ open class MaeumGaGymTextField: UITextField {
             errorLabel.text = errorMessage
         }
     }
-
   
     public var nameErrorType: TextFieldErrorType.Name? {
         didSet {
@@ -62,7 +60,6 @@ open class MaeumGaGymTextField: UITextField {
         placeholderLabel.text = placeholder
     }
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -140,4 +137,3 @@ extension MaeumGaGymTextField: UITextFieldDelegate {
         }
     }
 }
-

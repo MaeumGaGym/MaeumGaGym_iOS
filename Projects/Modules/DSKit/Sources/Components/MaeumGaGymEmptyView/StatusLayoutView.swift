@@ -1,24 +1,19 @@
-//
-//  StatusLayoutView.swift
-//  DSKit
-//
-//  Created by 박준하 on 12/26/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 import Foundation
 import SnapKit
 import Then
+import Core
 
-public class StatusLayoutView: UIView {
+public class StatusLayoutView: BaseView {
     
-    let imageView = UIImageView().then {
+    private let imageView = UIImageView().then {
         $0.adjustsImageSizeForAccessibilityContentSizeCategory = true
         $0.contentMode = .scaleAspectFill
+        $0.tintColor = .black
+
     }
 
-    let messageLabel = UILabel().then {
+    private var messageLabel = UILabel().then {
         $0.textColor = .red
         $0.numberOfLines = 0
         $0.textAlignment = .center
@@ -28,30 +23,32 @@ public class StatusLayoutView: UIView {
     
     public init(message: String, image: UIImage) {
         super.init(frame: .zero)
+        self.setupUI(message: message, image: image)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func layout() {
+        super.layout()
         
-        let emptyimage: UIImage = image
+        self.addSubviews([imageView, messageLabel])
 
-        emptyimage.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = .red
-        imageView.image = emptyimage
-        messageLabel.text = message
-        
-        self.addSubview(imageView)
-        self.addSubview(messageLabel)
-        
-        imageView.snp.makeConstraints {
+        self.imageView.snp.makeConstraints {
             $0.centerY.equalToSuperview().offset(-80.0)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(80.0)
         }
 
-        messageLabel.snp.makeConstraints {
+        self.messageLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(40.0)
             $0.centerX.equalToSuperview()
         }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setupUI(message: String, image: UIImage) {
+        imageView.image = image
+        messageLabel.text = message
     }
 }

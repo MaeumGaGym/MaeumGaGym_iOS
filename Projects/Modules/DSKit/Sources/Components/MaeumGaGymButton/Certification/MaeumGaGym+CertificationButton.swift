@@ -5,14 +5,12 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymCertificationButton: UIButton {
+open class MaeumGaGymCertificationButton: BaseButton {
 
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
     }
-
-    private let disposeBag = DisposeBag()
 
     public init(
         text: String,
@@ -57,16 +55,19 @@ open class MaeumGaGymCertificationButton: UIButton {
                 break
             }
 
-            contentEdgeInsets = UIEdgeInsets(top: topBottomInset, left: leftRightInset, bottom: topBottomInset, right: leftRightInset)
+            contentEdgeInsets = UIEdgeInsets(top: topBottomInset,
+                                             left: leftRightInset,
+                                             bottom: topBottomInset,
+                                             right: leftRightInset)
         }
 
         titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.numberOfLines = 0
-
-        setupConstraints()
     }
-
-    private func setupConstraints() {
+    
+    open override func layout() {
+        super.layout()
+        
         addSubview(textLabel)
 
         textLabel.snp.makeConstraints {
@@ -79,7 +80,7 @@ open class MaeumGaGymCertificationButton: UIButton {
             $0.width.equalTo(textWidth + 1 * (contentEdgeInsets.left + contentEdgeInsets.right))
         }
     }
-
+    
     private func updateButtonWidth(for text: String) {
         let textWidth = text.size(withAttributes: [.font: textLabel.font ?? UIFont.Pretendard.bodyMedium]).width
 

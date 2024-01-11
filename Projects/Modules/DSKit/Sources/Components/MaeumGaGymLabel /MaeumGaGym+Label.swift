@@ -1,10 +1,3 @@
-//
-//  MaeumGaGym+Label.swift
-//  DSKit
-//
-//  Created by 박준하 on 12/31/23.
-//  Copyright © 2023 MaeumGaGym-iOS. All rights reserved.
-//
 import UIKit
 import Then
 import SnapKit
@@ -12,11 +5,9 @@ import Core
 import RxSwift
 import RxCocoa
 
-open class MaeumGaGymLabel: UILabel {
-    
-    private let disposeBag = DisposeBag()
-    
-    private let textLabel = UILabel().then {
+open class MaeumGaGymLabel: BaseLabel {
+        
+    private var textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
         $0.backgroundColor = .clear
@@ -50,19 +41,19 @@ open class MaeumGaGymLabel: UILabel {
   
         if let font = font {
             textLabel.font = font
-        }
-        
-        setupConstraints()
+        }        
     }
     
-    private func setupConstraints() {
-        addSubview(textLabel)
+    public override func layout() {
+        super.layout()
+        
+        self.addSubview(textLabel)
 
-        textLabel.snp.makeConstraints {
+        self.textLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        snp.makeConstraints {
+        self.snp.makeConstraints {
             switch textLabel.font {
             case UIFont.Pretendard.titleLarge:
                 $0.height.equalTo(48)
@@ -70,7 +61,7 @@ open class MaeumGaGymLabel: UILabel {
                 $0.height.equalTo(50)
             case UIFont.Pretendard.bodyMedium2:
                 $0.height.equalTo(20)
-                $0.width.equalTo(330.0)
+                $0.width.equalTo(280.0)
             case UIFont.Pretendard.light:
                 $0.height.equalTo(64.0)
             case UIFont.Pretendard.bodyLarge:
