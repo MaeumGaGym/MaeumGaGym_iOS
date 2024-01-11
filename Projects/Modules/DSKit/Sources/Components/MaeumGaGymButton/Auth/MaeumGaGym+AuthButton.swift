@@ -56,4 +56,3 @@ open class MaeumGaGymAuthButton: BaseButton {
         self.textLabel.textColor = type.titleColor
     }
 }
-

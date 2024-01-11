@@ -33,7 +33,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     }
     
     public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 9, 4 / 10, 6 / 7)
-    public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate? = nil
+    public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate?
     
     private lazy var size: CGSize = {
         guard let superview = view.superview else { return CGSize.zero }
@@ -237,7 +237,7 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.view.superview?.layoutIfNeeded()
             self.view.removeFromSuperview()
-        }) { (isFinished) in
+        }) { _ in
             completion?()
         }
     }

@@ -7,11 +7,11 @@ import SnapKit
 public class MaeumGaGymPagingTabBar: UIView {
     
     public var cellHeight: CGFloat { 36.0 }
-
+    
     private var categoryTitleList: [String]
     
     public let selectedIndex = PublishSubject<Int>()
-        
+    
     public let itemSelected = PublishSubject<IndexPath>()
     
     private let disposeBag = DisposeBag()
@@ -40,38 +40,38 @@ public class MaeumGaGymPagingTabBar: UIView {
         collectionView.isScrollEnabled = categoryTitleList.count >= 7
         
         Observable.just(categoryTitleList).bind(to:
-            collectionView.rx.items(
-                cellIdentifier: MaeumGaGymPagingTabBarCell.identifier,
-                cellType: MaeumGaGymPagingTabBarCell.self)) { _, title, cell in
-                    cell.setupView(title: title)
-                }.disposed(by: disposeBag)
-
+                                                    collectionView.rx.items(
+                                                        cellIdentifier: MaeumGaGymPagingTabBarCell.identifier,
+                                                        cellType: MaeumGaGymPagingTabBarCell.self)) { _, title, cell in
+                                                            cell.setupView(title: title)
+                                                        }.disposed(by: disposeBag)
+        
         collectionView.rx.itemSelected.bind(to: self.itemSelected).disposed(by: self.disposeBag)
-
+        
         return collectionView
     }()
     
     public init(categoryTitleList: [String]) {
-       self.categoryTitleList = categoryTitleList
-       super.init(frame: .zero)
-       setupLayout()
+        self.categoryTitleList = categoryTitleList
+        super.init(frame: .zero)
+        setupLayout()
         
-       self.collectionView.selectItem(at:
-           IndexPath(row: 0, section: 0),
-           animated: true,
-           scrollPosition: []
-       )
+        self.collectionView.selectItem(at:
+                                        IndexPath(row: 0, section: 0),
+                                       animated: true,
+                                       scrollPosition: []
+        )
         
         collectionView.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
-          guard let strongSelf = self else { return }
-          strongSelf.selectedIndex.onNext(indexPath.row)
+            guard let strongSelf = self else { return }
+            strongSelf.selectedIndex.onNext(indexPath.row)
         }).disposed(by: self.disposeBag)
-       
-   }
-   
-   required init?(coder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-   }
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension MaeumGaGymPagingTabBar: UICollectionViewDelegateFlowLayout {
@@ -85,7 +85,7 @@ extension MaeumGaGymPagingTabBar: UICollectionViewDataSource {
         return categoryTitleList.count
     }
     public func collectionView(_ collectionView: UICollectionView,
-                                          cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: MaeumGaGymPagingTabBarCell.identifier,
             for: indexPath) as? MaeumGaGymPagingTabBarCell else { return UICollectionViewCell() }

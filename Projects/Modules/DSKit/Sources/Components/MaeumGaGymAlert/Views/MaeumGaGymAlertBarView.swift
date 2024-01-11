@@ -5,7 +5,7 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
     open var dismissByTap: Bool = true
     open var dismissInTime: Bool = true
     open var duration: TimeInterval = 1.5
-    open var haptic: AlertHaptic? = nil
+    open var haptic: AlertHaptic?
     
     public let titleLabel: UILabel?
     public let subtitleLabel: UILabel?
@@ -22,7 +22,7 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
     fileprivate var presentDismissDuration: TimeInterval = 0.2
     fileprivate var presentDismissScale: CGFloat = 0.8
     
-    fileprivate var completion: (()->Void)? = nil
+    fileprivate var completion: (() -> Void)?
     
     private lazy var backgroundView: UIView = {
         let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
@@ -112,7 +112,7 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func present(on view: UIView, completion: (()->Void)? = nil) {
+    open func present(on view: UIView, completion: (() -> Void)? = nil) {
         self.viewForPresent = view
         self.completion = completion
         viewForPresent?.addSubview(self)
@@ -135,7 +135,7 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 1
             self.transform = CGAffineTransform.identity
-        }, completion: { [weak self] finished in
+        }, completion: { [weak self] _ in
             guard let self = self else { return }
             
             if let iconView = self.iconView as? AlertIconAnimatable {
@@ -156,11 +156,11 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
         self.dismiss(customCompletion: self.completion)
     }
     
-    func dismiss(customCompletion: (()->Void)? = nil) {
+    func dismiss(customCompletion: (() -> Void)? = nil) {
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 0
             self.transform = self.transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
-        }, completion: { [weak self] finished in
+        }, completion: { [weak self] _ in
             self?.removeFromSuperview()
             customCompletion?()
         })

@@ -7,8 +7,8 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
     open var dismissByTap: Bool = true
     open var dismissInTime: Bool = true
     open var duration: TimeInterval = 1.5
-    open var haptic: AlertHaptic? = nil
-    
+    open var haptic: AlertHaptic?
+
     public let titleLabel: UILabel?
     public let subtitleLabel: UILabel?
     public let iconView: UIView?
@@ -24,7 +24,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
     fileprivate var presentDismissDuration: TimeInterval = 0.2
     fileprivate var presentDismissScale: CGFloat = 0.8
     
-    fileprivate var completion: (() -> Void)? = nil
+    fileprivate var completion: (() -> Void)?
     
     private lazy var backgroundView: UIVisualEffectView = {
         let view: UIVisualEffectView = {
@@ -34,7 +34,9 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         return view
     }()
     
-    public init(title: String?, subtitle: String?, icon: AlertIcon?) {
+    public init(title: String? = nil,
+                subtitle: String? = nil,
+                icon: AlertIcon? = nil) {
         
         if let title = title {
             let label = UILabel()
@@ -48,7 +50,6 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         } else {
             self.titleLabel = nil
         }
-        
         if let subtitle = subtitle {
             let label = UILabel()
             label.font = UIFont.preferredFont(forTextStyle: .body)
@@ -138,7 +139,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 1
             self.transform = CGAffineTransform.identity
-        }, completion: { [weak self] finished in
+        }, completion: { [weak self] _ in
             guard let self = self else { return }
             
             if let iconView = self.iconView as? AlertIconAnimatable {
@@ -163,7 +164,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
         UIView.animate(withDuration: presentDismissDuration, animations: {
             self.alpha = 0
             self.transform = self.transform.scaledBy(x: self.presentDismissScale, y: self.presentDismissScale)
-        }, completion: { [weak self] finished in
+        }, completion: { [weak self] _ in
             self?.removeFromSuperview()
             customCompletion?()
         })
@@ -195,7 +196,9 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
                     return layoutMargins.top
                 }
             }()
-            subtitleLabel.layoutDynamicHeight(x: layoutMargins.left, y: yPosition, width: frame.width - layoutMargins.left - layoutMargins.right)
+            subtitleLabel.layoutDynamicHeight(x: layoutMargins.left,
+                                              y: yPosition,
+                                              width: frame.width - layoutMargins.left - layoutMargins.right)
         }
     }
     
@@ -235,10 +238,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
             switch preset {
             case .done:
                 self.init(
-                    iconSize: .init(
-                        width: 112,
-                        height: 112
-                    ),
+                    iconSize: .init(width: 112, height: 112),
                     margins: .init(
                         top: 63,
                         left: Self.defaultHorizontalInset,
@@ -249,10 +249,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
                 )
             case .heart:
                 self.init(
-                    iconSize: .init(
-                        width: 112,
-                        height: 77
-                    ),
+                    iconSize: .init(width: 112, height: 77),
                     margins: .init(
                         top: 49,
                         left: Self.defaultHorizontalInset,
@@ -263,10 +260,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
                 )
             case .error:
                 self.init(
-                    iconSize: .init(
-                        width: 86,
-                        height: 86
-                    ),
+                    iconSize: .init(width: 86, height: 86),
                     margins: .init(
                         top: 63,
                         left: Self.defaultHorizontalInset,
@@ -277,10 +271,7 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
                 )
             case .spinnerLarge, .spinnerSmall:
                 self.init(
-                    iconSize: .init(
-                        width: 16,
-                        height: 16
-                    ),
+                    iconSize: .init(width: 16, height: 16),
                     margins: .init(
                         top: 58,
                         left: Self.defaultHorizontalInset,
@@ -289,12 +280,9 @@ public class MaeumGaGymAlertBoxView: UIView, AlertViewProtocol {
                     ),
                     spaceBetweenIconAndTitle: 39
                 )
-            case .custom(_):
+            case .custom:
                 self.init(
-                    iconSize: .init(
-                        width: 100,
-                        height: 100
-                    ),
+                    iconSize: .init(width: 100, height: 100),
                     margins: .init(
                         top: 43,
                         left: Self.defaultHorizontalInset,
