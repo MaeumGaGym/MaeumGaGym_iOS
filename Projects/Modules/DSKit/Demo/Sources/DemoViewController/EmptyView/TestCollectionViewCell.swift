@@ -18,7 +18,7 @@ public class TestCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    func setImageView(){
+    func setImageView() {
         backgroundColor = .systemGroupedBackground
         
         addSubview(imageView)
