@@ -122,7 +122,6 @@ public final class PickleView: UIView {
     }
 }
 
-
 extension PickleView: MakeLayout {
     public func addSubViews() {
         self.addSubview(self.collectionView)
@@ -231,7 +230,7 @@ extension PickleView: PickleManagerDelegate {
             self.currentCell?.configure(event: event)
         }
     }
-    
+
     func currentPage(page: Int) {
         self.delegate?.currentPage(page, data: self.manager.itemManager.getItem(at: page))
     }
