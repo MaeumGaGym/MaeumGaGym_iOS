@@ -3,7 +3,6 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import DSKit
 
 open class MaeumGaGymPostureTitleView: UIView {
     
@@ -18,7 +17,6 @@ open class MaeumGaGymPostureTitleView: UIView {
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.cornerRadius = 8.0
     }
-    
     
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
@@ -40,25 +38,23 @@ open class MaeumGaGymPostureTitleView: UIView {
     }
     
     private func setupUI() {
-        addSubviews([titleLabel, imageView, seeMoreButton])
-        
-        titleLabel.snp.makeConstraints {
-            $0.width.equalTo(430.0)
-            $0.height.equalTo(721.0)
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(0.0)
+        addSubviews([imageView, titleLabel, seeMoreButton])
+    
+        imageView.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
+            $0.width.height.equalTo(40.0)
         }
         
-        imageView.snp.makeConstraints {
-            $0.width.equalTo(430.0)
-            $0.height.equalTo(721.0)
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(0.0)
+        titleLabel.snp.makeConstraints {
+            $0.width.equalTo(89.0)
+            $0.height.equalTo(32.0)
+            $0.leading.bottom.equalToSuperview()
         }
         
         seeMoreButton.snp.makeConstraints {
-            $0.leading.equalTo(imageToggleButton.snp.trailing).offset(16.0)
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-16.0)
+            $0.centerY.trailing.equalToSuperview()
+            $0.width.equalTo(74.0)
+            $0.height.equalTo(24.0)
         }
         
     }
