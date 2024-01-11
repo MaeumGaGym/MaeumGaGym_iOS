@@ -24,15 +24,28 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
             scrollView?.decelerationRate = UIScrollView.DecelerationRate.fast
             bottomConstraint.constant = constant(of: state)
             bottomSheetDelegate?.didMove(to: 1 - Float(constant(of: state) / constant(of: .collapsed)))
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                self.view.superview?.layoutIfNeeded()
-            }) { _ in
-                scrollView?.decelerationRate = UIScrollView.DecelerationRate.normal
-            }
+
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                options: .curveEaseOut,
+                animations: {
+                    self.view.superview?.layoutIfNeeded()
+                },
+                completion: { _ in
+                    scrollView?.decelerationRate = UIScrollView.DecelerationRate.normal
+                }
+            )
         }
     }
-    
-    public var heights: (CGFloat, CGFloat, CGFloat) = (1 / 9, 4 / 10, 6 / 7)
+ 
+    public struct Heights {
+        var value1: CGFloat = 1 / 9
+        var value2: CGFloat = 4 / 10
+        var value3: CGFloat = 6 / 7
+    }
+
+    public var heights = Heights()
     public var bottomSheetDelegate: MaeumGaGymBottomSheetViewDelegate?
     
     private lazy var size: CGSize = {
@@ -123,11 +136,11 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
         let height: CGFloat
         switch state {
         case .collapsed:
-            height = heights.0
+            height = heights.value1
         case .partiallyExpanded:
-            height = heights.1
+            height = heights.value2
         case .fullyExpanded:
-            height = heights.2
+            height = heights.value3
         }
         if height > 1.0 {
             return height
@@ -234,12 +247,18 @@ public final class MaeumGaGymBottomSheetViewController: UINavigationController {
     
     public func hideBottomSheet(completion: (() -> Void)? = nil) {
         state = .collapsed
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-            self.view.superview?.layoutIfNeeded()
-            self.view.removeFromSuperview()
-        }) { _ in
-            completion?()
-        }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: .curveEaseOut,
+            animations: {
+                self.view.superview?.layoutIfNeeded()
+                self.view.removeFromSuperview()
+            },
+            completion: { _ in
+                completion?()
+            }
+        )
     }
 }
 

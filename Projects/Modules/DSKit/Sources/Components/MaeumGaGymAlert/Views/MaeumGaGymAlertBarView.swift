@@ -194,64 +194,107 @@ public class MaeumGaGymAlertBarView: UIView, AlertViewProtocol, AlertViewInterna
     }
     
     private func layout(maxWidth: CGFloat?) {
-        
         let spaceBetweenLabelAndIcon: CGFloat = 12
         let spaceBetweenTitleAndSubtitle: CGFloat = 4
-        
+
         if let iconView = self.iconView {
-            iconView.frame = .init(x: layoutMargins.left, y: .zero, width: 20, height: 20)
-            let xPosition = iconView.frame.maxX + spaceBetweenLabelAndIcon
-            if let maxWidth = maxWidth {
-                let labelWidth = maxWidth - xPosition - layoutMargins.right
-                titleLabel?.frame = .init(
-                    x: xPosition,
-                    y: layoutMargins.top,
-                    width: labelWidth,
-                    height: titleLabel?.frame.height ?? .zero
-                )
-                titleLabel?.sizeToFit()
-                subtitleLabel?.frame = .init(
-                    x: xPosition,
-                    y: (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle,
-                    width: labelWidth,
-                    height: subtitleLabel?.frame.height ?? .zero
-                )
-                subtitleLabel?.sizeToFit()
-            } else {
-                titleLabel?.sizeToFit()
-                titleLabel?.frame.origin.x = xPosition
-                titleLabel?.frame.origin.y = layoutMargins.top
-                subtitleLabel?.sizeToFit()
-                subtitleLabel?.frame.origin.x = xPosition
-                subtitleLabel?.frame.origin.y = (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle
-            }
+            layoutWithIcon(iconView,
+                           maxWidth: maxWidth,
+                           spaceBetweenLabelAndIcon: spaceBetweenLabelAndIcon,
+                           spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle)
         } else {
-            if let maxWidth = maxWidth {
-                let labelWidth = maxWidth - layoutMargins.left - layoutMargins.right
-                titleLabel?.frame = .init(
-                    x: layoutMargins.left,
-                    y: layoutMargins.top,
-                    width: labelWidth,
-                    height: titleLabel?.frame.height ?? .zero
-                )
-                titleLabel?.sizeToFit()
-                subtitleLabel?.frame = .init(
-                    x: layoutMargins.left,
-                    y: (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle,
-                    width: labelWidth,
-                    height: subtitleLabel?.frame.height ?? .zero
-                )
-                subtitleLabel?.sizeToFit()
-            } else {
-                titleLabel?.sizeToFit()
-                titleLabel?.frame.origin.x = layoutMargins.left
-                titleLabel?.frame.origin.y = layoutMargins.top
-                subtitleLabel?.sizeToFit()
-                subtitleLabel?.frame.origin.x = layoutMargins.left
-                subtitleLabel?.frame.origin.y = (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle
-            }
+            layoutWithoutIcon(maxWidth: maxWidth,
+                              spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle)
         }
-        
+
         iconView?.center.y = frame.height / 2
+    }
+
+    private func layoutWithIcon(_ iconView: UIView,
+                                maxWidth: CGFloat?,
+                                spaceBetweenLabelAndIcon: CGFloat,
+                                spaceBetweenTitleAndSubtitle: CGFloat
+    ) {
+        iconView.frame = .init(x: layoutMargins.left, y: .zero, width: 20, height: 20)
+        let xPosition = iconView.frame.maxX + spaceBetweenLabelAndIcon
+
+        if let maxWidth = maxWidth {
+            layoutWithMaxWidth(maxWidth,
+                               xPosition: xPosition,
+                               spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle
+            )
+        } else {
+            layoutWithoutMaxWidth(xPosition: xPosition,
+                                  spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle
+            )
+        }
+    }
+
+    private func layoutWithMaxWidth(_ maxWidth: CGFloat, xPosition: CGFloat, spaceBetweenTitleAndSubtitle: CGFloat) {
+        let labelWidth = maxWidth - xPosition - layoutMargins.right
+
+        titleLabel?.frame = .init(
+            x: xPosition,
+            y: layoutMargins.top,
+            width: labelWidth,
+            height: titleLabel?.frame.height ?? .zero
+        )
+        titleLabel?.sizeToFit()
+
+        subtitleLabel?.frame = .init(
+            x: xPosition,
+            y: (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle,
+            width: labelWidth,
+            height: subtitleLabel?.frame.height ?? .zero
+        )
+        subtitleLabel?.sizeToFit()
+    }
+
+    private func layoutWithoutMaxWidth(xPosition: CGFloat, spaceBetweenTitleAndSubtitle: CGFloat) {
+        titleLabel?.sizeToFit()
+        titleLabel?.frame.origin.x = xPosition
+        titleLabel?.frame.origin.y = layoutMargins.top
+
+        subtitleLabel?.sizeToFit()
+        subtitleLabel?.frame.origin.x = xPosition
+        subtitleLabel?.frame.origin.y = (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle
+    }
+
+    private func layoutWithoutIcon(maxWidth: CGFloat?, spaceBetweenTitleAndSubtitle: CGFloat) {
+        if let maxWidth = maxWidth {
+            layoutWithoutIconAndMaxWidth(maxWidth, spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle)
+        } else {
+            layoutWithoutIconAndWithoutMaxWidth(spaceBetweenTitleAndSubtitle: spaceBetweenTitleAndSubtitle)
+        }
+    }
+
+    private func layoutWithoutIconAndMaxWidth(_ maxWidth: CGFloat, spaceBetweenTitleAndSubtitle: CGFloat) {
+        let labelWidth = maxWidth - layoutMargins.left - layoutMargins.right
+
+        titleLabel?.frame = .init(
+            x: layoutMargins.left,
+            y: layoutMargins.top,
+            width: labelWidth,
+            height: titleLabel?.frame.height ?? .zero
+        )
+        titleLabel?.sizeToFit()
+
+        subtitleLabel?.frame = .init(
+            x: layoutMargins.left,
+            y: (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle,
+            width: labelWidth,
+            height: subtitleLabel?.frame.height ?? .zero
+        )
+        subtitleLabel?.sizeToFit()
+    }
+
+    private func layoutWithoutIconAndWithoutMaxWidth(spaceBetweenTitleAndSubtitle: CGFloat) {
+        titleLabel?.sizeToFit()
+        titleLabel?.frame.origin.x = layoutMargins.left
+        titleLabel?.frame.origin.y = layoutMargins.top
+
+        subtitleLabel?.sizeToFit()
+        subtitleLabel?.frame.origin.x = layoutMargins.left
+        subtitleLabel?.frame.origin.y = (titleLabel?.frame.maxY ?? layoutMargins.top) + spaceBetweenTitleAndSubtitle
     }
 }
