@@ -2,7 +2,7 @@ import UIKit
 
 public final class NavigationBar: UINavigationBar {
     
-    var navigationController: UINavigationController? = nil
+    var navigationController: UINavigationController?
     var type: MaeumGaGymBottomSheetType = .plain
     
     public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -10,7 +10,7 @@ public final class NavigationBar: UINavigationBar {
         switch type {
         case .plain:
             return view
-        case .navigation(title: _):
+        case .navigation:
             if view is UIControl {
                 return view
             }

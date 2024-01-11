@@ -60,7 +60,6 @@ open class MaeumGaGymTextField: UITextField {
         placeholderLabel.text = placeholder
     }
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -138,4 +137,3 @@ extension MaeumGaGymTextField: UITextFieldDelegate {
         }
     }
 }
-

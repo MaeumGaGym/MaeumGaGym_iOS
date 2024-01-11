@@ -17,6 +17,9 @@ open class MaeumGaGymAgreeView: UIView {
     public let thirdAgreeButton = MaeumGaGymAgreeButton(text: .ageAgreeText)
     public let fourthAgreeButton = MaeumGaGymAgreeButton(text: .marketingAgreeText, chooseType: true)
     
+    private var blueColor = DSKitAsset.Colors.blue500.color
+    private var grayColor = DSKitAsset.Colors.gray400.color
+    
     public init () {
         super.init(frame: .zero)
         setupUI()
@@ -51,7 +54,13 @@ open class MaeumGaGymAgreeView: UIView {
             $0.height.equalTo(284.0)
         }
         
-        addSubviews([decorateLine1, allAgreeButton, decorateLine2, firstAgreeButton, secondAgreeButton, thirdAgreeButton, fourthAgreeButton])
+        addSubviews([decorateLine1,
+                     allAgreeButton,
+                     decorateLine2,
+                     firstAgreeButton,
+                     secondAgreeButton,
+                     thirdAgreeButton,
+                     fourthAgreeButton])
         
         decorateLine1.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -128,7 +137,7 @@ open class MaeumGaGymAgreeView: UIView {
                                    !fourthAgreeButton.checked
 
         button.isEnabled = shouldActivateButton
-        button.backgroundColor = shouldActivateButton ? DSKitAsset.Colors.blue500.color : DSKitAsset.Colors.gray400.color
+        button.backgroundColor = shouldActivateButton ? blueColor : grayColor
         button.textLabel.textColor = shouldActivateButton ? .white : DSKitAsset.Colors.gray200.color
 
         return shouldActivateButton

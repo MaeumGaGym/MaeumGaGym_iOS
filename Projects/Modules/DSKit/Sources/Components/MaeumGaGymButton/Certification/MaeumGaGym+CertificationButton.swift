@@ -55,7 +55,10 @@ open class MaeumGaGymCertificationButton: BaseButton {
                 break
             }
 
-            contentEdgeInsets = UIEdgeInsets(top: topBottomInset, left: leftRightInset, bottom: topBottomInset, right: leftRightInset)
+            contentEdgeInsets = UIEdgeInsets(top: topBottomInset,
+                                             left: leftRightInset,
+                                             bottom: topBottomInset,
+                                             right: leftRightInset)
         }
 
         titleLabel?.lineBreakMode = .byWordWrapping

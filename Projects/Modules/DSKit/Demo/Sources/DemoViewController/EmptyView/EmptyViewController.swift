@@ -23,7 +23,8 @@ public class EmptyViewController: UIViewController, UICollectionViewDelegateFlow
         
         items.subscribe(onNext: { [weak self] items in
             if items.isEmpty {
-                self?.collectionView.setEmptyMessage("아직 게시물이 없어요.", image: UIImage(systemName: "square.and.arrow.up.fill")!)
+                self?.collectionView.setEmptyMessage("아직 게시물이 없어요.",
+                                                     image: UIImage(systemName: "square.and.arrow.up.fill")!)
             } else {
                 self?.collectionView.restore()
             }
@@ -44,15 +45,17 @@ public class EmptyViewController: UIViewController, UICollectionViewDelegateFlow
     
     private func setupBinding() {
         
-        collectionView.rx.itemSelected.subscribe(onNext:{ indexPath in
+        collectionView.rx.itemSelected.subscribe(onNext: { indexPath in
             
             print(indexPath.row)
             
         }).disposed(by: disposeBag)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let size = CGSize(width: UIScreen.main.bounds.size.width, height: 80)
         return size
     }

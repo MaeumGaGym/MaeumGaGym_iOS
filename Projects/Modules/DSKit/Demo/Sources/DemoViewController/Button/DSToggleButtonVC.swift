@@ -10,7 +10,6 @@ public class DSToggleButtonVC: UIViewController {
     var metronome = MaeumGaGymToggleButton(type: .metronome)
     var timer = MaeumGaGymToggleButton(type: .timer)
 
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -55,5 +54,3 @@ public class DSToggleButtonVC: UIViewController {
         }
     }
 }
-
-

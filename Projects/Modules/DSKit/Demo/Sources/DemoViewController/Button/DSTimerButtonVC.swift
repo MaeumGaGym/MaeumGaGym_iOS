@@ -9,7 +9,6 @@ public class DSTimerButtonVC: UIViewController {
     var restartButton = MaeumGaGymTimerButton(type: .restart)
     var startButton = MaeumGaGymTimerButton(type: .start)
     var stopButton = MaeumGaGymTimerButton(type: .stop)
-
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,4 +50,3 @@ public class DSTimerButtonVC: UIViewController {
         }
     }
 }
-

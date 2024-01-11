@@ -20,7 +20,6 @@ open class MaeumGaGymLine: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     public override func layout() {
         super.layout()
         

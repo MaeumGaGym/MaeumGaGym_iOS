@@ -1,7 +1,6 @@
 import UIKit
 import Then
 import SnapKit
-import DSKit
 
 public class MaeumGaGymPagingTabBarCell: UICollectionViewCell {
     
@@ -18,7 +17,6 @@ public class MaeumGaGymPagingTabBarCell: UICollectionViewCell {
         $0.alpha = 1.0
     }
 
-        
     private lazy var underline = UIView().then {
         $0.backgroundColor = DSKitAsset.Colors.blue500.color
         $0.alpha = 0.0

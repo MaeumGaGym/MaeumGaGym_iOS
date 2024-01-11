@@ -1,6 +1,7 @@
 import UIKit
 
-open class BaseDesignSystemTableViewController<T: RawRepresentable & CaseIterable>: UITableViewController where T.RawValue == String {
+open class BaseDesignSystemTableViewController<T: RawRepresentable & CaseIterable>: 
+    UITableViewController where T.RawValue == String {
 
     var designSystems: [T] = T.allCases as! [T]
 

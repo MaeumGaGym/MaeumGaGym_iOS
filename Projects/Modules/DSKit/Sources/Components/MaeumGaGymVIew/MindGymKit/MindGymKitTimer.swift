@@ -58,7 +58,7 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
         let hours: String = String(format: "%02d", Int(counter / 3600))
         let minutes: String = String(format: "%02d", Int(counter / 60))
         let seconds: String = String(format: "%02d", Int(counter.truncatingRemainder(dividingBy: 60)))
-        if counter / 3600 >= 1  {
+        if counter / 3600 >= 1 {
             return "\(hours) : \(minutes) : \(seconds)"
         } else if counter / 60 > 1 {
             return "\(minutes) : \(seconds)"
@@ -67,4 +67,3 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
         }
     }
 }
-
