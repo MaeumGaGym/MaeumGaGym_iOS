@@ -90,7 +90,9 @@ extension MaeumGaGymPagingTabBar: UICollectionViewDataSource {
         return categoryTitleList.count
     }
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaeumGaGymPagingTabBarCell.identifier, for: indexPath) as? MaeumGaGymPagingTabBarCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MaeumGaGymPagingTabBarCell.identifier,
+            for: indexPath) as? MaeumGaGymPagingTabBarCell else { return UICollectionViewCell() }
         
         cell.setupView(title: categoryTitleList[indexPath.row])
         
