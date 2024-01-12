@@ -18,7 +18,6 @@ open class MaeumGaGymPostureTitleView: UIView {
         $0.layer.cornerRadius = 8.0
     }
     
-    
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
 
@@ -61,6 +60,4 @@ open class MaeumGaGymPostureTitleView: UIView {
         }
         
     }
-    
 }
-
