@@ -20,7 +20,6 @@ open class MaeumGaGymPostureTitleView: UIView {
     
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
-
     public init(
         text: String,
         image: UIImage
