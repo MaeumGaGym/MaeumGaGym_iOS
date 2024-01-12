@@ -5,9 +5,11 @@ import RxSwift
 import RxCocoa
 import DSKit
 
-open class PostureRecommandTitleView: UIView {
+open class PostureRecommandTitleView: UICollectionViewCell {
     
     let disposeBag = DisposeBag()
+    
+    private let backView = UIView()
     
     private let titleLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
@@ -21,13 +23,16 @@ open class PostureRecommandTitleView: UIView {
     
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
+    private var collectionViewCell: MaeumGaGymPostureRecommandCollectionViewCell!
     
     public init(
         text: String,
-        image: UIImage
-
+        image: UIImage,
+        cellData: [(image: UIImage, text1: String, text2: String)]
     ) {
         super.init(frame: .zero)
+        
+        collectionViewCell = MaeumGaGymPostureRecommandCollectionViewCell(cellData: cellData)
         
         titleLabel.text = text
         imageView.image = image
@@ -39,7 +44,15 @@ open class PostureRecommandTitleView: UIView {
     }
     
     private func setupUI() {
-        addSubviews([imageView, titleLabel, seeMoreButton])
+        addSubviews([backView ,imageView, collectionViewCell])
+        backView.addSubviews([imageView, titleLabel, seeMoreButton])
+        
+        backView.snp.makeConstraints {
+            $0.width.equalToSuperview().inset(20.0)
+            $0.height.equalTo(80.0)
+            $0.top.equalToSuperview().offset(20.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+        }
     
         imageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
@@ -58,9 +71,11 @@ open class PostureRecommandTitleView: UIView {
             $0.height.equalTo(24.0)
         }
         
+        collectionViewCell.snp.makeConstraints {
+            $0.top.equalTo(seeMoreButton.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
     }
-    
 }
-
-
 
