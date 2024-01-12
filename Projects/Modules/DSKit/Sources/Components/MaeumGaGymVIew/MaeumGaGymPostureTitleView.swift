@@ -3,7 +3,6 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-import DSKit
 
 open class MaeumGaGymPostureTitleView: UIView {
     
@@ -22,7 +21,7 @@ open class MaeumGaGymPostureTitleView: UIView {
     
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
-    
+
     public init(
         text: String,
         image: UIImage
@@ -57,7 +56,7 @@ open class MaeumGaGymPostureTitleView: UIView {
         }
         
         seeMoreButton.snp.makeConstraints {
-            $0.leading.equalTo(imageToggleButton.snp.trailing).offset(16.0)
+            $0.leading.equalTo(imageView.snp.trailing).offset(16.0)
             $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(-16.0)
         }
         
