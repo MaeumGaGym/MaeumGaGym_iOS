@@ -15,11 +15,11 @@ public class MaeumGaGymBannerTableViewCell: UITableViewCell {
     
     private var bannerModel: MaeumGaGymBannerModel?
     public var imageList: [UIImage] = [
-        DSKitAsset.Assets.basicProfile.image,
-        DSKitAsset.Assets.basicProfile.image,
-        DSKitAsset.Assets.basicProfile.image,
-        DSKitAsset.Assets.basicProfile.image,
-        DSKitAsset.Assets.basicProfile.image
+        DSKitAsset.Assets.testImage1.image,
+        DSKitAsset.Assets.testImage1.image,
+        DSKitAsset.Assets.testImage1.image,
+        DSKitAsset.Assets.testImage1.image,
+        DSKitAsset.Assets.testImage1.image
     ]
     
     private lazy var collectionView: UICollectionView = {
@@ -143,8 +143,13 @@ extension MaeumGaGymBannerTableViewCell: UICollectionViewDataSource {
         return imageList.count
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MaeumGaGymeBannerCell.identifier, for: indexPath) as? MaeumGaGymeBannerCell else {
+    public func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MaeumGaGymeBannerCell.identifier,
+            for: indexPath
+        ) as? MaeumGaGymeBannerCell else {
             return UICollectionViewCell()
         }
         cell.configure(with: imageList[indexPath.item])
@@ -169,6 +174,7 @@ extension MaeumGaGymBannerTableViewCell {
             showingWidth,
             numberOfData
         )
+        
         self.indicatorView.layoutIfNeeded()
     }
     
@@ -177,7 +183,7 @@ extension MaeumGaGymBannerTableViewCell {
         self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
     }
     
-    func computeCurrentIndex() -> Int{
+    func computeCurrentIndex() -> Int {
         let visibleIndexPaths = self.collectionView.indexPathsForVisibleItems
         guard let currentVisibleIndexPath = visibleIndexPaths.first else { return 0 }
         let currentIndex = currentVisibleIndexPath.item
