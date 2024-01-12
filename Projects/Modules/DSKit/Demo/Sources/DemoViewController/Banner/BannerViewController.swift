@@ -4,6 +4,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 import Then
+import DSKit
 
 public enum TestBannerCell {
     case banner(model: MaeumGaGymBannerModel)
@@ -30,7 +31,6 @@ public class BannerViewController: UIViewController {
         self.viewModel = MaeumGaGymBannerModel()
         self.configureUI()
         self.addCells()
-        
     }
 }
 
