@@ -1,13 +1,13 @@
 import UIKit
 import DSKit
 
-struct Exercise {
+public struct Exercise {
     var image: UIImage
     var name: String
     var part: String
 }
 
-enum PostureRecommandModel {
+public enum PostureRecommandModel {
     case first
     case second
     
