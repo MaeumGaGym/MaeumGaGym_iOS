@@ -93,6 +93,7 @@ public extension Project {
             var demoInfoPlist = Project.demoInfoPlist
 
             demoInfoPlist["CFBundleDisplayName"] = "\(name)-Demo"
+            demoInfoPlist["CFBundleIdentifier"] = "com.maeumGaGym-\(name)-iOS.test"
 
             let target = Target(
                 name: "\(name)Demo",
