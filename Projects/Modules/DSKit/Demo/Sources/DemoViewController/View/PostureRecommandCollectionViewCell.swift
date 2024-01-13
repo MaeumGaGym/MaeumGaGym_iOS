@@ -9,9 +9,7 @@ open class PostureRecommandCollectionViewCell: UICollectionViewCell {
     
     static public let identifier = "PostureRecommandCollectionViewCell"
 
-    
-    let disposeBag = DisposeBag()
-    
+
     private let backView = UIView()
     
     private let titleLabel = UILabel().then {
