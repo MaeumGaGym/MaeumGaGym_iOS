@@ -197,13 +197,16 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MaeumGaGymBottomSheetIconCell.identifier, for: indexPath) as! MaeumGaGymBottomSheetIconCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: MaeumGaGymBottomSheetIconCell.identifier,
+            for: indexPath
+        ) as? MaeumGaGymBottomSheetIconCell
 
         let item = bottomSheetItems[indexPath.row]
-        cell.iconImage.image = item.icon
-        cell.mainTitle.text = item.title
+        cell?.iconImage.image = item.icon
+        cell?.mainTitle.text = item.title
 
-        return cell
+        return cell ?? UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
