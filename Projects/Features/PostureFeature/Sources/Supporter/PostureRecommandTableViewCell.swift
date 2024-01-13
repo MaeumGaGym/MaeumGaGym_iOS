@@ -3,7 +3,7 @@ import SnapKit
 import Then
 import DSKit
 
-class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+public class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
     
     static let identifier: String = "PostureRecommandTableViewCell"
     
@@ -29,7 +29,6 @@ class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
             $0.minimumLineSpacing = 12
@@ -51,7 +50,7 @@ class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, 
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -99,18 +98,18 @@ class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, 
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PostureRecommandCollectionViewCell.identifier, for: indexPath) as! PostureRecommandCollectionViewCell
         let model = data[indexPath.row]
         cell.setup(exerciseImage: model.image, exerciseNameText: model.name, exercisePartText: model.part)
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         _ = data[indexPath.row]
     }
     
@@ -119,7 +118,7 @@ class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDelegate, 
 
 extension PostureRecommandTableViewCell: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         return CGSize(width: 148.0,  height: 200.0)
     }
