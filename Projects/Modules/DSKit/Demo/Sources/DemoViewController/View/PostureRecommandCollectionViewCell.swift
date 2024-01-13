@@ -7,6 +7,9 @@ import DSKit
 
 open class PostureRecommandCollectionViewCell: UICollectionViewCell {
     
+    static public let identifier = "PostureRecommandCollectionViewCell"
+
+    
     let disposeBag = DisposeBag()
     
     private let backView = UIView()
@@ -25,27 +28,14 @@ open class PostureRecommandCollectionViewCell: UICollectionViewCell {
 
     private var collectionViewCell: MaeumGaGymPostureRecommandView!
     
-    public init(
-        text: String,
-        image: UIImage,
-        cellData: [(image: UIImage, text1: String, text2: String)]
-    ) {
-        super.init(frame: .zero)
-        
-        collectionViewCell = MaeumGaGymPostureRecommandCollectionViewCell(cellData: cellData)
-        
-        titleLabel.text = text
-        imageView.image = image
-        setupUI()
-    }
-    
-    public required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private func setupUI() {
         addSubviews([backView ,imageView, collectionViewCell])
         backView.addSubviews([imageView, titleLabel, seeMoreButton])
+        
+        snp.makeConstraints {
+            $0.width.equalTo(430.0)
+            $0.height.equalTo(340.0)
+        }
         
         backView.snp.makeConstraints {
             $0.width.equalToSuperview().inset(20.0)
@@ -76,6 +66,13 @@ open class PostureRecommandCollectionViewCell: UICollectionViewCell {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+    }
+    
+    public func configure(titleData: (String, UIImage), cellData: [(UIImage, String, String)]) {
+        titleLabel.text = titleData.0
+        imageView.image = titleData.1
+        collectionViewCell = MaeumGaGymPostureRecommandView(cellData: cellData)
+        setupUI()
     }
 }
 
