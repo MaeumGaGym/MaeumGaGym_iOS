@@ -78,7 +78,7 @@ public class PostureRecommandTableViewCell: UITableViewCell, UICollectionViewDel
         
         seemoreButton.snp.makeConstraints {
             $0.width.equalTo(74.0)
-            $0.height.equalTo(20.0)
+            $0.height.equalTo(24.0)
             $0.trailing.equalToSuperview().offset(-20.0)
             $0.top.equalToSuperview().offset(28.0)
         }
