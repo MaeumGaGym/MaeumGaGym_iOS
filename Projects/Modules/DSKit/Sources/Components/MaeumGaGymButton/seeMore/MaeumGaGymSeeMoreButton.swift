@@ -38,7 +38,9 @@ public class MaeumGaGymSeeMoreButton: BaseButton {
         
         rigthArrowImageView.snp.makeConstraints {
             $0.width.height.equalTo(24.0)
+            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview()
+            $0.leading.equalTo(seemoreLabel.snp.trailing)
         }
     }
 }

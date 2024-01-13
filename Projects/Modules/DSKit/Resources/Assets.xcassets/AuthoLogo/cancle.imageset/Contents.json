@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "holloewPosition.png",
+      "filename" : "cancle.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "holloewPosition@2x.png",
+      "filename" : "cancle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "holloewPosition@3x.png",
+      "filename" : "cancle@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
