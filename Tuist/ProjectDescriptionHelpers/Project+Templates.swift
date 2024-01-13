@@ -89,14 +89,18 @@ public extension Project {
         
         if targets.contains(.demo) {
             let deps: [TargetDependency] = [.target(name: name)]
-            
+
+            var demoInfoPlist = Project.demoInfoPlist
+
+            demoInfoPlist["CFBundleDisplayName"] = "\(name)-Demo"
+
             let target = Target(
                 name: "\(name)Demo",
                 platform: platform,
                 product: .app,
                 bundleId: "\(Environment.bundlePrefix).\(name)Demo",
                 deploymentTarget: deploymentTarget,
-                infoPlist: .extendingDefault(with: Project.demoInfoPlist),
+                infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
                 scripts: [.swiftLintScript],
@@ -105,7 +109,7 @@ public extension Project {
                 ].flatMap { $0 },
                 settings: .settings(base: baseSettings)
             )
-            
+
             projectTargets.append(target)
         }
         
@@ -168,6 +172,7 @@ public extension Project {
         )
     }
 }
+
 //
 //extension Scheme {
 //    /// Scheme 생성하는 method
