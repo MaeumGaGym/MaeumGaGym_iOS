@@ -5,7 +5,7 @@ import RxSwift
 import RxCocoa
 import DSKit
 
-open class PostureRecommandTitleView: UICollectionViewCell {
+open class PostureRecommandCollectionViewCell: UICollectionViewCell {
     
     let disposeBag = DisposeBag()
     
@@ -23,7 +23,7 @@ open class PostureRecommandTitleView: UICollectionViewCell {
     
     private let seeMoreButton = MaeumGaGymSeeMoreButton()
 
-    private var collectionViewCell: MaeumGaGymPostureRecommandCollectionViewCell!
+    private var collectionViewCell: MaeumGaGymPostureRecommandView!
     
     public init(
         text: String,

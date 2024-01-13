@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import Then
 
-open class MaeumGaGymPostureRecommandCollectionViewCell: UIView {
+open class MaeumGaGymPostureRecommandView: UIView {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
