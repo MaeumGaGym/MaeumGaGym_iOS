@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import Then
 
-open class CustomCell: UICollectionViewCell {
+open class MaeumGaGymPostureRecommandInsideCell: UICollectionViewCell {
     
     let imageView = UIImageView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
