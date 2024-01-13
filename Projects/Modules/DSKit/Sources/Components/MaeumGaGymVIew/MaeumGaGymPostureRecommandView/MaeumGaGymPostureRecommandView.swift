@@ -19,7 +19,7 @@ open class MaeumGaGymPostureRecommandView: UIView {
         return stackView
     }()
     
-    var cellData: [(image: UIImage, text1: String, text2: String)] = []
+    public var cellData: [(image: UIImage, text1: String, text2: String)] = []
     
     
     override init(frame: CGRect) {
@@ -55,7 +55,7 @@ open class MaeumGaGymPostureRecommandView: UIView {
         
         for data in cellData {
                 let (imageName, text1, text2) = data
-                let cell = CustomCell()
+                let cell = MaeumGaGymPostureRecommandInsideCell()
                 cell.configure(image: imageName, text1: text1, text2: text2)
                 cell.snp.makeConstraints { make in
                     make.width.equalTo(148)
