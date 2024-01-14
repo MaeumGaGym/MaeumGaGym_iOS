@@ -198,9 +198,9 @@ public enum ToggleButtonType {
         case .dinner:
             return DSKitAsset.Colors.blue500.color
         case .bareBody:
-            return DSKitAsset.Colors.gray50.color
+            return DSKitAsset.Colors.blue500.color
         case .marchine:
-            return DSKitAsset.Colors.gray50.color
+            return DSKitAsset.Colors.blue500.color
         }
     }
 }
