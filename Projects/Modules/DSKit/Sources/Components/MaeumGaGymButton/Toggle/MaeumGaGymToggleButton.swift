@@ -44,7 +44,7 @@ public class MaeumGaGymToggleButton: BaseButton {
         self.textLabel.textColor = type.textColor
     }
 
-    private func setupButton(type: ToggleButtonType) {
+    public func setupButton(type: ToggleButtonType) {
         self.backgroundColor = type.backgroundColor
         self.textLabel.font = type.textFont
         self.textLabel.text = type.message
