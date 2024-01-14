@@ -69,6 +69,33 @@ public enum ToggleButtonType {
         }
     }
     
+    var textFont: UIFont {
+        switch self {
+        case .image:
+            return UIFont.Pretendard.labelLarge
+        case .album:
+            return UIFont.Pretendard.labelLarge
+        case .timer:
+            return UIFont.Pretendard.labelLarge
+        case .metronome:
+            return UIFont.Pretendard.labelLarge
+        case .timerHome:
+            return UIFont.Pretendard.bodyMedium
+        case .metronomeHome:
+            return UIFont.Pretendard.bodyMedium
+        case .morning:
+            return UIFont.Pretendard.bodyMedium
+        case .lunch:
+            return UIFont.Pretendard.bodyMedium
+        case .dinner:
+            return UIFont.Pretendard.bodyMedium
+        case .bareBody:
+            return UIFont.Pretendard.labelMedium
+        case .marchine:
+            return UIFont.Pretendard.labelMedium
+        }
+    }
+    
     var backgroundColor: UIColor {
         switch self {
         case .image:
@@ -120,6 +147,33 @@ public enum ToggleButtonType {
             return .white
         case .marchine:
             return .white
+        }
+    }
+    
+    var checkedTextFont: UIFont {
+        switch self {
+        case .image:
+            return UIFont.Pretendard.labelLarge
+        case .album:
+            return UIFont.Pretendard.labelLarge
+        case .timer:
+            return UIFont.Pretendard.labelLarge
+        case .metronome:
+            return UIFont.Pretendard.labelLarge
+        case .timerHome:
+            return UIFont.Pretendard.titleSmall
+        case .metronomeHome:
+            return UIFont.Pretendard.titleSmall
+        case .morning:
+            return UIFont.Pretendard.titleSmall
+        case .lunch:
+            return UIFont.Pretendard.titleSmall
+        case .dinner:
+            return UIFont.Pretendard.titleSmall
+        case .bareBody:
+            return UIFont.Pretendard.labelMedium
+        case .marchine:
+            return UIFont.Pretendard.labelMedium
         }
     }
     
