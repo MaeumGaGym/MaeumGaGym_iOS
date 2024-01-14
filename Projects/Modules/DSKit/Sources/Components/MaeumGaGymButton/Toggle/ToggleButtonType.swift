@@ -42,6 +42,33 @@ public enum ToggleButtonType {
         }
     }
     
+    var radius: Double {
+        switch self {
+        case .image:
+            return 20.0
+        case .album:
+            return 20.0
+        case .timer:
+            return 20.0
+        case .metronome:
+            return 20.0
+        case .timerHome:
+            return 16.0
+        case .metronomeHome:
+            return 16.0
+        case .morning:
+            return 16.0
+        case .lunch:
+            return 16.0
+        case .dinner:
+            return 16.0
+        case .bareBody:
+            return 16.0
+        case .marchine:
+            return 16.0
+        }
+    }
+    
     var textColor: UIColor {
         switch self {
         case .image:
