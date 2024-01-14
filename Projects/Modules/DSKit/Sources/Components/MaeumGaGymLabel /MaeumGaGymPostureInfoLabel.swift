@@ -43,15 +43,32 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
     }
     
     private func setupViews(lines: Int) {
+        switch lines {
+        case 1:
+            titleNumberLabel.snp.makeConstraints {
+                $0.height.equalTo(32.0)
+            }
+            textLabel.snp.makeConstraints {
+                $0.height.equalTo(32.0)
+            }
+        case 2:
+            titleNumberLabel.snp.makeConstraints {
+                $0.height.equalTo(32.0)
+            }
+            textLabel.snp.makeConstraints {
+                $0.height.equalTo(52.0)
+            }
+        default:
+            break
+        }
+        
         titleNumberLabel.snp.makeConstraints {
             $0.width.equalTo(52.0)
-            $0.height.equalTo(30.0)
-            $0.top.leading.bottom.equalToSuperview()
+            $0.top.leading.equalToSuperview()
         }
         
         textLabel.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.height.equalTo(32.0)
             $0.leading.equalTo(titleNumberLabel.snp.trailing)
             $0.top.bottom.equalToSuperview()
         }
