@@ -13,7 +13,6 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
     }
     private var textLabel = UILabel().then {
         $0.textAlignment = .left
-        $0.numberOfLines = 1
         $0.backgroundColor = .clear
         $0.textColor = .black
         $0.font = UIFont.Pretendard.bodyMedium
@@ -21,14 +20,16 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
     
     public init(
         titleNumber: String,
-        text: String
+        text: String,
+        numberOfLines: Int? = 1
     ) {
         super.init(frame: .zero)
+        self.textLabel.numberOfLines = numberOfLines ?? 1
         self.titleNumberLabel.text = titleNumber
         self.textLabel.text = text
         
         addViews()
-        setupViews()
+        setupViews(lines: numberOfLines ?? 1)
     }
     
     required public init?(coder: NSCoder) {
@@ -41,7 +42,7 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
 
     }
     
-    private func setupViews() {
+    private func setupViews(lines: Int) {
         titleNumberLabel.snp.makeConstraints {
             $0.width.equalTo(52.0)
             $0.height.equalTo(30.0)
@@ -56,13 +57,13 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
         }
     }
     
-    public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, font: UIFont? = UIFont.Pretendard.labelMedium) {
+    public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, font: UIFont? = UIFont.Pretendard.labelMedium, numberOfLines: Int? = 1) {
         self.textLabel.text = text
         self.textLabel.textColor = textcolor
         self.backgroundColor = backgroundColor
         self.textLabel.font = font
         
         addViews()
-        setupViews()
+        setupViews(lines: numberOfLines ?? 1)
     }
 }
