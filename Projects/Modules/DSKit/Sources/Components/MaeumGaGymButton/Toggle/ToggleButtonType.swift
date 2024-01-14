@@ -63,9 +63,9 @@ public enum ToggleButtonType {
         case .dinner:
             return 16.0
         case .bareBody:
-            return 20.0
+            return 18.0
         case .marchine:
-            return 20.0
+            return 18.0
         }
     }
     
