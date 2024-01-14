@@ -7,9 +7,8 @@ open class MaeumGaGymTagLabel: BaseLabel {
     private var textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = .clear
         $0.textColor = DSKitAsset.Colors.blue500.color
-        $0.layer.cornerRadius = 18.0
         $0.font = UIFont.Pretendard.labelMedium
     }
     
@@ -18,6 +17,9 @@ open class MaeumGaGymTagLabel: BaseLabel {
     ) {
         super.init(frame: .zero)
         self.textLabel.text = text
+        self.layer.cornerRadius = 18.0
+        self.clipsToBounds = true 
+        self.backgroundColor = DSKitAsset.Colors.gray50.color
         
         addView()
         setupView()
@@ -42,8 +44,8 @@ open class MaeumGaGymTagLabel: BaseLabel {
     public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, cornerRadius: Double? = 18.0, font: UIFont? = UIFont.Pretendard.labelMedium) {
         self.textLabel.text = text
         self.textLabel.textColor = textcolor
-        self.textLabel.backgroundColor = backgroundColor
-        self.textLabel.layer.cornerRadius = cornerRadius ?? 18.0
+        self.backgroundColor = backgroundColor
+        self.layer.cornerRadius = cornerRadius ?? 18.0
         self.textLabel.font = font
         
         addView()
