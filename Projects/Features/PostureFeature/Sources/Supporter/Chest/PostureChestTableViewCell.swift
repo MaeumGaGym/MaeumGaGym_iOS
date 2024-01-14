@@ -44,7 +44,6 @@ public class PostureChestTableViewCell: UITableViewCell {
         
         exerciseNameLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(34.0)
-            $0.trailing.equalToSuperview()
             $0.leading.equalTo(postureImageView.snp.trailing).offset(18.0)
             $0.width.equalToSuperview()
             $0.height.equalTo(20.0)
