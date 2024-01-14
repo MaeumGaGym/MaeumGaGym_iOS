@@ -34,6 +34,9 @@ open class LabelViewController: UIViewController {
         textColor: .black
     )
     
+    private let tagLabel1 = MaeumGaGymTagLabel(text: "맨몸")
+    private let tagLabel2 = MaeumGaGymTagLabel(text: "가슴")
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -47,7 +50,9 @@ open class LabelViewController: UIViewController {
             textInformation,
             firstTimerTitle,
             secondTimerTitle,
-            thirdTimerTitle
+            thirdTimerTitle,
+            tagLabel1,
+            tagLabel2
         ].forEach { view.addSubview($0) }
         
         telUILabel.snp.makeConstraints {
@@ -78,6 +83,20 @@ open class LabelViewController: UIViewController {
             $0.top.equalTo(secondTimerTitle.snp.bottom).offset(8.0)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
+        }
+        
+        tagLabel1.snp.makeConstraints {
+            $0.top.equalTo(thirdTimerTitle.snp.bottom).offset(8.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.width.equalTo(60.0)
+            $0.height.equalTo(36.0)
+        }
+        
+        tagLabel2.snp.makeConstraints {
+            $0.top.equalTo(thirdTimerTitle.snp.bottom).offset(8.0)
+            $0.leading.equalTo(tagLabel1.snp.trailing).offset(100.0)
+            $0.width.equalTo(60.0)
+            $0.height.equalTo(36.0)
         }
     }
 }
