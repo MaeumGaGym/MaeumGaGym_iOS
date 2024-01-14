@@ -5,6 +5,7 @@ import DSKit
 import RxSwift
 
 public class PostureChestToggleTableViewCell: UITableViewCell {
+    
     static let identifier: String = "PostureChestToggleTableViewCell"
     
     let disposeBag = DisposeBag()
@@ -58,25 +59,21 @@ public class PostureChestToggleTableViewCell: UITableViewCell {
                     self.secondButtonCliked = false
                 case true:
                     self.firstButton.buttonNoChecked(type: firstType)
-                    self.secondButton.buttonNoChecked(type: secondType)
                     self.firstButtonCliked = false
-                    self.secondButtonCliked = false
                 }
             }).disposed(by: disposeBag)
         
         secondButton.rx.tap
             .subscribe(onNext: {
-                switch self.firstButtonCliked {
+                switch self.secondButtonCliked {
                 case false:
-                    self.firstButton.buttonYesChecked(type: secondType)
-                    self.secondButton.buttonNoChecked(type: firstType)
+                    self.secondButton.buttonYesChecked(type: secondType)
+                    self.firstButton.buttonNoChecked(type: firstType)
                     self.secondButtonCliked = true
                     self.firstButtonCliked = false
                 case true:
-                    self.firstButton.buttonNoChecked(type: secondType)
-                    self.secondButton.buttonNoChecked(type: firstType)
+                    self.secondButton.buttonNoChecked(type: secondType)
                     self.secondButtonCliked = false
-                    self.firstButtonCliked = false
                 }
             }).disposed(by: disposeBag)
     }
