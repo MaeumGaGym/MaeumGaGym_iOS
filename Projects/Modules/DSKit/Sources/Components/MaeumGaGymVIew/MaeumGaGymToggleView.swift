@@ -83,8 +83,8 @@ open class MaeumGaGymToggleView: UIView {
                 $0.top.equalToSuperview().offset(0.0)
             }
             
-            imageToggleButton.buttonYesChecked()
-            albumToggleButton.buttonNoChecked()
+            imageToggleButton.buttonYesChecked(type: .image)
+            albumToggleButton.buttonNoChecked(type: .album)
         } else {
             
             view1.removeFromSuperview()
@@ -97,8 +97,8 @@ open class MaeumGaGymToggleView: UIView {
                 $0.top.equalToSuperview().offset(0.0)
             }
 
-            albumToggleButton.buttonYesChecked()
-            imageToggleButton.buttonNoChecked()
+            albumToggleButton.buttonYesChecked(type: .album)
+            imageToggleButton.buttonNoChecked(type: .image)
         }
     }
 
