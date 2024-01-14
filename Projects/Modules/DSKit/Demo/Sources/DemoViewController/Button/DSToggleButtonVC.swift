@@ -9,8 +9,8 @@ public class DSToggleButtonVC: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    var image = MaeumGaGymToggleButton(type: .album)
-    var album = MaeumGaGymToggleButton(type: .image)
+    var image = MaeumGaGymToggleButton(type: .image)
+    var album = MaeumGaGymToggleButton(type: .album)
     var metronome = MaeumGaGymToggleButton(type: .metronome)
     var timer = MaeumGaGymToggleButton(type: .timer)
     var metronome1 = MaeumGaGymToggleButton(type: .metronomeHome)
