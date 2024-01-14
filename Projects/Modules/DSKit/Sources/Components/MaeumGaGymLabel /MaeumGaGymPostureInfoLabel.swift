@@ -1,9 +1,68 @@
-//
-//  MaeumGaGymPostureInfoLabel.swift
-//  DSKit
-//
-//  Created by 이은호 on 1/15/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
+import SnapKit
+import Then
+import Core
 
-import Foundation
+open class MaeumGaGymPostureInfoLabel: BaseLabel {
+    private var titleNumberLabel = UILabel().then {
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.backgroundColor = .clear
+        $0.textColor = DSKitAsset.Colors.gray200.color
+        $0.font = UIFont.Pretendard.titleMedium
+    }
+    private var textLabel = UILabel().then {
+        $0.textAlignment = .left
+        $0.numberOfLines = 1
+        $0.backgroundColor = .clear
+        $0.textColor = .black
+        $0.font = UIFont.Pretendard.bodyMedium
+    }
+    
+    public init(
+        titleNumber: String,
+        text: String
+    ) {
+        super.init(frame: .zero)
+        self.titleNumberLabel.text = titleNumber
+        self.textLabel.text = text
+        
+        addViews()
+        setupViews()
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func addViews() {
+        self.addSubview(titleNumberLabel)
+        self.addSubview(textLabel)
+
+    }
+    
+    private func setupViews() {
+        titleNumberLabel.snp.makeConstraints {
+            $0.width.equalTo(52.0)
+            $0.height.equalTo(30.0)
+            $0.top.leading.bottom.equalToSuperview()
+        }
+        
+        textLabel.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(32.0)
+            $0.leading.equalTo(titleNumberLabel.snp.trailing)
+            $0.top.bottom.equalToSuperview()
+        }
+    }
+    
+    public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, font: UIFont? = UIFont.Pretendard.labelMedium) {
+        self.textLabel.text = text
+        self.textLabel.textColor = textcolor
+        self.backgroundColor = backgroundColor
+        self.textLabel.font = font
+        
+        addViews()
+        setupViews()
+    }
+}
