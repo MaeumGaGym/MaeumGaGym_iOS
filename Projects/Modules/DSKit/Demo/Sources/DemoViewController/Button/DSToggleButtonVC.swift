@@ -2,8 +2,12 @@ import UIKit
 import DSKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 public class DSToggleButtonVC: UIViewController {
+    
+    let disposeBag = DisposeBag()
     
     var image = MaeumGaGymToggleButton(type: .album)
     var album = MaeumGaGymToggleButton(type: .image)
@@ -23,6 +27,7 @@ public class DSToggleButtonVC: UIViewController {
         view.backgroundColor = .white
         
         layout()
+        bind()
     }
     
     func layout() {
@@ -116,5 +121,83 @@ public class DSToggleButtonVC: UIViewController {
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)
         }
+    }
+    
+    func bind() {
+        image.buttonYesChecked(type: .image)
+        timer.buttonYesChecked(type: .timer)
+        timer1.buttonYesChecked(type: .timerHome)
+        morning.buttonYesChecked(type: .morning)
+        bareBody.buttonYesChecked(type: .bareBody)
+
+        image.rx.tap
+            .subscribe(onNext: {
+                self.image.buttonYesChecked(type: .image)
+                self.album.buttonNoChecked(type: .album)
+            }).disposed(by: disposeBag)
+        
+        album.rx.tap
+            .subscribe(onNext: {
+                self.album.buttonYesChecked(type: .album)
+                self.image.buttonNoChecked(type: .image)
+            }).disposed(by: disposeBag)
+        
+        timer.rx.tap
+            .subscribe(onNext: {
+                self.timer.buttonYesChecked(type: .timer)
+                self.metronome.buttonNoChecked(type: .metronome)
+            }).disposed(by: disposeBag)
+        
+        metronome.rx.tap
+            .subscribe(onNext: {
+                self.metronome.buttonYesChecked(type: .metronome)
+                self.timer.buttonNoChecked(type: .timer)
+            }).disposed(by: disposeBag)
+        
+        timer1.rx.tap
+            .subscribe(onNext: {
+                self.timer1.buttonYesChecked(type: .timerHome)
+                self.metronome1.buttonNoChecked(type: .metronomeHome)
+            }).disposed(by: disposeBag)
+        
+        metronome1.rx.tap
+            .subscribe(onNext: {
+                self.metronome1.buttonYesChecked(type: .metronomeHome)
+                self.timer1.buttonNoChecked(type: .timerHome)
+            }).disposed(by: disposeBag)
+        
+        morning.rx.tap
+            .subscribe(onNext: {
+                self.morning.buttonYesChecked(type: .morning)
+                self.lunch.buttonNoChecked(type: .lunch)
+                self.dinner.buttonNoChecked(type: .dinner)
+            }).disposed(by: disposeBag)
+        
+        
+        lunch.rx.tap
+            .subscribe(onNext: {
+                self.lunch.buttonYesChecked(type: .lunch)
+                self.morning.buttonNoChecked(type: .morning)
+                self.dinner.buttonNoChecked(type: .dinner)
+            }).disposed(by: disposeBag)
+        
+        dinner.rx.tap
+            .subscribe(onNext: {
+                self.dinner.buttonYesChecked(type: .dinner)
+                self.morning.buttonNoChecked(type: .morning)
+                self.lunch.buttonNoChecked(type: .lunch)
+            }).disposed(by: disposeBag)
+        
+        bareBody.rx.tap
+            .subscribe(onNext: {
+                self.bareBody.buttonYesChecked(type: .bareBody)
+                self.marchine.buttonNoChecked(type: .marchine)
+            }).disposed(by: disposeBag)
+        
+        marchine.rx.tap
+            .subscribe(onNext: {
+                self.marchine.buttonYesChecked(type: .marchine)
+                self.bareBody.buttonNoChecked(type: .bareBody)
+            }).disposed(by: disposeBag)
     }
 }
