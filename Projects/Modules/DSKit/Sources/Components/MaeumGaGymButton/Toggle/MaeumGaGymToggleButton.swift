@@ -12,17 +12,17 @@ public class MaeumGaGymToggleButton: BaseButton {
         $0.numberOfLines = 1
     }
 
-    public init(type: ToggleButtonType, radius: Double? = 16.0) {
+    public init(type: ToggleButtonType) {
         super.init(frame: .zero)
-        setupUI(type: type, radius: radius ?? 16.0)
+        setupUI(type: type)
     }
 
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI(type: ToggleButtonType, radius: Double) {
-        self.layer.cornerRadius = radius
+    private func setupUI(type: ToggleButtonType) {
+        self.layer.cornerRadius = type.radius
         self.setupButton(type: type)
 
         self.addSubviews([textLabel])
