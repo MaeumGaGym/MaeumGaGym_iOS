@@ -10,16 +10,11 @@ public class MaeumGaGymToggleButton: BaseButton {
     private let textLabel = UILabel().then {
         $0.textAlignment = .center
         $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.labelLarge
-        $0.textColor = .black
-        $0.backgroundColor = .clear
     }
 
-    private let defaultRadius: Double = 20.0
-
-    public init(type: ToggleButtonType, radius: Double? = nil) {
+    public init(type: ToggleButtonType, radius: Double? = 16.0) {
         super.init(frame: .zero)
-        setupUI(type: type, radius: radius ?? defaultRadius)
+        setupUI(type: type, radius: radius ?? 16.0)
     }
 
     required public init?(coder: NSCoder) {
@@ -28,30 +23,31 @@ public class MaeumGaGymToggleButton: BaseButton {
 
     private func setupUI(type: ToggleButtonType, radius: Double) {
         self.layer.cornerRadius = radius
-        self.textLabel.text = type.message
+        self.setupButton(type: type)
 
         self.addSubviews([textLabel])
 
-        self.snp.makeConstraints {
-            $0.width.equalTo(83.0)
-            $0.height.equalTo(40.0)
-        }
-
         self.textLabel.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
 
-    public func buttonYesChecked() {
-        updateButtonStyle(backgroundColor: DSKitAsset.Colors.gray50.color, textColor: DSKitAsset.Colors.blue500.color)
+    public func buttonYesChecked(type: ToggleButtonType) {
+        self.backgroundColor = type.checkedBackgroundColor
+        self.textLabel.font = type.checkedTextFont
+        self.textLabel.textColor = type.checkedTextColor
     }
 
-    public func buttonNoChecked() {
-        updateButtonStyle(backgroundColor: .clear, textColor: DSKitAsset.Colors.gray400.color)
+    public func buttonNoChecked(type: ToggleButtonType) {
+        self.backgroundColor = type.backgroundColor
+        self.textLabel.font = type.textFont
+        self.textLabel.textColor = type.textColor
     }
 
-    private func updateButtonStyle(backgroundColor: UIColor, textColor: UIColor) {
-        self.backgroundColor = backgroundColor
-        textLabel.textColor = textColor
+    private func setupButton(type: ToggleButtonType) {
+        self.backgroundColor = type.backgroundColor
+        self.textLabel.font = type.textFont
+        self.textLabel.text = type.message
+        self.textLabel.textColor = type.textColor
     }
 }
