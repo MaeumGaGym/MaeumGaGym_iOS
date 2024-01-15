@@ -28,7 +28,8 @@ public class PostureDetailTagTableViewCell: UITableViewCell {
     
     private func setupViews() {
         exerciseName.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalTo(60.0)
             $0.height.equalTo(32.0)
         }
