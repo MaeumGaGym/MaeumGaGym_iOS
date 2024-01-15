@@ -38,10 +38,6 @@ public struct relatedPickle {
     var image4: UIImage
 }
 
-case exerciseWay
-case exerciseCaution
-case relatedPickle
-
 public enum titleImageModel {
     case pushUpModel
     
