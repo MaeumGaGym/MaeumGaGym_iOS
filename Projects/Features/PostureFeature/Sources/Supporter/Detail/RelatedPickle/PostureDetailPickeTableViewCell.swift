@@ -56,7 +56,7 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
     
     private func setupViews() {
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(12.0)
+            $0.top.equalToSuperview().offset(36.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.width.equalToSuperview()
         }
@@ -64,7 +64,6 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
         pickleColellectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(24.0)
             $0.leading.equalToSuperview().offset(20.0)
-            $0.bottom.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(224.0)
         }
