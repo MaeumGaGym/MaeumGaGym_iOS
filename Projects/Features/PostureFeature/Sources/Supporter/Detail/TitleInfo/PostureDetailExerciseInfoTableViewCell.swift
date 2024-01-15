@@ -20,15 +20,21 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
     
     private var exerciseInfo3 = MaeumGaGymPostureInfoLabel(titleNumber: "03", text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다.")
     
-    public func setup(textNum1: String, textLabel1: String, textNum2: String, textLabel2: String, textNum3: String, textLabel3: String) {
-        
-        self.exerciseInfo1.updateData(textNum: textNum1, text: textLabel1)
-        self.exerciseInfo2.updateData(textNum: textNum2, text: textLabel2)
-        self.exerciseInfo3.updateData(textNum: textNum3, text: textLabel3)
-        
+    public func setup(model: postureExerciseWayModel) {
+        let exerciseInfos = model.data
+        guard exerciseInfos.count >= 3 else {
+            print("운동 정보가 충분하지 않습니다.")
+            return
+        }
+
+        self.exerciseInfo1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
+        self.exerciseInfo2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way)
+        self.exerciseInfo3.updateData(textNum: exerciseInfos[2].num, text: exerciseInfos[2].way)
+
         addViews()
         setupViews()
     }
+
     
     
     private func addViews() {
