@@ -19,7 +19,7 @@ public struct exerciseInfo {
     var firstNum: String
     var firstWay: String
     var secondNum: String
-    var secondWay: String    
+    var secondWay: String
     var thirdNum: String
     var thirdWay: String
 }
@@ -32,13 +32,10 @@ public struct exerciseCaution {
 }
 
 public struct relatedPickle {
-    var image1: UIImage
-    var image2: UIImage
-    var image3: UIImage
-    var image4: UIImage
+    var image: UIImage
 }
 
-public enum titleImageModel {
+public enum postureTitleImageModel {
     case pushUpModel
     
     var data: [titleImage] {
@@ -50,7 +47,7 @@ public enum titleImageModel {
 }
 
 
-public enum titlelabelModel {
+public enum postureTitlelabelModel {
     case pushUpModel
     
     var data: [titleLabel] {
@@ -61,7 +58,7 @@ public enum titlelabelModel {
     }
 }
 
-public enum tagLabelModel {
+public enum postureTagLabelModel {
     case pushUpModel
     
     var data: [tagLabel] {
@@ -72,7 +69,7 @@ public enum tagLabelModel {
     }
 }
 
-public enum exerciseWayModel {
+public enum postureExerciseWayModel {
     case pushUpModel
     
     var data: [exerciseInfo] {
@@ -83,7 +80,7 @@ public enum exerciseWayModel {
     }
 }
 
-public enum exerciseCautionModel {
+public enum pstureExerciseCautionModel {
     case pushUpModel
     
     var data: [exerciseCaution] {
@@ -94,13 +91,18 @@ public enum exerciseCautionModel {
     }
 }
 
-public enum relatedPickleModel {
+public enum postureRelatedPickleModel {
     case pushUpModel
     
     var data: [relatedPickle] {
         switch self {
         case .pushUpModel:
-            return [(relatedPickle(image1: DSKitAsset.Assets.posturePickleTest1.image, image2: DSKitAsset.Assets.posturePickleTest2.image, image3: DSKitAsset.Assets.posturePickleTest3.image, image4: DSKitAsset.Assets.posturePickleTest4.image))]
+            return [
+                relatedPickle(image: DSKitAsset.Assets.posturePickleTest1.image),
+                 relatedPickle(image: DSKitAsset.Assets.posturePickleTest2.image),
+                 relatedPickle(image: DSKitAsset.Assets.posturePickleTest3.image),
+                 relatedPickle(image: DSKitAsset.Assets.posturePickleTest4.image)
+            ]
         }
     }
 }
