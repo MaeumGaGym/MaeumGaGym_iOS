@@ -1,6 +1,6 @@
 import UIKit
 
-public final class Logger {
+public final class MGLogger {
     
     private static let dateFormatter = DateFormatter()
     private static var dateFormat: String = "yyyy년/MM월/dd일-HH:mm:ss초"
@@ -30,7 +30,7 @@ public final class Logger {
     
     private static var time: String {
         let now = Date()
-        Logger.dateFormatter.dateFormat = Logger.dateFormat
+        MGLogger.dateFormatter.dateFormat = MGLogger.dateFormat
         let dateNow = dateFormatter.string(from: now)
         return dateNow
     }
@@ -114,7 +114,7 @@ public final class Logger {
 }
 
 
-extension Logger {
+extension MGLogger {
     
     private static func saveLog(_ items: Any, level: Level, file: String, function: String, line: Int, threadName: String) {
         
@@ -257,7 +257,7 @@ extension Logger {
     
 }
 
-extension Logger {
+extension MGLogger {
     private static func isArray<T>(_ value: T) -> Bool {
         let mirror = Mirror(reflecting: value)
         return mirror.displayStyle == .collection

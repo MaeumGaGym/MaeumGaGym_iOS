@@ -1,7 +1,7 @@
 import UIKit
 import DSKit
 import Core
-import CSLogger
+import MGLogger
 
 public enum ButtonType: String, CaseIterable {
     case agree
@@ -24,28 +24,28 @@ public class ButtonTableViewController: BaseDesignSystemTableViewController<Butt
     public override func showDetailViewController(for designSystem: ButtonType) {
         switch designSystem {
         case .agree:
-            Logger.verbose("Agree Button")
+            MGLogger.verbose("Agree Button")
             self.navigationController?.pushVC(DSAgreeButtonVC.self)
         case .auth:
-            Logger.verbose("Auth Button")
+            MGLogger.verbose("Auth Button")
             self.navigationController?.pushVC(DSAuthButtonVC.self)
         case .certification:
-            Logger.verbose("Certification Button")
+            MGLogger.verbose("Certification Button")
             self.navigationController?.pushVC(DSCertificationButtonVC.self)
         case .icon:
-            Logger.verbose("Icon Button")
+            MGLogger.verbose("Icon Button")
             self.navigationController?.pushVC(DSIconButtonVC.self)
         case .check:
-            Logger.verbose("Check Button")
+            MGLogger.verbose("Check Button")
             self.navigationController?.pushVC(DSCheckButtonVC.self)
         case .timer:
-            Logger.verbose("Timer Button")
+            MGLogger.verbose("Timer Button")
             self.navigationController?.pushVC(DSTimerButtonVC.self)
         case .toggle:
-            Logger.verbose("Toggle Button")
+            MGLogger.verbose("Toggle Button")
             self.navigationController?.pushVC(DSToggleButtonVC.self)
         case .seemore:
-            Logger.verbose("seemore Button")
+            MGLogger.verbose("seemore Button")
             self.navigationController?.pushVC(DSSeeMoreButtonVC.self)
         }
     }

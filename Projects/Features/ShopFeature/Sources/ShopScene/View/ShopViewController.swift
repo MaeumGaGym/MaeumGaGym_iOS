@@ -2,7 +2,7 @@ import UIKit
 import DSKit
 import RxSwift
 import RxCocoa
-import CSLogger
+import MGLogger
 
 public class ShopViewController: UIViewController {
     

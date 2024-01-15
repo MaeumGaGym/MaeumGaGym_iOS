@@ -1,6 +1,6 @@
 import UIKit
 import Core
-import CSLogger
+import MGLogger
 import DSKit
 
 public enum DesignSystemType: String, CaseIterable {
@@ -26,34 +26,34 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
     public override func showDetailViewController(for designSystem: DesignSystemType) {
         switch designSystem {
         case .button:
-            Logger.verbose("Button")
+            MGLogger.verbose("Button")
             self.navigationController?.pushVC(ButtonTableViewController.self)
         case .textField:
-            Logger.verbose("textField")
+            MGLogger.verbose("textField")
             self.navigationController?.pushVC(TextFieldViewController.self)
         case .label:
-            Logger.verbose("label")
+            MGLogger.verbose("label")
             self.navigationController?.pushVC(LabelViewController.self)
         case .line:
-            Logger.verbose("line")
+            MGLogger.verbose("line")
             self.navigationController?.pushVC(LineViewController.self)
         case .profile:
-            Logger.verbose("profile")
+            MGLogger.verbose("profile")
             self.navigationController?.pushVC(ProfileViewController.self)
         case .alert:
-            Logger.verbose("alert")
+            MGLogger.verbose("alert")
             self.navigationController?.pushVC(AlertViewController.self)
         case .bottomSheet:
-            Logger.verbose("bottomSheet")
+            MGLogger.verbose("bottomSheet")
             self.navigationController?.pushVC(BottomSheetViewController.self)
         case .emptyView:
-            Logger.verbose("emptyView")
+            MGLogger.verbose("emptyView")
             self.navigationController?.pushVC(EmptyViewController.self)
         case .pagingTabBar:
-            Logger.verbose("pagingTabBar")
+            MGLogger.verbose("pagingTabBar")
             self.navigationController?.pushVC(PagingTabBarViewController.self)
         case .banner:
-            Logger.verbose("Banner")
+            MGLogger.verbose("Banner")
             self.navigationController?.pushVC(BannerViewController.self)
         }
     }
