@@ -26,7 +26,7 @@ public class PostureDetailImageTableViewCell: UITableViewCell {
         postureImageView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalToSuperview()
-            $0.centerX.centerY.equalToSuperview()
+            $0.top.equalToSuperview()
         }
     }
 }
