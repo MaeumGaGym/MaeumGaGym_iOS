@@ -7,7 +7,7 @@ let project = Project.makeModule(
     targets: [.unitTest, .demo, .dynamicFramework],
     internalDependencies: [
         .core,
-        .Modules.csLogger
+        .Modules.mgLogger
     ],
     hasResources: true
 )

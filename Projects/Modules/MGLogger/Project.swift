@@ -10,7 +10,7 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: "CSLogger",
+    name: "MGLogger",
     targets: [.unitTest, .dynamicFramework],
     internalDependencies: [
         .core

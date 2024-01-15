@@ -37,7 +37,7 @@ public extension Gym.Modules {
     
     static let tokenManager = Gym.project(target: "TokenManager", path: .relativeToModules("TokenManager"))
     
-    static let csLogger = Gym.project(target: "CSLogger", path: .relativeToModules("CSLogger"))
+    static let mgLogger = Gym.project(target: "MGLogger", path: .relativeToModules("MGLogger"))
 
     static let pickle = Gym.project(target: "Pickle", path: .relativeToModules("Pickle"))
 }
