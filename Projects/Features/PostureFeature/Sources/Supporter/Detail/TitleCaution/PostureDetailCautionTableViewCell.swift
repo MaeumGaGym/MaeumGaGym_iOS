@@ -19,13 +19,13 @@ public class PostureDetailCautionTableViewCell: UITableViewCell {
     
     public func setup(model: postureExerciseCautionModel) {
         let exerciseInfos = model.data
-        guard exerciseInfos.count >= 3 else {
+        guard exerciseInfos.count >= 2 else {
             print("운동 정보가 충분하지 않습니다.")
             return
         }
 
         self.exerciseCaution1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
-        self.exerciseCaution2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way)
+        self.exerciseCaution2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way, numberOfLines: 2)
 
         
         addViews()
@@ -44,20 +44,20 @@ public class PostureDetailCautionTableViewCell: UITableViewCell {
         
         exerciseWay.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
             $0.height.equalTo(32.0)
         }
         
         exerciseCaution1.snp.makeConstraints {
             $0.top.equalTo(exerciseWay.snp.bottom).offset(24.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
         
         exerciseCaution2.snp.makeConstraints {
             $0.top.equalTo(exerciseCaution1.snp.bottom).offset(16.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
     }
