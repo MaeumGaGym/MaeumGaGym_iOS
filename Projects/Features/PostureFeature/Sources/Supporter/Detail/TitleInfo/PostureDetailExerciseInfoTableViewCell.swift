@@ -28,7 +28,7 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
         }
 
         self.exerciseInfo1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
-        self.exerciseInfo2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way)
+        self.exerciseInfo2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way, numberOfLines: 2)
         self.exerciseInfo3.updateData(textNum: exerciseInfos[2].num, text: exerciseInfos[2].way)
 
         addViews()
@@ -50,26 +50,26 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
         
         exerciseWay.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
             $0.height.equalTo(32.0)
         }
         
         exerciseInfo1.snp.makeConstraints {
             $0.top.equalTo(exerciseWay.snp.bottom).offset(24.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
         
         exerciseInfo2.snp.makeConstraints {
             $0.top.equalTo(exerciseInfo1.snp.bottom).offset(16.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
         
         exerciseInfo3.snp.makeConstraints {
             $0.top.equalTo(exerciseInfo2.snp.bottom).offset(16.0)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
     }
