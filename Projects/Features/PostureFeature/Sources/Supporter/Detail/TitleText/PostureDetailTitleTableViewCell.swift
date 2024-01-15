@@ -38,7 +38,7 @@ public class PostureDetailTitleTableViewCell: UITableViewCell {
         englishTitle.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(32.0)
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().offset(32.0)
             $0.trailing.leading.equalToSuperview().inset(20.0)
         }
         
