@@ -1,12 +1,6 @@
 import UIKit
 import DSKit
 
-
-public struct titleLabel {
-    var englishName: String
-    var koreanName: String
-}
-
 public struct tagLabel {
     var exerciseType: String
     var exercisePart: String
@@ -44,13 +38,21 @@ public enum postureTitleImageModel {
 }
 
 
-public enum postureTitlelabelModel {
+public enum postureTitleLabelModel {
     case pushUpModel
     
-    var data: [titleLabel] {
+    var englishName: String{
         switch self {
         case .pushUpModel:
-            return[(titleLabel(englishName: "푸시업", koreanName: "팔굽혀펴기"))]
+            return"푸시업"
+        }
+    }
+    
+    var koreanName: String {
+        switch self {
+        case .pushUpModel:
+            return "팔굽혀펴기"
+        
         }
     }
 }
