@@ -1,9 +1,6 @@
 import UIKit
 import DSKit
 
-public struct titleImage {
-    var image: UIImage
-}
 
 public struct titleLabel {
     var englishName: String
@@ -38,10 +35,10 @@ public struct relatedPickle {
 public enum postureTitleImageModel {
     case pushUpModel
     
-    var data: [titleImage] {
+    var data: UIImage {
         switch self {
         case .pushUpModel:
-            return[(titleImage(image: DSKitAsset.Assets.pushUpDetail.image))]
+            return DSKitAsset.Assets.pushUpDetail.image
         }
     }
 }
@@ -80,7 +77,7 @@ public enum postureExerciseWayModel {
     }
 }
 
-public enum pstureExerciseCautionModel {
+public enum postureExerciseCautionModel {
     case pushUpModel
     
     var data: [exerciseCaution] {
