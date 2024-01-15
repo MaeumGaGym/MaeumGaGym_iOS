@@ -1,13 +1,6 @@
 import UIKit
 import DSKit
 
-public struct exerciseCaution {
-    var firstNum: String
-    var firstWay: String
-    var secondNum: String
-    var secondWay: String
-}
-
 public struct relatedPickle {
     var image: UIImage
 }
@@ -81,13 +74,21 @@ public enum postureExerciseWayModel {
     }
 }
 
+public struct exerciseCaution {
+    var num: String
+    var way: String
+}
+
 public enum postureExerciseCautionModel {
     case pushUpModel
-    
-    var data: [exerciseCaution] {
+
+    var data: [exerciseInfo] {
         switch self {
         case .pushUpModel:
-            return[(exerciseCaution(firstNum: "01", firstWay: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.", secondNum: "02", secondWay: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."))]
+            return [
+                exerciseInfo(num: "01", way: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
+                exerciseInfo(num: "02", way: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
+            ]
         }
     }
 }
