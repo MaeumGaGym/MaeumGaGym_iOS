@@ -20,6 +20,12 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
     
     private var exerciseInfo3 = MaeumGaGymPostureInfoLabel(titleNumber: "03", text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다.")
     
+    public func setup(textNum1: String, textLabel1: String, textNum2: String, textLabel2: String, textNum3: String, textLabel3: String) {
+        self.exerciseInfo1.updateData(text: textLabel1)
+        self.exerciseInfo2.updateData(text: textLabel2)
+        self.exerciseInfo3.updateData(text: textLabel3)
+    }
+    
     
     private func addViews() {
         [
