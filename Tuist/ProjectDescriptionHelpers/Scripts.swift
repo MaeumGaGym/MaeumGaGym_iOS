@@ -18,9 +18,4 @@ public extension TargetScript {
         name: "SwiftLint",
         basedOnDependencyAnalysis: false
     )
-//    
-//    static let SwiftLintShell = TargetScript.pre(
-//        path: .relativeToRoot("Scripts/SwiftLintRunScript.sh"),
-//        name: "SwiftLintShell"
-//    )
 }

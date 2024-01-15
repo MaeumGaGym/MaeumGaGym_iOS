@@ -13,6 +13,7 @@ public enum DesignSystemType: String, CaseIterable {
     case bottomSheet
     case emptyView
     case pagingTabBar
+    case banner
 }
 
 public class ComponentsDemoTableViewController: BaseDesignSystemTableViewController<DesignSystemType> {
@@ -51,6 +52,9 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
         case .pagingTabBar:
             Logger.verbose("pagingTabBar")
             self.navigationController?.pushVC(PagingTabBarViewController.self)
+        case .banner:
+            Logger.verbose("Banner")
+            self.navigationController?.pushVC(BannerViewController.self)
         }
     }
 }

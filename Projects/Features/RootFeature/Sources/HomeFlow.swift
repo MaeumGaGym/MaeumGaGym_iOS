@@ -14,7 +14,7 @@ public class HomeFlow: Flow {
     private let rootViewController = UINavigationController()
 
     init() {
-        let viewController = TimerViewController()
+        let viewController = TimerViewController(TimerViewModel())
         viewController.view.backgroundColor = .white
         viewController.tabBarItem = UITabBarItem(title: "홈", image: DSKitAsset.Assets.blackHome.image, selectedImage: DSKitAsset.Assets.blueHome.image)
         
