@@ -45,6 +45,9 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
     private func setupViews(lines: Int) {
         switch lines {
         case 1:
+            self.snp.makeConstraints {
+                $0.height.equalTo(32.0)
+            }
             titleNumberLabel.snp.makeConstraints {
                 $0.height.equalTo(32.0)
             }
@@ -52,6 +55,9 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
                 $0.height.equalTo(32.0)
             }
         case 2:
+            self.snp.makeConstraints {
+                $0.height.equalTo(52.0)
+            }
             titleNumberLabel.snp.makeConstraints {
                 $0.height.equalTo(32.0)
             }
