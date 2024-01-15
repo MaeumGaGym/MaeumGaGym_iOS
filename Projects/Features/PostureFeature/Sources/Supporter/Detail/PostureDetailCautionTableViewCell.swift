@@ -17,6 +17,14 @@ public class PostureDetailCautionTableViewCell: UITableViewCell {
     
     private var exerciseCaution2 = MaeumGaGymPostureInfoLabel(titleNumber: "02", text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.", numberOfLines: 2)
     
+    public func setup(textNum1: String, cautionText1: String, textNum2: String, cautionText2: String) {
+        self.exerciseCaution1.updateData(textNum: textNum1, text: textNum1)
+        self.exerciseCaution2.updateData(textNum: textNum2, text: textNum2)
+        
+        addViews()
+        setupViews()
+    }
+    
     private func addViews() {
         [
             exerciseWay,
