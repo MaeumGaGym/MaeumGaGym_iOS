@@ -29,7 +29,7 @@ public extension Gym {
 public extension Gym.Modules {
     static let dsKit = Gym.project(target: "DSKit", path: .relativeToModules("DSKit"))
     
-    static let networks = Gym.project(target: "Networks", path: .relativeToModules("Networks"))
+    static let mgNetworks = Gym.project(target: "MGNetworks", path: .relativeToModules("MGNetworks"))
     
     static let thirdPartyLibs = Gym.project(target: "ThirdPartyLibs", path: .relativeToModules("ThirdPartyLibs"))
     

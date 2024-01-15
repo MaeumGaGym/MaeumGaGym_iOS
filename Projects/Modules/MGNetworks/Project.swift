@@ -3,7 +3,7 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: "Networks",
+    name: "MGNetworks",
     targets: [.unitTest, .staticFramework],
     internalDependencies: [
         .core,
