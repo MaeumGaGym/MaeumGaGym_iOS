@@ -17,9 +17,16 @@ public class PostureDetailCautionTableViewCell: UITableViewCell {
     
     private var exerciseCaution2 = MaeumGaGymPostureInfoLabel(titleNumber: "02", text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.", numberOfLines: 2)
     
-    public func setup(textNum1: String, cautionText1: String, textNum2: String, cautionText2: String) {
-        self.exerciseCaution1.updateData(textNum: textNum1, text: textNum1)
-        self.exerciseCaution2.updateData(textNum: textNum2, text: textNum2)
+    public func setup(model: postureExerciseCautionModel) {
+        let exerciseInfos = model.data
+        guard exerciseInfos.count >= 3 else {
+            print("운동 정보가 충분하지 않습니다.")
+            return
+        }
+
+        self.exerciseCaution1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
+        self.exerciseCaution2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way)
+
         
         addViews()
         setupViews()
