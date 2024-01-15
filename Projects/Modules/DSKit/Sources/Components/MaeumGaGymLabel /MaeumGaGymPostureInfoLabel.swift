@@ -80,7 +80,8 @@ open class MaeumGaGymPostureInfoLabel: BaseLabel {
         }
     }
     
-    public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, font: UIFont? = UIFont.Pretendard.labelMedium, numberOfLines: Int? = 1) {
+    public func updateData(textNum: String,text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, font: UIFont? = UIFont.Pretendard.labelMedium, numberOfLines: Int? = 1) {
+        self.titleNumberLabel.text = textNum
         self.textLabel.text = text
         self.textLabel.textColor = textcolor
         self.backgroundColor = backgroundColor
