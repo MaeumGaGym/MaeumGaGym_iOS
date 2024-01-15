@@ -24,6 +24,9 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
         self.exerciseInfo1.updateData(text: textLabel1)
         self.exerciseInfo2.updateData(text: textLabel2)
         self.exerciseInfo3.updateData(text: textLabel3)
+        
+        addViews()
+        setupViews()
     }
     
     
