@@ -49,7 +49,7 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
     private func setupViews() {
         
         exerciseWay.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(12.0)
+            $0.top.equalToSuperview().offset(36.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
             $0.height.equalTo(32.0)
