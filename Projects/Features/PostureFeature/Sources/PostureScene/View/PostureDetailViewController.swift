@@ -6,7 +6,6 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
-import CSLogger
 import PostureFeatureInterface
 
 public class PostureDetailViewController: BaseViewController<PostureDetailViewModel>, UITableViewDelegate, UITableViewDataSource {
