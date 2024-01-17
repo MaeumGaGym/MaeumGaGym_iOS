@@ -14,3 +14,8 @@ public enum MGCameraKitError: Error {
     case MGFilterError(FilterError)
     case MGAlbumError(AlbumError)
 }
+
+public enum MGCameraError: Error {
+    case captureStillImageOutput
+    case imageData
+}
