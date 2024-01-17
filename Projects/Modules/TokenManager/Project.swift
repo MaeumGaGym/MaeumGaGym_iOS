@@ -13,6 +13,6 @@ let project = Project.makeModule(
     name: "TokenManager",
     targets: [.unitTest, .staticFramework],
     internalDependencies: [
-        .Modules.csLogger
+        .Modules.mgLogger
     ]
 )

@@ -6,7 +6,7 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
-import CSLogger
+import MGLogger
 import PostureFeatureInterface
 
 public class PostureChestViewController: BaseViewController<PostureChestViewModel>, UITableViewDelegate, UITableViewDataSource {

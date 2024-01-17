@@ -6,7 +6,7 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
-import CSLogger
+import MGLogger
 
 public class AgreeViewController: BaseViewController<AgreeViewModel> {
     
@@ -103,7 +103,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             buttonOutput
                 .drive(onNext: { [weak self] message in
                     self?.agreeTermsView.updateAllAgreeButtonState()
-                    Logger.verbose(message)
+                    MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)
         }
@@ -112,7 +112,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
-                Logger.verbose(message)
+                MGLogger.verbose(message)
             })
             .disposed(by: disposeBag)
         
@@ -120,7 +120,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
-                Logger.verbose(message)
+                MGLogger.verbose(message)
             })
             .disposed(by: disposeBag)
         
@@ -128,20 +128,20 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             .drive(onNext: { message in
                 self.agreeTermsView.updateAllAgreeButtonState()
                 _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
-                Logger.verbose(message)
+                MGLogger.verbose(message)
             })
             .disposed(by: disposeBag)
         
         
         output.fourthAgreeButtonClickedMessage
             .drive(onNext: { message in
-                Logger.verbose(message)
+                MGLogger.verbose(message)
             })
             .disposed(by: disposeBag)
         
         output.nextButtonClicked
             .drive(onNext: { message in// 네비게이션 컨트롤러 확인
-                Logger.verbose(message)
+                MGLogger.verbose(message)
             })
             .disposed(by: disposeBag)
         

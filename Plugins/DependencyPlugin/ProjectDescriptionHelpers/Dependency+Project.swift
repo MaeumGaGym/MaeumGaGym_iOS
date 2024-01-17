@@ -29,7 +29,7 @@ public extension Gym {
 public extension Gym.Modules {
     static let dsKit = Gym.project(target: "DSKit", path: .relativeToModules("DSKit"))
     
-    static let networks = Gym.project(target: "Networks", path: .relativeToModules("Networks"))
+    static let mgNetworks = Gym.project(target: "MGNetworks", path: .relativeToModules("MGNetworks"))
     
     static let thirdPartyLibs = Gym.project(target: "ThirdPartyLibs", path: .relativeToModules("ThirdPartyLibs"))
     
@@ -37,7 +37,7 @@ public extension Gym.Modules {
     
     static let tokenManager = Gym.project(target: "TokenManager", path: .relativeToModules("TokenManager"))
     
-    static let csLogger = Gym.project(target: "CSLogger", path: .relativeToModules("CSLogger"))
+    static let mgLogger = Gym.project(target: "MGLogger", path: .relativeToModules("MGLogger"))
 
     static let pickle = Gym.project(target: "Pickle", path: .relativeToModules("Pickle"))
 }

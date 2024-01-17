@@ -3,11 +3,9 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: "DSKit",
+    name: "MGCameraKit",
     targets: [.unitTest, .demo, .dynamicFramework],
     internalDependencies: [
-        .core,
-        .Modules.mgLogger
-    ],
-    hasResources: true
+        .core
+    ]
 )
