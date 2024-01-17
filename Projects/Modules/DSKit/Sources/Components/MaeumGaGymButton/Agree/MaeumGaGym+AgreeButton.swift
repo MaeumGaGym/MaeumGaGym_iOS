@@ -5,6 +5,7 @@ import RxSwift
 import RxCocoa
 import Core
 
+
 open class MaeumGaGymAgreeButton: BaseButton {
         
     public var checked: Bool = false
