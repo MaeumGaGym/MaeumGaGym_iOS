@@ -33,6 +33,8 @@ public extension Project {
         "App Transport Security Settings": ["Allow Arbitrary Loads": true],
         "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
         "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryAddUsageDescription": "사진을 저장할 수 있도록 해주세요",
+        "NSCameraUsageDescription": "카메라 접근을 허용할 수 있도록 해주세요",
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
@@ -73,6 +75,8 @@ public extension Project {
         "Item 8": "Pretendard-Thin.otf"
       ],
       "App Transport Security Settings": ["Allow Arbitrary Loads": true],
+      "NSPhotoLibraryAddUsageDescription": "사진을 저장할 수 있도록 해주세요",
+      "NSCameraUsageDescription": "카메라 접근을 허용할 수 있도록 해주세요",
       "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
       "ITSAppUsesNonExemptEncryption": false,
 //      "UIUserInterfaceStyle": "Dark",
