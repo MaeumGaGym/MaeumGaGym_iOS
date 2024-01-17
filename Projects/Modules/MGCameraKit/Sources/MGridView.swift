@@ -1,6 +1,6 @@
 import UIKit
 
-open class XGridView: UIView {
+open class MGridView: UIView {
     
     open override func draw(_ rect: CGRect) {
         print("draw func has called: \(bounds)")
