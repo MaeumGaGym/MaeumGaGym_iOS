@@ -8,7 +8,7 @@ v0.0.1.6
 ## 작업로그 🏃
 ![Alt](https://repobeats.axiom.co/api/embed/19fa14bed6ae235217e9a0e619a2dbc1f92b026d.svg "Repobeats analytics image")
 
-## Contributors
+## Contributors ✨
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -32,3 +32,6 @@ v0.0.1.6
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## Module Graph
+![graph](https://github.com/MaeumgaGym/MaeumGaGym_iOS/assets/102890390/7c0d3e6e-4517-4044-8fef-62db69630e58)
