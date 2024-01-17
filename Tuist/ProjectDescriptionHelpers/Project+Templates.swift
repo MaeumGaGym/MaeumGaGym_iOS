@@ -92,14 +92,14 @@ public extension Project {
 
             var demoInfoPlist = Project.demoInfoPlist
 
-            demoInfoPlist["CFBundleDisplayName"] = "\(name)-Demo"
-            demoInfoPlist["CFBundleIdentifier"] = "com.maeumGaGym-\(name)-iOS.test"
+            demoInfoPlist["CFBundleDisplayName"] = "\(name)Demo"
+            demoInfoPlist["CFBundleIdentifier"] = "com.maeumGaGym.\(name)Demo"
 
             let target = Target(
                 name: "\(name)Demo",
                 platform: platform,
                 product: .app,
-                bundleId: "\(Environment.bundlePrefix).\(name)Demo",
+                bundleId: "com.maeumGaGym.\(name)Demo",
                 deploymentTarget: deploymentTarget,
                 infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
