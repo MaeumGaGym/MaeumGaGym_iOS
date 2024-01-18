@@ -41,7 +41,7 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
         setupViews()
     }
     
-    public func setupCell(model: postureRelatedPickleModel) {
+    public func setupCell(model: PostureRelatedPickleModel) {
         self.data = model.data
     }
     

@@ -73,12 +73,12 @@ public enum PostureExerciseWayModel {
     }
 }
 
-public struct exerciseCaution {
+public struct ExerciseCaution {
     var num: String
     var way: String
 }
 
-public enum postureExerciseCautionModel {
+public enum PostureExerciseCautionModel {
     case pushUpModel
 
     var data: [ExerciseInfo] {
@@ -86,13 +86,13 @@ public enum postureExerciseCautionModel {
         case .pushUpModel:
             return [
                 ExerciseInfo(num: "01", way: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
-                ExerciseInfo(num: "02", way: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
+                ExerciseInfo(num: "02", way: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.")
             ]
         }
     }
 }
 
-public enum postureRelatedPickleModel {
+public enum PostureRelatedPickleModel {
     case pushUpModel
 
     var data: [RelatedPickle] {
