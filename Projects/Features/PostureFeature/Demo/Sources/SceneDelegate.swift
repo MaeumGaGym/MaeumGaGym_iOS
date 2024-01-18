@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
             window?.rootViewController = UINavigationController(
-                rootViewController: PostureRecommandViewController(PostureViewModel()))
+                rootViewController: PostureDetailViewController(PostureDetailViewModel()))
         window?.makeKeyAndVisible()
     }
 }

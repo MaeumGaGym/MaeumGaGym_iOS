@@ -81,6 +81,8 @@ extension PostureDetailViewController: UITableViewDelegate {
             return 204
         case 5:
             return 394
+        case 6:
+            return 40
         default:
             return UITableView.automaticDimension
         }
@@ -89,7 +91,7 @@ extension PostureDetailViewController: UITableViewDelegate {
 
 extension PostureDetailViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 7
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,6 +138,9 @@ extension PostureDetailViewController: UITableViewDataSource {
             cell?.setupCell(model: PostureRelatedPickleModel.pushUpModel)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
+        case 6:
+            let cell = UITableViewCell()
+            return cell
         default:
             return UITableViewCell()
         }
