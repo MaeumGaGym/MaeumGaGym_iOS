@@ -27,6 +27,6 @@ open class BaseTableViewCell: UITableViewCell {
     }
     
     open func addViews() {
-        
+        // view 추가 함수
     }
 }

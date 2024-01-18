@@ -22,7 +22,7 @@ public enum PostureTitleLabelModel {
     var englishName: String {
         switch self {
         case .pushUpModel:
-            return"푸시업"
+            return "푸시업"
         }
     }
 
