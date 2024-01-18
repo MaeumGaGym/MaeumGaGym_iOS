@@ -30,7 +30,6 @@ public enum PostureTitleLabelModel {
         switch self {
         case .pushUpModel:
             return "팔굽혀펴기"
-
         }
     }
 }

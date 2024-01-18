@@ -3,7 +3,7 @@ import SnapKit
 import Then
 import DSKit
 
-public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+public class PostureDetailPickeTableViewCell: UITableViewCell {
     static let identifier: String = "PostureDetailPickeTableViewCell"
 
     private var pickleColellectionView: UICollectionView!
@@ -67,7 +67,28 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
             $0.height.equalTo(224.0)
         }
     }
+}
 
+extension PostureDetailPickeTableViewCell: UICollectionViewDelegateFlowLayout {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: 126.0, height: 224.0)
+    }
+}
+
+extension PostureDetailPickeTableViewCell: UICollectionViewDelegate {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        _ = data[indexPath.row]
+    }
+}
+
+extension PostureDetailPickeTableViewCell: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -86,22 +107,5 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
         let model = data[indexPath.row]
         cell?.setup(image: model.image)
         return cell ?? UICollectionViewCell()
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        _ = data[indexPath.row]
-    }
-}
-
-extension PostureDetailPickeTableViewCell: UICollectionViewDelegateFlowLayout {
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        return CGSize(width: 126.0, height: 224.0)
     }
 }

@@ -67,7 +67,10 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
 }
 
 extension PostureDetailViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(
+        _ tableView: UITableView,
+        heightForRowAt indexPath: IndexPath
+    ) -> CGFloat {
         switch indexPath.row {
         case 0:
             return 300
@@ -90,11 +93,17 @@ extension PostureDetailViewController: UITableViewDelegate {
 }
 
 extension PostureDetailViewController: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return 7
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         switch indexPath.row {
         case 0:
             let cell = postureDetailTableView.dequeueReusableCell(
