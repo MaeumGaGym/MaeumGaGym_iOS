@@ -7,7 +7,6 @@ public class DSSeeMoreButtonVC: UIViewController {
     
     var seeMoreButton = MaeumGaGymSeeMoreButton()
 
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -17,7 +16,7 @@ public class DSSeeMoreButtonVC: UIViewController {
     
     func layout() {
         [
-            seeMoreButton,
+            seeMoreButton
         ].forEach { view.addSubview($0) }
 
         seeMoreButton.snp.makeConstraints {
@@ -28,6 +27,3 @@ public class DSSeeMoreButtonVC: UIViewController {
         }
     }
 }
-
-
-

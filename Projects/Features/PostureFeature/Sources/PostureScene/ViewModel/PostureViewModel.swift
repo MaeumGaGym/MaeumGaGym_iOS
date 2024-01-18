@@ -8,12 +8,11 @@ public class PostureViewModel: BaseViewModel {
     public func transform(_ input: Input) -> Output {
         return Output()
     }
-    
 
     public struct Input {
 
     }
-    
+
     public struct Output {
 
     }
@@ -22,7 +21,3 @@ public class PostureViewModel: BaseViewModel {
 
     }
 }
-
-
-
-

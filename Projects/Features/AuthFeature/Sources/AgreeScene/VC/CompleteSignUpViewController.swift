@@ -6,7 +6,7 @@ import RxFlow
 import RxCocoa
 import RxSwift
 import DSKit
-import CSLogger
+import MGLogger
 
 public class CompleteSignUpViewController: BaseViewController<CompleteViewModel> {
     
