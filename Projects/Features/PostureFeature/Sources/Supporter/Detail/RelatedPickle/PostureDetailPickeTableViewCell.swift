@@ -7,7 +7,7 @@ public class PostureDetailPickeTableViewCell: UITableViewCell, UICollectionViewD
     static let identifier: String = "PostureDetailPickeTableViewCell"
     
     private var pickleColellectionView: UICollectionView!
-    var data: [relatedPickle] = []
+    var data: [RelatedPickle] = []
     
     
     private let titleLabel = UILabel().then {

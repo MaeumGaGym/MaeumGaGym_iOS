@@ -12,19 +12,19 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
     
     var postureDetailTableView: UITableView!
     
-    var titleImageModel: postureTitleImageModel!
-    var titleLabelModel: postureTitleLabelModel!
-    var titleTagModel: postureTagLabelModel!
-    var exerciseWayModel: postureExerciseWayModel!
+    var titleImageModel: PostureTitleImageModel!
+    var titleLabelModel: PostureTitleLabelModel!
+    var titleTagModel: PostureTagLabelModel!
+    var exerciseWayModel: PostureExerciseWayModel!
     var exerciseCautionModel: postureExerciseCautionModel!
     var relatedPickleModel: postureRelatedPickleModel!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        titleImageModel = postureTitleImageModel.pushUpModel
-        titleLabelModel = postureTitleLabelModel.pushUpModel
-        titleTagModel = postureTagLabelModel.pushUpModel
-        exerciseWayModel = postureExerciseWayModel.pushUpModel
+        titleImageModel = PostureTitleImageModel.pushUpModel
+        titleLabelModel = PostureTitleLabelModel.pushUpModel
+        titleTagModel = PostureTagLabelModel.pushUpModel
+        exerciseWayModel = PostureExerciseWayModel.pushUpModel
         exerciseCautionModel = postureExerciseCautionModel.pushUpModel
         relatedPickleModel = postureRelatedPickleModel.pushUpModel
         
@@ -82,7 +82,7 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         case 3:
             let cell = postureDetailTableView.dequeueReusableCell(withIdentifier: PostureDetailExerciseInfoTableViewCell.identifier, for: indexPath) as! PostureDetailExerciseInfoTableViewCell
             
-            cell.setup(model: postureExerciseWayModel.pushUpModel)
+            cell.setup(model: PostureExerciseWayModel.pushUpModel)
             cell.selectionStyle = .none
             return cell
         case 4:

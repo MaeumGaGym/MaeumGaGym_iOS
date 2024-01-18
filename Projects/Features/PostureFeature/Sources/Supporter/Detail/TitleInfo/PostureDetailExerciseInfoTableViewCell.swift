@@ -20,7 +20,7 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
     
     private var exerciseInfo3 = MaeumGaGymPostureInfoLabel(titleNumber: "03", text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다.")
     
-    public func setup(model: postureExerciseWayModel) {
+    public func setup(model: PostureExerciseWayModel) {
         let exerciseInfos = model.data
         guard exerciseInfos.count >= 3 else {
             print("운동 정보가 충분하지 않습니다.")
