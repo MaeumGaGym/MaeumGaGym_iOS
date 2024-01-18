@@ -14,8 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-//        window?.rootViewController = UINavigationController(rootViewController: PostureDetailViewController(PostureDetailViewModel()))
-            window?.rootViewController = UINavigationController(rootViewController: PostureRecommandViewController(PostureViewModel()))
+            window?.rootViewController = UINavigationController(
+                rootViewController: PostureRecommandViewController(PostureViewModel()))
         window?.makeKeyAndVisible()
     }
 }

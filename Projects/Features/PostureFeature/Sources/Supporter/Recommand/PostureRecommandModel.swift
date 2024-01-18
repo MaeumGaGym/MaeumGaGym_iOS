@@ -10,7 +10,7 @@ public struct Exercise {
 public enum PostureRecommandModel {
     case first
     case second
-    
+
     var data: [Exercise] {
         switch self {
         case .first:
@@ -27,7 +27,7 @@ public enum PostureRecommandModel {
             ]
         }
     }
-    
+
     var logo: UIImage {
         switch self {
         case .first:
@@ -36,7 +36,7 @@ public enum PostureRecommandModel {
             return DSKitAsset.Assets.blueDumbbel.image
         }
     }
-    
+
     var title: String {
         switch self {
         case .first:
@@ -46,4 +46,3 @@ public enum PostureRecommandModel {
         }
     }
 }
-
