@@ -3,12 +3,12 @@ import SnapKit
 import Then
 import DSKit
 import RxSwift
+import Core
 
-public class PostureChestToggleTableViewCell: UITableViewCell {
+public class PostureChestToggleTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureChestToggleTableViewCell"
 
-    let disposeBag = DisposeBag()
     private var firstButtonCliked: Bool = false
     private var secondButtonCliked: Bool = false
 
@@ -19,19 +19,17 @@ public class PostureChestToggleTableViewCell: UITableViewCell {
         self.firstButton = MaeumGaGymToggleButton(type: firstType)
         self.secondButton = MaeumGaGymToggleButton(type: secondType)
 
-        addViews()
-        setupViews()
         bind(firstType: firstType, secondType: secondType)
     }
 
-    private func addViews() {
+    public override func addViews() {
         [
             firstButton,
             secondButton
         ].forEach { contentView.addSubview($0) }
     }
 
-    private func setupViews() {
+    public override func layout() {
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
             $0.centerY.equalToSuperview()

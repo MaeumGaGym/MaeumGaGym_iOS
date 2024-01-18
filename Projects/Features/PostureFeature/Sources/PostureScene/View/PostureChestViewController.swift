@@ -12,6 +12,7 @@ import PostureFeatureInterface
 public class PostureChestViewController: BaseViewController<PostureChestViewModel> {
 
     private var chestModel: PostureChestModel!
+
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white

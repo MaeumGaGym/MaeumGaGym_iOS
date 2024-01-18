@@ -2,8 +2,9 @@ import UIKit
 import SnapKit
 import Then
 import DSKit
+import Core
 
-public class PostureChestTableViewCell: UITableViewCell {
+public class PostureChestTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureChestTableViewCell"
 
@@ -24,17 +25,17 @@ public class PostureChestTableViewCell: UITableViewCell {
         self.exerciseNameLabel.text = exerciseNameText
 
         addViews()
-        setupViews()
     }
 
-    private func addViews() {
+    public override func addViews() {
         [
             postureImageView,
             exerciseNameLabel
         ].forEach { contentView.addSubview($0) }
     }
 
-    private func setupViews() {
+    public override func layout() {
+        super.layout()
 
         postureImageView.snp.makeConstraints {
             $0.leading.top.equalToSuperview().offset(12.0)
