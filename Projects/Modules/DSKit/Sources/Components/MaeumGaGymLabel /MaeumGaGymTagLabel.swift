@@ -41,7 +41,13 @@ open class MaeumGaGymTagLabel: BaseLabel {
         }
     }
     
-    public func updateData(text: String, textcolor: UIColor? = DSKitAsset.Colors.blue500.color, backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color, cornerRadius: Double? = 18.0, font: UIFont? = UIFont.Pretendard.labelMedium) {
+    public func updateData(
+        text: String,
+        textcolor: UIColor? = DSKitAsset.Colors.blue500.color,
+        backgroundColor: UIColor? = DSKitAsset.Colors.gray50.color,
+        cornerRadius: Double? = 18.0,
+        font: UIFont? = UIFont.Pretendard.labelMedium
+    ) {
         self.textLabel.text = text
         self.textLabel.textColor = textcolor
         self.backgroundColor = backgroundColor

@@ -19,8 +19,8 @@ open class BaseViewController<T>: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        layout()
         bindViewModel()
+        layout()
         configureNavigationBar()
         setupKeyboardHandling()
         attribute()
