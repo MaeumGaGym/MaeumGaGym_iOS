@@ -1,5 +1,4 @@
 import UIKit
-import PostureFeatureInterface
 import RxFlow
 import Core
 import PostureFeature
