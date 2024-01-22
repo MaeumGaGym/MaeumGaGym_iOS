@@ -13,6 +13,7 @@ open class MaeumGaGymSearchView: UIView {
     private var cancelImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = DSKitAsset.Assets.postureCancel.image
+        $0.isHidden = true
     }
     
     public init (backgroundColor: UIColor) {
@@ -32,6 +33,14 @@ open class MaeumGaGymSearchView: UIView {
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func hideCancelButton() {
+        self.cancelImage.isHidden = true
+    }
+    
+    public func showCancelButton() {
+        self.cancelImage.isHidden = true
     }
     
     private func setupUI() {
