@@ -19,17 +19,17 @@ public class InputNicknameViewController: BaseViewController<NicknameViewModel> 
     private var bottomConstraint: Constraint?
 
 
-    private let nicknameTitle = MaeumGaGymLabel(text: "닉네임", font: UIFont.Pretendard.titleLarge, isCenter: false)
+    private let nicknameTitle = MGLabel(text: "닉네임", font: UIFont.Pretendard.titleLarge, isCenter: false)
     
-    private let textInformation = MaeumGaGymLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color,  isCenter: false)
+    private let textInformation = MGLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color,  isCenter: false)
     
-    private let nicknameTF = MaeumGaGymTextField(placeholder: "닉네임")
+    private let nicknameTF = MGTextField(placeholder: "닉네임")
     
     private let cancelButton = UIButton().then {
         $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
     }
     
-    private var checkButton = MaeumGaGymCheckButton(text: "회원가입")
+    private var checkButton = MGCheckButton(text: "회원가입")
 
 
     public override func attribute() {

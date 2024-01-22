@@ -5,9 +5,9 @@ import Then
 
 public class DSAuthButtonVC: UIViewController {
     
-    var kakaoButton = MaeumGaGymAuthButton(type: .kakao)
-    var googleButton = MaeumGaGymAuthButton(type: .google)
-    var appleButton = MaeumGaGymAuthButton(type: .apple)
+    var kakaoButton = MGAuthButton(type: .kakao)
+    var googleButton = MGAuthButton(type: .google)
+    var appleButton = MGAuthButton(type: .apple)
     
     public override func viewDidLoad() {
         super.viewDidLoad()

@@ -14,16 +14,16 @@ public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
         $0.font = UIFont.Pretendard.titleMedium
     }
 
-    private var exerciseInfo1 = MaeumGaGymPostureInfoLabel(
+    private var exerciseInfo1 = MGPostureInfoLabel(
         titleNumber: "01",
         text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."
     )
-    private var exerciseInfo2 = MaeumGaGymPostureInfoLabel(
+    private var exerciseInfo2 = MGPostureInfoLabel(
         titleNumber: "02",
         text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.",
         numberOfLines: 2
     )
-    private var exerciseInfo3 = MaeumGaGymPostureInfoLabel(
+    private var exerciseInfo3 = MGPostureInfoLabel(
         titleNumber: "03",
         text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다."
     )

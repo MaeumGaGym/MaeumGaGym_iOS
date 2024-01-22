@@ -16,25 +16,25 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         AppStep.homeIsRequired
     }
     
-    private let agreeLabel = MaeumGaGymLabel(
+    private let agreeLabel = MGLabel(
         text: "약관동의",
         font: UIFont.Pretendard.titleLarge
     )
     
-    private let textInformation = MaeumGaGymLabel(
+    private let textInformation = MGLabel(
         text: "서비스 이용을 위해 필수 약관동의가 필요해요.",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color
     )
     
-    private let agreeTermsView = MaeumGaGymAgreeView(
+    private let agreeTermsView = MGAgreeView(
         firstAgreeText: .privacyAgreeText,
         secondAgreeText: .termsAgreeText,
         thirdAgreeText: .ageAgreeText,
         fourthAgreeText: .marketingAgreeText
     )
     
-    private var checkButton = MaeumGaGymCheckButton(text: "확인")
+    private var checkButton = MGCheckButton(text: "확인")
     
     public override func layout() {
         self.view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])

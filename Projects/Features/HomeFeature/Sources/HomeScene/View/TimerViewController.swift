@@ -8,12 +8,12 @@ import Core
 
 public class TimerViewController: BaseViewController<TimerViewModel> {
         
-    lazy var progressBarView = MaeumGaGymProgressBarView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
+    lazy var progressBarView = MGProgressBarView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
-    private let closeButton = MaeumGaGymTimerButton(type: .close)
-    private let stopButton = MaeumGaGymTimerButton(type: .stop, radius: 40.0)
-    private let startButton = MaeumGaGymTimerButton(type: .start, radius: 40.0)
-    private let restartButton = MaeumGaGymTimerButton(type: .restart)
+    private let closeButton = MGTimerButton(type: .close)
+    private let stopButton = MGTimerButton(type: .stop, radius: 40.0)
+    private let startButton = MGTimerButton(type: .start, radius: 40.0)
+    private let restartButton = MGTimerButton(type: .restart)
 
     
     public override func attribute() {

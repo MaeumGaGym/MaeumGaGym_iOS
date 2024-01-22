@@ -20,18 +20,18 @@ public class CompleteSignUpViewController: BaseViewController<CompleteViewModel>
         $0.image = DSKitAsset.Assets.mainLogo.image
     }
     
-    private let agreeLabel = MaeumGaGymLabel(
+    private let agreeLabel = MGLabel(
         text: "회원가입 완료",
         font: UIFont.Pretendard.titleLarge
     )
     
-    private let textInformation = MaeumGaGymLabel(
+    private let textInformation = MGLabel(
         text: "마음가짐의 회원이 되신 것을 축하드려요!",
         font: UIFont.Pretendard.labelMedium,
         textColor: DSKitAsset.Colors.gray600.color
     )
     
-    private var checkButton = MaeumGaGymCheckButton(text: "확인")
+    private var checkButton = MGCheckButton(text: "확인")
     
     public override func layout() {
         self.view.addSubviews([mainLogo ,agreeLabel, textInformation,  checkButton])

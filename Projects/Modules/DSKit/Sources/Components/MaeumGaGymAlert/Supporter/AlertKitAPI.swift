@@ -16,12 +16,12 @@ public enum AlertKitAPI {
         switch style {
         case .iOS16AppleMusic:
             guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
-            let view = MaeumGaGymAlertBoxView(title: title, subtitle: subtitle, icon: icon)
+            let view = MGAlertBoxView(title: title, subtitle: subtitle, icon: icon)
             view.haptic = haptic
             view.present(on: window)
         case .iOS17AppleMusic:
             guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
-            let view = MaeumGaGymAlertBarView(title: title, subtitle: subtitle, icon: icon)
+            let view = MGAlertBarView(title: title, subtitle: subtitle, icon: icon)
             view.haptic = haptic
             view.present(on: window)
         }
