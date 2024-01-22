@@ -10,10 +10,11 @@ import UIKit
 import SnapKit
 import Then
 import Core
+import DSKit
 
 public class DSCameraButtonVC: UIViewController {
     
-    var cameraFeatureButton = MGCameraFeatureButton(image: DSKitAsset.Assets.blackHome.image)
+    var cameraFeatureButton = MGCameraFeatureButton(image: DSKitAsset.Assets.image.image)
     
     public override func viewDidLoad() {
         super.viewDidLoad()
