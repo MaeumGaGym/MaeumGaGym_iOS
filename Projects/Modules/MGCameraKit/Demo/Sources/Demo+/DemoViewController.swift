@@ -8,7 +8,12 @@ import MGCameraKit
 
 public class DemoViewController: UIViewController {
     
-    private var cameraView: MGCamera!
+    private var cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 430, height: 573)).then {
+        $0.setAspectRatio(.full)
+        $0.setBackgroundColor(.white)
+        $0.setFlashMode(.off)
+        $0.setCameraPosition(.back)
+    }
     private var gridView: MGridView!
     
     private var captureButton = UIButton().then {
@@ -36,25 +41,30 @@ public class DemoViewController: UIViewController {
     }
     
     private var isOn = true
-    private var gridOn = false
-    private var touchShootOn = false
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .black
-        
-        cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 430, height: 573))
-        view.addSubview(cameraView)
-        cameraView.setAspectRatio(.full)
-        cameraView.setBackgroundColor(.white)
-        cameraView.setFlashMode(.off)
-        cameraView.setCameraPosition(.back)
+                
         cameraView.startRunning()
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+        cameraView.addGestureRecognizer(pinchGesture)
+
+        bindActions()
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        view.addSubview(buttomStackView)
-        buttomStackView.addArrangedSubviews(photoButton, captureButton, chageButton)
-        
+        layout()
+        attribute()
+    }
+    
+    open func attribute() {
+        view.backgroundColor = .black
+        title = "사진 촬영"
+    }
+    
+    open func bindActions() {
         chageButton.rx.tap
             .subscribe(with: self, onNext: { owner, _  in
                 owner.reversalDidTap()
@@ -64,19 +74,13 @@ public class DemoViewController: UIViewController {
             .bind {
                 self.buttonDidTap()
             }
-        
-        title = "사진 촬영"
-        
-        buttonDidTap()
-    }
-    
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        layout()
     }
     
     func layout() {
+        view.addSubview(cameraView)
+        view.addSubview(buttomStackView)
+        buttomStackView.addArrangedSubviews(photoButton, captureButton, chageButton)
+
         cameraView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
@@ -117,6 +121,7 @@ public class DemoViewController: UIViewController {
         }
     }
     
+    // 보류
     func lightButtonDidTap(_ sender: Any) {
         isOn.toggle()
         
