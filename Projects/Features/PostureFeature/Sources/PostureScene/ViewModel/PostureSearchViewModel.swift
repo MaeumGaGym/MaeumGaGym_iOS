@@ -1,9 +1,24 @@
-//
-//  PostureSearchViewModel.swift
-//  PostureFeature
-//
-//  Created by 이은호 on 1/19/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
+import RxFlow
+import RxCocoa
+import RxSwift
+import Core
+
+public class PostureViewModel: BaseViewModel {
+    public func transform(_ input: Input) -> Output {
+        return Output()
+    }
+
+    public struct Input {
+
+    }
+
+    public struct Output {
+
+    }
+
+    public init() {
+
+    }
+}
+
