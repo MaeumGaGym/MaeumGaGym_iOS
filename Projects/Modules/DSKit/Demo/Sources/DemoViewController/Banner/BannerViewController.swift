@@ -7,12 +7,12 @@ import Then
 import DSKit
 
 public enum TestBannerCell {
-    case banner(model: MaeumGaGymBannerModel)
+    case banner(model: MGBannerModel)
 }
 
 public class BannerViewController: UIViewController {
     
-    private var viewModel: MaeumGaGymBannerModel?
+    private var viewModel: MGBannerModel?
     private var cellList: [UITableViewCell] = []
     private var cells: [TestBannerCell] = []
     private lazy var tableView = UITableView(frame: .zero).then {
@@ -21,14 +21,14 @@ public class BannerViewController: UIViewController {
         $0.backgroundColor = .systemBackground
         $0.showsHorizontalScrollIndicator = false
         $0.register(
-            MaeumGaGymBannerTableViewCell.self,
-            forCellReuseIdentifier: MaeumGaGymBannerTableViewCell.identifier
+            MGBannerTableViewCell.self,
+            forCellReuseIdentifier: MGBannerTableViewCell.identifier
         )
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel = MaeumGaGymBannerModel()
+        self.viewModel = MGBannerModel()
         self.configureUI()
         self.addCells()
     }
@@ -92,8 +92,8 @@ extension BannerViewController: UITableViewDataSource {
         switch self.cells[indexPath.item] {
         case .banner:
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MaeumGaGymBannerTableViewCell.identifier
-            ) as? MaeumGaGymBannerTableViewCell else {
+                withIdentifier: MGBannerTableViewCell.identifier
+            ) as? MGBannerTableViewCell else {
                 return UITableViewCell()
             }
             cell.setUp(viewModel)

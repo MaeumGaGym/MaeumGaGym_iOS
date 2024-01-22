@@ -7,9 +7,9 @@ import DSKit
 
 open class TitlePickleView: UIView {
 
-    private let telUILabel = MaeumGaGymLabel(text: " 마음가짐 테스트 영상", font: UIFont.Pretendard.titleMedium, textColor: .white)
+    private let telUILabel = MGLabel(text: " 마음가짐 테스트 영상", font: UIFont.Pretendard.titleMedium, textColor: .white)
     
-    private let textInformation = MaeumGaGymLabel(text: "오늘도 열심히 헬스하러 헬스장을 가보는 것은 어...", font: UIFont.Pretendard.bodyMedium2, textColor: .white)
+    private let textInformation = MGLabel(text: "오늘도 열심히 헬스하러 헬스장을 가보는 것은 어...", font: UIFont.Pretendard.bodyMedium2, textColor: .white)
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

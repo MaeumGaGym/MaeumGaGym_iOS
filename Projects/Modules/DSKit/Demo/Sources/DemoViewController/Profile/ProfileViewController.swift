@@ -8,18 +8,18 @@ import RxSwift
 public class ProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
-    lazy var smallProfile = MaeumGaGymProfileView(
-        profileImage: MaeumGaGymProfileImage(type: .custom, customImage: nil),
+    lazy var smallProfile = MGProfileView(
+        profileImage: MGProfileImage(type: .custom, customImage: nil),
         profileType: .smallProfile
     )
     
-    lazy var middleProfile = MaeumGaGymProfileView(
-        profileImage: MaeumGaGymProfileImage(type: .custom, customImage: nil),
+    lazy var middleProfile = MGProfileView(
+        profileImage: MGProfileImage(type: .custom, customImage: nil),
         profileType: .middleProfile
     )
     
-    lazy var bigProfile = MaeumGaGymProfileView(
-        profileImage: MaeumGaGymProfileImage(type: .custom, customImage: nil),
+    lazy var bigProfile = MGProfileView(
+        profileImage: MGProfileImage(type: .custom, customImage: nil),
         profileType: .bigProfile
     )
     

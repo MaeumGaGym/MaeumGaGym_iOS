@@ -29,11 +29,11 @@ public class StartViewController: BaseViewController<StartViewModel> {
         $0.textAlignment = .center
     }
     
-    private var googleButton = MaeumGaGymAuthButton(type: .google)
+    private var googleButton = MGAuthButton(type: .google)
 
-    private var kakaoButton = MaeumGaGymAuthButton(type: .kakao)
+    private var kakaoButton = MGAuthButton(type: .kakao)
         
-    private var appleButton = MaeumGaGymAuthButton(type: .apple)
+    private var appleButton = MGAuthButton(type: .apple)
     
     
     public override func layout() {

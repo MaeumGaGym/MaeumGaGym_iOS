@@ -14,7 +14,6 @@ public enum ToggleButtonType {
     case bareBody
     case marchine
     
-    
     var message: String {
         switch self {
         case .image:

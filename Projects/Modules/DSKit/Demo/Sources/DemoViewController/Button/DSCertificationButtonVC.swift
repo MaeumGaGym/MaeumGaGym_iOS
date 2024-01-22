@@ -5,8 +5,8 @@ import Then
 
 public class DSCertificationButtonVC: UIViewController {
     
-    let certificationButton1 = MaeumGaGymCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
-    let certificationButton2 = MaeumGaGymCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
+    let certificationButton1 = MGCertificationButton(text: "문자 다시 받기", font: UIFont.Pretendard.bodyMedium)
+    let certificationButton2 = MGCertificationButton(text: "인증 요청", font: UIFont.Pretendard.bodySmall)
     
     public override func viewDidLoad() {
         super.viewDidLoad()

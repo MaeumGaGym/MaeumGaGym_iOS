@@ -10,7 +10,7 @@ public class PagingTabBarViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let categoryTitleList = ["추천", "맨몸", "기구", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
     
-    private lazy var pagingTabBar = MaeumGaGymPagingTabBar(categoryTitleList: categoryTitleList)
+    private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
     
     private lazy var viewControllers: [UIViewController] = [
         RedViewController(),

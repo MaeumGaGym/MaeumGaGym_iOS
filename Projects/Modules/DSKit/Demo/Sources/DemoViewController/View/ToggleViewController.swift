@@ -5,7 +5,7 @@ import DSKit
 
 public class ToggleViewController: UIViewController {
     
-    let toggleView = MaeumGaGymToggleView(width: 430.0, height: 793.0)
+    let toggleView = MGToggleView(width: 430.0, height: 793.0)
     
     public override func viewDidLoad() {
         super.viewDidLoad()

@@ -12,7 +12,7 @@ open class UserProfileView: UIView {
         $0.backgroundColor = .clear
     }
     
-    private lazy var smallProfile = MaeumGaGymProfileView(profileImage: MaeumGaGymProfileImage(type: .custom, customImage: nil), profileType: .smallProfile)
+    private lazy var smallProfile = MGProfileView(profileImage: MGProfileImage(type: .custom, customImage: nil), profileType: .smallProfile)
     
     public init(
         userName: String,

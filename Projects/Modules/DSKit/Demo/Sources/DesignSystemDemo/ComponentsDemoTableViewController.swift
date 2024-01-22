@@ -27,7 +27,7 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
         switch designSystem {
         case .button:
             MGLogger.verbose("Button")
-            self.navigationController?.pushVC(ButtonTableViewController.self)
+            self.navigationController?.pushVC(DSButtonViewController.self)
         case .textField:
             MGLogger.verbose("textField")
             self.navigationController?.pushVC(TextFieldViewController.self)

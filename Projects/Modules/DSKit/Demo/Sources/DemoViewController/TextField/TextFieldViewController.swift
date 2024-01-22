@@ -10,16 +10,16 @@ public class TextFieldViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    private let nicknameLabel = MaeumGaGymLabel(text: "닉네임")
-    private let nicknameInfo = MaeumGaGymLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
+    private let nicknameLabel = MGLabel(text: "닉네임")
+    private let nicknameInfo = MGLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
     
     private let cancelButton = UIButton().then {
         $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
     }
     
-    public let completeButton = MaeumGaGymCheckButton(text: "완료")
+    public let completeButton = MGCheckButton(text: "완료")
     
-    public let nicknameTF = MaeumGaGymTextField(placeholder: "닉네임")
+    public let nicknameTF = MGTextField(placeholder: "닉네임")
     
     public override func viewDidLoad() {
         super.viewDidLoad()

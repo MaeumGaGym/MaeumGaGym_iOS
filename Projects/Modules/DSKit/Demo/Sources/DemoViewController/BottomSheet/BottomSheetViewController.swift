@@ -8,11 +8,11 @@ struct BottomSheetItem {
 
 public class BottomSheetViewController: UIViewController {
 
-    private let bottomSheetViewController: MaeumGaGymBottomSheetViewController = {
+    private let bottomSheetViewController: MGBottomSheetViewController = {
         if #available(iOS 11.0, *) {
-            return MaeumGaGymBottomSheetViewController(type: .plain)
+            return MGBottomSheetViewController(type: .plain)
         } else {
-            return MaeumGaGymBottomSheetViewController(type: .plain)
+            return MGBottomSheetViewController(type: .plain)
         }
     }()
     
@@ -34,8 +34,8 @@ public class BottomSheetViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(
-            MaeumGaGymBottomSheetIconCell.self,
-            forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier
+            MGBottomSheetIconCell.self,
+            forCellReuseIdentifier: MGBottomSheetIconCell.identifier
         )
         addChild(bottomSheetViewController)
         bottomSheetViewController.show(in: view, initialState: .collapsed)
@@ -69,7 +69,7 @@ public class BottomSheetViewController: UIViewController {
     }
 }
 
-extension BottomSheetViewController: MaeumGaGymBottomSheetViewDelegate {
+extension BottomSheetViewController: MGBottomSheetViewDelegate {
 
     public func didMove(to percentage: Float) {
 //        bottomSheetViewController.rootViewController.title = String(format: "didMove to %.1f", percentage)
@@ -84,9 +84,9 @@ extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate,
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: MaeumGaGymBottomSheetIconCell.identifier,
+            withIdentifier: MGBottomSheetIconCell.identifier,
             for: indexPath
-        ) as! MaeumGaGymBottomSheetIconCell
+        ) as! MGBottomSheetIconCell
 
         let item = bottomSheetItems[indexPath.row]
         cell.iconImage.image = item.icon

@@ -5,40 +5,40 @@ import Then
 
 open class LabelViewController: UIViewController {
     
-    private let telUILabel = MaeumGaGymLabel(
+    private let telUILabel = MGLabel(
         text: "휴대폰 번호",
         font: UIFont.Pretendard.titleLarge
     )
     
-    private let textInformation = MaeumGaGymLabel(
+    private let textInformation = MGLabel(
         text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color
     )
     
-    private let firstTimerTitle = MaeumGaGymLabel(
+    private let firstTimerTitle = MGLabel(
         text: "4분",
         font: UIFont.Pretendard.bodyLarge,
         textColor: .black
     )
     
-    private let secondTimerTitle = MaeumGaGymLabel(
+    private let secondTimerTitle = MGLabel(
         text: "04 : 00",
         font: UIFont.Pretendard.light,
         textColor: .black
     )
     
-    private let thirdTimerTitle = MaeumGaGymLabel(
+    private let thirdTimerTitle = MGLabel(
         text: "오전 8:09",
         font: UIFont.Pretendard.bodyMedium,
         textColor: .black
     )
     
-    private let tagLabel1 = MaeumGaGymTagLabel(text: "맨몸")
-    private let tagLabel2 = MaeumGaGymTagLabel(text: "가슴")
+    private let tagLabel1 = MGTagLabel(text: "맨몸")
+    private let tagLabel2 = MGTagLabel(text: "가슴")
     
-    private let postureInfoTitle1 = MaeumGaGymPostureInfoLabel(titleNumber: "01", text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.")
-    private let postureInfoTitle2 = MaeumGaGymPostureInfoLabel(titleNumber: "02", text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.", numberOfLines: 2)
+    private let postureInfoTitle1 = MGPostureInfoLabel(titleNumber: "01", text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.")
+    private let postureInfoTitle2 = MGPostureInfoLabel(titleNumber: "02", text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.", numberOfLines: 2)
     
     open override func viewDidLoad() {
         super.viewDidLoad()
