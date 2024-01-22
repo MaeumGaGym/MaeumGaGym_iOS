@@ -18,48 +18,47 @@ public class DemoViewController: UIViewController {
         
         view.backgroundColor = .red
         
+        cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 350, height: 480))
         view.addSubview(cameraView)
-        cameraView.setAspectRatio(.square)
+        cameraView.setAspectRatio(.full)
         cameraView.setBackgroundColor(.white)
         cameraView.setFlashMode(.off)
         cameraView.setCameraPosition(.back)
         
-        gridView = MGridView(frame: cameraView.frame)
-        gridView.isUserInteractionEnabled = false
-        view.addSubview(gridView)
+//        gridView = MGridView(frame: cameraView.frame)
+//        gridView.isUserInteractionEnabled = false
+//        view.addSubview(gridView)
         
-        captureButton.layer.cornerRadius = 50.0
+//        captureButton.layer.cornerRadius = 50.0
         
         cameraView.startRunning()
-        updateGridViewSize()
+//        updateGridViewSize()
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        updateGridViewSize()
+//        updateGridViewSize()
         layout()
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
     }
     
     func layout() {
         
         cameraView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(90.0)
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(430.0)
         }
     }
     
-    func updateGridViewSize() {
-        let cameraViewSize = cameraView.frame.size
-        let gridSize = CGSize(width: cameraViewSize.width, height: cameraViewSize.width)
-        let gridOrigin = CGPoint(x: cameraView.frame.origin.x, y: cameraView.frame.origin.y + (cameraViewSize.height - gridSize.height) / 2)
-        gridView.frame = CGRect(origin: gridOrigin, size: gridSize)
-    }
+//    func updateGridViewSize() {
+//        let cameraViewSize = cameraView.frame.size
+//        let gridSize = CGSize(width: cameraViewSize.width, height: cameraViewSize.width)
+//        let gridOrigin = CGPoint(x: cameraView.frame.origin.x,
+//                                 y: cameraView.frame.origin.y + (cameraViewSize.height - gridSize.height) / 2)
+//        gridView.frame = CGRect(origin: gridOrigin, size: gridSize)
+//    }
     
     func GridButtonDidTap(_ sender: Any) {
         gridOn.toggle()
@@ -73,10 +72,8 @@ public class DemoViewController: UIViewController {
             case .success(let image):
                 print("사진 저장")
                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                break
             case .failure(let error):
                 print("저장 실패 \(error)")
-                break
             }
         }
     }
