@@ -12,6 +12,7 @@ public enum ButtonType: String, CaseIterable {
     case timer
     case toggle
     case seemore
+    case camera
 }
 
 public class ButtonTableViewController: BaseDesignSystemTableViewController<ButtonType> {
@@ -47,6 +48,9 @@ public class ButtonTableViewController: BaseDesignSystemTableViewController<Butt
         case .seemore:
             MGLogger.verbose("seemore Button")
             self.navigationController?.pushVC(DSSeeMoreButtonVC.self)
+        case .camera:
+            MGLogger.verbose("camera featrure Button")
+            self.navigationController?.pushVC(DSCameraButtonVC.self)
         }
     }
 }

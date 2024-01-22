@@ -24,8 +24,8 @@ public class BottomSheetViewController: UIViewController {
         view.backgroundColor = .lightGray
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "수정"),
-             BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.heart.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.heart.image, title: "삭제")
          ]
 
         bottomSheetViewController.bottomSheetDelegate = self
