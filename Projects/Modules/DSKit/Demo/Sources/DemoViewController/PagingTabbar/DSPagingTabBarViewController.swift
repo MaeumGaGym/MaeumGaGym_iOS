@@ -5,7 +5,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-public class PagingTabBarViewController: UIViewController {
+public class DSPagingTabBarViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let categoryTitleList = ["추천", "맨몸", "기구", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]

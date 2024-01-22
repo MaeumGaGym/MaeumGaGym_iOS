@@ -10,7 +10,7 @@ public enum TestBannerCell {
     case banner(model: MGBannerModel)
 }
 
-public class BannerViewController: UIViewController {
+public class DSBannerViewController: UIViewController {
     
     private var viewModel: MGBannerModel?
     private var cellList: [UITableViewCell] = []
@@ -34,7 +34,7 @@ public class BannerViewController: UIViewController {
     }
 }
 
-extension BannerViewController {
+extension DSBannerViewController {
     
     private func configureUI() {
         view.backgroundColor = .white
@@ -55,7 +55,7 @@ extension BannerViewController {
     }
 }
 
-extension BannerViewController: UITableViewDelegate {
+extension DSBannerViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return self.view.frame.height / 2
@@ -78,7 +78,7 @@ extension BannerViewController: UITableViewDelegate {
     }
 }
 
-extension BannerViewController: UITableViewDataSource {
+extension DSBannerViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.cells.count
     }

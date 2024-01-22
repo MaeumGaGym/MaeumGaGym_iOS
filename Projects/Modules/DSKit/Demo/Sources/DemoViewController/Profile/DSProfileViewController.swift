@@ -5,7 +5,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-public class ProfileViewController: UIViewController {
+public class DSProfileViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     lazy var smallProfile = MGProfileView(

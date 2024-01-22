@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public class EmptyViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+public class DSEmptyViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     public let disposeBag = DisposeBag()
     

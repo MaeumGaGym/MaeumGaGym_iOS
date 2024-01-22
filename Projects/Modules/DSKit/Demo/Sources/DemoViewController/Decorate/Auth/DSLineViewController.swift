@@ -3,14 +3,14 @@ import DSKit
 import SnapKit
 import Then
 
-open class LineViewController: UIViewController {
+open class DSLineViewController: UIViewController {
     
-    private let decorateLine1 = MaeumGaGymLine(
+    private let decorateLine1 = MGLine(
         lineColor: DSKitAsset.Colors.gray50.color,
         lineWidth: 390.0,
         lineHeight: 2.0
     )
-    private let decorateLine2 = MaeumGaGymLine(
+    private let decorateLine2 = MGLine(
         lineColor: DSKitAsset.Colors.red700.color,
         lineWidth: 390.0,
         lineHeight: 10.0

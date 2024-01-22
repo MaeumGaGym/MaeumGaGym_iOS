@@ -32,7 +32,7 @@ open class MGAgreeButton: BaseButton {
         $0.isHidden = false
     }
     
-    private let readMoreLine = MaeumGaGymLine(lineColor: DSKitAsset.Colors.gray300.color,
+    private let readMoreLine = MGLine(lineColor: DSKitAsset.Colors.gray300.color,
                                               lineWidth: 64.0,
                                               lineHeight: 1.0
     )

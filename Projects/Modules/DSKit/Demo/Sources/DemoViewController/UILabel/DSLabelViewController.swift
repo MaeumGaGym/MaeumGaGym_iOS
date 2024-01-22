@@ -3,7 +3,7 @@ import DSKit
 import SnapKit
 import Then
 
-open class LabelViewController: UIViewController {
+open class DSLabelViewController: UIViewController {
     
     private let telUILabel = MGLabel(
         text: "휴대폰 번호",

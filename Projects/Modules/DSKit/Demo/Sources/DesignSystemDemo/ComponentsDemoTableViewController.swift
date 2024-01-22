@@ -30,31 +30,31 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
             self.navigationController?.pushVC(DSButtonViewController.self)
         case .textField:
             MGLogger.verbose("textField")
-            self.navigationController?.pushVC(TextFieldViewController.self)
+            self.navigationController?.pushVC(DSTextFieldViewController.self)
         case .label:
             MGLogger.verbose("label")
-            self.navigationController?.pushVC(LabelViewController.self)
+            self.navigationController?.pushVC(DSLabelViewController.self)
         case .line:
             MGLogger.verbose("line")
-            self.navigationController?.pushVC(LineViewController.self)
+            self.navigationController?.pushVC(DSLineViewController.self)
         case .profile:
             MGLogger.verbose("profile")
-            self.navigationController?.pushVC(ProfileViewController.self)
+            self.navigationController?.pushVC(DSProfileViewController.self)
         case .alert:
             MGLogger.verbose("alert")
-            self.navigationController?.pushVC(AlertViewController.self)
+            self.navigationController?.pushVC(DSAlertViewController.self)
         case .bottomSheet:
             MGLogger.verbose("bottomSheet")
-            self.navigationController?.pushVC(BottomSheetViewController.self)
+            self.navigationController?.pushVC(DSBottomSheetViewController.self)
         case .emptyView:
             MGLogger.verbose("emptyView")
-            self.navigationController?.pushVC(EmptyViewController.self)
+            self.navigationController?.pushVC(DSEmptyViewController.self)
         case .pagingTabBar:
             MGLogger.verbose("pagingTabBar")
-            self.navigationController?.pushVC(PagingTabBarViewController.self)
+            self.navigationController?.pushVC(DSPagingTabBarViewController.self)
         case .banner:
             MGLogger.verbose("Banner")
-            self.navigationController?.pushVC(BannerViewController.self)
+            self.navigationController?.pushVC(DSBannerViewController.self)
         }
     }
 }

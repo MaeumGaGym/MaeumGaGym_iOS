@@ -4,7 +4,7 @@ import SnapKit
 import Then
 import RxSwift
 
-public class TextFieldViewController: UIViewController {
+public class DSTextFieldViewController: UIViewController {
     
     private var bottomConstraint: Constraint?
     

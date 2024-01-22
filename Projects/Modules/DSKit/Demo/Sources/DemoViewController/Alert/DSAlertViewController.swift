@@ -3,7 +3,7 @@ import SnapKit
 import Then
 import DSKit
 
-public class AlertViewController: UIViewController {
+public class DSAlertViewController: UIViewController {
     
     let alertView1 = MGAlertOnlyTitleView(title: "링크가 복사되었어요").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium

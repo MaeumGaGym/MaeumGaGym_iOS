@@ -6,7 +6,7 @@ struct BottomSheetItem {
     let title: String
 }
 
-public class BottomSheetViewController: UIViewController {
+public class DSBottomSheetViewController: UIViewController {
 
     private let bottomSheetViewController: MGBottomSheetViewController = {
         if #available(iOS 11.0, *) {
@@ -69,14 +69,14 @@ public class BottomSheetViewController: UIViewController {
     }
 }
 
-extension BottomSheetViewController: MGBottomSheetViewDelegate {
+extension DSBottomSheetViewController: MGBottomSheetViewDelegate {
 
     public func didMove(to percentage: Float) {
 //        bottomSheetViewController.rootViewController.title = String(format: "didMove to %.1f", percentage)
     }
 }
 
-extension BottomSheetViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+extension DSBottomSheetViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bottomSheetItems.count

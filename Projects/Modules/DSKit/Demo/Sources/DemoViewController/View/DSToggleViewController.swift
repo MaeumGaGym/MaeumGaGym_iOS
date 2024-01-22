@@ -3,7 +3,7 @@ import SnapKit
 import Then
 import DSKit
 
-public class ToggleViewController: UIViewController {
+public class DSToggleViewController: UIViewController {
     
     let toggleView = MGToggleView(width: 430.0, height: 793.0)
     

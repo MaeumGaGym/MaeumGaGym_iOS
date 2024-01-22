@@ -3,7 +3,7 @@ import Then
 import SnapKit
 import Core
 
-open class MaeumGaGymLine: BaseView {
+open class MGLine: BaseView {
     private let lineView = UIView()
     
     public init(

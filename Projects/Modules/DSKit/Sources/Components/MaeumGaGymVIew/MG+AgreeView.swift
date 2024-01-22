@@ -8,9 +8,9 @@ open class MGAgreeView: UIView {
 
     let disposeBag = DisposeBag()
     
-    private let decorateLine1 = MaeumGaGymLine()
+    private let decorateLine1 = MGLine()
     public let allAgreeButton = MGAgreeButton(text: .allAgreeText, font: UIFont.Pretendard.labelLarge)
-    private let decorateLine2 = MaeumGaGymLine()
+    private let decorateLine2 = MGLine()
     
     public let firstAgreeButton = MGAgreeButton(text: .privacyAgreeText, readMoreType: true)
     public let secondAgreeButton = MGAgreeButton(text: .termsAgreeText, readMoreType: true)
