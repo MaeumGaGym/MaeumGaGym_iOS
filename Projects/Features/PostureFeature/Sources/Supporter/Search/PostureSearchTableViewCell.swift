@@ -1,10 +1,14 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import DSKit
+import Core
 
 public class PostureSearchTableViewCell: UITableViewCell {
-    static let identifier: String = "PostureSearchTableViewCell"
+    
+    public static let identifier: String = "PostureSearchTableViewCell"
     
     private var searchImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
