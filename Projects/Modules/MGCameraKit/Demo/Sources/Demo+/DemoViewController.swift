@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import Then
 import MGCameraKit
+import MGLogger
 
 public class DemoViewController: UIViewController {
     
@@ -16,89 +17,68 @@ public class DemoViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = .black
         
-        cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 350, height: 480))
+        cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 430, height: 573))
         view.addSubview(cameraView)
         cameraView.setAspectRatio(.full)
         cameraView.setBackgroundColor(.white)
         cameraView.setFlashMode(.off)
         cameraView.setCameraPosition(.back)
-        
-//        gridView = MGridView(frame: cameraView.frame)
-//        gridView.isUserInteractionEnabled = false
-//        view.addSubview(gridView)
-        
-//        captureButton.layer.cornerRadius = 50.0
-        
         cameraView.startRunning()
-//        updateGridViewSize()
+        
+        title = "사진 촬영"
     }
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        updateGridViewSize()
         layout()
     }
     
     func layout() {
-        
         cameraView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(90.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(430.0)
+            $0.height.equalTo(573.0)
         }
     }
     
-//    func updateGridViewSize() {
-//        let cameraViewSize = cameraView.frame.size
-//        let gridSize = CGSize(width: cameraViewSize.width, height: cameraViewSize.width)
-//        let gridOrigin = CGPoint(x: cameraView.frame.origin.x,
-//                                 y: cameraView.frame.origin.y + (cameraViewSize.height - gridSize.height) / 2)
-//        gridView.frame = CGRect(origin: gridOrigin, size: gridSize)
-//    }
-    
-    func GridButtonDidTap(_ sender: Any) {
-        gridOn.toggle()
-        gridView.isHidden = !gridOn
-    }
-    
-    func ButtonDidTap(_ sender: Any) {
+    func buttonDidTap(_ sender: Any) {
         print("capture")
         cameraView.capturePhoto { result in
             switch result {
             case .success(let image):
-                print("사진 저장")
+                MGLogger.debug("사진 저장")
                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             case .failure(let error):
-                print("저장 실패 \(error)")
+                MGLogger.error("저장 실패: \(error)")
             }
         }
     }
     
-    func LightButtonDidTap(_ sender: Any) {
+    func lightButtonDidTap(_ sender: Any) {
         isOn.toggle()
         
         if isOn {
             cameraView.setFlashMode(.on)
-            print("on")
+            MGLogger.debug("on")
         } else {
             cameraView.setFlashMode(.off)
-            print("off")
+            MGLogger.debug("off")
         }
     }
     
-    func ReversalDidTap(_ sender: Any) {
+    func reversalDidTap(_ sender: Any) {
         isOn.toggle()
         
         if isOn {
             cameraView.setCameraPosition(.back)
-            print("back")
+            MGLogger.debug("back")
         } else {
             cameraView.setCameraPosition(.front)
-            print("front")
+            MGLogger.debug("front")
         }
     }
     
