@@ -40,6 +40,8 @@ public extension Gym.Modules {
     static let mgLogger = Gym.project(target: "MGLogger", path: .relativeToModules("MGLogger"))
 
     static let pickle = Gym.project(target: "Pickle", path: .relativeToModules("Pickle"))
+    
+    static let mgCameraKit = Gym.project(target: "MGCameraKit", path: .relativeToModules("MGCameraKit"))
 }
 
 // MARK: - Features
