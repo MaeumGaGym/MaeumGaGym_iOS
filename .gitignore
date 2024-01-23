@@ -3,6 +3,7 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+.env
 
 # Icon must end with two
 Icon
@@ -61,10 +62,35 @@ DerivedData/
 ### Projects ###
 *.xcodeproj
 *.xcworkspace
+/Projects/Modules/TestCore/Sources/TestConfig.swift
+/Projects/Core/Sources/Config.swift
 
 ### Tuist derived files ###
 graph.dot
+graph.png
 Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+### fastlane ###
+# fastlane specific
+**/fastlane/report.xml
+
+# deliver temporary files
+**/fastlane/Preview.html
+
+# snapshot generated screenshots
+**/fastlane/screenshots
+
+# scan temporary files
+**/fastlane/test_output
+
+# Fastlane.swift runner binary
+**/fastlane/FastlaneRunner
+**/fastlane/.env
+
+**Gemfile.lock
+
+##XCConfigFile
+xcconfigs
