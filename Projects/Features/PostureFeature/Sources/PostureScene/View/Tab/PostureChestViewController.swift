@@ -1,10 +1,14 @@
 import UIKit
-import SnapKit
-import Then
-import Core
+
 import RxFlow
 import RxCocoa
 import RxSwift
+
+import SnapKit
+import Then
+
+
+import Core
 import DSKit
 import MGLogger
 import PostureFeatureInterface
@@ -36,9 +40,9 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
 
         postureChestTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
-            $0.width.equalToSuperview()
+            $0.width.equalToSuperview().inset(8.0)
             $0.height.equalTo(613.0)
-            $0.bottom.equalToSuperview()
+            $0.top.equalToSuperview().offset(12.0)
         }
     }
 
