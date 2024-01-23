@@ -28,15 +28,17 @@ public class PostureChestTableViewCell: BaseTableViewCell {
     }
 
     public override func addViews() {
+        super.addViews()
         [
             postureImageView,
             exerciseNameLabel
         ].forEach { contentView.addSubview($0) }
+        
+        layout()
     }
 
     public override func layout() {
         super.layout()
-
         postureImageView.snp.makeConstraints {
             $0.leading.top.equalToSuperview().offset(12.0)
             $0.bottom.equalToSuperview().inset(12.0)
@@ -46,7 +48,7 @@ public class PostureChestTableViewCell: BaseTableViewCell {
         exerciseNameLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(34.0)
             $0.leading.equalTo(postureImageView.snp.trailing).offset(18.0)
-            $0.width.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(18.0)
             $0.height.equalTo(20.0)
         }
     }
