@@ -15,7 +15,7 @@ import PostureFeatureInterface
 
 public class PostureChestViewController: BaseViewController<PostureChestViewModel> {
 
-    private var chestModel: PostureChestModel!
+    private var chestModel = PostureChestModel.first
 
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false

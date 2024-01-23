@@ -20,8 +20,8 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
         $0.separatorStyle = .none
     }
 
-    var firstModel: PostureRecommandModel!
-    var secondModel: PostureRecommandModel!
+    var firstModel = PostureRecommandModel.first
+    var secondModel = PostureRecommandModel.second
 
     public override func attribute() {
         super.attribute()
