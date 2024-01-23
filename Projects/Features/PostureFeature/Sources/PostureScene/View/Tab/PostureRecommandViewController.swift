@@ -9,7 +9,7 @@ import DSKit
 import MGLogger
 import PostureFeatureInterface
 
-public class PostureRecommandViewController: BaseViewController<PostureViewModel> {
+public class PostureRecommandViewController: BaseViewController<PostureRecommandViewModel> {
 
     var tableView = UITableView().then {
         $0.register(PostureRecommandTableViewCell.self,
