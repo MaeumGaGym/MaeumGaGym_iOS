@@ -4,7 +4,7 @@ import RxCocoa
 import RxSwift
 import Core
 
-public class PostureViewModel: BaseViewModel {
+public class PostureRecommandViewModel: BaseViewModel {
     public func transform(_ input: Input) -> Output {
         return Output()
     }
