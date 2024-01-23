@@ -8,7 +8,7 @@ import Core
 public class PostureChestToggleTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureChestToggleTableViewCell"
-
+    
     private var firstButtonCliked: Bool = false
     private var secondButtonCliked: Bool = false
 
@@ -20,16 +20,22 @@ public class PostureChestToggleTableViewCell: BaseTableViewCell {
         self.secondButton = MGToggleButton(type: secondType)
 
         bind(firstType: firstType, secondType: secondType)
+        
+        addViews()
     }
 
     public override func addViews() {
+        super.addViews()
         [
             firstButton,
             secondButton
         ].forEach { contentView.addSubview($0) }
+        
+        layout()
     }
 
     public override func layout() {
+        super.layout()
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
             $0.centerY.equalToSuperview()
