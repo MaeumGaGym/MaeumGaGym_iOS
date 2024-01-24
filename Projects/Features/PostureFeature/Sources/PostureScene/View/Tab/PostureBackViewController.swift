@@ -16,13 +16,10 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
     
     private var backEntireModel = PostureExerciseModel.back
     
-    private var firstButtonCliked: Bool = false
-    private var secondButtonCliked: Bool = false
-    
-    
-    
     private var firstButton = MGToggleButton(type: .bareBody)
     private var secondButton = MGToggleButton(type: .marchine)
+    
+    private var headerView = UIView()
     
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -41,30 +38,34 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
     
     public override func layout() {
         super.layout()
-        view.addSubview(firstButton)
-        view.addSubview(secondButton)
-        view.addSubview(postureChestTableView)
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
         
+        headerView.addSubview(firstButton)
+        headerView.addSubview(secondButton)
+
         
         firstButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.equalToSuperview().offset(12.0)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)
         }
         
         secondButton.snp.makeConstraints {
             $0.leading.equalTo(firstButton.snp.trailing).offset(8.0)
-            $0.top.equalToSuperview().offset(12.0)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)
         }
         
+        postureChestTableView.tableHeaderView = headerView
+        view.addSubview(postureChestTableView)
+        
         postureChestTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
-            $0.height.equalTo(613.0)
-            $0.top.equalTo(secondButton.snp.bottom).offset(12.0)
+            $0.height.equalToSuperview()
+            $0.top.equalToSuperview().offset(12.0)
         }
     }
     
@@ -72,33 +73,33 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         super.bindViewModel()
         
         let input = PostureBackViewModel.Input(firstButtonTapped: firstButton.rx.tap.asObservable(),
-                                                secondButtonTapped: secondButton.rx.tap.asObservable())
+                                               secondButtonTapped: secondButton.rx.tap.asObservable())
         
         let output = viewModel.transform(input)
         
         output.backModel
-            .subscribe(onNext: { [weak self] model in
-                self?.backEntireModel = model
-                self?.postureChestTableView.reloadData()
+            .subscribe(onNext: { [self] model in
+                backEntireModel = model
+                postureChestTableView.reloadData()
             }).disposed(by: disposeBag)
         
         output.firstButtonState
-            .subscribe(onNext: { [weak self] state in
+            .subscribe(onNext: { [self] state in
                 switch state {
                 case .checked:
-                    self?.firstButton.buttonYesChecked(type: .bareBody)
-                case .unchecked:
-                    self?.firstButton.buttonNoChecked(type: .bareBody)
+                    firstButton.buttonYesChecked(type: .bareBody)
+                case .unChecked:
+                    firstButton.buttonNoChecked(type: .bareBody)
                 }
             }).disposed(by: disposeBag)
         
         output.secondButtonState
-            .subscribe(onNext: { [weak self] state in
+            .subscribe(onNext: { [self] state in
                 switch state {
                 case .checked:
-                    self?.secondButton.buttonYesChecked(type: .marchine)
-                case .unchecked:
-                    self?.secondButton.buttonNoChecked(type: .marchine)
+                    secondButton.buttonYesChecked(type: .marchine)
+                case .unChecked:
+                    secondButton.buttonNoChecked(type: .marchine)
                 }
             }).disposed(by: disposeBag)
     }
