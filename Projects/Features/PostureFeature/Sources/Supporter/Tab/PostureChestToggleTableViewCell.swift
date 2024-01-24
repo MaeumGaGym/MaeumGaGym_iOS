@@ -20,7 +20,6 @@ public class PostureChestToggleTableViewCell: BaseTableViewCell {
         self.secondButton = MGToggleButton(type: secondType)
 
         bind(firstType: firstType, secondType: secondType)
-        
         addViews()
     }
 
