@@ -1,6 +1,8 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import DSKit
 
 public class PostureDetailCautionTableViewCell: UITableViewCell {

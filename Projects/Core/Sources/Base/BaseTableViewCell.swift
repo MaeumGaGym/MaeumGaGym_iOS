@@ -11,6 +11,7 @@ open class BaseTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         attribute()
+        addViews()
         layout()
     }
 

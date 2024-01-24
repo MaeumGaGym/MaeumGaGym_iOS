@@ -1,5 +1,7 @@
 import UIKit
+
 import RxFlow
+
 import Core
 import PostureFeature
 
@@ -15,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
             window?.rootViewController = UINavigationController(
-                rootViewController: PostureSearchViewController(PostureSearchViewModel()))
+                rootViewController: PostureMainViewController(PostureMainViewModel()))
         window?.makeKeyAndVisible()
     }
 }
