@@ -16,14 +16,14 @@ public enum PostureRecommandModel {
         case .first:
             return [
                 Exercise(image: DSKitAsset.Assets.pushUp.image, name: "푸시업", part: "가슴"),
-                Exercise(image: DSKitAsset.Assets.reverseCrunch.image, name: "리버스 크런치", part: "복근"),
-                Exercise(image: DSKitAsset.Assets.hollowPosition.image, name: "할로우 포지션", part: "복근")
+                Exercise(image: DSKitAsset.Assets.bodySplitSqt.image, name: "맨몸 스플릿 스쿼트", part: "하체"),
+                Exercise(image: DSKitAsset.Assets.backExtension.image, name: "백 익스텐션", part: "등")
             ]
         case .second:
             return [
-                Exercise(image: DSKitAsset.Assets.dumbbellSquat.image, name: "덤벨 스쿼트", part: "복근"),
-                Exercise(image: DSKitAsset.Assets.cableTrisemExtension.image, name: "케이블 트리이셉", part: "다리"),
-                Exercise(image: DSKitAsset.Assets.hammerBenchPress.image, name: "헤머 벤치프레스", part: "팔")
+                Exercise(image: DSKitAsset.Assets.deeps.image, name: "딥스", part: "가슴"),
+                Exercise(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스", part: "가슴"),
+                Exercise(image: DSKitAsset.Assets.runge.image, name: "런지", part: "팔")
             ]
         }
     }
@@ -31,9 +31,9 @@ public enum PostureRecommandModel {
     var logo: UIImage {
         switch self {
         case .first:
-            return DSKitAsset.Assets.arm.image
+            return DSKitAsset.Assets.postureArmLogo.image
         case .second:
-            return DSKitAsset.Assets.blueDumbbel.image
+            return DSKitAsset.Assets.postureDumbelLogo.image
         }
     }
 
