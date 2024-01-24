@@ -19,6 +19,8 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     private var firstButton = MGToggleButton(type: .bareBody)
     private var secondButton = MGToggleButton(type: .marchine)
     
+    private var headerView = UIView()
+    
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white
@@ -36,30 +38,34 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     
     public override func layout() {
         super.layout()
-        view.addSubview(firstButton)
-        view.addSubview(secondButton)
-        view.addSubview(postureChestTableView)
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
         
+        headerView.addSubview(firstButton)
+        headerView.addSubview(secondButton)
+
         
         firstButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.equalToSuperview().offset(12.0)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)
         }
         
         secondButton.snp.makeConstraints {
             $0.leading.equalTo(firstButton.snp.trailing).offset(8.0)
-            $0.top.equalToSuperview().offset(12.0)
+            $0.centerY.equalToSuperview()
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)
         }
         
+        postureChestTableView.tableHeaderView = headerView
+        view.addSubview(postureChestTableView)
+        
         postureChestTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
-            $0.height.equalTo(613.0)
-            $0.top.equalTo(secondButton.snp.bottom).offset(12.0)
+            $0.height.equalToSuperview()
+            $0.top.equalToSuperview().offset(12.0)
         }
     }
     
