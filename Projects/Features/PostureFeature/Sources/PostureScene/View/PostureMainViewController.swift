@@ -1,9 +1,12 @@
-import Foundation
-import DSKit
 import UIKit
-import SnapKit
+
 import RxCocoa
 import RxSwift
+
+import SnapKit
+import Then
+
+import DSKit
 import Core
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
@@ -27,7 +30,6 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         PostureChestViewController(PostureChestViewModel()),
         PostureChestViewController(PostureChestViewModel()),
         PostureChestViewController(PostureChestViewModel()),
-
      ]
      
      private lazy var containerView: UIView = {

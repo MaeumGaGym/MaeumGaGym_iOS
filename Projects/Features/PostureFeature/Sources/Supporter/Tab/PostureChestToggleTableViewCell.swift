@@ -1,8 +1,11 @@
 import UIKit
+
+import RxSwift
+
 import SnapKit
 import Then
+
 import DSKit
-import RxSwift
 import Core
 
 public class PostureChestToggleTableViewCell: BaseTableViewCell {

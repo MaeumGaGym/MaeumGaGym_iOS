@@ -38,12 +38,12 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     
     public override func layout() {
         super.layout()
+    
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
         
         headerView.addSubview(firstButton)
         headerView.addSubview(secondButton)
 
-        
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
             $0.centerY.equalToSuperview()
