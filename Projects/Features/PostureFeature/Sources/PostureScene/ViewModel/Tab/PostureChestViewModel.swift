@@ -34,7 +34,6 @@ public class PostureChestViewModel: BaseViewModel {
         input.firstButtonTapped
             .subscribe(onNext: { [self] in
                 let currentState = try? firstButtonStateSubject.value()
-                let currentModel = try? chestEntireModelSubject.value()
                 switch currentState {
                 case .unchecked:
                     firstButtonStateSubject.onNext(.checked)
@@ -51,7 +50,6 @@ public class PostureChestViewModel: BaseViewModel {
         input.secondButtonTapped
             .subscribe(onNext: { [self] in
                 let currentState = try? secondButtonStateSubject.value()
-                let currentModel = try? chestEntireModelSubject.value()
                 switch currentState {
                 case .unchecked:
                     secondButtonStateSubject.onNext(.checked)
