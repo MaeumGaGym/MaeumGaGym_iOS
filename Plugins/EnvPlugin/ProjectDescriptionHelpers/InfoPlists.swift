@@ -5,7 +5,7 @@ public extension Project {
         "CFBundleShortVersionString": "1.0.0",
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
-        "CFBundleIdentifier": "com.maeumGaGym-stamp-iOS.release",
+        "CFBundleIdentifier": "com.maeumGaGym-health-iOS.release",
         "CFBundleDisplayName": "Maeumgajim",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
@@ -49,7 +49,7 @@ public extension Project {
       "CFBundleShortVersionString": "1.0.0",
       "CFBundleDevelopmentRegion": "ko",
       "CFBundleVersion": "1",
-      "CFBundleIdentifier": "com.maeumGaGym-stamp-iOS.test",
+      "CFBundleIdentifier": "com.maeumGaGym-health-iOS.test",
       "CFBundleDisplayName": "maeumGaGym-Test",
       "UILaunchStoryboardName": "LaunchScreen",
       "UIApplicationSceneManifest": [
