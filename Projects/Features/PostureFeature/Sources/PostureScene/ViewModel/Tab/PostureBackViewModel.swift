@@ -6,7 +6,7 @@ import Core
 
 public enum backToggleButtonState {
     case checked
-    case unchecked
+    case unChecked
 }
 
 public class PostureBackViewModel: BaseViewModel {
@@ -25,45 +25,41 @@ public class PostureBackViewModel: BaseViewModel {
       }
       
       private let backEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .back)
-      private let firstButtonStateSubject = BehaviorSubject<backToggleButtonState>(value: .unchecked)
-      private let secondButtonStateSubject = BehaviorSubject<backToggleButtonState>(value: .unchecked)
+    private let firstButtonStateSubject = BehaviorSubject<backToggleButtonState> (value: .unChecked)
+    private let secondButtonStateSubject = BehaviorSubject<backToggleButtonState>(value: .unChecked)
       
       public init() {}
       
       public func transform(_ input: Input) -> Output {
           input.firstButtonTapped
-              .subscribe(onNext: { [weak self] in
-                  let currentState = try? self?.firstButtonStateSubject.value()
-                  let currentModel = try? self?.backEntireModelSubject.value()
+              .subscribe(onNext: { [self] in
+                  let currentState = try? firstButtonStateSubject.value()
+                  let currentModel = try? backEntireModelSubject.value()
                   switch currentState {
-                  case .unchecked:
-                      self?.firstButtonStateSubject.onNext(.checked)
-                      self?.secondButtonStateSubject.onNext(.unchecked)
-                      self?.backEntireModelSubject.onNext(.backBody)
+                  case .unChecked:
+                      firstButtonStateSubject.onNext(.checked)
+                      secondButtonStateSubject.onNext(.unChecked)
+                      backEntireModelSubject.onNext(.backBody)
                   case .checked:
-                      self?.firstButtonStateSubject.onNext(.unchecked)
-                      if currentModel == .backBody {
-                          self?.backEntireModelSubject.onNext(.back)
-                      }
+                      firstButtonStateSubject.onNext(.unChecked)
+                      backEntireModelSubject.onNext(.back)
                   case .none:
                       break
                   }
               }).disposed(by: disposeBag)
           
           input.secondButtonTapped
-              .subscribe(onNext: { [weak self] in
-                  let currentState = try? self?.secondButtonStateSubject.value()
-                  let currentModel = try? self?.backEntireModelSubject.value()
+              .subscribe(onNext: { [self] in
+                  let currentState = try? self.secondButtonStateSubject.value()
+                  let currentModel = try? self.backEntireModelSubject.value()
                   switch currentState {
-                  case .unchecked:
-                      self?.secondButtonStateSubject.onNext(.checked)
-                      self?.firstButtonStateSubject.onNext(.unchecked)
-                      self?.backEntireModelSubject.onNext(.backMachine)
+                  case .unChecked:
+                      secondButtonStateSubject.onNext(.checked)
+                      firstButtonStateSubject.onNext(.unChecked)
+                      backEntireModelSubject.onNext(.backMachine)
                   case .checked:
-                      self?.secondButtonStateSubject.onNext(.unchecked)
-                      if currentModel == .backMachine {
-                          self?.backEntireModelSubject.onNext(.back)
-                      }
+                      secondButtonStateSubject.onNext(.unChecked)
+                      backEntireModelSubject.onNext(.back)
                   case .none:
                       break
                   }
