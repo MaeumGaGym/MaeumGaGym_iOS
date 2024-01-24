@@ -21,7 +21,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
     
     private var headerView = UIView()
     
-    private var postureChestTableView = UITableView().then {
+    private var postureBackTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -32,8 +32,8 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
     public override func attribute() {
         super.attribute()
         
-        postureChestTableView.dataSource = self
-        postureChestTableView.delegate = self
+        postureBackTableView.dataSource = self
+        postureBackTableView.delegate = self
     }
     
     public override func layout() {
@@ -58,10 +58,10 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
             $0.height.equalTo(36.0)
         }
         
-        postureChestTableView.tableHeaderView = headerView
-        view.addSubview(postureChestTableView)
+        postureBackTableView.tableHeaderView = headerView
+        view.addSubview(postureBackTableView)
         
-        postureChestTableView.snp.makeConstraints {
+        postureBackTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
             $0.height.equalToSuperview()
@@ -80,7 +80,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         output.backModel
             .subscribe(onNext: { [self] model in
                 backEntireModel = model
-                postureChestTableView.reloadData()
+                postureBackTableView.reloadData()
             }).disposed(by: disposeBag)
         
         output.firstButtonState
