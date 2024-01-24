@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "blueDumbbel.png",
+      "filename" : "dumbel.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "blueDumbbel@2x.png",
+      "filename" : "dumbel@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "blueDumbbel@3x.png",
+      "filename" : "dumbel@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
