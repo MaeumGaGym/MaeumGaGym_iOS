@@ -8,7 +8,7 @@ import Core
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
     
-    private let categoryTitleList = ["추천", "맨몸", "기구", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
+    private let categoryTitleList = ["추천", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
     
     private let titleText = UILabel().then {
         $0.text = "자세"
@@ -22,10 +22,7 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
     private lazy var viewControllers: [UIViewController] = [
         PostureRecommandViewController(PostureRecommandViewModel()),
         PostureChestViewController(PostureChestViewModel()),
-        PostureChestViewController(PostureChestViewModel()),
-        PostureChestViewController(PostureChestViewModel()),
         PostureBackViewController(PostureBackViewModel()),
-        PostureChestViewController(PostureChestViewModel()),
         PostureChestViewController(PostureChestViewModel()),
         PostureChestViewController(PostureChestViewModel()),
         PostureChestViewController(PostureChestViewModel()),
@@ -67,7 +64,7 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         }
        
        pagingTabBar.snp.makeConstraints {
-           $0.top.equalTo(titleText.snp.bottom)
+           $0.top.equalTo(titleText.snp.bottom).offset(12.0)
            $0.leading.trailing.equalToSuperview()
            $0.height.equalTo(pagingTabBar.cellHeight)
        }
