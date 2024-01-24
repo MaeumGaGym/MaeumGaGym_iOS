@@ -16,11 +16,6 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     
     private var chestEntireModel = PostureExerciseModel.chest
     
-    private var firstButtonCliked: Bool = false
-    private var secondButtonCliked: Bool = false
-    
-    
-    
     private var firstButton = MGToggleButton(type: .bareBody)
     private var secondButton = MGToggleButton(type: .marchine)
     
@@ -77,28 +72,28 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
         let output = viewModel.transform(input)
         
         output.chestModel
-            .subscribe(onNext: { [weak self] model in
-                self?.chestEntireModel = model
-                self?.postureChestTableView.reloadData()
+            .subscribe(onNext: { [self] model in
+                chestEntireModel = model
+                postureChestTableView.reloadData()
             }).disposed(by: disposeBag)
         
         output.firstButtonState
-            .subscribe(onNext: { [weak self] state in
-                switch state {
+            .subscribe(onNext: { [self] bool in
+                switch bool {
                 case .checked:
-                    self?.firstButton.buttonYesChecked(type: .bareBody)
+                    firstButton.buttonYesChecked(type: .bareBody)
                 case .unchecked:
-                    self?.firstButton.buttonNoChecked(type: .bareBody)
+                    firstButton.buttonNoChecked(type: .bareBody)
                 }
             }).disposed(by: disposeBag)
         
         output.secondButtonState
-            .subscribe(onNext: { [weak self] state in
+            .subscribe(onNext: { [self] state in
                 switch state {
                 case .checked:
-                    self?.secondButton.buttonYesChecked(type: .marchine)
+                    secondButton.buttonYesChecked(type: .marchine)
                 case .unchecked:
-                    self?.secondButton.buttonNoChecked(type: .marchine)
+                    secondButton.buttonNoChecked(type: .marchine)
                 }
             }).disposed(by: disposeBag)
     }
