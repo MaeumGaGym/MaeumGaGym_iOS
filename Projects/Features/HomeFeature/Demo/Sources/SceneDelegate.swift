@@ -13,24 +13,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                options connectionOptions: UIScene.ConnectionOptions) {
         let viewController = HomeViewController()
         self.window = makeWindow(scene: scene)
-        configure(window: window, rootViewController: viewController)
-    }
-}
-
-extension SceneDelegate {
-    private func makeWindow(scene: UIScene) -> UIWindow? {
-        guard let windowScene = (scene as? UIWindowScene) else { return nil }
-        return UIWindow(windowScene: windowScene)
-    }
-
-    private func configure(
-        window: UIWindow?,
-        rootViewController: UIViewController
-    ) {
-        guard let window = window else { return }
-        window.backgroundColor = .white
-        window.overrideUserInterfaceStyle = .light
-        window.rootViewController = rootViewController
-        window.makeKeyAndVisible()
+        window?.configure(withRootViewController: viewController)
     }
 }
