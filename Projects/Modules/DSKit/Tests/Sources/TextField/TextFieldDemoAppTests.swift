@@ -3,10 +3,10 @@ import DSKit
 
 final class MaeumGaGymTextFieldTests: XCTestCase {
     
-    var textField: MaeumGaGymTextField!
+    var textField: MGTextField!
 
     override func setUpWithError() throws {
-        textField = MaeumGaGymTextField()
+        textField = MGTextField()
     }
 
     override func tearDownWithError() throws {

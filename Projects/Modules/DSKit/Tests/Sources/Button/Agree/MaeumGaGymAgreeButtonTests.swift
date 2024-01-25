@@ -3,11 +3,11 @@ import DSKit
 
 class MaeumGaGymAgreeButtonTests: XCTestCase {
 
-    var agreeButton: MaeumGaGymAgreeButton!
+    var agreeButton: MGAgreeButton!
 
     override func setUp() {
         super.setUp()
-        agreeButton = MaeumGaGymAgreeButton(text: .privacyAgreeText)
+        agreeButton = MGAgreeButton(text: .privacyAgreeText)
     }
 
     override func tearDown() {

@@ -1,6 +1,8 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import DSKit
 
 public class PostureDetailCautionTableViewCell: UITableViewCell {
@@ -13,12 +15,12 @@ public class PostureDetailCautionTableViewCell: UITableViewCell {
         $0.font = UIFont.Pretendard.titleMedium
     }
 
-    private var exerciseCaution1 = MaeumGaGymPostureInfoLabel(
+    private var exerciseCaution1 = MGPostureInfoLabel(
         titleNumber: "01",
         text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."
     )
 
-    private var exerciseCaution2 = MaeumGaGymPostureInfoLabel(
+    private var exerciseCaution2 = MGPostureInfoLabel(
         titleNumber: "02",
         text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.",
         numberOfLines: 2

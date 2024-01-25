@@ -1,5 +1,6 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
+import ConfigPlugin
 
 let dependencies = Dependencies(
     swiftPackageManager: .init([
@@ -12,6 +13,8 @@ let dependencies = Dependencies(
         .remote(url: "https://github.com/airbnb/lottie-ios", requirement: .upToNextMajor(from: "4.3.3")),
         .remote(url: "https://github.com/onevcat/Kingfisher", requirement: .upToNextMajor(from: "7.0.0")),
         .remote(url: "https://github.com/MaeumgaGym/MindGymKit", requirement: .upToNextMajor(from: "0.2.3"))
-    ]),
+    ], baseSettings: Settings.settings(
+        configurations: XCConfig.framework
+    )),
     platforms: [.iOS]
 )

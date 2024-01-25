@@ -18,13 +18,13 @@ public class PickleCell: PickleCollectionViewCell {
     
     public static let identifier = "PickleCell"
         
-    let alertView1 = MaeumGaGymAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
+    let alertView1 = MGAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
     }
     
-    let alertView2 = MaeumGaGymAlertOnlyTitleView(title: "아직 개발중입니다!").then {
+    let alertView2 = MGAlertOnlyTitleView(title: "아직 개발중입니다!").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
@@ -36,16 +36,16 @@ public class PickleCell: PickleCollectionViewCell {
         $0.axis = .vertical
     }
         
-    private let heartButton = MaeumGaGymOpaqueIconButton(type: .heart)
-    private let commentButton = MaeumGaGymOpaqueIconButton(type: .comment)
-    private let shareButton = MaeumGaGymOpaqueIconButton(type: .share)
-    private let dotButton = MaeumGaGymOpaqueIconButton(type: .dots)
+    private let heartButton = MGOpaqueIconButton(type: .heart)
+    private let commentButton = MGOpaqueIconButton(type: .comment)
+    private let shareButton = MGOpaqueIconButton(type: .share)
+    private let dotButton = MGOpaqueIconButton(type: .dots)
 
-    private let bottomSheetViewController : MaeumGaGymBottomSheetViewController = {
+    private let bottomSheetViewController : MGBottomSheetViewController = {
         if #available(iOS 11.0, *) {
-            return MaeumGaGymBottomSheetViewController(type: .plain)
+            return MGBottomSheetViewController(type: .plain)
         } else {
-            return MaeumGaGymBottomSheetViewController(type: .plain)
+            return MGBottomSheetViewController(type: .plain)
         }
     }()
     
@@ -70,7 +70,7 @@ public class PickleCell: PickleCollectionViewCell {
         let tableView = bottomSheetViewController.tableView
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(MaeumGaGymBottomSheetIconCell.self, forCellReuseIdentifier: MaeumGaGymBottomSheetIconCell.identifier)
+        tableView.register(MGBottomSheetIconCell.self, forCellReuseIdentifier: MGBottomSheetIconCell.identifier)
     }
     
     public override func makeConstraints() {
@@ -198,9 +198,9 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: MaeumGaGymBottomSheetIconCell.identifier,
+            withIdentifier: MGBottomSheetIconCell.identifier,
             for: indexPath
-        ) as? MaeumGaGymBottomSheetIconCell
+        ) as? MGBottomSheetIconCell
 
         let item = bottomSheetItems[indexPath.row]
         cell?.iconImage.image = item.icon
@@ -226,7 +226,7 @@ extension PickleCell: UITableViewDataSource, UITableViewDelegate, UIScrollViewDe
     }
 }
 
-extension PickleCell: MaeumGaGymBottomSheetViewDelegate {
+extension PickleCell: MGBottomSheetViewDelegate {
 
     public func didMove(to percentage: Float) {
     }

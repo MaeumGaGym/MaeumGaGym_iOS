@@ -5,10 +5,10 @@ import Then
 
 public class DSIconButtonVC: UIViewController {
     
-    var heartButton = MaeumGaGymOpaqueIconButton(type: .heart, likeCount: 12003)
-    var commentButton = MaeumGaGymOpaqueIconButton(type: .comment, likeCount: 1200)
-    var dotsButton = MaeumGaGymOpaqueIconButton(type: .dots)
-    var shareButton = MaeumGaGymOpaqueIconButton(type: .share)
+    var heartButton = MGOpaqueIconButton(type: .heart, likeCount: 12003)
+    var commentButton = MGOpaqueIconButton(type: .comment, likeCount: 1200)
+    var dotsButton = MGOpaqueIconButton(type: .dots)
+    var shareButton = MGOpaqueIconButton(type: .share)
         
     public override func viewDidLoad() {
         super.viewDidLoad()

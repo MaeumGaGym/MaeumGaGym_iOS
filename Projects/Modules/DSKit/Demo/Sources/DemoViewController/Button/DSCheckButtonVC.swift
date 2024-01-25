@@ -5,7 +5,7 @@ import Then
 
 public class DSCheckButtonVC: UIViewController {
     
-    var checkButton = MaeumGaGymCheckButton(text: "asdf")
+    var checkButton = MGCheckButton(text: "asdf")
     
     public override func viewDidLoad() {
         super.viewDidLoad()

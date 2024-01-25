@@ -9,17 +9,17 @@ public class DSToggleButtonVC: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    var image = MaeumGaGymToggleButton(type: .image)
-    var album = MaeumGaGymToggleButton(type: .album)
-    var metronome = MaeumGaGymToggleButton(type: .metronome)
-    var timer = MaeumGaGymToggleButton(type: .timer)
-    var metronome1 = MaeumGaGymToggleButton(type: .metronomeHome)
-    var timer1 = MaeumGaGymToggleButton(type: .timerHome)
-    var morning = MaeumGaGymToggleButton(type: .morning)
-    var lunch = MaeumGaGymToggleButton(type: .lunch)
-    var dinner = MaeumGaGymToggleButton(type: .dinner)
-    var bareBody = MaeumGaGymToggleButton(type: .bareBody)
-    var marchine = MaeumGaGymToggleButton(type: .marchine)
+    var image = MGToggleButton(type: .image)
+    var album = MGToggleButton(type: .album)
+    var metronome = MGToggleButton(type: .metronome)
+    var timer = MGToggleButton(type: .timer)
+    var metronome1 = MGToggleButton(type: .metronomeHome)
+    var timer1 = MGToggleButton(type: .timerHome)
+    var morning = MGToggleButton(type: .morning)
+    var lunch = MGToggleButton(type: .lunch)
+    var dinner = MGToggleButton(type: .dinner)
+    var bareBody = MGToggleButton(type: .bareBody)
+    var marchine = MGToggleButton(type: .marchine)
 
 
     public override func viewDidLoad() {
