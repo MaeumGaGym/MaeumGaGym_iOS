@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        let viewController = HomeViewController()
+        let viewController = HomeViewController((Any).self)
         self.window = makeWindow(scene: scene)
         window?.configure(withRootViewController: viewController)
     }

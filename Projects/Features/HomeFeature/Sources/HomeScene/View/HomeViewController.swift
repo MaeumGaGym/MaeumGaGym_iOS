@@ -1,28 +1,30 @@
 import UIKit
-import SnapKit
-import RxFlow
-import RxCocoa
+
 import RxSwift
+import RxCocoa
+import RxFlow
+
+import Then
+import SnapKit
+
 import Core
 import DSKit
 
 enum HomeCell {
-    case banner
+    case motivationMessage
 }
 
-public class HomeViewController: UIViewController, Stepper {
+public class HomeViewController: BaseViewController<Any>, Stepper {
 
     public var steps = PublishRelay<Step>()
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
 
-    //text 길이의 맞게 View가 유동적으로 늘어나야함
+    // text 길이의 맞게 View가 유동적으로 늘어나야함
     let quotes: MotivationMessageModel = MotivationMessageModel(
         text: "가능성은 한계를 넘는다.",
         author: "Kimain"
     )
-
-    public let disposeBag = DisposeBag()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -38,16 +40,14 @@ public class HomeViewController: UIViewController, Stepper {
         return tableView
     }()
 
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-
+    public override func attribute() {
         self.title = "Home"
         self.view.backgroundColor = .systemBackground
-        configureUI()
+
         addCells()
     }
 
-    private func configureUI() {
+    public override func layout() {
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -56,8 +56,9 @@ public class HomeViewController: UIViewController, Stepper {
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
     }
+
     private func addCells() {
-        self.cells.append(.banner)
+        self.cells.append(.motivationMessage)
     }
 }
 
@@ -76,7 +77,7 @@ extension HomeViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch self.cells[indexPath.item] {
-        case .banner:
+        case .motivationMessage:
             cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         }
     }
@@ -94,7 +95,7 @@ extension HomeViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch self.cells[indexPath.item] {
-        case .banner:
+        case .motivationMessage:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: MotivationMessageTableViewCell.identifier
             ) as? MotivationMessageTableViewCell else {
