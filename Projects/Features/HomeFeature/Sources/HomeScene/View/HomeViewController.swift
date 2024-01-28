@@ -15,6 +15,7 @@ import HomeFeatureInterface
 enum HomeCell {
     case motivationMessage
     case stepNumber
+    case routine
 }
 
 public class HomeViewController: BaseViewController<Any>, Stepper {
@@ -31,6 +32,13 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
 
     let stepModels: StepModel = StepModel(stepCount: 112771)
 
+    var routines: [RoutineModel] = [
+        RoutineModel(exercise: "벤치", sets: 2, reps: 10),
+        RoutineModel(exercise: "팔굽혀펴기", sets: 3, reps: 10),
+        RoutineModel(exercise: "러닝", sets: 5, reps: 10),
+        RoutineModel(exercise: "러닝", sets: 5, reps: 10)
+    ]
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
@@ -42,7 +50,12 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
             MotivationMessageTableViewCell.self,
             forCellReuseIdentifier: MotivationMessageTableViewCell.identifier
         )
-        tableView.register(StepTableViewCell.self, forCellReuseIdentifier: StepTableViewCell.identifier)
+        tableView.register(
+            StepTableViewCell.self,
+            forCellReuseIdentifier: StepTableViewCell.identifier)
+        tableView.register(
+            RoutineTableViewCell.self,
+            forCellReuseIdentifier: RoutineTableViewCell.identifier)
         return tableView
     }()
 
@@ -72,19 +85,24 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
     private func addCells() {
         self.cells.append(.motivationMessage)
         self.cells.append(.stepNumber)
+        self.cells.append(.routine)
+    }
+
+    func heightForCell(with routines: [RoutineModel]) -> CGFloat {
+        let cellHeight: CGFloat = 64.0
+        return max(CGFloat(routines.count) * cellHeight, cellHeight) + 72
     }
 }
 
 extension HomeViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        switch self.cells[indexPath.item] {
+        case .motivationMessage:
             return 60.0
-        } else if indexPath.row == 1 {
+        case .stepNumber:
             return 80.0
-        } else if indexPath.row == 3 {
-            return self.view.frame.height / 2.6
-        } else {
-            return self.view.frame.height / 2
+        case .routine:
+            return heightForCell(with: routines)
         }
     }
 
@@ -94,6 +112,8 @@ extension HomeViewController: UITableViewDelegate {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 24, right: 20)
         case .stepNumber:
             cell.separatorInset = UIEdgeInsets(top: 24, left: 20, bottom: 0, right: 20)
+        case .routine:
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
 }
@@ -117,7 +137,7 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: quotes)
-            
+
             return cell
         case .stepNumber:
             guard let cell = tableView.dequeueReusableCell(
@@ -127,6 +147,17 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: stepModels)
+            cell.layer.cornerRadius = 16.0
+
+            return cell
+        case .routine:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier:
+                    RoutineTableViewCell.identifier
+            ) as? RoutineTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.routines = routines
             cell.layer.cornerRadius = 16.0
 
             return cell
