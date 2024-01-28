@@ -40,6 +40,7 @@ public class MotivationMessageTableViewCell: UITableViewCell {
      }
 
      private func setupUI() {
+         self.backgroundColor = DSKitAsset.Colors.gray25.color
          addSubview(messageLabel)
          messageLabel.snp.makeConstraints {
              $0.top.equalToSuperview()

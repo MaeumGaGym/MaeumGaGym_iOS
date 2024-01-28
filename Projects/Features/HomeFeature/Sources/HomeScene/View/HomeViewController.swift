@@ -12,7 +12,6 @@ import DSKit
 
 import HomeFeatureInterface
 
-
 enum HomeCell {
     case motivationMessage
     case stepNumber
@@ -29,14 +28,14 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
         text: "가능성은 한계를 넘는다.",
         author: "Kimain"
     )
-    
-    let stepModels: StepModel = StepModel(stepCount: 2771)
+
+    let stepModels: StepModel = StepModel(stepCount: 112771)
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = DSKitAsset.Colors.gray25.color
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.register(
@@ -55,7 +54,7 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
 
     public override func attribute() {
         self.title = "Home"
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = DSKitAsset.Colors.gray25.color
 
         addCells()
     }
@@ -118,6 +117,7 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: quotes)
+            
             return cell
         case .stepNumber:
             guard let cell = tableView.dequeueReusableCell(
@@ -127,6 +127,8 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: stepModels)
+            cell.layer.cornerRadius = 16.0
+
             return cell
         }
     }

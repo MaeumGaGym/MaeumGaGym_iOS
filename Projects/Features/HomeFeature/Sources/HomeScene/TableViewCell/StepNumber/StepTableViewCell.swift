@@ -37,7 +37,7 @@ public class StepTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         
-        self.backgroundColor = .red
+        self.backgroundColor = .white
     }
 
     required init?(coder: NSCoder) {
