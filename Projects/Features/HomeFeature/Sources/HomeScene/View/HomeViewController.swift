@@ -10,8 +10,12 @@ import SnapKit
 import Core
 import DSKit
 
+import HomeFeatureInterface
+
+
 enum HomeCell {
     case motivationMessage
+    case stepNumber
 }
 
 public class HomeViewController: BaseViewController<Any>, Stepper {
@@ -25,6 +29,8 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
         text: "가능성은 한계를 넘는다.",
         author: "Kimain"
     )
+    
+    let stepModels: StepModel = StepModel(stepCount: 2771)
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -37,8 +43,15 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
             MotivationMessageTableViewCell.self,
             forCellReuseIdentifier: MotivationMessageTableViewCell.identifier
         )
+        tableView.register(StepTableViewCell.self, forCellReuseIdentifier: StepTableViewCell.identifier)
         return tableView
     }()
+
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        tableView.frame = tableView.frame.inset(by: UIEdgeInsets(top: .zero, left: 20, bottom: .zero, right: 20))
+    }
 
     public override func attribute() {
         self.title = "Home"
@@ -51,23 +64,24 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.trailing.equalToSuperview().inset(20.0)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 
     private func addCells() {
         self.cells.append(.motivationMessage)
+        self.cells.append(.stepNumber)
     }
 }
 
 extension HomeViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 60
+            return 60.0
         } else if indexPath.row == 1 {
-            return self.view.frame.height / 3.55
+            return 80.0
         } else if indexPath.row == 3 {
             return self.view.frame.height / 2.6
         } else {
@@ -78,7 +92,9 @@ extension HomeViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch self.cells[indexPath.item] {
         case .motivationMessage:
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 24, right: 20)
+        case .stepNumber:
+            cell.separatorInset = UIEdgeInsets(top: 24, left: 20, bottom: 0, right: 20)
         }
     }
 }
@@ -102,6 +118,15 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: quotes)
+            return cell
+        case .stepNumber:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier:
+                    StepTableViewCell.identifier
+            ) as? StepTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.configure(with: stepModels)
             return cell
         }
     }
