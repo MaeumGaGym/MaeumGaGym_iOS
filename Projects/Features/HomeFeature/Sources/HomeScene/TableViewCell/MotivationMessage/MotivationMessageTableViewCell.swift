@@ -1,18 +1,13 @@
-//
-//  MotivationMessageTableViewCell.swift
-//  HomeFeatureInterface
-//
-//  Created by 박준하 on 1/25/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
-import SnapKit
-import Then
+
 import RxSwift
 import RxCocoa
-import DSKit
+
+import Then
+import SnapKit
+
 import Core
+import DSKit
 
 public class MotivationMessageTableViewCell: UITableViewCell {
 
@@ -58,7 +53,6 @@ public class MotivationMessageTableViewCell: UITableViewCell {
              $0.leading.equalTo(messageLabel.snp.leading)
              $0.bottom.equalToSuperview()
          }
-
          rx.deallocated
              .bind { [weak self] in
                  self?.disposeBag = DisposeBag()
