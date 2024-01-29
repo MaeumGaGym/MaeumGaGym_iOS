@@ -23,21 +23,12 @@ public class PostureChestToggleTableViewCell: BaseTableViewCell {
         self.secondButton = MGToggleButton(type: secondType)
 
         bind(firstType: firstType, secondType: secondType)
-        addViews()
-    }
-
-    public override func addViews() {
-        super.addViews()
-        [
-            firstButton,
-            secondButton
-        ].forEach { contentView.addSubview($0) }
-        
-        layout()
     }
 
     public override func layout() {
         super.layout()
+        
+        contentView.addSubviews([firstButton, secondButton])
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
             $0.centerY.equalToSuperview()

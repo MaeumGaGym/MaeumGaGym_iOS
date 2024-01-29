@@ -24,7 +24,7 @@ regenerate:
 	
 # Privates 파일 다운로드
 
-BASE_URL=https://github.com/MaeumgaGym/MaeumagGym-iOS-ignored.git
+BASE_URL=https://github.com/MaeumgaGym/MaeumagGym-iOS-ignoreds.git
 
 XCCONFIG_PATHS = \
     xcconfigs/Base Common.xcconfig \
