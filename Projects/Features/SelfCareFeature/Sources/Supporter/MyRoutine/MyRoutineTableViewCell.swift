@@ -6,16 +6,6 @@ import Then
 import Core
 import DSKit
 
-public enum SharedState {
-    case yesShared
-    case notShared
-}
-
-public enum RoutineState {
-    case useRoutine
-    case keepRoutine
-}
-
 public class MyRoutineTableViewCell: BaseTableViewCell {
     
     static let identifier: String = "MyRoutineTableViewCell"
