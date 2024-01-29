@@ -36,7 +36,7 @@ public class StepTableViewCell: UITableViewCell {
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
-        
+
         self.backgroundColor = .white
     }
 
@@ -44,8 +44,17 @@ public class StepTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 16.0
+        backgroundColor = DSKitAsset.Colors.gray25.color
+    }
+
     private func setupUI() {
-        addSubviews([stepNumberTitle, workTitle])
+        contentView.addSubviews([stepNumberTitle, workTitle])
 
         stepNumberTitle.snp.makeConstraints {
             $0.centerY.equalToSuperview()

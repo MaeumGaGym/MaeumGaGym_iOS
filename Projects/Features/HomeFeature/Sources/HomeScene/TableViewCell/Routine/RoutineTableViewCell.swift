@@ -22,7 +22,7 @@ public class RoutineTableViewCell: UITableViewCell {
     private var routineCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8
+        layout.minimumInteritemSpacing = 8.0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.register(
@@ -36,6 +36,16 @@ public class RoutineTableViewCell: UITableViewCell {
         didSet {
             routineCollectionView.reloadData()
         }
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
+        contentView.backgroundColor = .white
+
+        contentView.layer.cornerRadius = 16.0
+        self.backgroundColor = DSKitAsset.Colors.gray25.color
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -64,7 +74,7 @@ public class RoutineTableViewCell: UITableViewCell {
     }
 }
 
-extension RoutineTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RoutineTableViewCell: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -86,5 +96,11 @@ extension RoutineTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
         cell.configure(with: routines[indexPath.item])
         return cell
     }
+}
 
+extension RoutineTableViewCell: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 현재 이미지를 눌렀을 때만 이동하는 문제 해결해야함
+        print(routines[indexPath.row])
+    }
 }
