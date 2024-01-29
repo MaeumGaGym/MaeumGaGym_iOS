@@ -9,11 +9,9 @@ import SnapKit
 import Core
 import DSKit
 
-public class ExtraTableViewCell: UITableViewCell {
+public class ExtraTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "ExtraTableViewCell"
-
-    let sectionInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
     private var extraCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,6 +19,7 @@ public class ExtraTableViewCell: UITableViewCell {
         layout.minimumInteritemSpacing = 12.0
         layout.itemSize = CGSize(width: 240, height: 240)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = DSKitAsset.Colors.gray25.color
         collectionView.register(
             ExtraCollectionViewCell.self,
@@ -33,32 +32,24 @@ public class ExtraTableViewCell: UITableViewCell {
             extraCollectionView.reloadData()
         }
     }
-
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+    
+    public override func attribute() {
+        super.attribute()
+        
+        self.backgroundColor = DSKitAsset.Colors.gray25.color
+        
+        extraCollectionView.delegate = self
+        extraCollectionView.dataSource = self
+    }
+    
+    public override func layout() {
+        super.layout()
+        
         contentView.addSubview(extraCollectionView)
 
         extraCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-
-        extraCollectionView.delegate = self
-        extraCollectionView.dataSource = self
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-        contentView.backgroundColor = .white
-
-        contentView.layer.cornerRadius = 16.0
-        self.backgroundColor = DSKitAsset.Colors.gray25.color
     }
 }
 
