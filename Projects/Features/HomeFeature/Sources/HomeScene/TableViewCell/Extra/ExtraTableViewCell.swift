@@ -45,6 +45,7 @@ public class ExtraTableViewCell: BaseTableViewCell {
     public override func layout() {
         super.layout()
         
+        setupCornerRadiusAndBackground()
         contentView.addSubview(extraCollectionView)
 
         extraCollectionView.snp.makeConstraints {
