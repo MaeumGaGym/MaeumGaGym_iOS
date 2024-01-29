@@ -1,9 +1,6 @@
-//
-//  RoutineStateEnum.swift
-//  SelfCareFeature
-//
-//  Created by 이은호 on 1/29/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
+
+public enum RoutineState {
+    case useRoutine
+    case keepRoutine
+}
