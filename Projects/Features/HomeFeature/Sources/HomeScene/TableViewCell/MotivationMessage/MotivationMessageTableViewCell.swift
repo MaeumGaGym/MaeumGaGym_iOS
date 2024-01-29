@@ -24,7 +24,7 @@ public class MotivationMessageTableViewCell: BaseTableViewCell {
         $0.textColor = DSKitAsset.Colors.gray500.color
     }
 
-    func configure(with message: MotivationMessageModel) {
+    public func configure(with message: MotivationMessageModel) {
         messageLabel.text = "\"\(message.text)\""
         authorLabel.text = "\(message.author)"
     }
