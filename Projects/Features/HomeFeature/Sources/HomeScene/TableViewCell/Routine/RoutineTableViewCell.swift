@@ -9,7 +9,7 @@ import SnapKit
 import Core
 import DSKit
 
-public class RoutineTableViewCell: UITableViewCell {
+public class RoutineTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "RoutineTableViewCell"
 
@@ -24,6 +24,7 @@ public class RoutineTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 8.0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(
             RoutineCollectionCell.self,
@@ -37,22 +38,20 @@ public class RoutineTableViewCell: UITableViewCell {
             routineCollectionView.reloadData()
         }
     }
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0))
-        contentView.backgroundColor = .white
-
-        contentView.layer.cornerRadius = 16.0
+    
+    public override func attribute() {
+        super.attribute()
+        
         self.backgroundColor = DSKitAsset.Colors.gray25.color
+        routineCollectionView.delegate = self
+        routineCollectionView.dataSource = self
     }
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        contentView.addSubview(nameTitle)
-        contentView.addSubview(routineCollectionView)
+    
+    public override func layout() {
+        super.layout()
+        
+        setupCornerRadiusAndBackground()
+        contentView.addSubviews([nameTitle, routineCollectionView])
 
         nameTitle.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
@@ -64,13 +63,6 @@ public class RoutineTableViewCell: UITableViewCell {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview().inset(16.0)
         }
-
-        routineCollectionView.delegate = self
-        routineCollectionView.dataSource = self
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
