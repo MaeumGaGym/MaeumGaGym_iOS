@@ -17,14 +17,12 @@ open class BaseTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         layout()
-        setupCornerRadiusAndBackground()
     }
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         attribute()
-        addViews()
     }
 
     required public init?(coder: NSCoder) {
@@ -51,9 +49,5 @@ open class BaseTableViewCell: UITableViewCell {
     
     open func layout() {
         // 서브뷰를 구성하고 SnapKit을 사용해서 layout을 하는 함수입니다.
-    }
-    
-    open func addViews() {
-        // view 추가 함수
     }
 }
