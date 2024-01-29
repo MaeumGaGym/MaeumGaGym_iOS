@@ -9,7 +9,7 @@ import SnapKit
 import Core
 import DSKit
 
-public class MotivationMessageTableViewCell: UITableViewCell {
+public class MotivationMessageTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "MotivationMessageTableViewCell"
 
@@ -24,25 +24,21 @@ public class MotivationMessageTableViewCell: UITableViewCell {
         $0.textColor = DSKitAsset.Colors.gray500.color
     }
 
-    private var disposeBag = DisposeBag()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func configure(with message: MotivationMessageModel) {
         messageLabel.text = "\"\(message.text)\""
         authorLabel.text = "\(message.author)"
     }
-
-    private func setupUI() {
+    
+    public override func attribute() {
+        super.attribute()
+        
         backgroundColor = DSKitAsset.Colors.gray25.color
-
+        setupRxBindings()
+    }
+    
+    public override func layout() {
+        super.layout()
+        
         addSubviews([messageLabel, authorLabel])
         messageLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -56,7 +52,6 @@ public class MotivationMessageTableViewCell: UITableViewCell {
             $0.bottom.equalToSuperview()
         }
 
-        setupRxBindings()
     }
 
     private func setupRxBindings() {
