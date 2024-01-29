@@ -10,7 +10,7 @@ import SnapKit
 import Core
 import DSKit
 
-public class StepTableViewCell: UITableViewCell {
+public class StepTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "StepTableViewCell"
 
@@ -27,33 +27,31 @@ public class StepTableViewCell: UITableViewCell {
         $0.text = "걸음"
     }
 
-    private var disposeBag = DisposeBag()
-
     public func configure(with step: StepModel) {
         stepNumberTitle.text = "\(formattedLikeCount(step.stepCount))"
     }
 
-    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-
-        self.backgroundColor = .white
+    public override func commonInit() {
+        super.commonInit()
+        
+        rx.deallocated
+            .bind { [weak self] in
+                self?.disposeBag = DisposeBag()
+            }
+            .disposed(by: disposeBag)
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0))
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 16.0
+    
+    public override func attribute() {
+        super.attribute()
+        
         backgroundColor = DSKitAsset.Colors.gray25.color
-    }
 
-    private func setupUI() {
+    }
+    
+    public override func layout() {
+        super.layout()
+        
+        setupCornerRadiusAndBackground()
         contentView.addSubviews([stepNumberTitle, workTitle])
 
         stepNumberTitle.snp.makeConstraints {
@@ -65,12 +63,6 @@ public class StepTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(stepNumberTitle.snp.trailing).offset(12.0)
         }
-
-        rx.deallocated
-            .bind { [weak self] in
-                self?.disposeBag = DisposeBag()
-            }
-            .disposed(by: disposeBag)
     }
 }
 
