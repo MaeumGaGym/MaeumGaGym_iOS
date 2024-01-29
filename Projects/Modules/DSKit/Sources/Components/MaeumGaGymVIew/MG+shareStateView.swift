@@ -6,7 +6,9 @@ import RxCocoa
 import SnapKit
 import Then
 
-open class MGShareStateView: UIView {
+import Core
+
+open class MGShareStateView: BaseView {
     
     private let sharedLabel = UILabel().then {
         $0.text = "공유됨"
@@ -18,20 +20,12 @@ open class MGShareStateView: UIView {
         $0.image = DSKitAsset.Assets.selfCareEarth.image
     }
     
-    public init() {
-        super.init(frame: .zero)
-        
+    override open func attribute() {
         self.layer.cornerRadius = 18.0
         self.backgroundColor = .white
-        
-        setupUI()
     }
     
-    public required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
+    public override func layout() {
         addSubviews([sharedLabel, sharedImage])
         
         sharedLabel.snp.makeConstraints {
