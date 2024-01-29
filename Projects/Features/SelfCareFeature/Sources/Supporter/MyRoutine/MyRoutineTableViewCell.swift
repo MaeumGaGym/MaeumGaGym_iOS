@@ -20,6 +20,11 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
     
     static let identifier: String = "MyRoutineTableViewCell"
     
+    private var containerView = UIView().then {
+        $0.backgroundColor = DSKitAsset.Colors.blue50.color
+        $0.layer.cornerRadius = 16.0
+    }
+    
     private var routineNameLabel = UILabel().then {
         $0.font = UIFont.Pretendard.labelLarge
         $0.textColor = .black
@@ -40,10 +45,10 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         $0.setImage(DSKitAsset.Assets.selfCareDots.image, for: .normal)
     }
     
-    public func setup(name: String, state: String, shared: SharedState) {
+    public func setup(name: String, state: RoutineState, shared: SharedState) {
         routineNameLabel.text = name
-        routineStateLabel.text = state
         
+        routineState(routineState: state)
         SharedViewState(sharedState: shared)
         addViews()
         layout()
@@ -51,21 +56,29 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
     }
     
     override public func addViews() {
+        super.addViews()
         
+        contentView.addSubview(containerView)
         [
             routineNameLabel,
             routineStateLabel,
-            sharedView,
-            dotsButton
-        ].forEach { contentView.addSubview($0) }
+            dotsButton,
+            sharedView
+        ].forEach { containerView.addSubview($0) }
     }
     
     override public func layout() {
+        super.layout()
+        
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+        }
         
         routineNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(18.0)
             $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalTo(75.0)
+            $0.width.equalToSuperview()
             $0.height.equalTo(24.0)
         }
         
@@ -76,16 +89,17 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
             $0.height.equalTo(18.0)
         }
         
+        dotsButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(29.0)
+            $0.trailing.equalToSuperview().offset(-20.0)
+            $0.width.height.equalTo(24.0)
+        }
+        
         sharedView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(23.0)
             $0.trailing.equalTo(dotsButton.snp.leading).offset(-12.0)
             $0.width.equalTo(98.0)
             $0.height.equalTo(36.0)
-        }
-        
-        dotsButton.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(29.0)
-            $0.trailing.equalToSuperview().offset(-20.0)
         }
     }
     
