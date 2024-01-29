@@ -1,11 +1,3 @@
-//
-//  MainNavigationBar.swift
-//  HomeFeature
-//
-//  Created by 박준하 on 1/29/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 
 import Core
@@ -29,8 +21,6 @@ final class MainNavigationBar: UIView {
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
-
-    // MARK: - initialization
     
     init() {
         super.init(frame: .zero)
@@ -42,8 +32,6 @@ final class MainNavigationBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-// MARK: - Methods
 
 extension MainNavigationBar {
     @discardableResult

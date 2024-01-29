@@ -20,7 +20,7 @@ public class StepTableViewCell: BaseTableViewCell {
         $0.textColor = DSKitAsset.Colors.blue800.color
     }
 
-    public let workTitle = UILabel().then {
+    private let workTitle = UILabel().then {
         $0.numberOfLines = 1
         $0.font = UIFont.Pretendard.titleSmall
         $0.textColor = DSKitAsset.Colors.gray600.color
