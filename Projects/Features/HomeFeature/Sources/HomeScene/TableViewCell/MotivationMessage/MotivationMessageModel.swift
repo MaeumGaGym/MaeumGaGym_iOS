@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct MotivationMessageModel {
+public struct MotivationMessageModel {
     let text: String
     let author: String
 }
