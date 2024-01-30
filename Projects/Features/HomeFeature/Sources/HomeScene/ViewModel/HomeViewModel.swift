@@ -17,8 +17,13 @@ import SnapKit
 import Core
 import Domain
 
+import HomeFeatureInterface
+
 public class HomeViewModel: HomeViewModelType {
-    
+    public var disposeBag: DisposeBag = DisposeBag()
+
+    private let useCase: HomeUseCase
+
     public struct Input {
          public let viewDidLoad: Driver<Void>
          public let myPageButtonTapped: Driver<Void>
@@ -34,7 +39,10 @@ public class HomeViewModel: HomeViewModelType {
         public let needNetworkAlert: Observable<Void>
     }
 
-    // Coordinator 클로저 정의
+    public init(useCase: HomeUseCase) {
+        self.useCase = useCase
+    }
+
     public var onSettingButtonTap: (() -> Void)?
     public var onStepNumberButtonTap: (() -> Void)?
     public var routineButtonTap: (() -> Void)?
@@ -45,15 +53,25 @@ public class HomeViewModel: HomeViewModelType {
     private let isServiceAvailableSubject = PublishSubject<Bool>()
     private let needNetworkAlertSubject = PublishSubject<Void>()
     
-    public init() {
-
-    }
-    
     public func transform(_ input: Input) -> Output {
+        
+        input.viewDidLoad
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.useCase.getServiceState()
+            }).disposed(by: DisposeBag())
         
         return Output(
             isServiceAvailable: isServiceAvailableSubject.asObservable(),
             needNetworkAlert: needNetworkAlertSubject.asObservable()
         )
+    }
+    
+    private func bindOutput(output: Output) {
+        
+        useCase.serviceState
+            .subscribe(onNext: { serviceState in
+                self.isServiceAvailableSubject.onNext(serviceState.isAvailable)
+            }).disposed(by: disposeBag)
     }
 }
