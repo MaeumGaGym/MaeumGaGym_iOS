@@ -19,13 +19,13 @@ enum HomeCell {
     case extra
 }
 
-public class HomeViewController: BaseViewController<Any>, Stepper {
+public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     public var steps = PublishRelay<Step>()
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
     
-    private lazy var naviBar = MainNavigationBar()
+    private lazy var naviBar = HomeNavigationBar()
 
     // text 길이의 맞게 View가 유동적으로 늘어나야함
     let quotes: MotivationMessageModel = MotivationMessageModel(
@@ -104,6 +104,31 @@ public class HomeViewController: BaseViewController<Any>, Stepper {
     func routineheightForCell(with routines: [RoutineModel]) -> CGFloat {
         let cellHeight: CGFloat = 64.0
         return max(CGFloat(routines.count) * cellHeight, cellHeight) + 92
+    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+
+        let myPageButtonTapped = naviBar.rightButtonTap
+            .asDriver(onErrorDriveWith: .never())
+
+        let input = HomeViewModel.Input(
+            viewDidLoad: Driver.just(Void()),
+            myPageButtonTapped: myPageButtonTapped
+        )
+        let output = self.viewModel.transform(input)
+
+        output.isServiceAvailable
+            .subscribe(onNext: { isServiceAvailable in
+                print("현재 앱 서비스 사용 가능(심사 X)?: \(isServiceAvailable)")
+            })
+            .disposed(by: self.disposeBag)
+
+        output.needNetworkAlert
+            .subscribe(onNext: { [weak self] in
+//                self?.presentNetworkAlertVC()
+            })
+            .disposed(by: self.disposeBag)
     }
 }
 
