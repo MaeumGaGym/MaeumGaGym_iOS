@@ -1,13 +1,20 @@
 import Foundation
+import Data
+import UIKit
+
 import RxFlow
 import RxCocoa
 import RxSwift
+
 import Core
-import UIKit
 import DSKit
 
+import Domain
+
+import HomeFeatureInterface
+
 public class AppFlow: Flow {
-    
+
     public var root: Presentable {
         return self.rootViewController
     }
@@ -30,7 +37,8 @@ public class AppFlow: Flow {
     }
 
     private func navigateToTabBarScreen() -> FlowContributors {
-        let homeFlow = HomeFlow()
+        let homeRepository = HomeRepository()
+        let homeFlow = HomeFlow(repository: homeRepository)
         let postureFlow = PostureFlow()
         let shopFlow = ShopFlow()
         let pickleFlow = PickleFlow()
