@@ -40,25 +40,16 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         
         routineState(routineState: state)
         SharedViewState(sharedState: shared)
-        addViews()
+
         layout()
         
     }
     
-    override public func addViews() {
-        super.addViews()
-        
-        contentView.addSubview(containerView)
-        [
-            routineNameLabel,
-            routineStateLabel,
-            dotsButton,
-            sharedView
-        ].forEach { containerView.addSubview($0) }
-    }
-    
     override public func layout() {
         super.layout()
+        contentView.addSubview(containerView)
+        containerView.addSubviews([routineNameLabel, routineStateLabel, dotsButton, sharedView])
+        
         
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12.0)
