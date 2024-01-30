@@ -2,6 +2,10 @@ import UIKit
 import HomeFeatureInterface
 import RxFlow
 import Core
+
+import Data
+import Domain
+
 import HomeFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -11,8 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        let viewController = HomeViewController((Any).self)
-        self.window = makeWindow(scene: scene)
+        let useCase = DefaultHomeUseCase(repository: HomeRepository())
+        let viewModel = HomeViewModel(useCase: useCase)
+        let viewController = HomeViewController(viewModel)
+                self.window = makeWindow(scene: scene)
         window?.configure(withRootViewController: viewController)
     }
 }
