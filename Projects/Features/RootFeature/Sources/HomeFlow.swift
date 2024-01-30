@@ -5,6 +5,7 @@ import RxCocoa
 import Core
 import DSKit
 import HomeFeature
+import HomeFeatureInterface
 
 public class HomeFlow: Flow {
     public var root: Presentable {
@@ -14,7 +15,7 @@ public class HomeFlow: Flow {
     private let rootViewController = UINavigationController()
 
     init() {
-        let viewController = HomeViewController((Any).self)
+        let viewController = HomeViewController(HomeViewModel())
         viewController.view.backgroundColor = DSKitAsset.Colors.gray25.color
         viewController.tabBarItem = UITabBarItem(title: "홈",
                                                  image: DSKitAsset.Assets.blackHome.image,
