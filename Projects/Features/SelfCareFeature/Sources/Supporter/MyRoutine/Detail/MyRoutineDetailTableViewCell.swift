@@ -15,6 +15,7 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
     private var exerciseImage = UIImageView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray25.color
         $0.layer.cornerRadius = 40.0
+        $0.contentMode = .scaleToFill
     }
     
     private var exerciseNameLabel = UILabel().then {
@@ -69,7 +70,6 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
             $0.top.equalToSuperview().offset(17.0)
             $0.leading.equalTo(exerciseImage.snp.trailing).offset(18.0)
             $0.trailing.equalTo(deatilImage.snp.leading)
-            $0.width.equalToSuperview()
             $0.height.equalTo(24.0)
         }
         
@@ -77,7 +77,6 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
             $0.top.equalTo(exerciseNameLabel.snp.bottom).offset(2.0)
             $0.leading.equalTo(exerciseImage.snp.trailing).offset(18.0)
             $0.trailing.equalTo(deatilImage.snp.leading)
-            $0.width.equalToSuperview()
             $0.height.equalTo(20.0)
         }
     }
