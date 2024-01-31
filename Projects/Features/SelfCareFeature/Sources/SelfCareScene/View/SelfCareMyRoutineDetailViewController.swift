@@ -8,7 +8,7 @@ import DSKit
 
 public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel> {
     
-    private var myRoutineDetailModel = SelfCareMyRoutineDetailModel.data
+    private var myRoutineDetailModel = SelfCareMyRoutineDetailModel.detailData
     
     private var containerView = UIView()
     private var headerView = UIView()
@@ -20,14 +20,15 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
         $0.font = UIFont.Pretendard.titleLarge
     }
     
-    private let myRoutineSubTitleLabel = UILabel().then {
-        $0.text = "나만의 루틴을 구성하여\n규칙적인 운동을 해보세요."
-        $0.numberOfLines = 2
-        $0.textColor = DSKitAsset.Colors.gray600.color
+    private var routineStateLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyMedium
+        $0.text = "사용중 • 공유됨"
+        $0.textColor = DSKitAsset.Colors.blue500.color
     }
     
-    private var myRoutineTableView = UITableView().then {
+    private var sharedView = MGShareStateView()
+    
+    private var myRoutineDetailTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .white
@@ -40,45 +41,50 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        sharedView.changeView(backColor: DSKitAsset.Colors.gray50.color)
     }
     
     public override func attribute() {
+        super.attribute()
         
-        myRoutineTableView.delegate = self
-        myRoutineTableView.dataSource = self
+        myRoutineDetailTableView.delegate = self
+        myRoutineDetailTableView.dataSource = self
     }
     
     public override func layout() {
+        super.layout()
         
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 144.0))
-        view.addSubview(headerView)
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 136.0))
+        view.addSubviews([headerView, myRoutineDetailTableView])
         
         headerView.addSubview(containerView)
         
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.bottom.equalToSuperview().inset(20.0)
+            $0.bottom.equalToSuperview().inset(32.0)
         }
         
-        containerView.addSubview(myRoutineTitleLabel)
-        containerView.addSubview(myRoutineSubTitleLabel)
+        containerView.addSubviews([myRoutineTitleLabel, routineStateLabel, sharedView])
         
         myRoutineTitleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-            $0.width.equalToSuperview()
             $0.height.equalTo(48.0)
         }
         
-        myRoutineSubTitleLabel.snp.makeConstraints {
+        routineStateLabel.snp.makeConstraints {
             $0.leading.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(40.0)
+            $0.height.equalTo(20.0)
         }
         
-        view.addSubview(myRoutineTableView)
-        myRoutineTableView.tableHeaderView = headerView
-        myRoutineTableView.snp.makeConstraints {
+        sharedView.snp.makeConstraints {
+            $0.centerY.trailing.equalToSuperview()
+            $0.width.equalTo(98.0)
+            $0.height.equalTo(36.0)
+        }
+        
+        myRoutineDetailTableView.tableHeaderView = headerView
+        myRoutineDetailTableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
@@ -98,6 +104,7 @@ extension SelfCareMyRoutineDetailViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         myRoutineDetailModel.data.count + 1
     }
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == myRoutineDetailModel.data.count {
             let cell = UITableViewCell()
@@ -108,8 +115,8 @@ extension SelfCareMyRoutineDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MyRoutineDetailTableViewCell.identifier,
                 for: indexPath) as? MyRoutineDetailTableViewCell
-            let data = myRoutineDetailModel.data[indexPath.row]
-            cell?.setup(image: data.image, name: data.name, routine: data.routine)
+            let detailData = myRoutineDetailModel.data[indexPath.row]
+            cell?.setup(image: detailData.image, name: detailData.name, routine: detailData.routine)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         }
