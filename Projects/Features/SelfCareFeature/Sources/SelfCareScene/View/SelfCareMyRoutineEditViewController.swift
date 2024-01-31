@@ -56,9 +56,9 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
         
         //        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 136.0))
         view.addSubviews([ myRoutineDetailTableView])
-        //        
+        //
         //        headerView.addSubview(containerView)
-        //        
+        //
         //        containerView.snp.makeConstraints {
         //            $0.top.equalToSuperview().offset(24.0)
         //            $0.leading.trailing.equalToSuperview().inset(20.0)
@@ -66,17 +66,17 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
         //        }
         
         //        containerView.addSubviews([myRoutineTitleLabel, routineStateLabel, sharedView])
-        //        
+        //
         //        myRoutineTitleLabel.snp.makeConstraints {
         //            $0.top.leading.equalToSuperview()
         //            $0.height.equalTo(48.0)
         //        }
-        //        
+        //
         //        routineStateLabel.snp.makeConstraints {
         //            $0.leading.bottom.equalToSuperview()
         //            $0.height.equalTo(20.0)
         //        }
-        //        
+        //
         //        sharedView.snp.makeConstraints {
         //            $0.centerY.trailing.equalToSuperview()
         //            $0.width.equalTo(98.0)
