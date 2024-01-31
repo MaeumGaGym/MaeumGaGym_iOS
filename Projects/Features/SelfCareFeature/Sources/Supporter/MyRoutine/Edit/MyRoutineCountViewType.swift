@@ -1,9 +1,15 @@
-//
-//  MyRoutineCountViewType.swift
-//  SelfCareFeature
-//
-//  Created by 이은호 on 1/31/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
+
+public enum MyRoutineCountViewType {
+    case number
+    case set
+    
+    var text: String {
+        switch self {
+        case .number:
+            return "횟수"
+        case .set:
+            return "세트"
+        }
+    }
+}
