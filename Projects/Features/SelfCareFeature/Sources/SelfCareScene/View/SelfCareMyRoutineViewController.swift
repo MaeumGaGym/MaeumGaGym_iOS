@@ -1,8 +1,11 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import Core
 import DSKit
+
 public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel> {
     private var myRoutineModel = SelfCareMyRoutineModel.myRoutine
     
@@ -94,7 +97,7 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 extension SelfCareMyRoutineViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == myRoutineModel.data.count + 1 {
-            return 100 // 마지막 셀의 높이를 100으로 설정
+            return 100
         } else {
             return 94
         }
