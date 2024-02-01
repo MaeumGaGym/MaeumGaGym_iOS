@@ -61,13 +61,12 @@ public class HomeViewModel: HomeViewModelType {
         input.settingButtonTapped
             .drive(onNext: { [weak self] _ in
                 self?.onSettingButtonTap?()
-                MGLogger.test("settingButtonTapped")
+                MGLogger.debug("SeetingButtonTapped")
             }).disposed(by: disposeBag)
 
         input.getStepNumber
             .drive(onNext: { [weak self] _ in
                 self?.useCase.getStepNumber()
-                MGLogger.test("getStepNumber")
             }).disposed(by: disposeBag)
 
         input.getMotivationMessage
@@ -98,7 +97,6 @@ public class HomeViewModel: HomeViewModelType {
         useCase.stepNumber
             .subscribe(onNext: { stepNumber in
                 self.stepNumberSubject.onNext(stepNumber)
-                MGLogger.test("\(stepNumber) 잘 받와지는데?")
             }).disposed(by: disposeBag)
 
         useCase.routines

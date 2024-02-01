@@ -95,7 +95,6 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     public override func bindViewModel() {
         super.bindViewModel()
-        MGLogger.test("asdf")
 
         let myPageButtonTapped = naviBar.rightButtonTap
             .asDriver(onErrorDriveWith: .never())
@@ -114,29 +113,28 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         let output = viewModel.transform(input, action: { output in
             output.stepNumber
                 .subscribe(onNext: { stepNumber in
-                    print("Step Number: \(stepNumber)")
-                    MGLogger.debug("asdfasdfasdgasgvasdgfs")
+                    MGLogger.debug("Step Number: \(stepNumber)")
                     self.stepModels = stepNumber
                 })
                 .disposed(by: disposeBag)
 
             output.motivationMessage
                 .subscribe(onNext: { message in
-                    print("Motivation Message: \(message)")
+                    MGLogger.debug("Motivation Message: \(message)")
                     self.quotes = message
                 })
                 .disposed(by: disposeBag)
 
             output.routines
                 .subscribe(onNext: { routines in
-                    print("Routines: \(routines)")
+                    MGLogger.debug("Routines: \(routines)")
                     self.routines = routines
                 })
                 .disposed(by: disposeBag)
 
             output.extras
                 .subscribe(onNext: { extras in
-                    print("Extras: \(extras)")
+                    MGLogger.debug("Extras: \(extras)")
                     self.extras = extras
                 })
                 .disposed(by: disposeBag)
