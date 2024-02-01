@@ -10,12 +10,6 @@ open class MGTitleTextField: UITextField {
         $0.textColor = DSKitAsset.Colors.gray400.color
         $0.contentMode = .left
     }
-    
-    public convenience init(placeholder: String) {
-        self.init(frame: .zero)
-        
-        placeholderLabel.text = placeholder
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +38,10 @@ open class MGTitleTextField: UITextField {
             $0.top.leading.equalToSuperview().offset(12.0)
             $0.height.equalTo(24.0)
         }
+    }
+    
+    public func setPlaceholder(placeholder: String) {
+        placeholderLabel.text = placeholder
     }
 }
 
