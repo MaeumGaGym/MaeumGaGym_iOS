@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 
 open class BaseViewController<T>: UIViewController {
-    public let viewModel: T
+    public var viewModel: T
     public var disposeBag = DisposeBag()
     let bounds = UIScreen.main.bounds
 
