@@ -1,123 +1,110 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import Core
 import DSKit
-public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel> {
-    private var myRoutineModel = SelfCareMyRoutineModel.myRoutine
+
+public class MyRoutineTableViewCell: BaseTableViewCell {
     
-    private var containerView = UIView()
-    private var headerView = UIView()
+    static let identifier: String = "MyRoutineTableViewCell"
     
-    private let myRoutineTitleLabel = UILabel().then {
-        $0.text = "내 루틴"
+    private var containerView = UIView().then {
+        $0.backgroundColor = DSKitAsset.Colors.blue50.color
+        $0.layer.cornerRadius = 16.0
+    }
+    
+    private var routineNameLabel = UILabel().then {
+        $0.font = UIFont.Pretendard.labelLarge
         $0.textColor = .black
-        $0.contentMode = .left
-        $0.font = UIFont.Pretendard.titleLarge
+        $0.numberOfLines = 1
     }
     
-    private let myRoutineSubTitleLabel = UILabel().then {
-        $0.text = "나만의 루틴을 구성하여\n규칙적인 운동을 해보세요."
-        $0.numberOfLines = 2
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.font = UIFont.Pretendard.bodyMedium
+    private var routineStateLabel = UILabel().then {
+        $0.font = UIFont.Pretendard.bodySmall
+        $0.numberOfLines = 1
+        $0.textColor = DSKitAsset.Colors.gray400.color
     }
     
-    private var myRoutineTableView = UITableView().then {
-        $0.showsVerticalScrollIndicator = false
-        $0.showsHorizontalScrollIndicator = false
-        $0.backgroundColor = .white
-        $0.separatorStyle = .none
-        $0.register(MyRoutineTableViewCell.self,
-                    forCellReuseIdentifier: MyRoutineTableViewCell.identifier)
+    private var sharedView = MGShareStateView().then {
+        $0.isHidden = true
     }
     
-    private var plusRoutineButton = MyRoutinePlusButton(text: "루틴 추가하기")
+    private let dotsButton = UIButton().then {
+        $0.setImage(DSKitAsset.Assets.selfCareDots.image, for: .normal)
+    }
     
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+    public func setup(name: String, state: RoutineState, shared: SharedState) {
+        routineNameLabel.text = name
         
-        view.backgroundColor = .white
+        routineState(routineState: state)
+        SharedViewState(sharedState: shared)
+
+        layout()
+        
     }
     
-    public override func attribute() {
+    override public func layout() {
+        super.layout()
+        contentView.addSubview(containerView)
+        containerView.addSubviews([routineNameLabel, routineStateLabel, dotsButton, sharedView])
         
-        myRoutineTableView.delegate = self
-        myRoutineTableView.dataSource = self
-    }
-    
-    public override func layout() {
-        
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 144.0))
-        view.addSubview(headerView)
-        
-        headerView.addSubview(containerView)
         
         containerView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(24.0)
+            $0.top.equalToSuperview().offset(12.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.bottom.equalToSuperview().inset(20.0)
         }
         
-        containerView.addSubview(myRoutineTitleLabel)
-        containerView.addSubview(myRoutineSubTitleLabel)
-        
-        myRoutineTitleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
+        routineNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(18.0)
+            $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
-            $0.height.equalTo(48.0)
+            $0.height.equalTo(24.0)
         }
         
-        myRoutineSubTitleLabel.snp.makeConstraints {
-            $0.leading.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(40.0)
+        routineStateLabel.snp.makeConstraints {
+            $0.top.equalTo(routineNameLabel.snp.bottom).offset(4.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.width.equalTo(37.0)
+            $0.height.equalTo(18.0)
         }
         
-        view.addSubview(myRoutineTableView)
-        myRoutineTableView.tableHeaderView = headerView
-        myRoutineTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+        dotsButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(29.0)
+            $0.trailing.equalToSuperview().offset(-20.0)
+            $0.width.height.equalTo(24.0)
         }
         
-        view.addSubview(plusRoutineButton)
-        plusRoutineButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-54.0)
-            $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.height.equalTo(58.0)
-        }
-        
-    }
-}
-extension SelfCareMyRoutineViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == myRoutineModel.data.count + 1 {
-            return 100 // 마지막 셀의 높이를 100으로 설정
-        } else {
-            return 94
+        sharedView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(23.0)
+            $0.trailing.equalTo(dotsButton.snp.leading).offset(-12.0)
+            $0.width.equalTo(98.0)
+            $0.height.equalTo(36.0)
         }
     }
-}
-extension SelfCareMyRoutineViewController: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myRoutineModel.data.count + 1
-    }
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == myRoutineModel.data.count {
-            let cell = UITableViewCell()
-            cell.backgroundColor = .white
-            cell.selectionStyle = .none
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: MyRoutineTableViewCell.identifier,
-                for: indexPath) as? MyRoutineTableViewCell
-            let routine = myRoutineModel.data[indexPath.row]
-            cell?.setup(name: routine.name, state: routine.routineState, shared: routine.sharedState)
-            cell?.selectionStyle = .none
-            return cell ?? UITableViewCell()
+    
+    public func SharedViewState(sharedState: SharedState) {
+        switch sharedState {
+        case .yesShared:
+            sharedView.isHidden = false
+        case .notShared:
+            sharedView.isHidden = true
         }
+    }
+    
+    public func routineState(routineState: RoutineState) {
+        switch routineState {
+        case .useRoutine:
+            routineStateLabel.text = "사용중"
+            routineStateLabel.textColor = DSKitAsset.Colors.blue500.color
+        case .keepRoutine:
+            routineStateLabel.text = "보관중"
+            routineStateLabel.textColor = DSKitAsset.Colors.gray400.color
+        }
+    }
+    
+    public func changeRoutineName(text: String) {
+        routineNameLabel.text = text
     }
 }
