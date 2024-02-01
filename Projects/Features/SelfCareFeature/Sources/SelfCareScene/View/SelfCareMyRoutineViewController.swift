@@ -5,6 +5,7 @@ import Then
 
 import Core
 import DSKit
+import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel> {
     private var myRoutineModel = SelfCareMyRoutineModel.myRoutine
@@ -35,7 +36,7 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
                     forCellReuseIdentifier: MyRoutineTableViewCell.identifier)
     }
     
-    private var plusRoutineButton = MyRoutinePlusButton(text: "루틴 추가하기")
+    private var plusRoutineButton = SelfCareButton(type: .plusRoutine)
     
     override public func viewDidLoad() {
         super.viewDidLoad()
