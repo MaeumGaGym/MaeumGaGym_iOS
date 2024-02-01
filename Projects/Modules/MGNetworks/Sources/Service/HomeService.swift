@@ -21,9 +21,9 @@ public class HomeService {
     public func requestRoutines() -> Single<[RoutineModel]> {
         let routines: [RoutineModel] = [
             RoutineModel(exercise: "벤치", sets: 2, reps: 10),
-            RoutineModel(exercise: "팔굽혀펴기", sets: 3, reps: 10),
-            RoutineModel(exercise: "러닝", sets: 5, reps: 10),
-            RoutineModel(exercise: "러닝", sets: 5, reps: 10)
+            RoutineModel(exercise: "팔굽혀펴기", sets: 3, reps: 11),
+            RoutineModel(exercise: "러닝", sets: 5, reps: 12),
+            RoutineModel(exercise: "러닝", sets: 5, reps: 13)
         ]
         return Single.just(routines)
     }
