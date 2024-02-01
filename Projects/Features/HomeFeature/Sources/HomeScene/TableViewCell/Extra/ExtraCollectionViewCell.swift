@@ -9,6 +9,8 @@ import SnapKit
 import Core
 import DSKit
 
+import Domain
+
 public class ExtraCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = "ExtraCollectionViewCell"

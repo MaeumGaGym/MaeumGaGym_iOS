@@ -7,6 +7,7 @@ let project = Project.makeModule(
     targets: [.unitTest, .staticFramework],
     internalDependencies: [
         .core,
-        .Modules.tokenManager
+        .Modules.tokenManager,
+        .domain
     ]
 )

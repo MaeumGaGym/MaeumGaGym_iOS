@@ -1,27 +1,40 @@
 import UIKit
+
 import RxFlow
 import RxSwift
 import RxCocoa
+
 import Core
 import DSKit
+import Domain
+
 import HomeFeature
+import HomeFeatureInterface
 
 public class HomeFlow: Flow {
+    
+    public var repository: HomeRepositoryInterface
+    
     public var root: Presentable {
         return self.rootViewController
     }
 
     private let rootViewController = UINavigationController()
 
-    init() {
-        let viewController = HomeViewController((Any).self)
+    init(repository: HomeRepositoryInterface) {
+        self.repository = repository
+        
+        let useCase = DefaultHomeUseCase(repository: repository)
+        let viewModel = HomeViewModel(useCase: useCase)
+        let viewController = HomeViewController(viewModel)
+        
         viewController.view.backgroundColor = DSKitAsset.Colors.gray25.color
         viewController.tabBarItem = UITabBarItem(title: "홈",
                                                  image: DSKitAsset.Assets.blackHome.image,
                                                  selectedImage: DSKitAsset.Assets.blueHome.image
         )
 
-        rootViewController.setViewControllers([viewController], animated: false)
+        self.rootViewController.setViewControllers([viewController], animated: false)
     }
 
     public func navigate(to step: Step) -> FlowContributors {

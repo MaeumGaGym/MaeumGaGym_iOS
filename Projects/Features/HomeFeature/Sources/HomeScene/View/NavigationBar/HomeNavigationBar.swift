@@ -1,12 +1,16 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 import Core
 import DSKit
 
-final class MainNavigationBar: UIView {
+final class HomeNavigationBar: UIView {
             
-    public var rightButtonTap: (() -> Void)?
-        
+    public var rightButtonTap: ControlEvent<Void> {
+         return rightButton.rx.tap
+     }
     private let logoImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.mainTitle.image.withRenderingMode(.alwaysOriginal)
         $0.contentMode = .scaleToFill
@@ -33,7 +37,7 @@ final class MainNavigationBar: UIView {
     }
 }
 
-extension MainNavigationBar {
+extension HomeNavigationBar {
     @discardableResult
     public func setRightButtonImage(image: UIImage) -> Self {
         self.rightButton.setImage(image, for: .normal)
@@ -43,7 +47,7 @@ extension MainNavigationBar {
 
 // MARK: - UI & Layout
 
-extension MainNavigationBar {
+extension HomeNavigationBar {
     private func setUI() {
         self.backgroundColor = DSKitAsset.Colors.gray25.color
     }

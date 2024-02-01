@@ -10,6 +10,8 @@ import SnapKit
 import Core
 import DSKit
 
+import Domain
+
 public class StepTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "StepTableViewCell"
