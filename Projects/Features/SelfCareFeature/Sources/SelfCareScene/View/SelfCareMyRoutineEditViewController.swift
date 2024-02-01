@@ -65,7 +65,7 @@ extension SelfCareMyRoutineEditViewController: UITableViewDelegate {
 }
 extension SelfCareMyRoutineEditViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myRoutineEditModel.data.count + 1
+        myRoutineEditModel.data.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
