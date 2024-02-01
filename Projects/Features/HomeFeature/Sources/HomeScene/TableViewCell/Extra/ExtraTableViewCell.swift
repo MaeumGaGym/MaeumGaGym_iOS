@@ -9,6 +9,8 @@ import SnapKit
 import Core
 import DSKit
 
+import Domain
+
 public class ExtraTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "ExtraTableViewCell"
