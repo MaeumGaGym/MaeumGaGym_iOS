@@ -1,11 +1,3 @@
-//
-//  HomeViewModel.swift
-//  HomeFeatureInterface
-//
-//  Created by 박준하 on 1/30/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 import RxSwift
 import RxCocoa
@@ -15,18 +7,6 @@ import HomeFeatureInterface
 import MGLogger
 
 public class HomeViewModel: HomeViewModelType {
-    public func transform(_ input: Input) -> Output {
-        let output = Output(
-            settingButtonTapped: input.settingButtonTapped.asDriver(),
-            motivationMessage: motivationMessageSubject.asObservable(),
-            stepNumber: stepNumberSubject.asObservable(),
-            routines: routinesSubject.asObservable(),
-            extras: extrasSubject.asObservable()
-        )
-        
-        return output
-    }
-    
 
     public var disposeBag: DisposeBag = DisposeBag()
 

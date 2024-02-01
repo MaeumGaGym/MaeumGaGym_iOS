@@ -31,36 +31,13 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
 
-//    var quotes: MotivationMessageModel?
-//    var stepModels: StepModel?
-//    var routines: [RoutineModel]?
-//    var extras: [ExtrasModel]?
-
     private lazy var naviBar = HomeNavigationBar()
 
     // text 길이의 맞게 View가 유동적으로 늘어나야함
-    var quotes: MotivationMessageModel = MotivationMessageModel(
-        text: "가능성은 한계를 넘는다.asef",
-        author: "Kimain"
-    )
-
-    var stepModels: StepModel = StepModel(stepCount: 0)
-
-    var routines: [RoutineModel] = [
-        RoutineModel(exercise: "벤치", sets: 2, reps: 10),
-        RoutineModel(exercise: "팔굽혀펴기", sets: 3, reps: 10),
-        RoutineModel(exercise: "러닝", sets: 5, reps: 10),
-        RoutineModel(exercise: "러닝", sets: 5, reps: 10)
-    ]
-
-    var extras: [ExtrasModel] = [
-        ExtrasModel(image: DSKitAsset.Assets.basicProfile.image,
-                    titleName: "칼로리 계산기",
-                    description: "먹은 음식의 칼로리를\n계산해 보세요."),
-        ExtrasModel(image: DSKitAsset.Assets.basicProfile.image,
-                    titleName: "와카타임",
-                    description: "지금까지 한 운동 시간을\n확인해 보세요.")
-    ]
+    var quotes: MotivationMessageModel?
+    var stepModels: StepModel?
+    var routines: [RoutineModel]?
+    var extras: [ExtrasModel]?
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self
@@ -68,7 +45,6 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         $0.backgroundColor = DSKitAsset.Colors.gray25.color
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
-
         $0.register(MotivationMessageTableViewCell.self,
                     forCellReuseIdentifier: MotivationMessageTableViewCell.identifier)
         $0.register(StepTableViewCell.self,
@@ -135,8 +111,8 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
                getExtras: Observable.just(()).asDriver(onErrorDriveWith: .never())
            )
 
-        viewModel.transform(input) {
-            $0.stepNumber
+        let output = viewModel.transform(input, action: { output in
+            output.stepNumber
                 .subscribe(onNext: { stepNumber in
                     print("Step Number: \(stepNumber)")
                     MGLogger.debug("asdfasdfasdgasgvasdgfs")
@@ -144,30 +120,27 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
                 })
                 .disposed(by: disposeBag)
 
-            $0.motivationMessage
+            output.motivationMessage
                 .subscribe(onNext: { message in
                     print("Motivation Message: \(message)")
                     self.quotes = message
-                    self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
 
-            $0.routines
+            output.routines
                 .subscribe(onNext: { routines in
                     print("Routines: \(routines)")
                     self.routines = routines
-                    self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
 
-            $0.extras
+            output.extras
                 .subscribe(onNext: { extras in
                     print("Extras: \(extras)")
                     self.extras = extras
-                    self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
-        }
+        })
        }
 }
 
@@ -182,7 +155,7 @@ extension HomeViewController: UITableViewDelegate {
         case .stepNumber:
             return 120.0
         case .routine:
-            return routineheightForCell(with: routines)
+            return routineheightForCell(with: routines!)
         case .extra:
             return 260.0
         }
@@ -224,7 +197,7 @@ extension HomeViewController: UITableViewDataSource {
             ) as? MotivationMessageTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: quotes)
+            cell.configure(with: quotes!)
 
             return cell
         case .stepNumber:
@@ -234,7 +207,7 @@ extension HomeViewController: UITableViewDataSource {
             ) as? StepTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: stepModels)
+            cell.configure(with: stepModels!)
             cell.layer.cornerRadius = 16.0
 
             return cell
@@ -245,7 +218,7 @@ extension HomeViewController: UITableViewDataSource {
             ) as? RoutineTableViewCell else {
                 return UITableViewCell()
             }
-            cell.routines = routines
+            cell.routines = routines!
             cell.layer.cornerRadius = 16.0
 
             return cell
@@ -255,7 +228,7 @@ extension HomeViewController: UITableViewDataSource {
             ) as? ExtraTableViewCell else {
                 return UITableViewCell()
             }
-            cell.extras = extras
+            cell.extras = extras!
 
             return cell
         }
