@@ -12,5 +12,8 @@ import RxSwift
 import RxCocoa
 
 public protocol HomeRepositoryInterface {
-    func getServiceState() -> Single<ServiceStateModel>
+    func getMotivationMessage() -> Single<MotivationMessageModel>
+    func getStepNumber() -> Single<StepModel>
+    func getRoutines() -> Single<[RoutineModel]>
+    func getExtras() -> Single<[ExtrasModel]>
 }
