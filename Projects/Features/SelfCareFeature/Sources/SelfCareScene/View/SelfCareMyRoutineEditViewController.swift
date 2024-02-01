@@ -118,5 +118,3 @@ extension SelfCareMyRoutineEditViewController: UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
 }
-
-

@@ -122,4 +122,3 @@ extension SelfCareMyRoutineDetailViewController: UITableViewDataSource {
         }
     }
 }
-
