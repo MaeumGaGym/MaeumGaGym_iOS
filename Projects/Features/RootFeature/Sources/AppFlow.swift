@@ -10,6 +10,7 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 import HomeFeatureInterface
 
@@ -37,8 +38,10 @@ public class AppFlow: Flow {
     }
 
     private func navigateToTabBarScreen() -> FlowContributors {
-        let homeRepository = HomeRepository()
+        let homeService = HomeService()
+        let homeRepository = HomeRepository(networkService: homeService)
         let homeFlow = HomeFlow(repository: homeRepository)
+        
         let postureFlow = PostureFlow()
         let shopFlow = ShopFlow()
         let pickleFlow = PickleFlow()
