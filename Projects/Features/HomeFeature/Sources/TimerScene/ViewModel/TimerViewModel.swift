@@ -5,15 +5,14 @@ import RxSwift
 import Core
 
 public class TimerViewModel: BaseViewModel {
-    public func transform(_ input: Input) -> Output {
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }
-    
 
     public struct Input {
 
     }
-    
+
     public struct Output {
 
     }
@@ -22,6 +21,3 @@ public class TimerViewModel: BaseViewModel {
 
     }
 }
-
-
-

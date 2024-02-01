@@ -41,4 +41,8 @@ open class MGShareStateView: BaseView {
             $0.width.height.equalTo(16.0)
         }
     }
+    
+    public func changeView(backColor: UIColor) {
+        self.backgroundColor = backColor
+    }
 }

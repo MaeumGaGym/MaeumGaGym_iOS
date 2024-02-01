@@ -2,6 +2,11 @@ import UIKit
 import HomeFeatureInterface
 import RxFlow
 import Core
+
+import Data
+import Domain
+import MGNetworks
+
 import HomeFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -11,8 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        let viewController = HomeViewController((Any).self)
-        self.window = makeWindow(scene: scene)
+
+        let homeService = HomeService()
+        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: homeService))
+        let viewModel = HomeViewModel(useCase: useCase)
+        let viewController = HomeViewController(viewModel)
+                self.window = makeWindow(scene: scene)
         window?.configure(withRootViewController: viewController)
     }
 }

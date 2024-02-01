@@ -9,6 +9,8 @@ import SnapKit
 import Core
 import DSKit
 
+import Domain
+
 public class MotivationMessageTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "MotivationMessageTableViewCell"
@@ -28,17 +30,17 @@ public class MotivationMessageTableViewCell: BaseTableViewCell {
         messageLabel.text = "\"\(message.text)\""
         authorLabel.text = "\(message.author)"
     }
-    
+
     public override func attribute() {
         super.attribute()
-        
+
         backgroundColor = DSKitAsset.Colors.gray25.color
         setupRxBindings()
     }
-    
+
     public override func layout() {
         super.layout()
-        
+
         addSubviews([messageLabel, authorLabel])
         messageLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
