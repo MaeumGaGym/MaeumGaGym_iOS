@@ -21,7 +21,7 @@ public protocol HomeCoordintable {
     var routineButtonTap: (() -> Void)? { get set}
     var calorieCalculatorButtonTap: (() -> Void)? { get set }
     var maeumGaGymTimerButtonTap: (() -> Void)? { get set }
-    
+
     var disposeBag: DisposeBag { get set }
 }
 

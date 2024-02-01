@@ -5,6 +5,7 @@ import Core
 
 import Data
 import Domain
+import MGNetworks
 
 import HomeFeature
 
@@ -15,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
-        let useCase = DefaultHomeUseCase(repository: HomeRepository())
+
+        let homeService = HomeService()
+        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: homeService))
         let viewModel = HomeViewModel(useCase: useCase)
         let viewController = HomeViewController(viewModel)
                 self.window = makeWindow(scene: scene)

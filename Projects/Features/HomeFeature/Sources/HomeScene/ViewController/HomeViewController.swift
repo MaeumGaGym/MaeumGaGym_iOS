@@ -1,4 +1,8 @@
 import UIKit
+import Data
+
+import MGLogger
+import MGNetworks
 
 import RxSwift
 import RxCocoa
@@ -9,6 +13,8 @@ import SnapKit
 
 import Core
 import DSKit
+
+import Domain
 
 import HomeFeatureInterface
 
@@ -24,16 +30,21 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
     public var steps = PublishRelay<Step>()
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
-    
+
+//    var quotes: MotivationMessageModel?
+//    var stepModels: StepModel?
+//    var routines: [RoutineModel]?
+//    var extras: [ExtrasModel]?
+
     private lazy var naviBar = HomeNavigationBar()
 
     // text 길이의 맞게 View가 유동적으로 늘어나야함
-    let quotes: MotivationMessageModel = MotivationMessageModel(
-        text: "가능성은 한계를 넘는다.",
+    var quotes: MotivationMessageModel = MotivationMessageModel(
+        text: "가능성은 한계를 넘는다.asef",
         author: "Kimain"
     )
 
-    let stepModels: StepModel = StepModel(stepCount: 112771)
+    var stepModels: StepModel = StepModel(stepCount: 0)
 
     var routines: [RoutineModel] = [
         RoutineModel(exercise: "벤치", sets: 2, reps: 10),
@@ -81,11 +92,11 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     public override func layout() {
         view.addSubviews([naviBar, tableView])
-        
+
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
         }
-        
+
         tableView.snp.makeConstraints {
             $0.top.equalTo(naviBar.snp.bottom).offset(20.0)
             $0.leading.equalToSuperview()
@@ -105,31 +116,59 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         let cellHeight: CGFloat = 64.0
         return max(CGFloat(routines.count) * cellHeight, cellHeight) + 92
     }
-    
+
     public override func bindViewModel() {
         super.bindViewModel()
+        MGLogger.test("asdf")
 
         let myPageButtonTapped = naviBar.rightButtonTap
             .asDriver(onErrorDriveWith: .never())
 
-        let input = HomeViewModel.Input(
-            viewDidLoad: Driver.just(Void()),
-            myPageButtonTapped: myPageButtonTapped
-        )
-        let output = self.viewModel.transform(input)
+        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
+        viewModel = HomeViewModel(useCase: useCase)
 
-        output.isServiceAvailable
-            .subscribe(onNext: { isServiceAvailable in
-                print("현재 앱 서비스 사용 가능(심사 X)?: \(isServiceAvailable)")
-            })
-            .disposed(by: self.disposeBag)
+           let input = HomeViewModel.Input(
+               settingButtonTapped: myPageButtonTapped,
+               getStepNumber: Observable.just(()).asDriver(onErrorDriveWith: .never()),
+               getMotivationMessage: Observable.just(()).asDriver(onErrorDriveWith: .never()),
+               getRoutines: Observable.just(()).asDriver(onErrorDriveWith: .never()),
+               getExtras: Observable.just(()).asDriver(onErrorDriveWith: .never())
+           )
 
-        output.needNetworkAlert
-            .subscribe(onNext: { [weak self] in
-//                self?.presentNetworkAlertVC()
-            })
-            .disposed(by: self.disposeBag)
-    }
+        viewModel.transform(input) {
+            $0.stepNumber
+                .subscribe(onNext: { stepNumber in
+                    print("Step Number: \(stepNumber)")
+                    MGLogger.debug("asdfasdfasdgasgvasdgfs")
+                    self.stepModels = stepNumber
+                })
+                .disposed(by: disposeBag)
+
+            $0.motivationMessage
+                .subscribe(onNext: { message in
+                    print("Motivation Message: \(message)")
+                    self.quotes = message
+                    self.tableView.reloadData()
+                })
+                .disposed(by: disposeBag)
+
+            $0.routines
+                .subscribe(onNext: { routines in
+                    print("Routines: \(routines)")
+                    self.routines = routines
+                    self.tableView.reloadData()
+                })
+                .disposed(by: disposeBag)
+
+            $0.extras
+                .subscribe(onNext: { extras in
+                    print("Extras: \(extras)")
+                    self.extras = extras
+                    self.tableView.reloadData()
+                })
+                .disposed(by: disposeBag)
+        }
+       }
 }
 
 extension HomeViewController: UITableViewDelegate {
