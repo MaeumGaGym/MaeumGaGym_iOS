@@ -9,7 +9,6 @@ open class MGLabel: BaseLabel {
         
     private var textLabel = UILabel().then {
         $0.textAlignment = .center
-        $0.numberOfLines = 1
         $0.backgroundColor = .clear
     }
     
@@ -17,18 +16,25 @@ open class MGLabel: BaseLabel {
         text: String,
         font: UIFont? = UIFont.Pretendard.titleLarge,
         textColor: UIColor? = .black,
-        isCenter: Bool? = true
+        isCenter: Bool? = true,
+        numberOfLineCount: Int = 1
     ) {
         super.init(frame: .zero)
         
-        setupUI(text: text, font: font, textColor: textColor, isCencter: isCenter ?? true)
+        setupUI(text: text,
+                font: font,
+                textColor: textColor,
+                isCencter: isCenter ?? true,
+                numberOfLineCount: numberOfLineCount
+        )
+        
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI(text: String, font: UIFont?, textColor: UIColor?, isCencter: Bool) {
+    private func setupUI(text: String, font: UIFont?, textColor: UIColor?, isCencter: Bool, numberOfLineCount: Int) {
         
         if isCencter == true {
             textLabel.textAlignment = .center
@@ -41,7 +47,9 @@ open class MGLabel: BaseLabel {
   
         if let font = font {
             textLabel.font = font
-        }        
+        }
+        
+        textLabel.numberOfLines = numberOfLineCount
     }
     
     public override func layout() {
