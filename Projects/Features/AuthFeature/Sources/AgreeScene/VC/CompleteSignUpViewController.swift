@@ -33,6 +33,7 @@ public class CompleteSignUpViewController: BaseViewController<CompleteViewModel>
 
     private var checkButton = MGCheckButton(
         text: "확인",
+        textColor: .white,
         backColor: DSKitAsset.Colors.blue500.color
     )
 
