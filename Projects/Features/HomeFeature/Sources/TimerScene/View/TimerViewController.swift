@@ -1,14 +1,19 @@
 import UIKit
+
+import RxSwift
+
 import SnapKit
 import Then
-import DSKit
-import RxSwift
+
 import DSKit
 import Core
 
+import HomeFeatureInterface
+
+
 public class TimerViewController: BaseViewController<TimerViewModel> {
         
-    lazy var progressBarView = MGProgressBarView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
+    lazy var progressBarView = HomeTimerView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
     private let closeButton = MGTimerButton(type: .close)
     private let stopButton = MGTimerButton(type: .stop, radius: 40.0)
@@ -19,7 +24,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     public override func attribute() {
         view.backgroundColor = .white
         
-        progressBarView.setting(for: 60)
+        progressBarView.timerSetting(for: 10)
         buttonTap()
     }
 
@@ -91,7 +96,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
         
         closeButton.rx.tap
             .subscribe(onNext: { [self] in
-                progressBarView.closeTimer()
+                progressBarView.cancelTimer()
                 if startButton.isHidden == true {
                     stopButton.isHidden = true
                     startButton.isHidden = false
