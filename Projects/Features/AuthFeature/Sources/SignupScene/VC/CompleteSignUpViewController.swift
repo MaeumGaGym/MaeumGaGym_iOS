@@ -8,7 +8,7 @@ import RxSwift
 import DSKit
 import MGLogger
 
-public class CompleteSignUpViewController: BaseViewController<CompleteViewModel> {
+public class SignUpViewController: BaseViewController<CompleteViewModel> {
 
     public var steps = PublishRelay<Step>()
 

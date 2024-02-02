@@ -68,7 +68,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         checkButton.rx.tap
             .subscribe(onNext: {
                 self.navigationController?.pushViewController(
-                    InputNicknameViewController(NicknameViewModel()),
+                    NicknameViewController(NicknameViewModel()),
                     animated: false)
             })
     }

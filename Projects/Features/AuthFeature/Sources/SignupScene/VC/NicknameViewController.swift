@@ -8,7 +8,7 @@ import RxSwift
 import DSKit
 import MGLogger
 
-public class InputNicknameViewController: BaseViewController<NicknameViewModel> {
+public class NicknameViewController: BaseViewController<NicknameViewModel> {
 
     public var steps = PublishRelay<Step>()
 
