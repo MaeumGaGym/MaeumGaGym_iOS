@@ -31,13 +31,16 @@ public class CompleteSignUpViewController: BaseViewController<CompleteViewModel>
         textColor: DSKitAsset.Colors.gray600.color
     )
 
-    private var checkButton = MGCheckButton(text: "확인")
+    private var checkButton = MGCheckButton(
+        text: "확인",
+        backColor: DSKitAsset.Colors.blue500.color
+    )
 
     public override func layout() {
         view.addSubviews([mainLogo,
-                               agreeLabel,
-                               textInformation,
-                               checkButton])
+                          agreeLabel,
+                          textInformation,
+                          checkButton])
 
         mainLogo.snp.makeConstraints {
             $0.centerX.equalToSuperview()
