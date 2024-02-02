@@ -1,13 +1,13 @@
-//import Foundation
-//import RxFlow
-//import RxCocoa
-//import RxSwift
-//import Core
-//import UIKit
-//import RootFeature
+// import Foundation
+// import RxFlow
+// import RxCocoa
+// import RxSwift
+// import Core
+// import UIKit
+// import RootFeature
 //
-//public class AuthFlow: Flow {
-//    
+// public class AuthFlow: Flow {
+//
 //    public var root: Presentable {
 //        return self.rootViewController
 //    }
@@ -34,10 +34,12 @@
 //        Flows.whenReady(flow1: startFlow) { [unowned self] startRoot in
 //            self.rootViewController.present(startRoot, animated: true)
 //        }
-//        return .one(flowContributor: .contribute(withNextPresentable: startFlow, withNextStepper: OneStepper(withSingleStep: AppStep.startRequired)))
+//        return .one(flowContributor: .contribute(
+//            withNextPresentable: startFlow,
+//            withNextStepper: OneStepper(withSingleStep: AppStep.startRequired)))
 //    }
 //
 //    public init() {
 //        
 //    }
-//}
+// }
