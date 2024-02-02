@@ -36,8 +36,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
     private var checkButton = MGCheckButton(text: "회원가입")
 
     public override func attribute() {
-
-        view.backgroundColor = .white
+        super.attribute()
 
         cancelButtonTap()
         keyboardBind()
