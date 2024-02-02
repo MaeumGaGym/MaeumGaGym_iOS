@@ -27,8 +27,8 @@ public class AgreeViewModel: BaseViewModel {
     public init() {
 
     }
-
-    public func transform(_ input: Input) -> Output {
+    
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asDriver(onErrorJustReturn: "")
         let firstAgreeClickedMessage = input.firstAgreeButtonTap.map { "첫 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
         let secondAgreeClickedMessage = input.secondAgreeButtonTap.map { "두 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")

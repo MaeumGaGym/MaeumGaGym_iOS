@@ -5,15 +5,15 @@ import RxSwift
 import Core
 
 public class NicknameViewModel: BaseViewModel {
-    public func transform(_ input: Input) -> Output {
+
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }
-    
 
     public struct Input {
 
     }
-    
+
     public struct Output {
 
     }
@@ -22,4 +22,3 @@ public class NicknameViewModel: BaseViewModel {
 
     }
 }
-

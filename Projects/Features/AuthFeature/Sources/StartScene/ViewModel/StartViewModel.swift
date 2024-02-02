@@ -18,7 +18,7 @@ public class StartViewModel: BaseViewModel {
         let appleClickedMessage: Driver<String>
     }
     
-    public func transform(_ input: Input) -> Output {
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         let kakaoClickedMessage = input.kakaoButtonTap.map {
             return "카카오버튼 클릭"
         }
