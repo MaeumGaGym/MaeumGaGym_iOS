@@ -26,19 +26,18 @@ extension BaseAPI {
         case .apple:
             appURL += "/apple"
         }
-        
+
         guard let url = URL(string: appURL) else {
             fatalError("baseURL could not be configured")
         }
-        
+
         return url
     }
-    
+
     public var headers: [String: String]? {
         return HeaderType.createHeaders(csrfToken: self.csrfToken, oauthToken: self.oauthToken)
     }
 }
-
 
 public enum HeaderType {
     static func createHeaders(csrfToken: String?, oauthToken: String?) -> [String: String]? {
