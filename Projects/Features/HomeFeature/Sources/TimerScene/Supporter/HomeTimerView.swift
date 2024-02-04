@@ -18,6 +18,7 @@ public class HomeTimerView: UIView {
     
     private var initTime: Double = 0.0
     private var cancelTime: Double = 0.0
+    private var currentTime: Double = 0.0
     
     let disposeBag = DisposeBag()
     
@@ -132,14 +133,30 @@ public class HomeTimerView: UIView {
             return
         }
         
+        timerMainTitle.text = setTimerTimeLabelText(from: homeTimer.presentTimer())
+        
         homeTimer.mainTimer.timeUpdate
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] timeString in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
+                    self?.currentTime = self!.homeTimer.presentTimer()
                     self?.timerMainTitle.text = timeString
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func setTimerTimeLabelText(from counter: Double) -> String {
+        let hours: String = String(format: "%02d", Int(counter / 3600))
+        let minutes: String = String(format: "%02d", Int(counter / 60))
+        let seconds: String = String(format: "%02d", Int(counter.truncatingRemainder(dividingBy: 60)))
+        if counter / 3600 >= 1 {
+            return "\(hours) : \(minutes) : \(seconds)"
+        } else if counter / 60 > 1 {
+            return "\(minutes) : \(seconds)"
+        } else {
+            return "00 : \(seconds)"
+        }
     }
     
     private func setInitAlarmTimeLabel() {
@@ -202,10 +219,16 @@ public class HomeTimerView: UIView {
     
     public func restartTimer() {
         homeTimer.setting(count: Double(initTime))
+        cancelTime = initTime
         circleShapeLayer.add(createCircleAnimation(), forKey: "key")
         stopCricleAnimation()
         homeTimer.stopTimer()
         setAlarmTimeLabel()
+        setInitialTimeLabel()
+    }
+    
+    public func currentTimer() -> Double {
+        return currentTime
     }
 
     private func setCircleLayer() -> CAShapeLayer {
