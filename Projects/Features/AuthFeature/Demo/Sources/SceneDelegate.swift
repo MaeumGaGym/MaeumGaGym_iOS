@@ -4,6 +4,11 @@ import RxFlow
 import Core
 import AuthFeature
 
+import Domain
+import Data
+
+import MGNetworks
+
 import KakaoSDKAuth
 import KakaoSDKCommon
 
@@ -26,7 +31,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.configure(withRootViewController: KakaoOauthTestViewController())
+        
+        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        let viewModel = IntroViewModel(authUseCase: useCase)
+        let viewController = IntroViewController(viewModel)
+        window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 }

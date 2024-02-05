@@ -17,6 +17,9 @@ import Core
 import AuthFeatureInterface
 import Domain
 
+import KakaoSDKAuth
+import KakaoSDKUser
+
 public class IntroViewModel: AuthViewModelType {
 
     public var disposeBag: RxSwift.DisposeBag
@@ -34,9 +37,7 @@ public class IntroViewModel: AuthViewModelType {
     }
 
     public var goolgeButtonTap: (() -> Void)?
-
     public var appleButtonTap: (() -> Void)?
-
     public var kakaoButtonTap: (() -> Void)?
 
     public init(authUseCase: AuthUseCase) {
@@ -56,7 +57,7 @@ public class IntroViewModel: AuthViewModelType {
 
            input.kakaoButtonTapped
                .drive(onNext: { [weak self] _ in
-                   self?.kakaoButtonTap?()
+                   self?.useCase.kakaoButtonTap()
                })
                .disposed(by: disposeBag)
 
@@ -72,4 +73,20 @@ public class IntroViewModel: AuthViewModelType {
 
            return output
        }
+}
+
+private extension IntroViewModel {
+//    func kakaoGetUserInfo() {
+//        UserApi.shared.me() { (user, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//
+//            let userName = user?.kakaoAccount?.name
+//
+//            _ = "user name : \(String(describing: userName))"
+//
+//            print("user - \(String(describing: user))")
+//        }
+//    }
 }

@@ -19,6 +19,18 @@ public class AuthService {
         return Single.just(true)
     }
     
+    public func kakaoTokenState(access_token: String) -> Single<String> {
+        return Single.deferred {
+            return Single.create { single in
+                let result = access_token
+                
+                single(.success(result))
+                
+                return Disposables.create()
+            }
+        }
+    }
+    
     public init() {
         
     }
