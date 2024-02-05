@@ -54,6 +54,7 @@ public class KakaoOauthTestViewController: UIViewController {
                     print(error)
                 }
                 else {
+                    print("oauthToken: \(oauthToken)")
                     print("loginWithKakaoTalk() success.")
                     
                     self.kakaoGetUserInfo()
