@@ -38,11 +38,17 @@ public extension Project {
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
-                "CFBundleURLName": "maeumGaGym-makers",
-                "CFBundleURLSchemes": ["maeumGaGym-makers"]
+                "CFBundleURLName": "kakao44df4ecfe4e1218c17550a6ab201d87d",
+                "CFBundleURLSchemes": ["kakao44df4ecfe4e1218c17550a6ab201d87d"]
             ]
         ],
         "UIBackgroundModes": ["remote-notification"],
+        
+        "LSApplicationQueriesSchemes": [
+            "kakaokompassauth",
+            "kakaolink",
+            "kakaoplus"
+        ],
         
 //        "GoogleService-Info": .dictionary([
 //            "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
@@ -90,11 +96,18 @@ public extension Project {
       "CFBundleURLTypes": [
           [
               "CFBundleTypeRole": "Editor",
-              "CFBundleURLName": "maeumGaGym-makers",
-              "CFBundleURLSchemes": ["maeumGaGym-makers"]
+              "CFBundleURLName": "kakao44df4ecfe4e1218c17550a6ab201d87d",
+              "CFBundleURLSchemes": ["kakao44df4ecfe4e1218c17550a6ab201d87d"]
           ]
       ],
+      
       "UIBackgroundModes": ["remote-notification"],
+      
+      "LSApplicationQueriesSchemes": [
+          "kakaokompassauth",
+          "kakaolink",
+          "kakaoplus"
+      ],
       
 //      "GoogleService-Info": .dictionary([
 //          "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
