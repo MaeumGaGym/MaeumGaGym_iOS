@@ -1,4 +1,7 @@
 import UIKit
+import Data
+import MGNetworks
+import Domain
 
 import RxFlow
 import RxCocoa
@@ -97,4 +100,21 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
             $0.top.equalTo(subTitle.snp.bottom).offset(20.0 * height)
         }
     }
+
+    public override func bindViewModel() {
+         super.bindViewModel()
+
+         let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+         viewModel = IntroViewModel(authUseCase: useCase)
+
+         let input = IntroViewModel.Input(
+             goolgeButtonTapped: googleButton.rx.tap.asDriver(),
+             appleButtonTapped: appleButton.rx.tap.asDriver(),
+             kakaoButtonTapped: kakaoButton.rx.tap.asDriver()
+         )
+
+        viewModel.transform(input) {_ in 
+            
+        }
+     }
 }
