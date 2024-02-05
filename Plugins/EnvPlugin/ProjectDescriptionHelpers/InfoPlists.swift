@@ -42,7 +42,14 @@ public extension Project {
                 "CFBundleURLSchemes": ["maeumGaGym-makers"]
             ]
         ],
-        "UIBackgroundModes": ["remote-notification"]
+        "UIBackgroundModes": ["remote-notification"],
+        
+//        "GoogleService-Info": .dictionary([
+//            "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
+//            "REVERSED_CLIENT_ID": .string("com.googleusercontent.apps.49794141515-9gnqemglgiapma28nphc3oabfclbobem"),
+//            "PLIST_VERSION": .string("1"),
+//            "BUNDLE_ID": .string("com.maeumGaGym-health-iOS"),
+//        ]),
     ]
     
     static let demoInfoPlist: [String: InfoPlist.Value] = [
@@ -87,6 +94,13 @@ public extension Project {
               "CFBundleURLSchemes": ["maeumGaGym-makers"]
           ]
       ],
-      "UIBackgroundModes": ["remote-notification"]
+      "UIBackgroundModes": ["remote-notification"],
+      
+//      "GoogleService-Info": .dictionary([
+//          "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
+//          "REVERSED_CLIENT_ID": .string("com.googleusercontent.apps.49794141515-9gnqemglgiapma28nphc3oabfclbobem"),
+//          "PLIST_VERSION": .string("1"),
+//          "BUNDLE_ID": .string("com.maeumGaGym-health-iOS.test"),
+//      ]),
   ]
 }
