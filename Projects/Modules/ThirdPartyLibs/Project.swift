@@ -16,6 +16,7 @@ let project = Project.makeModule(
         .SPM.RxMoya,
         .SPM.Lottie,
         .SPM.kingfisher,
-        .SPM.MindGymKit
+        .SPM.MindGymKit,
+        .SPM.KakaoSDK
     ]
 )

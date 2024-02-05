@@ -7,25 +7,86 @@
 //
 
 import Foundation
+
 import RxFlow
 import RxCocoa
 import RxSwift
+
 import Core
 
-public class IntroViewModel: BaseViewModel {
-    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
-        return Output()
-    }
+import AuthFeatureInterface
+import Domain
+
+import KakaoSDKAuth
+import KakaoSDKUser
+
+public class IntroViewModel: AuthViewModelType {
+
+    public var disposeBag: RxSwift.DisposeBag
+
+    private let useCase: AuthUseCase
 
     public struct Input {
-
+        let goolgeButtonTapped: Driver<Void>
+        let appleButtonTapped: Driver<Void>
+        let kakaoButtonTapped: Driver<Void>
     }
 
-    public struct Output {
-
+    public struct Output { 
+        let loginResult: Driver<Result<AuthHandleableType, Error>>
     }
 
-    public init() {
+    public var goolgeButtonTap: (() -> Void)?
+    public var appleButtonTap: (() -> Void)?
+    public var kakaoButtonTap: (() -> Void)?
 
-    }
+    public init(authUseCase: AuthUseCase) {
+         self.useCase = authUseCase
+        self.disposeBag = DisposeBag()
+     }
+
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
+
+           let loginResultSubject = PublishSubject<Result<AuthHandleableType, Error>>()
+
+        input.goolgeButtonTapped
+            .drive(onNext: { [weak self] _ in
+                self?.useCase.requestSignIn(token: "googleToken")
+            })
+            .disposed(by: disposeBag)
+
+           input.kakaoButtonTapped
+               .drive(onNext: { [weak self] _ in
+                   self?.useCase.kakaoButtonTap()
+               })
+               .disposed(by: disposeBag)
+
+           input.appleButtonTapped
+               .drive(onNext: { [weak self] _ in
+                   self?.appleButtonTap?()
+               })
+               .disposed(by: disposeBag)
+
+           let output = Output(loginResult: loginResultSubject.asDriver(onErrorJustReturn: .failure(AuthError.unknown)))
+
+           action(output)
+
+           return output
+       }
+}
+
+private extension IntroViewModel {
+//    func kakaoGetUserInfo() {
+//        UserApi.shared.me() { (user, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//
+//            let userName = user?.kakaoAccount?.name
+//
+//            _ = "user name : \(String(describing: userName))"
+//
+//            print("user - \(String(describing: user))")
+//        }
+//    }
 }
