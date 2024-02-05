@@ -41,12 +41,10 @@ extension DefaultAuthUseCase: AuthUseCase {
                 if let error = error {
                     print(error)
                 } else {
-                    print("oauthToken: \(String(describing: oauthToken!.accessToken))")
                     let accessToken = oauthToken!.accessToken
                     self?.authRepository.kakaoToken(access_token: accessToken)
                         .subscribe(onSuccess: { [weak self] _ in
                             self?.signInResult.onNext(.success(.loginSuccess))
-                            print("성공")
                         }, onFailure: { [weak self] error in
                             self?.signInResult.onNext(.failure(error))
                         })
