@@ -31,11 +31,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
+
         let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
         let viewModel = IntroViewModel(authUseCase: useCase)
         let viewController = IntroViewController(viewModel)
         window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
+    
+//    private func coordinatorLogStart() {
+//        coordinator.rx.willNavigate
+//            .subscribe(onNext: { flow, step in
+//                let currentFlow = "\(flow)".split(separator: ".").last ?? "no flow"
+//                print("➡️ will navigate to flow = \(currentFlow) and step = \(step)")
+//            })
+//            .disposed(by: disposeBag)
+//        
+//        // didNavigate
+//    }
 }
