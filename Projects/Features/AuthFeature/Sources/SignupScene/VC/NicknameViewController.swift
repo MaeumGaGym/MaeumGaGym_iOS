@@ -94,7 +94,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
             $0.height.equalTo(58.0)
         }
     }
-
+    
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
         guard let keyboardSize = (notification.userInfo?[
             UIResponder.keyboardFrameEndUserInfoKey

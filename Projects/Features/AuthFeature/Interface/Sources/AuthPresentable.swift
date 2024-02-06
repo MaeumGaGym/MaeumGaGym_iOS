@@ -19,7 +19,7 @@ public protocol AuthCoordintable {
     var goolgeButtonTap: (() -> Void)? { get set }
     var appleButtonTap: (() -> Void)? { get set }
     var kakaoButtonTap: (() -> Void)? { get set }
-    
+
     var disposeBag: DisposeBag { get set }
 }
 

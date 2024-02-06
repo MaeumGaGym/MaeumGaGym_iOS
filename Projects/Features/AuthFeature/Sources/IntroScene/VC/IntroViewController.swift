@@ -1,4 +1,5 @@
 import UIKit
+import BaseFeatureDependency
 import Data
 import MGNetworks
 import Domain
