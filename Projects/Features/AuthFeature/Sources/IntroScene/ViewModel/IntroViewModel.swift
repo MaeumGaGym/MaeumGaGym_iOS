@@ -25,13 +25,17 @@ import KakaoSDKAuth
 import KakaoSDKUser
 import MGLogger
 
+import TokenManager
+
 public class IntroViewModel: AuthViewModelType {
 
     let provider = MoyaProvider<CsrfAPI>()
-    
+
     public var disposeBag: RxSwift.DisposeBag
 
     private let useCase: AuthUseCase
+
+    let keychainCSRF = KeychainType.CSRFToken
 
     public struct Input {
         let goolgeButtonTapped: Driver<Void>
@@ -56,17 +60,12 @@ public class IntroViewModel: AuthViewModelType {
 
            let loginResultSubject = PublishSubject<Result<AuthHandleableType, Error>>()
 
-        provider.rx.request(.getCSRFToken)
-            .subscribe(onSuccess: { response in
-                if let setCookieHeader =
-                    response.response?.allHeaderFields["Set-Cookie"] as? String {
-                    let cookies = setCookieHeader.components(separatedBy: ", ")
-                    for cookie in cookies {
-                        if cookie.hasPrefix("XSRF-TOKEN") {
-                            let token = cookie.components(separatedBy: "=")[1].components(separatedBy: ";")[0]
-                            print("XSRF-TOKEN is \(token)")
-                        }
-                    }
+        useCase.getCSRFToken()
+            .subscribe(onSuccess: { token in
+                if TokenManagerImpl().save(token: token, with: self.keychainCSRF) {
+                    print("토큰 저장 성공")
+                } else {
+                    print("토큰 저장 실패")
                 }
             }, onFailure: { error in
                 print("Error: \(error)")
