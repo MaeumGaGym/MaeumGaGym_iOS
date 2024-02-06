@@ -11,9 +11,12 @@ import RxSwift
 import RxCocoa
 import Domain
 import MGNetworks
+import Network
+import Moya
+import RxMoya
 
 public class AuthRepository: AuthRepositoryInterface {
-
+    
     private let networkService: AuthService
 
     public init(networkService: AuthService) {
@@ -26,5 +29,9 @@ public class AuthRepository: AuthRepositoryInterface {
 
     public func kakaoToken(access_token: String) -> Single<String> {
         networkService.kakaoTokenState(access_token: access_token)
+    }
+    
+    public func getCSRFToken() -> Single<String> {
+        return networkService.getCSRFToken()
     }
 }
