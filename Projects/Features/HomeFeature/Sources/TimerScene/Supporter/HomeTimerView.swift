@@ -109,21 +109,26 @@ public class HomeTimerView: UIView {
             timerInitTitle.text = "0분"
             return
         }
-        var time: [Double] = [0.0, 0.0, 0.0]
-        time[0] = Double(Int(initTime / 3600))
-        time[1] = Double(Int(initTime / 60))
-        time[2] = initTime.truncatingRemainder(dividingBy: 60)
+        var time: [Int] = [0, 0, 0]
+        let initTimeInt = Int(initTime)
+        time[0] = initTimeInt / 3600
+        time[1] = (initTimeInt % 3600) / 60
+        time[2] = initTimeInt % 60
         
-        if initTime.truncatingRemainder(dividingBy: 3600) == 0 {
-            timerInitTitle.text = "\(Int(time[0]))시간"
-        } else if initTime / 3600 > 1 {
-            timerInitTitle.text = "\(Int(time[0]))시간  \(Int(time[1]))분"
-        } else if initTime.truncatingRemainder(dividingBy: 60) == 0 {
-            timerInitTitle.text = "\(Int(time[1]))분"
-        } else if initTime / 60 > 1 {
-            timerInitTitle.text = "\(Int(time[1]))분  \(Int(time[2]))초"
+        if time[0] > 0 && time[1] > 0 && time[2] > 0 {
+            timerInitTitle.text = "\(time[0])시간 \(time[1])분 \(time[2])초"
+        } else if time[0] > 0 && time[2] > 0 {
+            timerInitTitle.text = "\(time[0])시간 \(time[2])초"
+        } else if time[0] > 0 && time[1] > 0 {
+            timerInitTitle.text = "\(time[0])시간 \(time[1])분"
+        } else if time[0] > 0 {
+            timerInitTitle.text = "\(time[0])시간"
+        } else if time[1] > 0  && time[2] > 0{
+            timerInitTitle.text = "\(time[1])분  \(time[2])초"
+        } else if time[1] > 0 {
+            timerInitTitle.text = "\(time[1])분"
         } else {
-            timerInitTitle.text = "\(Int(time[2]))초"
+            timerInitTitle.text = "\(time[2])초"
         }
     }
     
@@ -146,13 +151,16 @@ public class HomeTimerView: UIView {
             .disposed(by: disposeBag)
     }
     
+    
     private func setTimerTimeLabelText(from counter: Double) -> String {
-        let hours: String = String(format: "%02d", Int(counter / 3600))
-        let minutes: String = String(format: "%02d", Int(counter / 60))
-        let seconds: String = String(format: "%02d", Int(counter.truncatingRemainder(dividingBy: 60)))
-        if counter / 3600 >= 1 {
+        let totalSeconds = Int(counter)
+        let hours: String = String(format: "%02d", totalSeconds / 3600)
+        let minutes: String = String(format: "%02d", (totalSeconds % 3600) / 60)
+        let seconds: String = String(format: "%02d", totalSeconds % 60)
+
+        if totalSeconds / 3600 >= 1 {
             return "\(hours) : \(minutes) : \(seconds)"
-        } else if counter / 60 > 1 {
+        } else if totalSeconds / 60 >= 1 {
             return "\(minutes) : \(seconds)"
         } else {
             return "00 : \(seconds)"
@@ -165,7 +173,7 @@ public class HomeTimerView: UIView {
             return
         }
         let formatter_time = DateFormatter()
-        formatter_time.dateFormat = "a hh:mm"
+        formatter_time.dateFormat = "a h:mm"
         formatter_time.amSymbol = "오전"
         formatter_time.pmSymbol = "오후"
         let current_time_string = formatter_time.string(from: Date().addingTimeInterval(initTime))
@@ -176,7 +184,7 @@ public class HomeTimerView: UIView {
     
     private func setAlarmTimeLabel() {
         let formatter_time = DateFormatter()
-        formatter_time.dateFormat = "a hh:mm"
+        formatter_time.dateFormat = "a h:mm"
         formatter_time.amSymbol = "오전"
         formatter_time.pmSymbol = "오후"
         let current_time_string = formatter_time.string(from: Date().addingTimeInterval(homeTimer.presentTimer()))
