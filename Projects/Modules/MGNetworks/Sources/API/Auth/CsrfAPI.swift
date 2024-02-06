@@ -12,13 +12,6 @@ extension CsrfAPI: BaseAPI {
     
     public static var apiType: APIType = .CSRFToken
     
-    var apiType: APIType {
-         switch self {
-         case .getCSRFToken:
-             return .CSRFToken
-         }
-     }
-    
     public var path: String {
         switch self {
         case .getCSRFToken:
