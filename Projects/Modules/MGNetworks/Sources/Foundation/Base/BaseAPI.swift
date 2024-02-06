@@ -21,13 +21,12 @@ extension BaseAPI {
         switch Self.apiType {
         case .CSRFToken:
             appURL += "/public"
-        case .google:
-            appURL += "/google"
         case .kakao:
-            appURL += "/kakao"
+            appURL += ""
+        case .google:
+            appURL += ""
         case .apple:
-            appURL += "/apple"
-
+            appURL += ""
         }
 
         guard let url = URL(string: appURL) else {
