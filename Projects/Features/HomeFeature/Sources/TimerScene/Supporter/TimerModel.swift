@@ -3,7 +3,7 @@ import UIKit
 import DSKit
 
 public struct Time {
-    var time: Double
+    var time: Int
 }
 
 public enum TimerModel {
