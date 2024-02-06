@@ -1,11 +1,3 @@
-//
-//  AuthUseCase.swift
-//  Domain
-//
-//  Created by 박준하 on 2/5/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 
 import RxSwift
@@ -13,6 +5,9 @@ import RxCocoa
 
 import Core
 import KakaoSDKUser
+import Moya
+
+//import TokenManager
 
 public enum AuthHandleableType {
     case loginSuccess
@@ -22,12 +17,16 @@ public enum AuthHandleableType {
 public protocol AuthUseCase {
     func requestSignIn(token: String)
     func kakaoButtonTap()
+    func getCSRFToken() -> Single<String>
     var signInResult: PublishSubject<Result<AuthHandleableType, Error>> { get }
 }
 
 public class DefaultAuthUseCase {
     private let authRepository: AuthRepositoryInterface
     private let disposeBag = DisposeBag()
+    
+//    private let keychainAuthorization = KeychainType.authorizationToken
+
 
     public init(authRepository: AuthRepositoryInterface) {
         self.authRepository = authRepository
@@ -35,20 +34,33 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
+    
+
+    public func getCSRFToken() -> Single<String> {
+        return authRepository.getCSRFToken()
+    }
+    
     public func kakaoButtonTap() {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                 if let error = error {
                     print(error)
                 } else {
-                    let accessToken = oauthToken!.accessToken
-                    self?.authRepository.kakaoToken(access_token: accessToken)
+                    guard let self = self, let accessToken = oauthToken?.accessToken else { return }
+                        
+                    self.authRepository.kakaoToken(access_token: accessToken)
                         .subscribe(onSuccess: { [weak self] _ in
-                            self?.signInResult.onNext(.success(.loginSuccess))
+//                            guard let self = self else { return }
+//                            if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
+//                                print("토큰 저장 성공")
+//                            } else {
+//                                print("토큰 저장 실패")
+//                            }
+//                            self.signInResult.onNext(.success(.loginSuccess))
                         }, onFailure: { [weak self] error in
                             self?.signInResult.onNext(.failure(error))
                         })
-                        .disposed(by: self!.disposeBag)
+                        .disposed(by: self.disposeBag)
                 }
             }
         }
