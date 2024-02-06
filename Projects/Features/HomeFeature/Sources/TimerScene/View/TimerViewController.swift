@@ -13,7 +13,7 @@ import HomeFeatureInterface
 
 public class TimerViewController: BaseViewController<TimerViewModel> {
     
-    private var timerData: []
+    private var timerData = TimerModel.eunho
         
     lazy var progressBarView = HomeTimerView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
@@ -45,18 +45,18 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     }
 
     public override func layout() {
-        [
-            progressBarView,
-            closeButton,
-            stopButton,
-            startButton,
-            restartButton
-        ].forEach { view.addSubview($0) }
+        view.addSubviews([progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView])
         
         progressBarView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(141.0)
             $0.centerX.equalToSuperview()
             $0.width.height.equalTo(350.0)
+        }
+        
+        timerCollectionView.snp.makeConstraints {
+            $0.top.equalTo(progressBarView.snp.bottom).offset(49.5)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(120.0)
         }
         
         closeButton.snp.makeConstraints {
@@ -128,7 +128,7 @@ extension TimerViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 148.0, height: 200.0)
+        return CGSize(width: 120.0, height: 120.0)
     }
 }
 
@@ -137,7 +137,7 @@ extension TimerViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        _ = data[indexPath.row]
+        _ = timerData.data[indexPath.row]
     }
 }
 
@@ -146,7 +146,7 @@ extension TimerViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return data.count
+        return timerData.data.count
     }
 
     public func collectionView(
@@ -154,11 +154,11 @@ extension TimerViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: PostureRecommandCollectionViewCell.identifier,
+            withReuseIdentifier: TimerCollectionViewCell.identifier,
             for: indexPath
-        ) as? PostureRecommandCollectionViewCell
-        let model = data[indexPath.row]
-        cell?.setup(exerciseImage: model.image, exerciseNameText: model.name, exercisePartText: model.part)
+        ) as? TimerCollectionViewCell
+        let model = timerData.data[indexPath.row]
+        cell?.setup(time: model.time)
         return cell ?? UICollectionViewCell()
     }
 }
