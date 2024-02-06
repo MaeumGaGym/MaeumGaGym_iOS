@@ -12,16 +12,23 @@ import RxFlow
 import RxCocoa
 import RxSwift
 
+import RxMoya
+import Moya
+
 import Core
 
 import AuthFeatureInterface
 import Domain
+import MGNetworks
 
 import KakaoSDKAuth
 import KakaoSDKUser
+import MGLogger
 
 public class IntroViewModel: AuthViewModelType {
 
+    let provider = MoyaProvider<CsrfAPI>()
+    
     public var disposeBag: RxSwift.DisposeBag
 
     private let useCase: AuthUseCase
@@ -48,6 +55,23 @@ public class IntroViewModel: AuthViewModelType {
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
            let loginResultSubject = PublishSubject<Result<AuthHandleableType, Error>>()
+
+        provider.rx.request(.getCSRFToken)
+            .subscribe(onSuccess: { response in
+                if let setCookieHeader =
+                    response.response?.allHeaderFields["Set-Cookie"] as? String {
+                    let cookies = setCookieHeader.components(separatedBy: ", ")
+                    for cookie in cookies {
+                        if cookie.hasPrefix("XSRF-TOKEN") {
+                            let token = cookie.components(separatedBy: "=")[1].components(separatedBy: ";")[0]
+                            print("XSRF-TOKEN is \(token)")
+                        }
+                    }
+                }
+            }, onFailure: { error in
+                print("Error: \(error)")
+            })
+            .disposed(by: disposeBag)
 
         input.goolgeButtonTapped
             .drive(onNext: { [weak self] _ in
