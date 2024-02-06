@@ -13,6 +13,7 @@ public enum AuthError: Error {
     case googleSignInFailed
     case appleSignInFailed
     case kakaoSignInFailed
+    case tokenNotFound
 
     var localizedDescription: String {
         switch self {
@@ -24,6 +25,8 @@ public enum AuthError: Error {
             return "Apple Sign-In failed."
         case .kakaoSignInFailed:
             return "Kakao Sign-In failed."
+        case .tokenNotFound:
+            return "토큰을 찾을 수 없습니다"
         }
     }
 }
