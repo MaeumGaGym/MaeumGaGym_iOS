@@ -27,6 +27,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     private var exerciseNameLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyMedium
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.layer.masksToBounds = true
         $0.textColor = .black
         $0.textAlignment = .center
         $0.numberOfLines = 1
@@ -36,6 +37,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     public func setup(time: Double) {
         exerciseNameLabel.text = setTimerTimeLabelText(from: time)
         layout()
+        
     }
     
     private func setTimerTimeLabelText(from counter: Double) -> String {
@@ -52,20 +54,21 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
-        addSubviews([checkImage, unCheckView, exerciseNameLabel])
+        addSubviews([exerciseNameLabel, checkImage, unCheckView])
         
         checkImage.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(4.0)
+            $0.top.leading.equalToSuperview().offset(6.0)
             $0.width.height.equalTo(22.0)
         }
         
         unCheckView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(4.0)
+            $0.top.leading.equalToSuperview().offset(6.0)
             $0.width.height.equalTo(22.0)
         }
         
         exerciseNameLabel.snp.makeConstraints {
             $0.top.bottom.trailing.leading.equalToSuperview().inset(10.0)
+            $0.width.height.equalTo(100.0)
         }
     }
     
