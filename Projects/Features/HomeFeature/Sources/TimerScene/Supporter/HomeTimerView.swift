@@ -98,6 +98,8 @@ public class HomeTimerView: UIView {
     public func timerSetting(for seconds: Int) {
         homeTimer.setting(count: Double(seconds))
         initTime = Double(seconds)
+        circleShapeLayer.add(createCircleAnimation(), forKey: "key")
+        stopTimer()
         cancelTime = initTime
         setInitialTimeLabel()
         setTimerTimeLabel()
@@ -196,20 +198,23 @@ public class HomeTimerView: UIView {
     public func startTimer() -> Bool {
         if homeTimer.presentTimer() == 0.0 {
             return false
-        } else if circleShapeLayer.speed == 0 {
-            restartCricleAnimation()
-            homeTimer.startTimer()
-            setAlarmTimeLabel()
         } else {
-            circleShapeLayer.add(createCircleAnimation(), forKey: "key")
-            homeTimer.startTimer()
-            setAlarmTimeLabel()
+            if circleShapeLayer.speed == 0 {
+                restartCricleAnimation()
+                homeTimer.startTimer()
+                setAlarmTimeLabel()
+            } else {
+                circleShapeLayer.add(createCircleAnimation(), forKey: "key")
+                homeTimer.startTimer()
+                setAlarmTimeLabel()
+            }
+            circleShapeLayer.strokeColor = colorCircle.cgColor
         }
-        
         return true
     }
-    
+
     public func stopTimer() {
+        circleShapeLayer.strokeColor = DSKitAsset.Colors.gray400.color.cgColor
         stopCricleAnimation()
         homeTimer.stopTimer()
     }
