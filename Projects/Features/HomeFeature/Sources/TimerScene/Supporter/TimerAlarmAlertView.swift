@@ -1,9 +1,114 @@
-//
-//  TimerAlarmAlertView.swift
-//  HomeFeature
-//
-//  Created by 이은호 on 2/7/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+import SnapKit
+import Then
+
+import DSKit
+import Core
+
+public class TimerAlarmAlertView: BaseView {
+    private var timerCount: Int = 0
+
+    private var containerView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 20.0
+        $0.layer.shadow(color: DSKitAsset.Colors.gray50.color, alpha: 0.3, x: 0, y: 0, blur: 0, spread: 0)
+        $0.layer.shadowOpacity = 1
+        $0.layer.shadowRadius = 6
+    }
+    private let timerImage = UIImageView().then {
+        $0.image = DSKitAsset.Assets.homeTimerLogo.image
+    }
+    
+    private let timerTitleLabel = UILabel().then {
+        $0.text = "타이머"
+        $0.font = UIFont.Pretendard.bodySmall
+        $0.textColor = DSKitAsset.Colors.blue500.color
+        $0.textAlignment = .left
+    }
+    
+    private var finishTimerCountLabel = UILabel().then {
+        $0.text = "타이머 종료"
+        $0.font = UIFont.Pretendard.bodyMedium
+        $0.textColor = .black
+    }
+    
+    private var timerTimeLabel = UILabel().then {
+        $0.font = UIFont.monospacedDigitSystemFont(ofSize: UIFont.Pretendard.light32.pointSize, weight: .light)
+        $0.text = "-00:00:00"
+    }
+    
+    private let clearButton = UIButton().then {
+        $0.setTitle("해제", for: .normal)
+        $0.titleLabel?.font = UIFont.Pretendard.titleSmall
+        $0.setTitleColor(DSKitAsset.Colors.blue500.color, for: .normal)
+    }
+
+    private let restartButton = UIButton().then {
+        $0.setTitle("다시 시작", for: .normal)
+        $0.titleLabel?.font = UIFont.Pretendard.titleSmall
+        $0.setTitleColor(DSKitAsset.Colors.blue500.color, for: .normal)
+    }
+    
+    private let decorationLine = MGLine(lineHeight: 22.0).then {
+        $0.layer.cornerRadius = 1
+    }
+    
+    public override func attribute() {
+        layer.cornerRadius = 20.0
+    }
+    
+    public override func layout() {
+        addSubview(containerView)
+        containerView.addSubviews([timerImage, timerTitleLabel, finishTimerCountLabel, timerTimeLabel, clearButton, restartButton, decorationLine])
+        
+        containerView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        }
+        
+        timerImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.equalToSuperview().offset(24.0)
+            $0.width.height.equalTo(16.0)
+        }
+        
+        timerTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.equalTo(timerImage.snp.trailing).offset(4.0)
+            $0.height.equalTo(16.0)
+        }
+        
+        finishTimerCountLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(26.0)
+            $0.top.equalTo(timerTitleLabel.snp.bottom).offset(4.0)
+            $0.height.equalTo(20.0)
+        }
+        
+        timerTimeLabel.snp.makeConstraints {
+            $0.top.equalTo(finishTimerCountLabel.snp.bottom).offset(4.0)
+            $0.leading.equalToSuperview().offset(24.0)
+            $0.height.equalTo(48.0)
+        }
+        
+        decorationLine.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(12.0)
+            $0.width.equalTo(2.0)
+            $0.height.equalTo(22.0)
+        }
+        
+        clearButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(12.0)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(decorationLine.snp.leading).inset(3.0)
+            $0.height.equalTo(24.0)
+        }
+        
+        restartButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(12.0)
+            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(decorationLine.snp.trailing).offset(3.0)
+            $0.height.equalTo(24.0)
+        }
+    }
+}
