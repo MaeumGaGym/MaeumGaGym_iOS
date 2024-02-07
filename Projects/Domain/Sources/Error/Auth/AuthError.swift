@@ -1,11 +1,3 @@
-//
-//  AuthError.swift
-//  Domain
-//
-//  Created by 박준하 on 2/5/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
 
 public enum AuthError: Error {
@@ -18,13 +10,13 @@ public enum AuthError: Error {
     var localizedDescription: String {
         switch self {
         case .unknown:
-            return "Unknown error occurred."
+            return "알 수 없는 오류가 발생했습니다."
         case .googleSignInFailed:
-            return "Google Sign-In failed."
+            return "Google 로그인에 실패했습니다."
         case .appleSignInFailed:
-            return "Apple Sign-In failed."
+            return "Apple 로그인에 실패했습니다."
         case .kakaoSignInFailed:
-            return "Kakao Sign-In failed."
+            return "Kakao 로그인에 실패했습니다."
         case .tokenNotFound:
             return "토큰을 찾을 수 없습니다"
         }
