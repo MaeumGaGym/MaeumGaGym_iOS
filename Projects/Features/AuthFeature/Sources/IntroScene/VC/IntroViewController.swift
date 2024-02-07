@@ -1,8 +1,4 @@
 import UIKit
-import BaseFeatureDependency
-import Data
-import MGNetworks
-import Domain
 
 import RxFlow
 import RxCocoa
@@ -10,6 +6,11 @@ import RxSwift
 
 import Then
 import SnapKit
+
+import BaseFeatureDependency
+import Data
+import MGNetworks
+import Domain
 
 import Core
 import DSKit

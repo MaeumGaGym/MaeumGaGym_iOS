@@ -1,11 +1,3 @@
-//
-//  User.swift
-//  Domain
-//
-//  Created by 박준하 on 2/5/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 
 public struct User {

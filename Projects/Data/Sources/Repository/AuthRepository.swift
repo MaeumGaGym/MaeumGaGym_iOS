@@ -1,19 +1,13 @@
-//
-//  AuthRepository.swift
-//  Data
-//
-//  Created by 박준하 on 2/5/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
+
 import RxSwift
 import RxCocoa
-import Domain
-import MGNetworks
-import Network
+
 import Moya
 import RxMoya
+
+import Domain
+import MGNetworks
 
 public class AuthRepository: AuthRepositoryInterface {
     

@@ -1,4 +1,5 @@
 import Foundation
+
 import MGLogger
 
 public struct TokenManagerImpl: TokenManager {
