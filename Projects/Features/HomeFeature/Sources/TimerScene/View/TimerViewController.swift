@@ -15,6 +15,8 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     
     private var timerData = TimerModel.eunho
     
+    private var alaertView = TimerAlarmAlertView()
+    
     lazy var progressBarView = HomeTimerView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
     private let closeButton = MGTimerButton(type: .close)
@@ -46,7 +48,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     }
     
     public override func layout() {
-        view.addSubviews([progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView])
+        view.addSubviews([progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView, alaertView])
         
         progressBarView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(141.0)
@@ -81,6 +83,12 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             $0.top.equalTo(progressBarView.snp.bottom).offset(225.0)
             $0.trailing.equalToSuperview().offset(-83.0)
             
+        }
+        
+        alaertView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(77.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.height.equalTo(152.0)
         }
     }
     
