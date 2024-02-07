@@ -14,7 +14,7 @@ public class TimerHeaderCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .white
     }
     
-    public func setup(time: Double) {
+    public func setup() {
         layout()
     }
     
