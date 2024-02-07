@@ -1,9 +1,24 @@
-//
-//  Shadow.swift
-//  DSKit
-//
-//  Created by 이은호 on 2/7/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+extension CALayer {
+    public func shadow (
+    color: UIColor,
+    alpha: Float,
+    x: CGFloat,
+    y: CGFloat,
+    blur: CGFloat,
+    spread: CGFloat
+    ) {
+        masksToBounds = false
+        shadowColor = color.cgColor
+        shadowOpacity = alpha
+        shadowOffset = CGSize(width: x, height: y)
+        shadowRadius = blur / UIScreen.main.scale
+        if spread == 0 {
+            shadowPath = nil
+        } else {
+            let rect = bounds.insetBy(dx: -spread, dy: -spread)
+            shadowPath = UIBezierPath(rect: rect).cgPath
+        }
+    }
+}
