@@ -7,7 +7,7 @@ import Core
 import KakaoSDKUser
 import Moya
 
-//import TokenManager
+import TokenManager
 
 public enum AuthHandleableType {
     case loginSuccess
@@ -25,7 +25,7 @@ public class DefaultAuthUseCase {
     private let authRepository: AuthRepositoryInterface
     private let disposeBag = DisposeBag()
     
-//    private let keychainAuthorization = KeychainType.authorizationToken
+    private let keychainAuthorization = KeychainType.authorizationToken
 
 
     public init(authRepository: AuthRepositoryInterface) {
@@ -50,13 +50,13 @@ extension DefaultAuthUseCase: AuthUseCase {
                         
                     self.authRepository.kakaoToken(access_token: accessToken)
                         .subscribe(onSuccess: { [weak self] _ in
-//                            guard let self = self else { return }
-//                            if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
-//                                print("토큰 저장 성공")
-//                            } else {
-//                                print("토큰 저장 실패")
-//                            }
-//                            self.signInResult.onNext(.success(.loginSuccess))
+                            guard let self = self else { return }
+                            if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
+                                print("토큰 저장 성공")
+                            } else {
+                                print("토큰 저장 실패")
+                            }
+                            self.signInResult.onNext(.success(.loginSuccess))
                         }, onFailure: { [weak self] error in
                             self?.signInResult.onNext(.failure(error))
                         })
