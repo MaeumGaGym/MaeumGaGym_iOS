@@ -61,5 +61,9 @@ extension UIFont {
         @nonobjc public static var light: UIFont {
             return DSKitFontFamily.Pretendard.light.font(size: 64.0)
         }
+        
+        @nonobjc public static var light32: UIFont {
+            return DSKitFontFamily.Pretendard.light.font(size: 32.0)
+        }
      }
 }

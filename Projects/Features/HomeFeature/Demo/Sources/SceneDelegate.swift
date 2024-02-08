@@ -12,16 +12,15 @@ import HomeFeature
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator = FlowCoordinator()
 
-    func scene(_ scene: UIScene,
-               willConnectTo session: UISceneSession,
-               options connectionOptions: UIScene.ConnectionOptions) {
-
-        let homeService = HomeService()
-        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: homeService))
-        let viewModel = HomeViewModel(useCase: useCase)
-        let viewController = HomeViewController(viewModel)
-                self.window = makeWindow(scene: scene)
-        window?.configure(withRootViewController: viewController)
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+            window?.rootViewController = TimerViewController(TimerViewModel())
+        window?.makeKeyAndVisible()
     }
 }
