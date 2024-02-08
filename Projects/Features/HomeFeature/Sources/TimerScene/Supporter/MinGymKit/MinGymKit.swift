@@ -6,7 +6,7 @@ public protocol TimerControl {
     func start()
     func stop()
     func reset()
-    func record()
+    func presentTime() -> Double
 }
 
 open class MindGymTimerKit {
@@ -30,5 +30,10 @@ open class MindGymTimerKit {
 
     public func restartTimer() {
         (mainTimer as? MindGaGymKitTimer)?.restart()
+    }
+    
+    public func presentTimer() -> Double {
+        let presentTime: Double = mainTimer.presentTime()
+        return presentTime
     }
 }
