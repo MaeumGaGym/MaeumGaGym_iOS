@@ -241,7 +241,7 @@ public class HomeTimerView: UIView {
     }
     
     public func currentTimer() -> Double {
-        return currentTime
+        return homeTimer.presentTimer()
     }
 
     private func setCircleLayer() -> CAShapeLayer {
