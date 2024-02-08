@@ -75,11 +75,13 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     public func cellUnClicked() {
         exerciseNameLabel.layer.borderColor = DSKitAsset.Colors.gray50.color.cgColor
         exerciseNameLabel.layer.borderWidth = 2
+        exerciseNameLabel.backgroundColor = DSKitAsset.Colors.gray50.color
     }
     
     public func cellClicked() {
         exerciseNameLabel.layer.borderColor = DSKitAsset.Colors.blue500.color.cgColor
         exerciseNameLabel.layer.borderWidth = 2
+        exerciseNameLabel.backgroundColor = .white
     }
     
     public func cellChoosing() {
