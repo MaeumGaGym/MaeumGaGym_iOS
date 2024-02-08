@@ -13,9 +13,23 @@ import HomeFeatureInterface
 
 public class TimerViewController: BaseViewController<TimerViewModel> {
     
-    private var timerData = TimerModel.eunho
+    private var timerData = TimerModel.init()
     
     private var alaertView = TimerAlarmAlertView()
+    
+    private var navBeforeButton = UIButton().then {
+        $0.setImage(DSKitAsset.Assets.timerNavLeft.image, for: .normal)
+    }
+    
+    private var navAddButton = UIButton().then {
+        $0.setImage(DSKitAsset.Assets.timerNavPlus.image, for: .normal)
+    }
+    
+    private var navEditButton = UIButton().then {
+        $0.setImage(DSKitAsset.Assets.timerNavDots.image, for: .normal)
+    }
+    
+    private var editView = TimerEditView()
     
     lazy var progressBarView = HomeTimerView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
@@ -53,7 +67,29 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     }
     
     public override func layout() {
-        view.addSubviews([progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView, alaertView])
+        view.addSubviews([navBeforeButton, navAddButton, navEditButton, editView, progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView, alaertView])
+        
+        navBeforeButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(61.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.width.height.equalTo(32.0)
+        }
+        
+        navEditButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(61.0)
+            $0.trailing.equalToSuperview().offset(-20.0)
+            $0.width.height.equalTo(32.0)
+        }
+        
+        navAddButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(61.0)
+            $0.trailing.equalTo(navEditButton.snp.leading).offset(-12.0)
+            $0.width.height.equalTo(32.0)
+        }
+        
+        editView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         progressBarView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(141.0)
@@ -95,12 +131,28 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(152.0)
         }
-        
-        alaertView.initializeViewPosition()
-
     }
     
     private func buttonTap() {
+        
+        progressBarView.homeTimer.mainTimer.timeUpdate
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] timeString in
+                DispatchQueue.main.async { [weak self] in
+                    if self?.progressBarView.currentTimer() ?? 0.0 <= 0.0 {
+                        self?.alaertView.moveViewDown()
+                        self?.progressBarView.stopTimer()
+                        self?.stopButton.isHidden = true
+                        self?.startButton.isHidden = false
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        navEditButton.rx.tap
+            .subscribe(onNext: { [self] in
+                editView.showView()
+            }).disposed(by: disposeBag)
         
         startButton.rx.tap
             .subscribe(onNext: { [self] in
@@ -178,6 +230,11 @@ extension TimerViewController: UICollectionViewDataSource {
         ) as? TimerCollectionViewCell
         let model = timerData.data[indexPath.row - 1]
         cell?.setup(time: Double(model.time))
+        if model.isClicked {
+            cell?.cellClicked()
+        } else {
+            cell?.cellUnClicked()
+        }
         return cell ?? UICollectionViewCell()
     }
     
@@ -193,5 +250,23 @@ extension TimerViewController: UICollectionViewDataSource {
         startButton.isHidden = false
         
         return true
+    }
+}
+
+
+extension TimerViewController: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        for index in 0..<timerData.data.count {
+            if index == indexPath.row - 1 {
+                var newValue = timerData.data[index]
+                newValue.isClicked = true
+                timerData.updateData(at: index, with: newValue)
+            } else {
+                var newValue = timerData.data[index]
+                newValue.isClicked = false
+                timerData.updateData(at: index, with: newValue)
+            }
+        }
+        collectionView.reloadData()
     }
 }
