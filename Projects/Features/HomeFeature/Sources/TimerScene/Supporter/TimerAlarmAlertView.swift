@@ -152,7 +152,7 @@ public class TimerAlarmAlertView: BaseView {
     }
     
     private func animateViewMovingUp() {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.6, animations: {
             self.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
         }) { _ in
             self.transform = CGAffineTransform.identity
@@ -161,10 +161,9 @@ public class TimerAlarmAlertView: BaseView {
     }
 
     public func moveViewDown() {
-        initializeViewPosition()
-        UIView.animate(withDuration: 0.2, animations: {
-            self.transform = CGAffineTransform.identity
-        })
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, completion: nil)
     }
     
     @objc func handleSwipe(_ recognizer: UIPanGestureRecognizer) {
@@ -177,13 +176,13 @@ public class TimerAlarmAlertView: BaseView {
         if recognizer.state == .ended {
             let velocity = recognizer.velocity(in: self)
             if velocity.y < -500 || self.frame.minY < -100 {
-                UIView.animate(withDuration: 0.2, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
                 }) { _ in
                     self.initializeViewPosition()
                 }
             } else {
-                UIView.animate(withDuration: 0.2, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.transform = CGAffineTransform.identity
                 })
             }
