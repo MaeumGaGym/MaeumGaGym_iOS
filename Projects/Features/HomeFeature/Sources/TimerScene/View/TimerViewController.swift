@@ -39,11 +39,16 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
         $0.delegate = self
     }
     
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        alaertView.initializeViewPosition()
+    }
     
     public override func attribute() {
         view.backgroundColor = .white
         
         progressBarView.timerSetting(for: 3601)
+        
         buttonTap()
     }
     
@@ -90,6 +95,9 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(152.0)
         }
+        
+        alaertView.initializeViewPosition()
+
     }
     
     private func buttonTap() {
@@ -123,6 +131,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
         closeButton.rx.tap
             .subscribe(onNext: { [self] in
                 progressBarView.cancelTimer()
+                alaertView.moveViewDown()
                 if startButton.isHidden == true {
                     stopButton.isHidden = true
                     startButton.isHidden = false
