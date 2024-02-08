@@ -1,26 +1,27 @@
-import UIKit
+public class TimerModel {
+    public struct Time {
+        var time: Int
+        var isClicked: Bool
+    }
 
-import DSKit
-
-public struct Time {
-    var time: Int
-}
-
-public enum TimerModel {
-    case eunho
+    private var _data: [Time]
 
     var data: [Time] {
-        switch self {
-        case .eunho:
-            return [
-                Time(time: 60),
-                Time(time: 10),
-                Time(time: 4660),
-                Time(time: 3600),
-                Time(time: 700),
-                Time(time: 5),
-            ]
-        }
+        return _data
+    }
+
+    init() {
+        _data = [
+            Time(time: 60, isClicked: false),
+            Time(time: 10, isClicked: false),
+            Time(time: 4660, isClicked: false),
+            Time(time: 3600, isClicked: false),
+            Time(time: 700, isClicked: false),
+            Time(time: 5, isClicked: false),
+        ]
+    }
+
+    func updateData(at index: Int, with newValue: Time) {
+        _data[index] = newValue
     }
 }
-
