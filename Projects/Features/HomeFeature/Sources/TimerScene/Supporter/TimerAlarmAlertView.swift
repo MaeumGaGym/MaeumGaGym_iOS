@@ -1,14 +1,18 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 import SnapKit
 import Then
 
+import AudioToolbox
 import DSKit
 import Core
 
 public class TimerAlarmAlertView: BaseView {
     private var timerCount: Int = 0
-
+    
     private var containerView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 20.0
@@ -43,7 +47,7 @@ public class TimerAlarmAlertView: BaseView {
         $0.titleLabel?.font = UIFont.Pretendard.titleSmall
         $0.setTitleColor(DSKitAsset.Colors.blue500.color, for: .normal)
     }
-
+    
     private let restartButton = UIButton().then {
         $0.setTitle("다시 시작", for: .normal)
         $0.titleLabel?.font = UIFont.Pretendard.titleSmall
@@ -52,6 +56,23 @@ public class TimerAlarmAlertView: BaseView {
     
     private let decorationLine = MGLine(lineHeight: 22.0).then {
         $0.layer.cornerRadius = 1
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupGesture()
+        buttonTapped()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupGesture()
+        buttonTapped()
+    }
+    
+    private func setupGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        self.addGestureRecognizer(panGesture)
     }
     
     public override func attribute() {
@@ -109,6 +130,63 @@ public class TimerAlarmAlertView: BaseView {
             $0.trailing.equalToSuperview()
             $0.leading.equalTo(decorationLine.snp.trailing).offset(3.0)
             $0.height.equalTo(24.0)
+        }
+    }
+    
+    private func buttonTapped() {
+        clearButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.animateViewMovingUp()
+            }).disposed(by: disposeBag)
+        
+        restartButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.animateViewMovingUp()
+            }).disposed(by: disposeBag)
+    }
+    
+    public func initializeViewPosition() {
+        guard let superView = self.superview else { return }
+        let totalHeight = self.frame.height + superView.frame.height - self.frame.minY
+        self.transform = CGAffineTransform(translationX: 0, y: -totalHeight)
+    }
+    
+    private func animateViewMovingUp() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
+        }) { _ in
+            self.transform = CGAffineTransform.identity
+            self.initializeViewPosition()
+        }
+    }
+
+    public func moveViewDown() {
+        initializeViewPosition()
+        UIView.animate(withDuration: 0.2, animations: {
+            self.transform = CGAffineTransform.identity
+        })
+    }
+    
+    @objc func handleSwipe(_ recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: self)
+        
+        if translation.y < 0 {
+            self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        }
+        
+        if recognizer.state == .ended {
+            let velocity = recognizer.velocity(in: self)
+            if velocity.y < -500 || self.frame.minY < -100 {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
+                }) { _ in
+                    self.initializeViewPosition()
+                }
+            } else {
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.transform = CGAffineTransform.identity
+                })
+            }
         }
     }
 }
