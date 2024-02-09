@@ -115,7 +115,7 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
              kakaoButtonTapped: kakaoButton.rx.tap.asDriver()
          )
 
-        viewModel.transform(input) {_ in 
+        viewModel.transform(input) { _ in 
             
         }
      }

@@ -1,8 +1,10 @@
 import UIKit
-import Then
-import SnapKit
+
 import RxSwift
 import RxCocoa
+
+import Then
+import SnapKit
 
 open class BaseLabel: UILabel {
     public let disposeBag = DisposeBag()

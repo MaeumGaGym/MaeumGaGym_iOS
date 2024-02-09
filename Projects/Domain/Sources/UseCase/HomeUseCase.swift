@@ -38,7 +38,7 @@ extension DefaultHomeUseCase: HomeUseCase {
                 onSuccess: { [weak self] messageModel in
                     self?.motivationMessage.onNext(messageModel)
                 },
-                onFailure: { [weak self] error in
+                onFailure: { error in
                     print("HomeUseCase getMotivationMessage error occurred: \(error)")
                 }
             )
@@ -51,7 +51,7 @@ extension DefaultHomeUseCase: HomeUseCase {
                 onSuccess: { [weak self] stepModel in
                     self?.stepNumber.onNext(stepModel)
                 },
-                onFailure: { [weak self] error in
+                onFailure: { error in
                     print("HomeUseCase getStepNumber error occurred: \(error)")
                 }
             )
@@ -64,7 +64,7 @@ extension DefaultHomeUseCase: HomeUseCase {
                 onSuccess: { [weak self] routines in
                     self?.routines.onNext(routines)
                 },
-                onFailure: { [weak self] error in
+                onFailure: { error in
                     print("HomeUseCase getRoutines error occurred: \(error)")
                 }
             )
@@ -77,7 +77,7 @@ extension DefaultHomeUseCase: HomeUseCase {
                 onSuccess: { [weak self] extras in
                     self?.extras.onNext(extras)
                 },
-                onFailure: { [weak self] error in
+                onFailure: { error in
                     print("HomeUseCase getExtras error occurred: \(error)")
                 }
             )

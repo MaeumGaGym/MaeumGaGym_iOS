@@ -1,7 +1,9 @@
 import UIKit
-import SnapKit
+
 import RxSwift
 import RxCocoa
+
+import SnapKit
 
 open class BaseViewController<T>: UIViewController {
     public var viewModel: T
