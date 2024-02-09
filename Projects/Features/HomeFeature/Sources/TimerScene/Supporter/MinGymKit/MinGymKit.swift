@@ -31,7 +31,7 @@ open class MindGymTimerKit {
     public func restartTimer() {
         (mainTimer as? MindGaGymKitTimer)?.restart()
     }
-    
+
     public func presentTimer() -> Double {
         let presentTime: Double = mainTimer.presentTime()
         return presentTime

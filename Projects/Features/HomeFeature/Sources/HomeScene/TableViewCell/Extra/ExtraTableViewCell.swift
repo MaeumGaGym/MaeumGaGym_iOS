@@ -34,19 +34,19 @@ public class ExtraTableViewCell: BaseTableViewCell {
             extraCollectionView.reloadData()
         }
     }
-    
+
     public override func attribute() {
         super.attribute()
-        
+
         self.backgroundColor = DSKitAsset.Colors.gray25.color
-        
+
         extraCollectionView.delegate = self
         extraCollectionView.dataSource = self
     }
-    
+
     public override func layout() {
         super.layout()
-        
+
         setupCornerRadiusAndBackground()
         contentView.addSubview(extraCollectionView)
 

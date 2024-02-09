@@ -1,5 +1,4 @@
 import UIKit
-import HomeFeatureInterface
 import RxFlow
 import Core
 
@@ -20,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = TimerViewController(TimerViewModel())
+            window?.rootViewController = MetronomeViewController(viewModel: MetronomeViewModel(metronome: Metronome()))
         window?.makeKeyAndVisible()
     }
 }
