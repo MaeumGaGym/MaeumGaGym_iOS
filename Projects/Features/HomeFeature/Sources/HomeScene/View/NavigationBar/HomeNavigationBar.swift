@@ -46,7 +46,6 @@ extension HomeNavigationBar {
 }
 
 // MARK: - UI & Layout
-
 extension HomeNavigationBar {
     private func setUI() {
         self.backgroundColor = DSKitAsset.Colors.gray25.color

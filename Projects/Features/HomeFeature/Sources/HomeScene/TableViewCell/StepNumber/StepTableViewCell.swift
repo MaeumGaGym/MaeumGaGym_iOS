@@ -12,6 +12,8 @@ import DSKit
 
 import Domain
 
+import MindGymKit
+
 public class StepTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "StepTableViewCell"
