@@ -55,24 +55,24 @@ public class MetronomeViewController: UIViewController {
         view.addSubview(startButton)
         view.addSubview(stopButton)
 
-        tempoLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(100)
+        tempoLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(100)
         }
 
-        tempoStepper.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(tempoLabel.snp.bottom).offset(20)
+        tempoStepper.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(tempoLabel.snp.bottom).offset(20)
         }
 
-        startButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview().offset(-50)
-            make.top.equalTo(tempoStepper.snp.bottom).offset(20)
+        startButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(-50)
+            $0.top.equalTo(tempoStepper.snp.bottom).offset(20)
         }
 
-        stopButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview().offset(50)
-            make.top.equalTo(tempoStepper.snp.bottom).offset(20)
+        stopButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview().offset(50)
+            $0.top.equalTo(tempoStepper.snp.bottom).offset(20)
         }
     }
 
