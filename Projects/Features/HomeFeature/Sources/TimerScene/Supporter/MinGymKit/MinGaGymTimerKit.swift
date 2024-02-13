@@ -20,8 +20,8 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
 
     public func start() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { [self] _ in
-            if  counter <= 0 {
-                stop()
+            if counter <= 0.001 {
+                timerStop()
             } else {
                 counter -= 0.001
                 setTimeString()
@@ -32,7 +32,12 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
     public func stop() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    public func timerStop() {
         setInitTimeString()
+        timer?.invalidate()
+        timer = nil
     }
 
     public func restart() {
