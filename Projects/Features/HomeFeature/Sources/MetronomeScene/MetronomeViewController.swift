@@ -1,6 +1,7 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import AudioToolbox
 
 public class MetronomeViewController: UIViewController {
     private var viewModel: MetronomeViewModel
@@ -31,6 +32,12 @@ public class MetronomeViewController: UIViewController {
         return button
     }()
 
+    private let vibrateButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Vibrate", for: .normal)
+        return button
+    }()
+
     public init(viewModel: MetronomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -46,7 +53,7 @@ public class MetronomeViewController: UIViewController {
         view.backgroundColor = .white
         setupViews()
         setupActions()
-        viewModel.tempo = 120
+        viewModel.tempo = 180
     }
 
     private func setupViews() {
@@ -54,6 +61,7 @@ public class MetronomeViewController: UIViewController {
         view.addSubview(tempoStepper)
         view.addSubview(startButton)
         view.addSubview(stopButton)
+        view.addSubview(vibrateButton)
 
         tempoLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -74,12 +82,18 @@ public class MetronomeViewController: UIViewController {
             $0.centerX.equalToSuperview().offset(50)
             $0.top.equalTo(tempoStepper.snp.bottom).offset(20)
         }
+
+        vibrateButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(stopButton.snp.bottom).offset(20)
+        }
     }
 
     private func setupActions() {
         tempoStepper.addTarget(self, action: #selector(stepperValueChanged), for: .valueChanged)
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
+        vibrateButton.addTarget(self, action: #selector(vibrateButtonTapped), for: .touchUpInside)
     }
 
     @objc private func stepperValueChanged() {
@@ -93,6 +107,10 @@ public class MetronomeViewController: UIViewController {
 
     @objc private func stopButtonTapped() {
         viewModel.stop()
+    }
+
+    @objc private func vibrateButtonTapped() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 }
 
