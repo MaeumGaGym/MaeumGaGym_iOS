@@ -1,76 +1,129 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import AudioToolbox
 
-public class Metronome: NSObject, MetronomeType {
-    static let sharedInstance = Metronome()
+public class Metronome: MetronomeType {
+    public static let sharedInstance = Metronome(
+        mainClickFile: Bundle.main.url(
+            forResource: "Low", withExtension: "wav"
+        )!,
+        accentedClickFile: Bundle.main.url(
+            forResource: "High", withExtension: "wav"
+        )!
+    )
 
-    private var audioPlayer: AVAudioPlayer?
-    private var timer: Timer?
-    private var bpm: Double = 120
-    private var beatCount: Int = 0
-    private var isPlayingInternal = false
+    private let audioPlayerNode: AVAudioPlayerNode
+    private let audioFileMainClick: AVAudioFile
+    private let audioFileAccentedClick: AVAudioFile
+    private let audioEngine: AVAudioEngine
 
-    public var isPlaying: Bool {
-        return isPlayingInternal
-    }
+    private var currentBuffer: AVAudioPCMBuffer?
 
-    public var currentProgressWithinBar: Double {
-        guard let player = audioPlayer else { return 0.0 }
-        return Double(player.currentTime / player.duration)
-    }
-
-    public override init() {
-        super.init()
-        setupAudioPlayer()
-    }
-
-    private func setupAudioPlayer() {
-        guard let url = Bundle.main.url(forResource: "High", withExtension: "wav") else {
-            fatalError("Sound file not found")
+    init(mainClickFile: URL, accentedClickFile: URL? = nil) {
+        do {
+            audioFileMainClick = try AVAudioFile(forReading: mainClickFile)
+            audioFileAccentedClick = try AVAudioFile(forReading: accentedClickFile ?? mainClickFile)
+        } catch {
+            fatalError("Failed to create AVAudioFile: \(error)")
         }
+
+        audioPlayerNode = AVAudioPlayerNode()
+
+        audioEngine = AVAudioEngine()
+        audioEngine.attach(self.audioPlayerNode)
+
+        audioEngine.connect(audioPlayerNode, to: audioEngine.mainMixerNode, format: audioFileMainClick.processingFormat)
 
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.delegate = self
+            try audioEngine.start()
         } catch {
-            fatalError("Failed to create audio player: \(error)")
+            fatalError("Failed to start audio engine: \(error)")
         }
-    }
-
-    public func play(bpm: Double) {
-        stop()
-        self.bpm = bpm
-        beatCount = 0
-        isPlayingInternal = true
-        startTimer()
     }
 
     public func stop() {
-        timer?.invalidate()
-        audioPlayer?.stop()
-        isPlayingInternal = false
+        audioPlayerNode.stop()
     }
 
-    private func startTimer() {
-        guard let player = audioPlayer else { return }
-        let interval = 60.0 / bpm
+    public var isPlaying: Bool {
+        audioPlayerNode.isPlaying
+    }
 
-        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
+    public func play(bpm: Double) {
+        let buffer = generateBuffer(bpm: bpm)
 
-            if self.beatCount == 0 {
-                player.play()
-            }
+        currentBuffer = buffer
 
-            self.beatCount = (self.beatCount + 1) % 4
+        if audioPlayerNode.isPlaying {
+            audioPlayerNode.stop()
         }
-    }
-}
 
-extension Metronome: AVAudioPlayerDelegate {
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        // Implement if needed
+        audioPlayerNode.play()
+
+        audioPlayerNode.scheduleBuffer(
+            buffer,
+            at: nil,
+            options: [.interruptsAtLoop, .loops]
+        )
+    }
+
+    /// Current progress within the bar. Changes from 0 to 1.
+    public var currentProgressWithinBar: Double {
+        guard let nodeTime = audioPlayerNode.lastRenderTime,
+              let playerTime = audioPlayerNode.playerTime(forNodeTime: nodeTime),
+              let buffer = currentBuffer else {
+            return 0
+        }
+
+        return Double(playerTime.sampleTime)
+            .truncatingRemainder(dividingBy: Double(buffer.frameLength))
+        / Double(buffer.frameLength)
+    }
+
+    private func generateBuffer(bpm: Double) -> AVAudioPCMBuffer {
+        audioFileMainClick.framePosition = 0
+        audioFileAccentedClick.framePosition = 0
+
+        let beatLength = AVAudioFrameCount(audioFileMainClick.processingFormat.sampleRate * 60 / bpm)
+        guard let bufferMainClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: beatLength) else {
+            fatalError("Failed to create AVAudioPCMBuffer for main click")
+        }
+
+        do {
+            try audioFileMainClick.read(into: bufferMainClick)
+            bufferMainClick.frameLength = beatLength
+        } catch {
+            fatalError("Failed to read main click audio file: \(error)")
+        }
+
+        guard let bufferAccentedClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: beatLength) else {
+            fatalError("Failed to create AVAudioPCMBuffer for accented click")
+        }
+
+        do {
+            try audioFileAccentedClick.read(into: bufferAccentedClick)
+            bufferAccentedClick.frameLength = beatLength
+        } catch {
+            fatalError("Failed to read accented click audio file: \(error)")
+        }
+
+        let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: 4 * beatLength)!
+        bufferBar.frameLength = 4 * beatLength
+
+        let channelCount = Int(audioFileMainClick.processingFormat.channelCount)
+        let accentedClickArray = Array(UnsafeBufferPointer(start: bufferAccentedClick.floatChannelData![0], count: channelCount * Int(beatLength)))
+        let mainClickArray = Array(UnsafeBufferPointer(start: bufferMainClick.floatChannelData![0], count: channelCount * Int(beatLength)))
+
+        var barArray = [Float]()
+        barArray.append(contentsOf: accentedClickArray)
+        for _ in 1...3 {
+            barArray.append(contentsOf: mainClickArray)
+        }
+
+        let bufferPointer = bufferBar.floatChannelData![0]
+        bufferPointer.initialize(from: barArray, count: barArray.count)
+
+        return bufferBar
     }
 }
