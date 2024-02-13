@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = MetronomeViewController(viewModel: MetronomeViewModel(metronome: Metronome()))
+            window?.rootViewController = MetronomeViewController(viewModel: MetronomeViewModel(metronome: Metronome.sharedInstance))
         window?.makeKeyAndVisible()
     }
 }
