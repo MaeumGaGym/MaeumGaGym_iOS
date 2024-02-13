@@ -4,58 +4,63 @@ import RxSwift
 
 open class MindGaGymKitTimer: NSObject, TimerControl {
     
-    private var initCounter: Double = 0.0
-    private var counter: Double = 0.0
+    private var initTime: Int = 0
+    private var time: Double = 0
     private var timer: Timer?
+    
     private let timerSubject = PublishSubject<String>()
     public var timeUpdate: Observable<String> {
         return timerSubject.asObservable()
     }
 
-    public func setting(count: Double) {
-        initCounter = count
-        self.counter = count
-        let timeString = self.timeString(from: self.counter)
-        self.timerSubject.onNext(timeString)
+    public func setting(initialTime: Int) {
+        initTime = initialTime
+        time = Double(initialTime)
+        setTimerString()
     }
 
     public func start() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.035, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            if self.counter <= 0 {
-                self.stop()
-            } else {
-                self.counter -= 0.035
-                let timeString = self.timeString(from: self.counter)
-                self.timerSubject.onNext(timeString)
-            }
-        }
+       reduceTime()
     }
-
+    
     public func stop() {
         timer?.invalidate()
         timer = nil
     }
-
+    
     public func restart() {
-        counter = initCounter
-        let timeString = self.timeString(from: self.counter)
-        self.timerSubject.onNext(timeString)
+        time = Double(initTime)
+        setTimerString()
     }
-
+    
     public func reset() {
-        counter = 0.0
-        initCounter = 0.0
-        let timeString = self.timeString(from: self.counter)
-        self.timerSubject.onNext(timeString)
+        time = 0
+        initTime = 0
+        setTimerString()
     }
     
-    public func presentTime() -> Double {
-        return self.counter
+    public func setTimerString() {
+        let timeString = timerString(count: Int(time))
+        timerSubject.onNext(timeString)
     }
     
-    private func timeString(from counter: Double) -> String {
-        let totalSeconds = Int(counter)
+    public func presentTime() -> Int {
+        return time
+    }
+    
+    private func reduceTime() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { [self] _ in
+            if time <= 0 {
+                stop()
+            } else {
+                time -= 0.001
+                setTimerString()
+            }
+        }
+    }
+    
+    private func timerString(count: Int) -> String {
+        let totalSeconds: Int = count
         let hours: String = String(format: "%02d", totalSeconds / 3600)
         let minutes: String = String(format: "%02d", (totalSeconds % 3600) / 60)
         let seconds: String = String(format: "%02d", totalSeconds % 60)
