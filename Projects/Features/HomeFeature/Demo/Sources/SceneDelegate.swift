@@ -1,13 +1,11 @@
 import UIKit
-import HomeFeatureInterface
+import HomeFeature
 import RxFlow
 import Core
 
 import Data
 import Domain
 import MGNetworks
-
-import HomeFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,7 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = TimerViewController(TimerViewModel())
+            window?.rootViewController = MetronomeViewController(
+                viewModel: MetronomeViewModel(metronome: Metronome.sharedInstance)
+            )
+//            window?.configure(withRootViewController: TimerViewController(TimerViewModel()))
         window?.makeKeyAndVisible()
     }
 }

@@ -6,6 +6,7 @@ let project = Project.makeModule(
     name: "Domain",
     targets: [.unitTest, .dynamicFramework],
     internalDependencies: [
-        .core
+        .core,
+        .Modules.tokenManager
     ]
 )

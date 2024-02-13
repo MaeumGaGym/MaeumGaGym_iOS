@@ -37,24 +37,24 @@ public class StepTableViewCell: BaseTableViewCell {
 
     public override func commonInit() {
         super.commonInit()
-        
+
         rx.deallocated
             .bind { [weak self] in
                 self?.disposeBag = DisposeBag()
             }
             .disposed(by: disposeBag)
     }
-    
+
     public override func attribute() {
         super.attribute()
-        
+
         backgroundColor = DSKitAsset.Colors.gray25.color
 
     }
     
     public override func layout() {
         super.layout()
-        
+
         setupCornerRadiusAndBackground()
         contentView.addSubviews([stepNumberTitle, workTitle])
 

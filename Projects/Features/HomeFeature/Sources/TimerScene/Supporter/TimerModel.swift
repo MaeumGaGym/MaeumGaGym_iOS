@@ -17,7 +17,7 @@ public class TimerModel {
             Time(time: 4660, isClicked: false),
             Time(time: 3600, isClicked: false),
             Time(time: 700, isClicked: false),
-            Time(time: 5, isClicked: false),
+            Time(time: 5, isClicked: false)
         ]
     }
 
