@@ -139,7 +139,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] timeString in
                 DispatchQueue.main.async { [weak self] in
-                    if self?.progressBarView.currentTimer() ?? 0 <= 0 {
+                    if self?.progressBarView.currentTimer() ?? 0.0 <= 0.0 {
                         self?.alaertView.moveViewDown()
                         self?.progressBarView.stopTimer()
                         self?.stopButton.isHidden = true
