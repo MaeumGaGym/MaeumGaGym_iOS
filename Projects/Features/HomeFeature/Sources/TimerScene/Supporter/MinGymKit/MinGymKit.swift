@@ -3,19 +3,17 @@ import RxSwift
 
 public protocol TimerControl {
     var timeUpdate: Observable<String> { get }
-    func setting(initialTime: Int)
     func start()
     func stop()
     func reset()
-    func restart()
-    func presentTime() -> Int
+    func presentTime() -> Double
 }
 
 open class MindGymTimerKit {
     public let mainTimer: TimerControl = MindGaGymKitTimer()
 
-    public func setting(time: Int) {
-        mainTimer.setting(initialTime: time)
+    public func setting(count: Double) {
+        (mainTimer as? MindGaGymKitTimer)?.setting(count: count)
     }
 
     public func startTimer() {
@@ -31,10 +29,11 @@ open class MindGymTimerKit {
     }
 
     public func restartTimer() {
-        mainTimer.restart()
+        (mainTimer as? MindGaGymKitTimer)?.restart()
     }
     
-    public func presentTimer() -> Int {
-        return mainTimer.presentTime()
+    public func presentTimer() -> Double {
+        let presentTime: Double = mainTimer.presentTime()
+        return presentTime
     }
 }
