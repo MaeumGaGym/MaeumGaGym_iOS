@@ -20,7 +20,9 @@ public class HomeTimerView: UIView {
     private var cancelTime: Double = 0.0
     private var currentTime: Double = 0.0
     
-    let disposeBag = DisposeBag()
+    private var timerIndex: Int = 0
+    
+    var disposeBag = DisposeBag()
     
     private var timerInitTitle = UILabel().then {
         $0.text = ""
@@ -34,6 +36,10 @@ public class HomeTimerView: UIView {
         $0.textAlignment = .center
         $0.font = UIFont.monospacedDigitSystemFont(ofSize: UIFont.Pretendard.light.pointSize, weight: .light)
         $0.textColor = .black
+    }
+    
+    private let alarmImage = UIImageView().then {
+        $0.image = DSKitAsset.Assets.homeTimerBell.image
     }
     
     private var timerAlarmTitle = UILabel().then {
@@ -71,7 +77,7 @@ public class HomeTimerView: UIView {
     }
     
     private func layout() {
-        addSubviews([timerInitTitle, timerMainTitle, timerAlarmTitle])
+        addSubviews([timerInitTitle, timerMainTitle, alarmImage, timerAlarmTitle])
         
         timerInitTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -95,12 +101,15 @@ public class HomeTimerView: UIView {
         }
     }
     
-    public func timerSetting(for seconds: Int) {
-        homeTimer.setting(count: Double(seconds))
-        initTime = Double(seconds)
-        circleShapeLayer.add(createCircleAnimation(), forKey: "key")
-        stopTimer()
+    let timerModel = TimerModel()
+    
+    public func timerSetting(for index: Int) {
+        initTime = timerModel.getTime(at: index)
         cancelTime = initTime
+        timerIndex = index
+        homeTimer.setTimer(index: index, settingTime: initTime)
+        circleShapeLayer.add(createCircleAnimation(), forKey: "key")
+        stopCricleAnimation()
         setInitialTimeLabel()
         setTimerTimeLabel()
         setInitAlarmTimeLabel()
@@ -140,18 +149,23 @@ public class HomeTimerView: UIView {
             return
         }
         
-        timerMainTitle.text = setTimerTimeLabelText(from: homeTimer.presentTimer())
-        
-        homeTimer.mainTimer.timeUpdate
+        timerMainTitle.text = setTimerTimeLabelText(from: homeTimer.presentTime(index: timerIndex))
+
+        // 이전 구독을 해제합니다.
+        disposeBag = DisposeBag()
+
+        let currentTimer = homeTimer.timers[timerIndex]
+        currentTimer.timeUpdate
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] timeString in
+            .subscribe(onNext: { [self] timeString in
                 DispatchQueue.main.async { [self] in
-                    self?.currentTime = self!.homeTimer.presentTimer()
-                    self?.timerMainTitle.text = timeString
+                    currentTime = homeTimer.presentTime(index: timerIndex)
+                    timerMainTitle.text = timeString
                 }
             })
             .disposed(by: disposeBag)
     }
+
     
     
     private func setTimerTimeLabelText(from counter: Double) -> String {
@@ -189,23 +203,23 @@ public class HomeTimerView: UIView {
         formatter_time.dateFormat = "a h:mm"
         formatter_time.amSymbol = "오전"
         formatter_time.pmSymbol = "오후"
-        let current_time_string = formatter_time.string(from: Date().addingTimeInterval(homeTimer.presentTimer()))
+        let current_time_string = formatter_time.string(from: Date().addingTimeInterval(currentTime))
         DispatchQueue.main.async {
             self.timerAlarmTitle.text = current_time_string
         }
     }
     
     public func startTimer() -> Bool {
-        if homeTimer.presentTimer() == 0.0 {
+        if currentTime == 0.0 {
             return false
         } else {
             if circleShapeLayer.speed == 0 {
                 restartCricleAnimation()
-                homeTimer.startTimer()
+                homeTimer.startTimer(index: timerIndex)
                 setAlarmTimeLabel()
             } else {
                 circleShapeLayer.add(createCircleAnimation(), forKey: "key")
-                homeTimer.startTimer()
+                homeTimer.startTimer(index: timerIndex)
                 setAlarmTimeLabel()
             }
             circleShapeLayer.strokeColor = colorCircle.cgColor
@@ -216,32 +230,32 @@ public class HomeTimerView: UIView {
     public func stopTimer() {
         circleShapeLayer.strokeColor = DSKitAsset.Colors.gray400.color.cgColor
         stopCricleAnimation()
-        homeTimer.stopTimer()
+        homeTimer.stopTimer(index: timerIndex)
     }
     
     public func cancelTimer() {
         cancelTime = 0.0
-        homeTimer.setting(count: Double(0))
+        homeTimer.setTimer(index: timerIndex, settingTime: 0.0)
         circleShapeLayer.add(createCircleAnimation(), forKey: "key")
         stopCricleAnimation()
-        homeTimer.stopTimer()
+        homeTimer.stopTimer(index: timerIndex)
         stopTimer()
         setInitAlarmTimeLabel()
         setInitialTimeLabel()
     }
     
     public func restartTimer() {
-        homeTimer.setting(count: Double(initTime))
+        homeTimer.setTimer(index: timerIndex, settingTime: initTime)
         cancelTime = initTime
         circleShapeLayer.add(createCircleAnimation(), forKey: "key")
         stopCricleAnimation()
-        homeTimer.stopTimer()
+        homeTimer.stopTimer(index: timerIndex)
         setAlarmTimeLabel()
         setInitialTimeLabel()
     }
     
-    public func currentTimer() -> Double {
-        return homeTimer.presentTimer()
+    public func currentTimer(index: Int) -> Double {
+        return homeTimer.presentTime(index: index)
     }
 
     private func setCircleLayer() -> CAShapeLayer {
@@ -294,7 +308,7 @@ public class HomeTimerView: UIView {
         
         strokeAnimation.toValue = 0
         strokeAnimation.fromValue = 1
-        strokeAnimation.duration = CFTimeInterval(homeTimer.presentTimer())
+        strokeAnimation.duration = CFTimeInterval(homeTimer.presentTime(index: timerIndex))
         strokeAnimation.isRemovedOnCompletion = true
         circleShapeLayer.strokeEnd = 0
         return strokeAnimation
