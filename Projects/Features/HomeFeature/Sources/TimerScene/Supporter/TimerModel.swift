@@ -4,14 +4,14 @@ public class TimerModel {
         var isClicked: Bool
     }
 
-    private var _data: [Time]
+    private var data: [Time]
 
     var data: [Time] {
-        return _data
+        return data
     }
 
     init() {
-        _data = [
+        data = [
             Time(time: 60, isClicked: false),
             Time(time: 10, isClicked: false),
             Time(time: 4660, isClicked: false),
@@ -22,6 +22,10 @@ public class TimerModel {
     }
 
     func updateData(at index: Int, with newValue: Time) {
-        _data[index] = newValue
+        data[index] = newValue
+    }
+    
+    public func getTime(at index: Int) -> Int {
+        return data[index].time
     }
 }
