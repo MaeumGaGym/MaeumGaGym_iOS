@@ -4,26 +4,26 @@ import RxSwift
 
 open class MindGaGymKitTimer: NSObject, TimerControl {
     
-    private var initCounter: Double = 0.0
-    private var counter: Double = 0.0
+    private var initialTime: Double = 0.0
+    private var time: Double = 0.0
     private var timer: Timer?
     private let timerSubject = PublishSubject<String>()
     public var timeUpdate: Observable<String> {
         return timerSubject.asObservable()
     }
 
-    public func setting(count: Double) {
-        initCounter = count
-        counter = count
+    public func setting(settingTime: Double) {
+        initialTime = settingTime
+        time = settingTime
         setInitTimeString()
     }
 
     public func start() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.001, repeats: true) { [self] _ in
-            if counter <= 0.001 {
+            if time <= 0.001 {
                 timerStop()
             } else {
-                counter -= 0.001
+                time -= 0.001
                 setTimeString()
             }
         }
@@ -41,27 +41,27 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
     }
 
     public func restart() {
-        counter = initCounter
+        time = initialTime
         setInitTimeString()
     }
 
     public func reset() {
-        counter = 0.0
-        initCounter = 0.0
+        time = 0.0
+        initialTime = 0.0
         setInitTimeString()
     }
     
     public func presentTime() -> Double {
-        return self.counter
+        return time
     }
     
     public func setTimeString() {
-        let timeString = timeString(from: counter)
+        let timeString = timeString(from: time)
         timerSubject.onNext(timeString)
     }
     
     public func setInitTimeString() {
-        let timeString = initTimeString(from: counter)
+        let timeString = initTimeString(from: time)
         timerSubject.onNext(timeString)
     }
     
