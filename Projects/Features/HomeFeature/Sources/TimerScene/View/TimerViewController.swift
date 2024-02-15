@@ -14,6 +14,7 @@ import HomeFeatureInterface
 public class TimerViewController: BaseViewController<TimerViewModel> {
     
     private var timerData = TimerModel.init()
+    private var currentTimerIndex: Int = 0
     
     private var alaertView = TimerAlarmAlertView()
     
@@ -30,6 +31,8 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     }
     
     private var editView = TimerEditView()
+    
+    private var testView = AddTimerView()
     
     lazy var progressBarView = HomeTimerView(center: view.center, radius: 175.0, color: DSKitAsset.Colors.blue500.color)
     
@@ -61,13 +64,13 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     public override func attribute() {
         view.backgroundColor = .white
         
-        progressBarView.timerSetting(for: 3601)
+        progressBarView.timerSetting(for: 0)
         
         buttonTap()
     }
     
     public override func layout() {
-        view.addSubviews([navBeforeButton, navAddButton, navEditButton, editView, progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView, alaertView])
+        view.addSubviews([navBeforeButton, navAddButton, navEditButton, editView, progressBarView, closeButton, stopButton, startButton, restartButton, timerCollectionView, alaertView, testView])
         
         navBeforeButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(61.0)
@@ -131,19 +134,23 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(152.0)
         }
+        
+        testView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     private func buttonTap() {
         
-        progressBarView.homeTimer.mainTimer.timeUpdate
+        progressBarView.homeTimer.timers[0].timeUpdate
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] timeString in
-                DispatchQueue.main.async { [weak self] in
-                    if self?.progressBarView.currentTimer() ?? 0.0 <= 0.0 {
-                        self?.alaertView.moveViewDown()
-                        self?.progressBarView.stopTimer()
-                        self?.stopButton.isHidden = true
-                        self?.startButton.isHidden = false
+            .subscribe(onNext: { [self] timeString in
+                DispatchQueue.main.async { [self] in
+                    if progressBarView.currentTimer(index: currentTimerIndex) <= 0.0 {
+                        alaertView.moveViewDown()
+                        progressBarView.stopTimer()
+                        stopButton.isHidden = true
+                        startButton.isHidden = false
                     }
                 }
             })
@@ -243,8 +250,8 @@ extension TimerViewController: UICollectionViewDataSource {
             return false
         }
         
-        let time = timerData.data[indexPath.row - 1].time
-        progressBarView.timerSetting(for: time)
+        progressBarView.timerSetting(for: indexPath.row - 1)
+        currentTimerIndex = indexPath.row - 1
         
         stopButton.isHidden = true
         startButton.isHidden = false
