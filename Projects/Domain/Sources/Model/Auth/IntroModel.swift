@@ -1,9 +1,9 @@
 import UIKit
 
 public struct IntroModel {
-    var image: UIImage
-    var mainTitle: String
-    var subTitle: String
+    public var image: UIImage
+    public var mainTitle: String
+    public var subTitle: String
     
     public init(image: UIImage, mainTitle: String, subTitle: String) {
         self.image = image

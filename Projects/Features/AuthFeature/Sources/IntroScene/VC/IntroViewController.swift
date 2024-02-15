@@ -120,7 +120,10 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
             output.introDatas
                 .subscribe(onNext: { introData in
                     self.introModel = introData
+                    self.mainTitle.text = self.introModel?.mainTitle
+                    self.subTitle.text = self.introModel?.subTitle
                 })
+                .disposed(by: disposeBag)
         })
      }
 }
