@@ -13,7 +13,7 @@ open class MGLabel: BaseLabel {
     }
     
     public init(
-        text: String,
+        text: String? = "",
         font: UIFont? = UIFont.Pretendard.titleLarge,
         textColor: UIColor? = .black,
         isCenter: Bool? = true,
@@ -34,7 +34,7 @@ open class MGLabel: BaseLabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI(text: String, font: UIFont?, textColor: UIColor?, isCencter: Bool, numberOfLineCount: Int) {
+    private func setupUI(text: String?, font: UIFont?, textColor: UIColor?, isCencter: Bool, numberOfLineCount: Int) {
         
         if isCencter == true {
             textLabel.textAlignment = .center
