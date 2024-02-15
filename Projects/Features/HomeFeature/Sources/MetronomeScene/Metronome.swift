@@ -68,7 +68,6 @@ public class Metronome: MetronomeType {
         )
     }
 
-    /// Current progress within the bar. Changes from 0 to 1.
     public var currentProgressWithinBar: Double {
         guard let nodeTime = audioPlayerNode.lastRenderTime,
               let playerTime = audioPlayerNode.playerTime(forNodeTime: nodeTime),
