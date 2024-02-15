@@ -1,5 +1,5 @@
 ![Group 551-2](https://github.com/MaeumgaGym/MaeumGaGym_iOS/assets/102890390/c35c9cf1-936d-422b-bdf5-6caae046480b)
-> #### 임시 0.0.2.1
+> #### 임시 0.0.2.2
 
 ## 헬스는 마음가짐이 중요하지~! 🧘
 > ### 쌈@뽕한 헬스 앱을 찾는다면 마음가짐
