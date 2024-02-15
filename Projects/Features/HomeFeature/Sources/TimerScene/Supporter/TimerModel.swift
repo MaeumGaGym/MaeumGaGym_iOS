@@ -1,27 +1,32 @@
+import Foundation
+
 public class TimerModel {
     public struct Time {
-        var time: Int
+        var time: Double
         var isClicked: Bool
     }
-
-    private var _data: [Time]
-
+    private var privateData: [Time]
+    
     var data: [Time] {
-        return _data
+        return privateData
     }
-
+    
     init() {
-        _data = [
-            Time(time: 60, isClicked: false),
-            Time(time: 10, isClicked: false),
-            Time(time: 4660, isClicked: false),
-            Time(time: 3600, isClicked: false),
-            Time(time: 700, isClicked: false),
-            Time(time: 5, isClicked: false)
+        privateData = [
+            Time(time: 60.0, isClicked: true),
+            Time(time: 10.0, isClicked: false),
+            Time(time: 4660.0, isClicked: false),
+            Time(time: 3600.0, isClicked: false),
+            Time(time: 700.0, isClicked: false),
+            Time(time: 5.0, isClicked: false),
         ]
     }
-
+    
     func updateData(at index: Int, with newValue: Time) {
-        _data[index] = newValue
+        privateData[index] = newValue
+    }
+    
+    public func getTime(at index: Int) -> Double {
+        return privateData[index].time
     }
 }
