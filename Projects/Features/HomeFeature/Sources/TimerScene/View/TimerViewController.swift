@@ -10,7 +10,6 @@ import Core
 
 import HomeFeatureInterface
 
-
 public class TimerViewController: BaseViewController<TimerViewModel> {
     
     private var timerData = TimerModel.init()
