@@ -10,10 +10,10 @@ import Domain
 import MGNetworks
 
 public class IntroRepository: IntroRepositoryInterface {
-    
-    private let networkService: AuthService
+        
+    private let networkService: IntroService
 
-    public init(networkService: AuthService) {
+    public init(networkService: IntroService) {
         self.networkService = networkService
     }
 
@@ -27,5 +27,9 @@ public class IntroRepository: IntroRepositoryInterface {
     
     public func getCSRFToken() -> Single<String> {
         return networkService.getCSRFToken()
+    }
+    
+    public func getIntroData() -> Single<IntroModel>  {
+        return networkService.requestIntroData()
     }
 }
