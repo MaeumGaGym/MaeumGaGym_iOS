@@ -1,14 +1,8 @@
-//
-//  MG+CameraButton.swift
-//  DSKit
-//
-//  Created by 박준하 on 1/22/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
-import Foundation
 import UIKit
+
+import SnapKit
 import Then
+
 import Core
 
 open class MGCameraFeatureButton: BaseButton {

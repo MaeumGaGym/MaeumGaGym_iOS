@@ -1,8 +1,11 @@
 import UIKit
-import Then
-import SnapKit
+
 import RxSwift
 import RxCocoa
+
+import SnapKit
+import Then
+
 import Core
 
 public class MGToggleButton: BaseButton {

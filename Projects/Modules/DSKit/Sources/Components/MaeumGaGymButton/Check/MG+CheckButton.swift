@@ -1,8 +1,11 @@
 import UIKit
+
 import RxSwift
 import RxCocoaRuntime
+
 import Then
 import SnapKit
+
 import Core
 
 open class MGCheckButton: BaseButton {

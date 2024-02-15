@@ -1,9 +1,12 @@
 import UIKit
-import Then
-import SnapKit
-import Core
+
 import RxSwift
 import RxCocoa
+
+import Then
+import SnapKit
+
+import Core
 
 open class MGCertificationButton: BaseButton {
 

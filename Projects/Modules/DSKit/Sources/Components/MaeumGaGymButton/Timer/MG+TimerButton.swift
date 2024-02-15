@@ -1,7 +1,10 @@
 import UIKit
+
+import RxSwift
+
 import SnapKit
 import Then
-import RxSwift
+
 import Core
 
 public class MGTimerButton: BaseButton {

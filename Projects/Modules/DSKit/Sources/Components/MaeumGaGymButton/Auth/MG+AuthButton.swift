@@ -1,7 +1,10 @@
 import UIKit
+
 import RxSwift
+
 import Then
 import SnapKit
+
 import Core
 
 open class MGAuthButton: BaseButton {
