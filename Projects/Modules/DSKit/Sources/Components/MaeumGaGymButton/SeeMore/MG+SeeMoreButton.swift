@@ -21,17 +21,8 @@ public class MaeumGaGymSeeMoreButton: BaseButton {
         $0.image = DSKitAsset.Assets.right.image
     }
     
-    public init() {
-        super.init(frame: .zero)
-        setupUI()
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        self.addSubviews([seemoreLabel, rigthArrowImageView])
+    public override func layout() {
+        addSubviews([seemoreLabel, rigthArrowImageView])
         seemoreLabel.snp.makeConstraints {
             $0.width.equalTo(42.0)
             $0.height.equalTo(20.0)

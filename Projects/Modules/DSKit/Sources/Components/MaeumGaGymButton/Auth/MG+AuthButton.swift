@@ -26,7 +26,7 @@ open class MGAuthButton: BaseButton {
     ) {
         super.init(frame: .zero)
 
-        setupUI(type: type, spacing: spacing, radius: radius)
+        setup(type: type, spacing: spacing, radius: radius)
     }
 
     required public init?(coder: NSCoder) {
@@ -48,8 +48,10 @@ open class MGAuthButton: BaseButton {
             $0.centerY.equalToSuperview()
         }
     }
-    
-    private func setupUI(type: AuthLogoType,
+}
+
+private extension MGAuthButton {
+    func setup(type: AuthLogoType,
                          spacing: CGFloat?,
                          radius: Double?) {
         self.textLabel.text = type.logoTitle

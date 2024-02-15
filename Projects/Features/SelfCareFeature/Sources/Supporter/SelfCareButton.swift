@@ -45,8 +45,8 @@ public class SelfCareButton: BaseButton {
 }
 
 
-extension SelfCareButton {
-    private func typeLayout(type: SelfCareButtonType) {
+private extension SelfCareButton {
+    func typeLayout(type: SelfCareButtonType) {
         switch type.buttonImage {
         case nil:
             containerView.addSubviews([buttonLabel])
@@ -90,7 +90,7 @@ extension SelfCareButton {
         }
     }
     
-    private func setup(type: SelfCareButtonType) {
+    func setup(type: SelfCareButtonType) {
         switch type.buttonImage {
         case nil:
             buttonImage.isHidden = true

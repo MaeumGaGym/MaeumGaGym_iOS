@@ -124,8 +124,8 @@ open class MGAgreeButton: BaseButton {
     }
 }
 
-extension MGAgreeButton {
-    private func setupUI(textType: agreeButtonTextType,
+private extension MGAgreeButton {
+    func setupUI(textType: agreeButtonTextType,
                          font: UIFont?,
                          type: Int?,
                          readMoreType: Bool?,
@@ -141,7 +141,7 @@ extension MGAgreeButton {
         }
     }
     
-    private func buttonTapped() {
+    func buttonTapped() {
         rx.tap
             .subscribe(onNext: { [self] in
                 checked ? buttonNoChecked() : buttonYesChecked()
@@ -153,7 +153,7 @@ extension MGAgreeButton {
             }).disposed(by: disposeBag)
     }
     
-    private func setOptionalViewVisibility(shouldShow: Bool) {
+    func setOptionalViewVisibility(shouldShow: Bool) {
         chooseLabel.isHidden = !shouldShow
         readMore.isHidden = !shouldShow
         readMoreLine.isHidden = !shouldShow

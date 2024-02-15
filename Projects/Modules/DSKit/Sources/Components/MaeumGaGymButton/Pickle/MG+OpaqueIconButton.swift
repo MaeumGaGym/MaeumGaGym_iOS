@@ -27,44 +27,44 @@ open class MGOpaqueIconButton: BaseButton {
         likeCount: Int? = 12000
     ) {
         super.init(frame: .zero)
-        setupUI(type: type, spacing: spacing, radius: radius, likeCount: likeCount)
+        setup(type: type, spacing: spacing, radius: radius, likeCount: likeCount)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func attribute() {
+    public override func attribute() {
         super.attribute()
         
-        self.isUserInteractionEnabled = true
-        self.backgroundColor = .clear
+        isUserInteractionEnabled = true
+        backgroundColor = .clear
         
         for subview in subviews {
             subview.isUserInteractionEnabled = false
         }
     }
     
-    open override func layout() {
+    public override func layout() {
         super.layout()
         
-        self.addSubviews([iconImageView, likeCountLabel])
+        addSubviews([iconImageView, likeCountLabel])
         
-        self.iconImageView.snp.makeConstraints {
+        iconImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(40.0)
         }
 
         if !likeCountLabel.isHidden {
-            self.likeCountLabel.snp.makeConstraints {
+            likeCountLabel.snp.makeConstraints {
                 $0.top.equalTo(iconImageView.snp.bottom).offset(4.0)
                 $0.centerX.equalToSuperview()
                 $0.bottom.equalToSuperview().offset(2)
             }
         }
 
-        self.snp.makeConstraints {
+        snp.makeConstraints {
             $0.height.equalTo(likeCountLabel.isHidden ? 50.0 : 70.0)
         }
     }
@@ -74,13 +74,13 @@ open class MGOpaqueIconButton: BaseButton {
     }
     
     public func pickleLogoTypeEdit(type: PickleLogoType) {
-        self.iconImageView.image = type.imageLogo
-        self.likeCountLabel.textColor = type.titleColor
+        iconImageView.image = type.imageLogo
+        likeCountLabel.textColor = type.titleColor
     }
 }
 
-extension MGOpaqueIconButton {
-    private func formattedLikeCount(_ count: Int) -> String {
+private extension MGOpaqueIconButton {
+    func formattedLikeCount(_ count: Int) -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 1
@@ -99,14 +99,14 @@ extension MGOpaqueIconButton {
         }
     }
     
-    private func setupUI(
+    func setup(
         type: PickleLogoType,
         spacing: CGFloat?,
         radius: Double?,
         likeCount: Int?
     ) {
-        self.iconImageView.image = type.imageLogo
-        self.likeCountLabel.textColor = type.titleColor
+        iconImageView.image = type.imageLogo
+        likeCountLabel.textColor = type.titleColor
         
         if type != .dots {
             setLikeCount(likeCount ?? 0)

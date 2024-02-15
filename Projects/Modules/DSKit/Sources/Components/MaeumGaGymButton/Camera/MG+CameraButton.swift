@@ -41,8 +41,10 @@ open class MGCameraFeatureButton: BaseButton {
             $0.height.width.equalTo(24.0)
         }
     }
-    
-    private func setup(image: UIImage, radius: Double, tintColor: UIColor) {
+}
+
+private extension MGCameraFeatureButton {
+    func setup(image: UIImage, radius: Double, tintColor: UIColor) {
         featureImageView.image = image
         featureImageView.tintColor = tintColor
         backgroundView.layer.cornerRadius = radius

@@ -25,14 +25,14 @@ open class MGCheckButton: BaseButton {
         
         super.init(frame: .zero)
 
-        setupUI(text: text, radius: radius, textColor: textColor, backColor: backColor)
+        setup(text: text, radius: radius, textColor: textColor, backColor: backColor)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func layout() {
+    public override func layout() {
         super.layout()
         
         self.addSubview(textLabel)
@@ -45,8 +45,10 @@ open class MGCheckButton: BaseButton {
             $0.height.equalTo(58.0)
         }
     }
-    
-    private func setupUI(
+}
+
+ private extension MGCheckButton {
+    func setup(
         text: String?,
         radius: Double?,
         textColor: UIColor?,
