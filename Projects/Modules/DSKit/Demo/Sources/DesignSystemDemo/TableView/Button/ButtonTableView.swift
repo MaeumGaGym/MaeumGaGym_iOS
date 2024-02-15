@@ -6,7 +6,6 @@ import MGLogger
 public enum ButtonType: String, CaseIterable {
     case agree
     case auth
-    case certification
     case icon
     case check
     case timer
@@ -30,9 +29,6 @@ public class ButtonTableViewController: BaseDesignSystemTableViewController<Butt
         case .auth:
             MGLogger.verbose("Auth Button")
             self.navigationController?.pushVC(DSAuthButtonVC.self)
-        case .certification:
-            MGLogger.verbose("Certification Button")
-            self.navigationController?.pushVC(DSCertificationButtonVC.self)
         case .icon:
             MGLogger.verbose("Icon Button")
             self.navigationController?.pushVC(DSIconButtonVC.self)
