@@ -8,7 +8,7 @@ import Moya
 
 import Domain
 
-public class AuthService {
+public class IntroService {
     
     let provider = MoyaProvider<CsrfAPI>()
     
