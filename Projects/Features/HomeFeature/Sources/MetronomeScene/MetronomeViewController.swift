@@ -13,6 +13,8 @@ import AVFoundation
 import AudioToolbox
 
 public class MetronomeViewController: UIViewController {
+    
+    public var disposeBag = DisposeBag()
 
     private var viewModel: MetronomeViewModel
 
@@ -182,6 +184,20 @@ public class MetronomeViewController: UIViewController {
         stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
         vibrateButton.addTarget(self, action: #selector(vibrateButtonTapped), for: .touchUpInside)
         tempoSlider.addTarget(self, action: #selector(tempoSliderValueChanged(_:)), for: .valueChanged)
+
+        startButton.rx.tap
+            .subscribe(onNext: { [self] in
+                    stopButton.isHidden = false
+                    startButton.isHidden = true
+            })
+            .disposed(by: disposeBag)
+
+        stopButton.rx.tap
+            .subscribe(onNext: { [self] in
+                stopButton.isHidden = true
+                startButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
     }
 
     @objc private func tempoSliderValueChanged(_ sender: UISlider) {
