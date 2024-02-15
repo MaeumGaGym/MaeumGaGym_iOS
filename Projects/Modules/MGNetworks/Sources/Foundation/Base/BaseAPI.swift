@@ -9,8 +9,6 @@ import Core
 
 public protocol BaseAPI: TargetType {
     static var apiType: APIType { get set }
-//    var csrfToken: String? { get }
-//    var oauthToken: String? { get }
 }
 
 extension BaseAPI {
