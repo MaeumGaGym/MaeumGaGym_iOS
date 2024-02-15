@@ -18,14 +18,14 @@ open class MGCameraFeatureButton: BaseButton {
     public init(image: UIImage, radius: Double = 26.0, tintColor: UIColor = .white) {
         super.init(frame: .zero)
         
-        featureImageEdit(image: image.withRenderingMode(.alwaysTemplate), radius: radius, tintColor: tintColor)
+        setup(image: image.withRenderingMode(.alwaysTemplate), radius: radius, tintColor: tintColor)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func layout() {
+    public override func layout() {
         super.layout()
         
         self.addSubviews([backgroundView, featureImageView])
@@ -42,7 +42,7 @@ open class MGCameraFeatureButton: BaseButton {
         }
     }
     
-    public func featureImageEdit(image: UIImage, radius: Double, tintColor: UIColor) {
+    private func setup(image: UIImage, radius: Double, tintColor: UIColor) {
         featureImageView.image = image
         featureImageView.tintColor = tintColor
         backgroundView.layer.cornerRadius = radius
