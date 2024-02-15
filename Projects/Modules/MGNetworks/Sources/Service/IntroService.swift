@@ -7,8 +7,9 @@ import RxMoya
 import Moya
 
 import Domain
+import DSKit
 
-public class AuthService {
+public class IntroService {
     
     let provider = MoyaProvider<CsrfAPI>()
     
@@ -42,6 +43,10 @@ public class AuthService {
                 }
                 return Single.error(AuthError.tokenNotFound)
             }
+    }
+    
+    public func requestIntroData() -> Single<IntroModel> {
+        return Single.just(IntroModel(image: DSKitAsset.Assets.blueHome.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
     public init() {

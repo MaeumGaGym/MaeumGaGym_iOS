@@ -9,35 +9,40 @@ import Moya
 
 import TokenManager
 
-public enum AuthHandleableType {
-    case loginSuccess
-    case loginFailure
-}
-
 public protocol AuthUseCase {
-    func requestSignIn(token: String)
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
-    var signInResult: PublishSubject<Result<AuthHandleableType, Error>> { get }
+    func getIntroData()
+    var introData: PublishSubject<IntroModel> { get }
 }
 
 public class DefaultAuthUseCase {
-    private let authRepository: AuthRepositoryInterface
+    private let introRepository: IntroRepositoryInterface
     private let disposeBag = DisposeBag()
+    
+    public let introData = PublishSubject<IntroModel>()
     
     private let keychainAuthorization = KeychainType.authorizationToken
 
-
-    public init(authRepository: AuthRepositoryInterface) {
-        self.authRepository = authRepository
+    public init(introRepository: IntroRepositoryInterface) {
+        self.introRepository = introRepository
     }
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-    
+    public func getIntroData() {
+        return introRepository.getIntroData()
+            .subscribe(onSuccess: { [weak self] introModel in
+                self?.introData.onNext(introModel)
+            },
+            onFailure: { error in
+                print("AuthUseCase getIntroData error occurred: \(error)")
+            })
+            .disposed(by: disposeBag)
+    }
 
     public func getCSRFToken() -> Single<String> {
-        return authRepository.getCSRFToken()
+        return introRepository.getCSRFToken()
     }
     
     public func kakaoButtonTap() {
@@ -48,7 +53,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                 } else {
                     guard let self = self, let accessToken = oauthToken?.accessToken else { return }
                         
-                    self.authRepository.kakaoToken(access_token: accessToken)
+                    self.introRepository.kakaoToken(access_token: accessToken)
                         .subscribe(onSuccess: { [weak self] _ in
                             guard let self = self else { return }
                             if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
@@ -56,28 +61,12 @@ extension DefaultAuthUseCase: AuthUseCase {
                             } else {
                                 print("토큰 저장 실패")
                             }
-                            self.signInResult.onNext(.success(.loginSuccess))
                         }, onFailure: { [weak self] error in
-                            self?.signInResult.onNext(.failure(error))
+                            fatalError("\(error)")
                         })
                         .disposed(by: self.disposeBag)
                 }
             }
         }
-    }
-    
-    public func requestSignIn(token: String) {
-        authRepository.requestSignIn(token: token)
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.signInResult.onNext(.success(.loginSuccess))
-                print("성공")
-            }, onFailure: { [weak self] error in
-                self?.signInResult.onNext(.failure(error))
-            })
-            .disposed(by: disposeBag)
-    }
-
-    public var signInResult: PublishSubject<Result<AuthHandleableType, Error>> {
-        return PublishSubject<Result<AuthHandleableType, Error>>()
     }
 }
