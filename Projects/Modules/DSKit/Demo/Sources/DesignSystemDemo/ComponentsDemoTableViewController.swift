@@ -14,6 +14,8 @@ public enum DesignSystemType: String, CaseIterable {
     case emptyView
     case pagingTabBar
     case banner
+    case slider
+    case horizontalPicker
 }
 
 public class ComponentsDemoTableViewController: BaseDesignSystemTableViewController<DesignSystemType> {
@@ -55,6 +57,12 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
         case .banner:
             MGLogger.verbose("Banner")
             self.navigationController?.pushVC(DSBannerViewController.self)
+        case .slider:
+            MGLogger.verbose("Slider")
+            self.navigationController?.pushVC(DSSliderViewController.self)
+        case .horizontalPicker:
+            MGLogger.verbose("horizontalPicker")
+            self.navigationController?.pushVC(DSHorizontalPickerViewController.self)
         }
     }
 }
