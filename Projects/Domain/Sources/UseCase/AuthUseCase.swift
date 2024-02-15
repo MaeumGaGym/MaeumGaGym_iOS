@@ -18,26 +18,32 @@ public protocol AuthUseCase {
     func requestSignIn(token: String)
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
+    func getIntroData() -> Single<IntroModel>
     var signInResult: PublishSubject<Result<AuthHandleableType, Error>> { get }
+    var introData: PublishSubject<IntroModel> { get }
 }
 
 public class DefaultAuthUseCase {
-    private let authRepository: AuthRepositoryInterface
+    private let introRepository: IntroRepositoryInterface
     private let disposeBag = DisposeBag()
+    
+    public let introData =  PublishSubject<IntroModel>()
     
     private let keychainAuthorization = KeychainType.authorizationToken
 
-
-    public init(authRepository: AuthRepositoryInterface) {
-        self.authRepository = authRepository
+    public init(introRepository: IntroRepositoryInterface) {
+        self.introRepository = introRepository
     }
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-    
 
+    public func getIntroData() -> Single<IntroModel> {
+        return introRepository.getIntroData()
+    }
+    
     public func getCSRFToken() -> Single<String> {
-        return authRepository.getCSRFToken()
+        return introRepository.getCSRFToken()
     }
     
     public func kakaoButtonTap() {
@@ -48,7 +54,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                 } else {
                     guard let self = self, let accessToken = oauthToken?.accessToken else { return }
                         
-                    self.authRepository.kakaoToken(access_token: accessToken)
+                    self.introRepository.kakaoToken(access_token: accessToken)
                         .subscribe(onSuccess: { [weak self] _ in
                             guard let self = self else { return }
                             if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
@@ -67,7 +73,7 @@ extension DefaultAuthUseCase: AuthUseCase {
     }
     
     public func requestSignIn(token: String) {
-        authRepository.requestSignIn(token: token)
+        introRepository.requestSignIn(token: token)
             .subscribe(onSuccess: { [weak self] _ in
                 self?.signInResult.onNext(.success(.loginSuccess))
                 print("성공")
