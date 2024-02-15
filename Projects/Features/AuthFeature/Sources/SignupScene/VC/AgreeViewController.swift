@@ -1,10 +1,13 @@
 import UIKit
+
+import RxSwift
+import RxCocoa
+import RxFlow
+
 import SnapKit
 import Then
+
 import Core
-import RxFlow
-import RxCocoa
-import RxSwift
 import DSKit
 import MGLogger
 
@@ -37,7 +40,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
     private var checkButton = MGCheckButton(text: "확인")
 
     public override func layout() {
-        self.view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])
+        view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])
 
         agreeLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(76.0)
