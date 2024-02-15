@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        let useCase = DefaultAuthUseCase(authRepository: IntroRepository(networkService: IntroService()))
         let viewModel = IntroViewModel(authUseCase: useCase)
         let viewController = IntroViewController(viewModel)
         window?.configure(withRootViewController: viewController)
