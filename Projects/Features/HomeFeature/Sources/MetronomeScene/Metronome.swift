@@ -50,8 +50,8 @@ public class Metronome: MetronomeType {
         audioPlayerNode.isPlaying
     }
 
-    public func play(bpm: Double) {
-        let buffer = generateBuffer(bpm: bpm)
+    public func play(bpm: Double, beats: Int) {
+        let buffer = generateBuffer(bpm: bpm, beats: beats)
 
         currentBuffer = buffer
 
@@ -80,11 +80,13 @@ public class Metronome: MetronomeType {
         / Double(buffer.frameLength)
     }
 
-    private func generateBuffer(bpm: Double) -> AVAudioPCMBuffer {
+    private func generateBuffer(bpm: Double, beats: Int) -> AVAudioPCMBuffer {
         audioFileMainClick.framePosition = 0
         audioFileAccentedClick.framePosition = 0
 
         let beatLength = AVAudioFrameCount(audioFileMainClick.processingFormat.sampleRate * 60 / bpm)
+        let barLength = beatLength * UInt32(beats)
+
         guard let bufferMainClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: beatLength) else {
             fatalError("Failed to create AVAudioPCMBuffer for main click")
         }
@@ -107,22 +109,31 @@ public class Metronome: MetronomeType {
             fatalError("Failed to read accented click audio file: \(error)")
         }
 
-        let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: 4 * beatLength)!
-        bufferBar.frameLength = 4 * beatLength
+        guard let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: barLength) else {
+            fatalError("Failed to create AVAudioPCMBuffer for bar")
+        }
 
         let channelCount = Int(audioFileMainClick.processingFormat.channelCount)
         let accentedClickArray = Array(UnsafeBufferPointer(start: bufferAccentedClick.floatChannelData![0], count: channelCount * Int(beatLength)))
         let mainClickArray = Array(UnsafeBufferPointer(start: bufferMainClick.floatChannelData![0], count: channelCount * Int(beatLength)))
 
         var barArray = [Float]()
-        barArray.append(contentsOf: accentedClickArray)
-        for _ in 1...3 {
-            barArray.append(contentsOf: mainClickArray)
+
+        if beats == 1 {
+            barArray.append(contentsOf: accentedClickArray)
+        } else {
+            barArray.append(contentsOf: accentedClickArray)
+            for _ in 1..<beats {
+                barArray.append(contentsOf: mainClickArray)
+            }
         }
 
         let bufferPointer = bufferBar.floatChannelData![0]
         bufferPointer.initialize(from: barArray, count: barArray.count)
 
+        bufferBar.frameLength = AVAudioFrameCount(barArray.count)
+
         return bufferBar
     }
+
 }
