@@ -7,6 +7,7 @@ import Core
 import DSKit
 
 public class SelfCareButton: BaseButton {
+    
     private var containerView = UIView()
     
     private var buttonImage = UIImageView()
@@ -21,34 +22,31 @@ public class SelfCareButton: BaseButton {
         type: SelfCareButtonType
     ) {
         super.init(frame: .zero)
-        
-        switch type.buttonImage {
-        case nil:
-            buttonImage.isHidden = true
-        default:
-            buttonImage.image = type.buttonImage
-        }
-        
-        buttonLabel.text = type.text
-        buttonLabel.textColor = type.textColor
-        backgroundColor = type.backgroundColor
-        layer.cornerRadius = 8.0
-        
-        layout(type: type)
+        setup(type: type)
+        typeLayout(type: type)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func layout(type: SelfCareButtonType) {
+    public override func layout() {
         addSubview(containerView)
         
         containerView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.bottom.equalToSuperview().inset(17.0)
         }
-        
+    }
+    
+    public override func attribute() {
+        layer.cornerRadius = 8.0
+    }
+}
+
+
+extension SelfCareButton {
+    private func typeLayout(type: SelfCareButtonType) {
         switch type.buttonImage {
         case nil:
             containerView.addSubviews([buttonLabel])
@@ -90,5 +88,19 @@ public class SelfCareButton: BaseButton {
                 $0.top.bottom.equalToSuperview().inset(17.0)
             }
         }
+    }
+    
+    private func setup(type: SelfCareButtonType) {
+        switch type.buttonImage {
+        case nil:
+            buttonImage.isHidden = true
+        default:
+            buttonImage.image = type.buttonImage
+        }
+        
+        buttonLabel.text = type.text
+        buttonLabel.textColor = type.textColor
+        backgroundColor = type.backgroundColor
+        
     }
 }
