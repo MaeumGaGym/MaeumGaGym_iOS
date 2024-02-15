@@ -1,9 +1,13 @@
-//
-//  IntroModel.swift
-//  Domain
-//
-//  Created by 이은호 on 2/15/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+public struct IntroModel {
+    var image: UIImage
+    var mainTitle: String
+    var subTitle: String
+    
+    public init(image: UIImage, mainTitle: String, subTitle: String) {
+        self.image = image
+        self.mainTitle = mainTitle
+        self.subTitle = subTitle
+    }
+}
