@@ -9,17 +9,10 @@ import Moya
 
 import TokenManager
 
-public enum AuthHandleableType {
-    case loginSuccess
-    case loginFailure
-}
-
 public protocol AuthUseCase {
-    func requestSignIn(token: String)
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
-    func getIntroData() -> Single<IntroModel>
-    var signInResult: PublishSubject<Result<AuthHandleableType, Error>> { get }
+    func getIntroData()
     var introData: PublishSubject<IntroModel> { get }
 }
 
@@ -27,7 +20,7 @@ public class DefaultAuthUseCase {
     private let introRepository: IntroRepositoryInterface
     private let disposeBag = DisposeBag()
     
-    public let introData =  PublishSubject<IntroModel>()
+    public let introData = PublishSubject<IntroModel>()
     
     private let keychainAuthorization = KeychainType.authorizationToken
 
@@ -37,11 +30,17 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-
-    public func getIntroData() -> Single<IntroModel> {
+    public func getIntroData() {
         return introRepository.getIntroData()
+            .subscribe(onSuccess: { [weak self] introModel in
+                self?.introData.onNext(introModel)
+            },
+            onFailure: { error in
+                print("AuthUseCase getIntroData error occurred: \(error)")
+            })
+            .disposed(by: disposeBag)
     }
-    
+
     public func getCSRFToken() -> Single<String> {
         return introRepository.getCSRFToken()
     }
@@ -62,28 +61,12 @@ extension DefaultAuthUseCase: AuthUseCase {
                             } else {
                                 print("토큰 저장 실패")
                             }
-                            self.signInResult.onNext(.success(.loginSuccess))
                         }, onFailure: { [weak self] error in
-                            self?.signInResult.onNext(.failure(error))
+                            fatalError("\(error)")
                         })
                         .disposed(by: self.disposeBag)
                 }
             }
         }
-    }
-    
-    public func requestSignIn(token: String) {
-        introRepository.requestSignIn(token: token)
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.signInResult.onNext(.success(.loginSuccess))
-                print("성공")
-            }, onFailure: { [weak self] error in
-                self?.signInResult.onNext(.failure(error))
-            })
-            .disposed(by: disposeBag)
-    }
-
-    public var signInResult: PublishSubject<Result<AuthHandleableType, Error>> {
-        return PublishSubject<Result<AuthHandleableType, Error>>()
     }
 }
