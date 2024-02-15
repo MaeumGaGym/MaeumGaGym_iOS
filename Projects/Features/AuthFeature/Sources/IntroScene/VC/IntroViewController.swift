@@ -17,6 +17,8 @@ import DSKit
 import MGLogger
 
 public class IntroViewController: BaseViewController<IntroViewModel> {
+    
+    private var introModel: IntroModel?
 
     private var introImageView = MGProfileView(
         profileImage: MGProfileImage(
@@ -26,13 +28,11 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
     )
 
     private var mainTitle = MGLabel(
-        text: "이제 헬창이 되어보세요!",
         font: UIFont.Pretendard.titleMedium,
         isCenter: true
     )
 
     private var subTitle = MGLabel(
-        text: "저희의 좋은 서비스를 통해 즐거운 헬창 생활을\n즐겨보세요!",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color,
         numberOfLineCount: 2
@@ -106,17 +106,24 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
     public override func bindViewModel() {
          super.bindViewModel()
 
-         let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        let useCase = DefaultAuthUseCase(introRepository: IntroRepository(networkService: IntroService()))
          viewModel = IntroViewModel(authUseCase: useCase)
 
          let input = IntroViewModel.Input(
              goolgeButtonTapped: googleButton.rx.tap.asDriver(),
              appleButtonTapped: appleButton.rx.tap.asDriver(),
-             kakaoButtonTapped: kakaoButton.rx.tap.asDriver()
+             kakaoButtonTapped: kakaoButton.rx.tap.asDriver(),
+             getIntroData:
+                Observable.just(())
+                .asDriver(onErrorDriveWith: .never())
          )
 
-        viewModel.transform(input) { _ in 
-            
-        }
+        let ouput = viewModel.transform(input,
+            action: { output in
+            output.introDatas
+                .subscribe(onNext: { introDatas in
+                    self.introModel = introDatas
+                }).disposed(by: disposeBag)
+        })
      }
 }
