@@ -13,7 +13,7 @@ import AVFoundation
 import AudioToolbox
 
 public class MetronomeViewController: UIViewController {
-    
+
     public var disposeBag = DisposeBag()
 
     private var viewModel: MetronomeViewModel
@@ -21,7 +21,7 @@ public class MetronomeViewController: UIViewController {
     private lazy var navBar = MetronomeNavigationBar()
 
     private var exView = UIView().then {
-        $0.backgroundColor = .red
+        $0.backgroundColor = .clear
     }
 
     private let bpmTitle = UILabel().then {
@@ -273,7 +273,7 @@ extension MetronomeViewController: HorizontalPickerViewDelegate {
 
         for index in 0..<selectedLevel {
             let bitView = UIView()
-            bitView.backgroundColor = .blue
+            bitView.backgroundColor = DSKitAsset.Colors.blue400.color
             view.addSubview(bitView)
             bitViews.append(bitView)
 
@@ -296,6 +296,13 @@ extension MetronomeViewController: HorizontalPickerViewDelegate {
                     bitView.layer.cornerRadius = viewWidth / 2.0
                 }
             }
+        }
+        viewModel.beats = selectedLevel
+
+        if viewModel.isPlaying {
+            stopButton.isHidden = true
+            startButton.isHidden = false
+            viewModel.stop()
         }
     }
 }
