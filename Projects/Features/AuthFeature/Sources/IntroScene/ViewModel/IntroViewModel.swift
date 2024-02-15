@@ -20,43 +20,43 @@ import MGLogger
 import TokenManager
 
 public class IntroViewModel: AuthViewModelType {
-    
+
     public var disposeBag: RxSwift.DisposeBag
-    
+
     private let useCase: AuthUseCase
-    
+
     let keychainCSRF = KeychainType.CSRFToken
-    
+
     public struct Input {
         let goolgeButtonTapped: Driver<Void>
         let appleButtonTapped: Driver<Void>
         let kakaoButtonTapped: Driver<Void>
         let getIntroData: Driver<Void>
     }
-    
+
     public struct Output {
         var introDatas: Observable<IntroModel>
     }
-    
+
     public var goolgeButtonTap: (() -> Void)?
     public var appleButtonTap: (() -> Void)?
     public var kakaoButtonTap: (() -> Void)?
-    
+
     private let introModelSubject = PublishSubject<IntroModel>()
-    
+
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
         self.disposeBag = DisposeBag()
     }
-    
+
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
-        
+
         let output = Output(introDatas: introModelSubject.asObservable())
-        
+
         action(output)
-        
+
         bindOutput(output: output)
-        
+
         useCase.getCSRFToken()
             .subscribe(onSuccess: { token in
                 if TokenManagerImpl().save(token: token, with: self.keychainCSRF) {
@@ -68,37 +68,38 @@ public class IntroViewModel: AuthViewModelType {
                 print("Error: \(error)")
             })
             .disposed(by: disposeBag)
-        
+
         input.goolgeButtonTapped
             .drive(onNext: { [weak self] _ in
-                self?.useCase.requestSignIn(token: "googleToken")
+                print("goolgeButtonTapped")
             })
             .disposed(by: disposeBag)
-        
+
         input.kakaoButtonTapped
             .drive(onNext: { [weak self] _ in
                 self?.useCase.kakaoButtonTap()
             })
             .disposed(by: disposeBag)
-        
+
         input.appleButtonTapped
             .drive(onNext: { [weak self] _ in
                 self?.appleButtonTap?()
             })
             .disposed(by: disposeBag)
-        
+
         input.getIntroData
             .drive(onNext: { [weak self] _ in
                 self?.useCase.getIntroData()
             }).disposed(by: disposeBag)
-        
+
         return output
     }
-    
+
     private func bindOutput(output: Output) {
         useCase.introData
             .subscribe(onNext: { introData in
                 self.introModelSubject.onNext(introData)
+                MGLogger.debug(introData)
             }).disposed(by: disposeBag)
     }
 }

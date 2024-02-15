@@ -113,17 +113,14 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
              goolgeButtonTapped: googleButton.rx.tap.asDriver(),
              appleButtonTapped: appleButton.rx.tap.asDriver(),
              kakaoButtonTapped: kakaoButton.rx.tap.asDriver(),
-             getIntroData:
-                Observable.just(())
-                .asDriver(onErrorDriveWith: .never())
+             getIntroData: Observable.just(()).asDriver(onErrorDriveWith: .never())
          )
 
-        let ouput = viewModel.transform(input,
-            action: { output in
+        let ouput = viewModel.transform(input, action: { output in
             output.introDatas
-                .subscribe(onNext: { introDatas in
-                    self.introModel = introDatas
-                }).disposed(by: disposeBag)
+                .subscribe(onNext: { introData in
+                    self.introModel = introData
+                })
         })
      }
 }
