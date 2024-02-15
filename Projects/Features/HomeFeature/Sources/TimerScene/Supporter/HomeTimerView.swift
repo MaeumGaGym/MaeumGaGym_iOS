@@ -103,13 +103,19 @@ public class HomeTimerView: UIView {
     
     let timerModel = TimerModel()
     
+    public func timerChange(for index: Int) {
+        initTime = timerModel.getTime(at: index)
+        cancelTime = initTime
+        timerIndex = index
+        homeTimer.setTimer(index: index, settingTime: homeTimer.presentTime(index: index))
+            
+    }
+    
     public func timerSetting(for index: Int) {
         initTime = timerModel.getTime(at: index)
         cancelTime = initTime
         timerIndex = index
-        homeTimer.setTimer(index: index, settingTime: initTime)
-        circleShapeLayer.add(createCircleAnimation(), forKey: "key")
-        stopCricleAnimation()
+        homeTimer.setTimer(index: index, settingTime: homeTimer.presentTime(index: index))
         setInitialTimeLabel()
         setTimerTimeLabel()
         setInitAlarmTimeLabel()
