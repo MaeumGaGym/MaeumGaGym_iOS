@@ -40,18 +40,18 @@ public class RoutineTableViewCell: BaseTableViewCell {
             routineCollectionView.reloadData()
         }
     }
-    
+
     public override func attribute() {
         super.attribute()
-        
+
         self.backgroundColor = DSKitAsset.Colors.gray25.color
         routineCollectionView.delegate = self
         routineCollectionView.dataSource = self
     }
-    
+
     public override func layout() {
         super.layout()
-        
+
         setupCornerRadiusAndBackground()
         contentView.addSubviews([nameTitle, routineCollectionView])
 

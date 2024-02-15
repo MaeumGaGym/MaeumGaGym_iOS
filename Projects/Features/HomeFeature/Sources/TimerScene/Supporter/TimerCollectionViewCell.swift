@@ -24,7 +24,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
         $0.isHidden = true
     }
     
-    private var exerciseNameLabel = UILabel().then {
+    private var timeLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyMedium
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.masksToBounds = true
@@ -35,7 +35,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     }
     
     public func setup(time: Double) {
-        exerciseNameLabel.text = setTimerTimeLabelText(from: time)
+        timeLabel.text = setTimerTimeLabelText(from: time)
         layout()
         
     }
@@ -54,7 +54,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     }
     
     private func layout() {
-        addSubviews([exerciseNameLabel, checkImage, unCheckView])
+        addSubviews([timeLabel, checkImage, unCheckView])
         
         checkImage.snp.makeConstraints {
             $0.top.leading.equalToSuperview().offset(6.0)
@@ -66,22 +66,22 @@ public class TimerCollectionViewCell: UICollectionViewCell {
             $0.width.height.equalTo(22.0)
         }
         
-        exerciseNameLabel.snp.makeConstraints {
+        timeLabel.snp.makeConstraints {
             $0.top.bottom.trailing.leading.equalToSuperview().inset(10.0)
             $0.width.height.equalTo(100.0)
         }
     }
     
     public func cellUnClicked() {
-        exerciseNameLabel.layer.borderColor = DSKitAsset.Colors.gray50.color.cgColor
-        exerciseNameLabel.layer.borderWidth = 2
-        exerciseNameLabel.backgroundColor = DSKitAsset.Colors.gray50.color
+        timeLabel.layer.borderColor = DSKitAsset.Colors.gray50.color.cgColor
+        timeLabel.layer.borderWidth = 2
+        timeLabel.backgroundColor = DSKitAsset.Colors.gray50.color
     }
     
     public func cellClicked() {
-        exerciseNameLabel.layer.borderColor = DSKitAsset.Colors.blue500.color.cgColor
-        exerciseNameLabel.layer.borderWidth = 2
-        exerciseNameLabel.backgroundColor = .white
+        timeLabel.layer.borderColor = DSKitAsset.Colors.blue500.color.cgColor
+        timeLabel.layer.borderWidth = 2
+        timeLabel.backgroundColor = .white
     }
     
     public func cellChoosing() {

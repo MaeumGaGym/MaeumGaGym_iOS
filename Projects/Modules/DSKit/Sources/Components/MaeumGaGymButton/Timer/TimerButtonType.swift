@@ -2,10 +2,15 @@ import Foundation
 import UIKit
 
 public enum TimerButtonType: String {
+    // Timer
     case close
     case start
     case stop
     case restart
+    
+    // BPM
+    case vibration
+    case sound
     
     public var imageLogo: UIImage? {
         switch self {
@@ -17,6 +22,10 @@ public enum TimerButtonType: String {
             return DSKitAsset.Assets.pause.image
         case .restart:
             return DSKitAsset.Assets.redo.image
+        case .vibration:
+            return DSKitAsset.Assets.vibration.image
+        case .sound:
+            return DSKitAsset.Assets.volume.image
         }
     }
     
@@ -29,6 +38,10 @@ public enum TimerButtonType: String {
         case .stop:
             return DSKitAsset.Colors.blue400.color
         case .restart:
+            return .white
+        case .vibration:
+            return .white
+        case .sound:
             return .white
         }
     }
