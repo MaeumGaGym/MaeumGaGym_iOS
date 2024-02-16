@@ -19,8 +19,6 @@ import MGLogger
 
 import TokenManager
 
-import AuthenticationServices
-
 public class IntroViewModel: AuthViewModelType {
 
     public var disposeBag: RxSwift.DisposeBag
@@ -40,9 +38,9 @@ public class IntroViewModel: AuthViewModelType {
         var introDatas: Observable<IntroModel>
     }
 
-    public var goolgeButtonTap: (() -> Void)?
-    public var appleButtonTap: (() -> Void)?
-    public var kakaoButtonTap: (() -> Void)?
+//    public var goolgeButtonTap: (() -> Void)?
+//    public var appleButtonTap: (() -> Void)?
+//    public var kakaoButtonTap: (() -> Bool)?
 
     private let introModelSubject = PublishSubject<IntroModel>()
 
@@ -73,7 +71,7 @@ public class IntroViewModel: AuthViewModelType {
 
         input.goolgeButtonTapped
             .drive(onNext: { [weak self] _ in
-                print("이건 은호가 해보자")
+                print("goolgeButtonTapped")
             })
             .disposed(by: disposeBag)
 
@@ -83,11 +81,11 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
 
-        input.appleButtonTapped
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.appleButtonTap()
-            })
-            .disposed(by: disposeBag)
+//        input.appleButtonTapped
+//            .drive(onNext: { [weak self] _ in
+//                self?.appleButtonTap?()
+//            })
+//            .disposed(by: disposeBag)
 
         input.getIntroData
             .drive(onNext: { [weak self] _ in
@@ -103,12 +101,6 @@ public class IntroViewModel: AuthViewModelType {
                 self.introModelSubject.onNext(introData)
                 MGLogger.debug(introData)
             }).disposed(by: disposeBag)
-
-        useCase.appleLoginResult
-            .subscribe(onNext: { token in
-                MGLogger.debug("여기 토큰 \(token)")
-            })
-            .disposed(by: disposeBag)
     }
 }
 
