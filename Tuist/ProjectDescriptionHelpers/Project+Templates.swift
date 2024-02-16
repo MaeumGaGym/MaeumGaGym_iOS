@@ -189,7 +189,7 @@ public extension Project {
             name: name,
             organizationName: Environment.workspaceName,
             packages: packages,
-            settings: .settings(configurations: XCConfig.project),
+            settings: .settings(base: Environment.baseSetting.merging(.codeSign),configurations: XCConfig.project),
             targets: projectTargets,
             schemes: scheme
         )
