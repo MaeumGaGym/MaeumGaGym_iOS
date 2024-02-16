@@ -13,7 +13,7 @@ public protocol AuthUseCase {
     func getCSRFToken() -> Single<String>
     func getIntroData()
     func appleButtonTap() -> Single<String>
-    var appleLoginResult: PublishSubject<String> { get }
+    var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
 
@@ -22,7 +22,7 @@ public class DefaultAuthUseCase {
     private let disposeBag = DisposeBag()
     
     public let introData = PublishSubject<IntroModel>()
-    public let appleLoginResult = PublishSubject<String>()
+    public let appleSignupResult = PublishSubject<String>()
 
     public init(introRepository: IntroRepositoryInterface) {
         self.introRepository = introRepository
@@ -32,18 +32,18 @@ public class DefaultAuthUseCase {
 extension DefaultAuthUseCase: AuthUseCase {
     
     public func appleButtonTap() -> Single<String> {
-        introRepository.appleLogin()
+        introRepository.appleSignup()
             .subscribe(
                 onSuccess: { [weak self] token in
-                    self?.appleLoginResult.onNext(token)
+                    self?.appleSignupResult.onNext(token)
                 },
                 onFailure: { [weak self] error in
-                    self?.appleLoginResult.onError(error)
+                    self?.appleSignupResult.onError(error)
                 }
             )
             .disposed(by: disposeBag)
     
-        return appleLoginResult.take(1).asSingle()
+        return appleSignupResult.take(1).asSingle()
     }
     
     public func getIntroData() {

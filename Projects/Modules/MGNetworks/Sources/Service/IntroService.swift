@@ -18,7 +18,7 @@ public class IntroService: NSObject {
     let kakaoProvider = MoyaProvider<KakaoAPI>()
     
     private let keychainAuthorization = KeychainType.authorizationToken
-    private let appleLoginSubject = PublishSubject<String>()
+    private let appleSignupSubject = PublishSubject<String>()
     
     public func requestToken() -> Single<Bool> {
         return Single.just(true)
@@ -84,7 +84,7 @@ public class IntroService: NSObject {
         return Single.just(IntroModel(image: DSKitAsset.Assets.blueHome.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
-    public func appleLogin() -> Single<String> {
+    public func appleSignup() -> Single<String> {
         let appleProvider = ASAuthorizationAppleIDProvider()
         let request = appleProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -94,7 +94,7 @@ public class IntroService: NSObject {
         
         controller.delegate = self
         
-        return appleLoginSubject.take(1).asSingle()
+        return appleSignupSubject.take(1).asSingle()
     }
     
     public override init() {
@@ -110,8 +110,8 @@ extension IntroService: ASAuthorizationControllerDelegate {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             if let identityToken = appleIDCredential.identityToken,
                let tokenString = String(data: identityToken, encoding: .utf8) {
-                appleLoginSubject.onNext(tokenString)
-                appleLoginSubject.onCompleted()
+                appleSignupSubject.onNext(tokenString)
+                appleSignupSubject.onCompleted()
             }
         default:
             break
@@ -119,7 +119,7 @@ extension IntroService: ASAuthorizationControllerDelegate {
     }
 
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        appleLoginSubject.onError(error)
+        appleSignupSubject.onError(error)
     }
 }
 
