@@ -10,5 +10,6 @@ public extension Project {
         public static let deploymentTarget = DeploymentTarget.iOS(targetVersion: "15.0", devices: .iphone)
         public static let platform = Platform.iOS
         public static let bundlePrefix = "com.maeumGaGym-health-iOS"
+        public static let baseSetting: SettingsDictionary = SettingsDictionary()
     }
 }

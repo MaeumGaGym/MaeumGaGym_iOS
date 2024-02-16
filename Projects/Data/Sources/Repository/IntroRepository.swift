@@ -10,7 +10,6 @@ import Domain
 import MGNetworks
 
 public class IntroRepository: IntroRepositoryInterface {
-        
     private let networkService: IntroService
 
     public init(networkService: IntroService) {
@@ -27,5 +26,9 @@ public class IntroRepository: IntroRepositoryInterface {
     
     public func getIntroData() -> Single<IntroModel>  {
         return networkService.requestIntroData()
+    }
+    
+    public func appleLogin() -> Single<String> {
+        return networkService.appleLogin()
     }
 }
