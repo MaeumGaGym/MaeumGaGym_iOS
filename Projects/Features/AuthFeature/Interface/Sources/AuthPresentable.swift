@@ -8,9 +8,9 @@ import Core
 
 public protocol AuthViewControllable: ViewControllable {}
 public protocol AuthCoordintable {
-    var goolgeButtonTap: (() -> Void)? { get set }
-    var appleButtonTap: (() -> Void)? { get set }
-    var kakaoButtonTap: (() -> Void)? { get set }
+//    var goolgeButtonTap: (() -> Void)? { get set }
+//    var appleButtonTap: (() -> Void)? { get set }
+//    var kakaoButtonTap: (() -> Bool)? { get set }
 
     var disposeBag: DisposeBag { get set }
 }
