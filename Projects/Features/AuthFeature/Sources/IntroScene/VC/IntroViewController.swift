@@ -128,62 +128,62 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
                 .disposed(by: disposeBag)
         })
 
-        appleButton.rx.tap
-            .bind {
-                let appleProvider = ASAuthorizationAppleIDProvider()
-                let request = appleProvider.createRequest()
-                request.requestedScopes = [.fullName, .email]
-
-                let controller = ASAuthorizationController(authorizationRequests: [request])
-                controller.delegate = self
-                controller.performRequests()
-            }
-            .disposed(by: disposeBag)
+//        appleButton.rx.tap
+//            .bind {
+//                let appleProvider = ASAuthorizationAppleIDProvider()
+//                let request = appleProvider.createRequest()
+//                request.requestedScopes = [.fullName, .email]
+//
+//                let controller = ASAuthorizationController(authorizationRequests: [request])
+//                controller.delegate = self
+//                controller.performRequests()
+//            }
+//            .disposed(by: disposeBag)
      }
 }
-
-extension IntroViewController: ASAuthorizationControllerDelegate,
-                               ASAuthorizationControllerPresentationContextProviding {
-    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-
-    public func authorizationController(controller: ASAuthorizationController,
-                                        didCompleteWithAuthorization authorization: ASAuthorization
-    ) {
-        switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-
-            if  let authorizationCode = appleIDCredential.authorizationCode,
-                let identityToken = appleIDCredential.identityToken,
-                let authCodeString = String(data: authorizationCode, encoding: .utf8),
-                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
-                print("authorizationCode: \(authorizationCode)")
-                print("identityToken: \(identityToken)")
-                print("authCodeString: \(authCodeString)")
-                print("identifyTokenString: \(identifyTokenString)")
-            }
-
-            print("useridentifier: \(userIdentifier)")
-            print("fullName: \(String(describing: fullName))")
-            print("email: \(String(describing: email))")
-
-        case let passwordCredential as ASPasswordCredential:
-            let username = passwordCredential.user
-            let password = passwordCredential.password
-
-            print("username: \(username)")
-            print("password: \(password)")
-
-        default:
-            break
-        }
-    }
-
-    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("login failed - \(error.localizedDescription)")
-    }
-}
+//
+//extension IntroViewController: ASAuthorizationControllerDelegate,
+//                               ASAuthorizationControllerPresentationContextProviding {
+//    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        return self.view.window!
+//    }
+//
+//    public func authorizationController(controller: ASAuthorizationController,
+//                                        didCompleteWithAuthorization authorization: ASAuthorization
+//    ) {
+//        switch authorization.credential {
+//        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+//            let userIdentifier = appleIDCredential.user
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//
+//            if  let authorizationCode = appleIDCredential.authorizationCode,
+//                let identityToken = appleIDCredential.identityToken,
+//                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+//                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+//                print("authorizationCode: \(authorizationCode)")
+//                print("identityToken: \(identityToken)")
+//                print("authCodeString: \(authCodeString)")
+//                print("identifyTokenString: \(identifyTokenString)")
+//            }
+//
+//            print("useridentifier: \(userIdentifier)")
+//            print("fullName: \(String(describing: fullName))")
+//            print("email: \(String(describing: email))")
+//
+//        case let passwordCredential as ASPasswordCredential:
+//            let username = passwordCredential.user
+//            let password = passwordCredential.password
+//
+//            print("username: \(username)")
+//            print("password: \(password)")
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+//        print("login failed - \(error.localizedDescription)")
+//    }
+//}
