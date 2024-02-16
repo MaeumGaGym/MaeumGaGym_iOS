@@ -1,4 +1,5 @@
 import UIKit
+import AuthenticationServices
 
 import RxSwift
 import RxCocoa
@@ -11,12 +12,13 @@ import DSKit
 import KakaoSDKUser
 import TokenManager
 
-public class IntroService {
+public class IntroService: NSObject {
     
     let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
     
     private let keychainAuthorization = KeychainType.authorizationToken
+    private let appleLoginSubject = PublishSubject<String>()
     
     public func requestToken() -> Single<Bool> {
         return Single.just(true)
@@ -26,12 +28,12 @@ public class IntroService {
         return kakaoProvider.rx.request(.kakaoLogin)
             .mapString()
     }
-
+    
     public func kakaoSignup(nickname: String, accessToken: String) -> Single<String> {
         return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
             .mapString()
     }
-
+    
     public func kakaoRecovery() -> Single<String> {
         return kakaoProvider.rx.request(.kakaoRecovery)
             .mapString()
@@ -82,8 +84,42 @@ public class IntroService {
         return Single.just(IntroModel(image: DSKitAsset.Assets.blueHome.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
-    public init() {
+    public func appleLogin() -> Single<String> {
+        let appleProvider = ASAuthorizationAppleIDProvider()
+        let request = appleProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
         
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.performRequests()
+        
+        controller.delegate = self
+        
+        return appleLoginSubject.take(1).asSingle()
     }
     
+    public override init() {
+        
+    }
 }
+
+extension IntroService: ASAuthorizationControllerDelegate {
+    public func authorizationController(controller: ASAuthorizationController,
+                                        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            if let identityToken = appleIDCredential.identityToken,
+               let tokenString = String(data: identityToken, encoding: .utf8) {
+                appleLoginSubject.onNext(tokenString)
+                appleLoginSubject.onCompleted()
+            }
+        default:
+            break
+        }
+    }
+
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        appleLoginSubject.onError(error)
+    }
+}
+

@@ -81,11 +81,11 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
 
-//        input.appleButtonTapped
-//            .drive(onNext: { [weak self] _ in
-//                self?.appleButtonTap?()
-//            })
-//            .disposed(by: disposeBag)
+        input.appleButtonTapped
+              .drive(onNext: { [weak self] _ in
+                  self?.useCase.appleButtonTap()
+              })
+              .disposed(by: disposeBag)
 
         input.getIntroData
             .drive(onNext: { [weak self] _ in
@@ -101,6 +101,12 @@ public class IntroViewModel: AuthViewModelType {
                 self.introModelSubject.onNext(introData)
                 MGLogger.debug(introData)
             }).disposed(by: disposeBag)
+        
+        useCase.appleLoginResult
+            .subscribe(onNext: { token in
+                MGLogger.debug("여기 토큰 \(token)")
+            })
+            .disposed(by: disposeBag)
     }
 }
 
