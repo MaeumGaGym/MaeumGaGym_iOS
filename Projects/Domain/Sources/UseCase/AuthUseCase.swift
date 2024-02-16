@@ -12,6 +12,8 @@ public protocol AuthUseCase {
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
     func getIntroData()
+    func appleButtonTap() -> Single<String>
+    var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
 
@@ -20,6 +22,7 @@ public class DefaultAuthUseCase {
     private let disposeBag = DisposeBag()
     
     public let introData = PublishSubject<IntroModel>()
+    public let appleSignupResult = PublishSubject<String>()
 
     public init(introRepository: IntroRepositoryInterface) {
         self.introRepository = introRepository
@@ -27,6 +30,22 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
+    
+    public func appleButtonTap() -> Single<String> {
+        introRepository.appleSignup()
+            .subscribe(
+                onSuccess: { [weak self] token in
+                    self?.appleSignupResult.onNext(token)
+                },
+                onFailure: { [weak self] error in
+                    self?.appleSignupResult.onError(error)
+                }
+            )
+            .disposed(by: disposeBag)
+    
+        return appleSignupResult.take(1).asSingle()
+    }
+    
     public func getIntroData() {
         return introRepository.getIntroData()
             .subscribe(onSuccess: { [weak self] introModel in

@@ -27,8 +27,9 @@ public class IntroRepository: IntroRepositoryInterface {
     public func getIntroData() -> Single<IntroModel>  {
         return networkService.requestIntroData()
     }
-    
-    public func appleLogin() -> Single<String> {
-        return networkService.appleLogin()
+    public func appleSignup() -> RxSwift.Single<String> {
+        return networkService.appleSignup()
     }
+    
+    
 }
