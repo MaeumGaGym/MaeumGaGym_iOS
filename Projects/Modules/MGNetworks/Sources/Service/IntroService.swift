@@ -8,24 +8,57 @@ import Moya
 
 import Domain
 import DSKit
+import KakaoSDKUser
+import TokenManager
 
 public class IntroService {
     
     let provider = MoyaProvider<CsrfAPI>()
+    let kakaoProvider = MoyaProvider<KakaoAPI>()
+    
+    private let keychainAuthorization = KeychainType.authorizationToken
     
     public func requestToken() -> Single<Bool> {
         return Single.just(true)
     }
     
-    public func kakaoTokenState(access_token: String) -> Single<String> {
-        return Single.deferred {
-            return Single.create { single in
-                let result = access_token
-                
-                single(.success(result))
-                
-                return Disposables.create()
+    public func kakaoLogin() -> Single<String> {
+        return kakaoProvider.rx.request(.kakaoLogin)
+            .mapString()
+    }
+
+    public func kakaoSignup(nickname: String, accessToken: String) -> Single<String> {
+        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
+            .mapString()
+    }
+
+    public func kakaoRecovery() -> Single<String> {
+        return kakaoProvider.rx.request(.kakaoRecovery)
+            .mapString()
+    }
+    
+    public func kakaoTokenState() -> Single<Bool> {
+        return Single.create { [weak self] single in
+            if UserApi.isKakaoTalkLoginAvailable() {
+                UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                    if let error = error {
+                        single(.success(false))
+                    } else {
+                        guard let self = self, let accessToken = oauthToken?.accessToken else {
+                            single(.success(false))
+                            return
+                        }
+                        if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
+                            single(.success(true))
+                        } else {
+                            single(.success(false))
+                        }
+                    }
+                }
+            } else {
+                single(.success(false))
             }
+            return Disposables.create()
         }
     }
     
@@ -52,4 +85,5 @@ public class IntroService {
     public init() {
         
     }
+    
 }
