@@ -20,7 +20,7 @@ extension BaseAPI {
         case .CSRFToken:
             appURL += "/public"
         case .kakao:
-            appURL += ""
+            appURL += "/kakao"
         case .google:
             appURL += ""
         case .apple:

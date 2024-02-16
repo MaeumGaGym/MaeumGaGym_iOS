@@ -38,9 +38,9 @@ public class IntroViewModel: AuthViewModelType {
         var introDatas: Observable<IntroModel>
     }
 
-    public var goolgeButtonTap: (() -> Void)?
-    public var appleButtonTap: (() -> Void)?
-    public var kakaoButtonTap: (() -> Void)?
+//    public var goolgeButtonTap: (() -> Void)?
+//    public var appleButtonTap: (() -> Void)?
+//    public var kakaoButtonTap: (() -> Bool)?
 
     private let introModelSubject = PublishSubject<IntroModel>()
 
@@ -81,11 +81,11 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
 
-        input.appleButtonTapped
-            .drive(onNext: { [weak self] _ in
-                self?.appleButtonTap?()
-            })
-            .disposed(by: disposeBag)
+//        input.appleButtonTapped
+//            .drive(onNext: { [weak self] _ in
+//                self?.appleButtonTap?()
+//            })
+//            .disposed(by: disposeBag)
 
         input.getIntroData
             .drive(onNext: { [weak self] _ in

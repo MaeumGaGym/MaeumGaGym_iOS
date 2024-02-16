@@ -17,8 +17,8 @@ public class IntroRepository: IntroRepositoryInterface {
         self.networkService = networkService
     }
 
-    public func kakaoToken(access_token: String) -> Single<String> {
-        networkService.kakaoTokenState(access_token: access_token)
+    public func kakaoToken() -> Single<Bool> {
+        networkService.kakaoTokenState()
     }
     
     public func getCSRFToken() -> Single<String> {
