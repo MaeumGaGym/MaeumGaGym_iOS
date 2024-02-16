@@ -19,6 +19,8 @@ import MGLogger
 
 import TokenManager
 
+import AuthenticationServices
+
 public class IntroViewModel: AuthViewModelType {
 
     public var disposeBag: RxSwift.DisposeBag
@@ -71,7 +73,7 @@ public class IntroViewModel: AuthViewModelType {
 
         input.goolgeButtonTapped
             .drive(onNext: { [weak self] _ in
-                print("goolgeButtonTapped")
+                print("이건 은호가 해보자")
             })
             .disposed(by: disposeBag)
 
