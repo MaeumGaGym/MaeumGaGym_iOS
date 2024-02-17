@@ -194,24 +194,24 @@ public class HomeTimerView: UIView {
             timerAlarmTitle.text = ""
             return
         }
-        let formatter_time = DateFormatter()
-        formatter_time.dateFormat = "a h:mm"
-        formatter_time.amSymbol = "오전"
-        formatter_time.pmSymbol = "오후"
-        let current_time_string = formatter_time.string(from: Date().addingTimeInterval(initTime))
+        let formatterTime = DateFormatter()
+        formatterTime.dateFormat = "a h:mm"
+        formatterTime.amSymbol = "오전"
+        formatterTime.pmSymbol = "오후"
+        let currentTimeString = formatterTime.string(from: Date().addingTimeInterval(initTime))
         DispatchQueue.main.async {
-            self.timerAlarmTitle.text = current_time_string
+            self.timerAlarmTitle.text = currentTimeString
         }
     }
-    
+
     private func setAlarmTimeLabel() {
-        let formatter_time = DateFormatter()
-        formatter_time.dateFormat = "a h:mm"
-        formatter_time.amSymbol = "오전"
-        formatter_time.pmSymbol = "오후"
-        let current_time_string = formatter_time.string(from: Date().addingTimeInterval(currentTime))
+        let formatterTime = DateFormatter()
+        formatterTime.dateFormat = "a h:mm"
+        formatterTime.amSymbol = "오전"
+        formatterTime.pmSymbol = "오후"
+        let currentTimeString = formatterTime.string(from: Date().addingTimeInterval(currentTime))
         DispatchQueue.main.async {
-            self.timerAlarmTitle.text = current_time_string
+            self.timerAlarmTitle.text = currentTimeString
         }
     }
     

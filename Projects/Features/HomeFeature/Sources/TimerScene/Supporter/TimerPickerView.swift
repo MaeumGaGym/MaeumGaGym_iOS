@@ -9,17 +9,21 @@ import DSKit
 public class TimerPickerView: BaseView {
     private var pickerWidth: Double = 75.0
     public var isFirstLoad: Bool?
-    
+
     public var pickerSelectValue = 0
-    
-    
+
     private let hourValues: [Int] = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-    
-    private let minuteValues: [Int] = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
-    
-    private let secondValues: [Int] = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
-    
-    
+
+    private let minuteValues: [Int] = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09,
+                                       10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                                       24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+                                       38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
+
+    private let secondValues: [Int] = [00, 01, 02, 03, 04, 05, 06, 07, 08, 09,
+                                       10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                                       21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+                                       33, 34, 35, 36, 37, 38, 39, 40, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]
+
     private var rotationAngle: CGFloat! = -90  * (.pi/180)
     
     lazy var pickerView = UIPickerView().then {
@@ -58,7 +62,8 @@ public class TimerPickerView: BaseView {
         pickerView.dataSource = self
         
         if #available(iOS 14.0, *) {
-            pickerView.preferredDatePickerStyle = .inline
+            // 여기 부분에서 에러가 납니다
+//            pickerView.preferredDatePickerStyle = .inline
         }
     }
     
@@ -138,9 +143,9 @@ extension TimerPickerView: UIPickerViewDelegate {
             return pickerRow
         }
         
-        let selectLabel = selectView.subviews[0] as! UILabel
-        selectLabel.textColor = .black
-        selectLabel.font = UIFont.Pretendard.light
+        let selectLabel = selectView.subviews[0] as? UILabel
+        selectLabel?.textColor = .black
+        selectLabel?.font = UIFont.Pretendard.light
         return pickerRow
     }
     
