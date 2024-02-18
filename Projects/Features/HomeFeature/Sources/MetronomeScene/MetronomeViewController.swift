@@ -58,7 +58,7 @@ public class MetronomeViewController: UIViewController {
     private var bitViews: [UIView] = []
 
     private lazy var bitPickerView = HorizontalPickerView().then {
-        $0.pickerSelectValue = 0
+        $0.pickerSelectValue = 3
         $0.delegate = self
     }
 
@@ -92,17 +92,9 @@ public class MetronomeViewController: UIViewController {
 
     private func setupViews() {
         view.addSubviews([navBar, exView, bpmTitle])
-        view.addSubview(tempoLabel)
-        view.addSubview(tempoIncrementButton)
-        view.addSubview(tempoDecrementButton)
-        view.addSubview(tempoSlider)
-        view.addSubview(bitTitle)
-        view.addSubview(bitPickerView)
-
-        view.addSubview(vibrateButton)
-        view.addSubview(stopButton)
-        view.addSubview(startButton)
-        view.addSubview(soundButton)
+        view.addSubviews([tempoLabel, tempoIncrementButton, tempoDecrementButton,
+                          tempoSlider, bitTitle, bitPickerView])
+        view.addSubviews([vibrateButton, stopButton, startButton, soundButton])
 
         navBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
