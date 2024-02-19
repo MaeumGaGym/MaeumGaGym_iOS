@@ -3,14 +3,12 @@ import UIKit
 import SnapKit
 import Then
 
+import Core
 import DSKit
+import Domain
 
-public class PostureRecommandTableViewCell: UITableViewCell {
+public class PostureRecommandTableViewCell: BaseTableViewCell{
     static let identifier: String = "PostureRecommandTableViewCell"
-
-    var collectionView: UICollectionView!
-    var data: [Exercise] = []
-    var cellSize: Int = 0
 
     private var titleImageLogo = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -26,9 +24,7 @@ public class PostureRecommandTableViewCell: UITableViewCell {
 
     private var seemoreButton = MaeumGaGymSeeMoreButton()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+    private var exerciseCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
             $0.minimumLineSpacing = 12
@@ -36,33 +32,34 @@ public class PostureRecommandTableViewCell: UITableViewCell {
             $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)
         }
 
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
             $0.register(PostureRecommandCollectionViewCell.self,
                         forCellWithReuseIdentifier: PostureRecommandCollectionViewCell.identifier)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.showsHorizontalScrollIndicator = false
             $0.showsVerticalScrollIndicator = false
-            $0.dataSource = self
-            $0.delegate = self
             $0.backgroundColor = .white
         }
-        addViews()
-        setupViews()
+        return collectionView
+    }()
+
+    private var recommandExerciseData: [PostureRecommandExerciseModel] = [] {
+        didSet {
+            exerciseCollectionView.reloadData()
+        }
     }
 
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public override func attribute() {
+        super.attribute()
+
+        backgroundColor = .white
+        exerciseCollectionView.delegate = self
+        exerciseCollectionView.dataSource = self
     }
 
-    private func addViews() {
-        contentView.addSubview(titleImageLogo)
-        contentView.addSubview(exerciseTitleLabel)
-        contentView.addSubview(seemoreButton)
-        contentView.addSubview(collectionView)
+    public override func layout() {
+        addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton, exerciseCollectionView])
 
-    }
-
-    private func setupViews() {
         titleImageLogo.snp.makeConstraints {
             $0.width.height.equalTo(40.0)
             $0.top.equalToSuperview().offset(24.0)
@@ -83,7 +80,7 @@ public class PostureRecommandTableViewCell: UITableViewCell {
             $0.top.equalToSuperview().offset(28.0)
         }
 
-        collectionView.snp.makeConstraints {
+        exerciseCollectionView.snp.makeConstraints {
             $0.width.equalToSuperview().inset(20.0)
             $0.height.equalTo(200.0)
             $0.bottom.equalToSuperview()
@@ -92,9 +89,9 @@ public class PostureRecommandTableViewCell: UITableViewCell {
     }
 
     public func selecCell(model: PostureRecommandModel) {
-        self.data = model.data
-        self.titleImageLogo.image = model.logo
-        self.exerciseTitleLabel.text = model.title
+        titleImageLogo.image = model.titleImage
+        exerciseTitleLabel.text = model.titleText
+        recommandExerciseData = model.exerciseData
     }
 }
 
@@ -113,7 +110,7 @@ extension PostureRecommandTableViewCell: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        _ = data[indexPath.row]
+        _ = recommandExerciseData[indexPath.row]
     }
 }
 
@@ -122,7 +119,7 @@ extension PostureRecommandTableViewCell: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return data.count
+        return recommandExerciseData.count
     }
 
     public func collectionView(
@@ -133,8 +130,8 @@ extension PostureRecommandTableViewCell: UICollectionViewDataSource {
             withReuseIdentifier: PostureRecommandCollectionViewCell.identifier,
             for: indexPath
         ) as? PostureRecommandCollectionViewCell
-        let model = data[indexPath.row]
-        cell?.setup(exerciseImage: model.image, exerciseNameText: model.name, exercisePartText: model.part)
+        let model = recommandExerciseData[indexPath.row]
+        cell?.setup(with: model)
         return cell ?? UICollectionViewCell()
     }
 }
