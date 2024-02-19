@@ -9,6 +9,8 @@ import Domain
 
 public class PostureRecommandTableViewCell: BaseTableViewCell{
     static let identifier: String = "PostureRecommandTableViewCell"
+    
+    private let containerView = UIView()
 
     private var titleImageLogo = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -58,33 +60,35 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
     }
 
     public override func layout() {
-        addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton, exerciseCollectionView])
+        addSubviews([containerView, exerciseCollectionView])
+        containerView.addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton])
+        
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.bottom.equalTo(exerciseCollectionView.snp.top).offset(-12.0)
+        }
 
         titleImageLogo.snp.makeConstraints {
+            $0.top.leading.equalToSuperview()
             $0.width.height.equalTo(40.0)
-            $0.top.equalToSuperview().offset(24.0)
-            $0.leading.equalToSuperview().offset(20.0)
         }
 
         exerciseTitleLabel.snp.makeConstraints {
-            $0.width.equalTo(89.0)
-            $0.height.equalTo(32)
             $0.top.equalTo(titleImageLogo.snp.bottom).offset(8.0)
-            $0.leading.equalToSuperview().offset(20.0)
+            $0.leading.equalToSuperview()
         }
 
         seemoreButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(28.0)
+            $0.trailing.equalToSuperview()
             $0.width.equalTo(74.0)
             $0.height.equalTo(24.0)
-            $0.trailing.equalToSuperview().offset(-20.0)
-            $0.top.equalToSuperview().offset(28.0)
         }
 
         exerciseCollectionView.snp.makeConstraints {
-            $0.width.equalToSuperview().inset(20.0)
-            $0.height.equalTo(200.0)
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.trailing.bottom.equalToSuperview()
         }
     }
 
