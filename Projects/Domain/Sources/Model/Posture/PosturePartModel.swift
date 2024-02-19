@@ -2,11 +2,15 @@ import UIKit
 
 public struct PosturePartModel {
     public var exerciseType: [PosturePartExerciseTypeModel]
-    public var exerciseData: [PosturePartExerciseModel]
+    public var allExerciseData: [PosturePartExerciseModel]
+    public var bodyExerciseData: [PosturePartExerciseModel]
+    public var machineExerciseData: [PosturePartExerciseModel]
 
-    public init(exerciseType: [PosturePartExerciseTypeModel], exerciseData: [PosturePartExerciseModel]) {
+    public init(exerciseType: [PosturePartExerciseTypeModel], allExerciseData: [PosturePartExerciseModel], bodyExerciseData: [PosturePartExerciseModel], machineExerciseData: [PosturePartExerciseModel]) {
         self.exerciseType = exerciseType
-        self.exerciseData = exerciseData
+        self.allExerciseData = allExerciseData
+        self.bodyExerciseData = bodyExerciseData
+        self.machineExerciseData = machineExerciseData
     }
 }
 
