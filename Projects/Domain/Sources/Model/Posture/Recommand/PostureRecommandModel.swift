@@ -1,5 +1,5 @@
 //
-//  PostureRecommandTitleModel.swift
+//  PostureRecommandModel.swift
 //  Domain
 //
 //  Created by 이은호 on 2/19/24.
