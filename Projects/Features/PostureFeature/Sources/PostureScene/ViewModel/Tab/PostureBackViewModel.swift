@@ -12,27 +12,27 @@ public enum backToggleButtonState {
 }
 
 public class PostureBackViewModel: BaseViewModel {
-    
+
     let disposeBag = DisposeBag()
-    
+
     public struct Input {
           let firstButtonTapped: Observable<Void>
           let secondButtonTapped: Observable<Void>
       }
-      
+
       public struct Output {
           let backModel: Observable<PostureExerciseModel>
           let firstButtonState: Observable<backToggleButtonState>
           let secondButtonState: Observable<backToggleButtonState>
       }
-      
-      private let backEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .back)
+
+    private let backEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .back)
     private let firstButtonStateSubject = BehaviorSubject<backToggleButtonState> (value: .unChecked)
     private let secondButtonStateSubject = BehaviorSubject<backToggleButtonState>(value: .unChecked)
-      
-      public init() {}
-      
-      public func transform(_ input: Input) -> Output {
+
+    public init() {}
+
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
           input.firstButtonTapped
               .subscribe(onNext: { [self] in
                   let currentState = try? firstButtonStateSubject.value()
