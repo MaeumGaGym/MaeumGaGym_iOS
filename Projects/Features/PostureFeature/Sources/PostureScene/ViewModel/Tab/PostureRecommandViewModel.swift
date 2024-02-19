@@ -10,10 +10,9 @@ import Domain
 
 public class PostureRecommandViewModel: BaseViewModel {
     
-    public var disposeBag: DisposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     private let useCase: PostureUseCase
-
 
     public struct Input {
         let getRecommandData: Driver<Void>
