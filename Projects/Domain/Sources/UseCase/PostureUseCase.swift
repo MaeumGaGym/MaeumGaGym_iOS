@@ -4,7 +4,7 @@ import RxSwift
 
 public protocol PostureUseCase {
     var recommandData: PublishSubject<[PostureRecommandModel]> { get }
-    
+
     var partData: PublishSubject<PosturePartModel> { get }
 
     func getRecommandData()
@@ -25,6 +25,7 @@ public class DefaultPostureUseCase {
 }
 
 extension DefaultPostureUseCase: PostureUseCase {
+
     public func getRecommandData() {
         repository.getRecommandData()
             .subscribe(onSuccess: { [weak self] recommandData in
