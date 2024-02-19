@@ -1,17 +1,31 @@
 import UIKit
-import SnapKit
-import Then
-import Core
+
 import RxFlow
 import RxCocoa
 import RxSwift
+
+import SnapKit
+import Then
+
+import Core
 import DSKit
 import MGLogger
+
+import Domain
+import Data
+import MGNetworks
+
 import PostureFeatureInterface
+
+enum RecommandCell {
+    case recommand
+}
 
 public class PostureRecommandViewController: BaseViewController<PostureRecommandViewModel> {
 
-    var tableView = UITableView().then {
+    private var recommandData: [PostureRecommandModel] = []
+
+    private var recommandTableView: UITableView = UITableView().then {
         $0.register(PostureRecommandTableViewCell.self,
                     forCellReuseIdentifier: PostureRecommandTableViewCell.identifier)
         $0.rowHeight = 340
@@ -20,32 +34,40 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
         $0.separatorStyle = .none
     }
 
-    var firstModel = PostureRecommandModel.first
-    var secondModel = PostureRecommandModel.second
-
     public override func attribute() {
-        super.attribute()
-
-        tableView.dataSource = self
+        recommandTableView.dataSource = self
     }
 
     public override func layout() {
         super.layout()
-        view.addSubview(tableView)
+        view.addSubviews([recommandTableView])
 
-        tableView.snp.makeConstraints {
+        recommandTableView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(676)
             $0.leading.trailing.equalToSuperview()
             $0.top.equalToSuperview()
         }
     }
-
+    
     public override func bindViewModel() {
         super.bindViewModel()
-
-        firstModel = PostureRecommandModel.first
-        secondModel = PostureRecommandModel.second
+        
+        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+        
+        let input = PostureRecommandViewModel.Input(
+            getRecommandData:
+                Observable.just(())
+                .asDriver(onErrorDriveWith: .never())
+        )
+        
+        let output = viewModel.transform(input, action: { output in
+            output.recommandData
+                .subscribe(onNext: { recommandData in
+                    MGLogger.debug("Recommand Data: \(recommandData)")
+                    self.recommandData = recommandData
+                }).disposed(by: disposeBag)
+        })
     }
 }
 
@@ -65,11 +87,8 @@ extension PostureRecommandViewController: UITableViewDataSource {
             withIdentifier: PostureRecommandTableViewCell.identifier,
             for: indexPath
         ) as? PostureRecommandTableViewCell
-        if indexPath.row == 0 {
-            cell?.selecCell(model: firstModel)
-        } else if indexPath.row == 1 {
-            cell?.selecCell(model: secondModel)
-        }
+        let model = recommandData[indexPath.row]
+        cell?.selecCell(model: model)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }

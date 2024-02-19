@@ -12,27 +12,27 @@ public enum chestToggleButtonState {
 }
 
 public class PostureChestViewModel: BaseViewModel {
-    
+
     let disposeBag = DisposeBag()
-    
+
     public struct Input {
         let firstButtonTapped: Observable<Void>
         let secondButtonTapped: Observable<Void>
     }
-    
+
     public struct Output {
         let chestModel: Observable<PostureExerciseModel>
         let firstButtonState: Observable<chestToggleButtonState>
         let secondButtonState: Observable<chestToggleButtonState>
     }
-    
+
     private let chestEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .chest)
     private let firstButtonStateSubject = BehaviorSubject<chestToggleButtonState>(value: .unchecked)
     private let secondButtonStateSubject = BehaviorSubject<chestToggleButtonState>(value: .unchecked)
-    
+
     public init() {}
-    
-    public func transform(_ input: Input) -> Output {
+
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         input.firstButtonTapped
             .subscribe(onNext: { [self] in
                 let currentState = try? firstButtonStateSubject.value()

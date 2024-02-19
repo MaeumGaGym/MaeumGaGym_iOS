@@ -5,7 +5,7 @@ import RxSwift
 import Core
 
 public class PostureDetailViewModel: BaseViewModel {
-    public func transform(_ input: Input) -> Output {
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }
 
