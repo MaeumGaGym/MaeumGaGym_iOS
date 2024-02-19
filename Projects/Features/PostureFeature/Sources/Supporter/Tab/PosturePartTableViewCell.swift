@@ -5,8 +5,9 @@ import Then
 
 import DSKit
 import Core
+import Domain
 
-public class PostureChestTableViewCell: BaseTableViewCell {
+public class PosturePartTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureChestTableViewCell"
 
@@ -22,26 +23,28 @@ public class PostureChestTableViewCell: BaseTableViewCell {
         $0.font = UIFont.Pretendard.bodyMedium
     }
 
-    public func setup(exerciseImage: UIImage, exerciseNameText: String) {
-        self.postureImageView.image = exerciseImage
-        self.exerciseNameLabel.text = exerciseNameText
-    }
-
     public override func layout() {
         super.layout()
         
         contentView.addSubviews([postureImageView, exerciseNameLabel])
+
         postureImageView.snp.makeConstraints {
-            $0.leading.top.equalToSuperview().offset(12.0)
-            $0.bottom.equalToSuperview().inset(12.0)
+            $0.top.bottom.equalToSuperview().inset(12.0)
+            $0.leading.equalToSuperview().offset(12.0)
             $0.width.height.equalTo(64.0)
         }
 
         exerciseNameLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(34.0)
             $0.leading.equalTo(postureImageView.snp.trailing).offset(18.0)
-            $0.trailing.equalToSuperview().inset(18.0)
             $0.height.equalTo(20.0)
         }
+    }
+}
+
+public extension PosturePartTableViewCell {
+    func setup(with exerciseData: PosturePartExerciseModel) {
+        postureImageView.image = exerciseData.image
+        exerciseNameLabel.text = exerciseData.name
     }
 }

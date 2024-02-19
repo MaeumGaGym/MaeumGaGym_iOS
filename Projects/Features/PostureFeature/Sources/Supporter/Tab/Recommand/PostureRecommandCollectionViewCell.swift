@@ -27,14 +27,6 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
         $0.textAlignment = .left
     }
 
-    public func setup(with exerciseData: PostureRecommandExerciseModel) {
-        postureImageView.image = exerciseData.image
-        exerciseNameLabel.text = exerciseData.name
-        exercisePartLabel.text = exerciseData.part
-
-        layout()
-    }
-
     private func layout() {
         addSubviews([postureImageView, exerciseNameLabel, exercisePartLabel])
 
@@ -57,5 +49,15 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+    }
+}
+
+public extension PostureRecommandCollectionViewCell {
+    func setup(with exerciseData: PostureRecommandExerciseModel) {
+        postureImageView.image = exerciseData.image
+        exerciseNameLabel.text = exerciseData.name
+        exercisePartLabel.text = exerciseData.part
+
+        layout()
     }
 }

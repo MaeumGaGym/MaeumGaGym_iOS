@@ -17,10 +17,6 @@ import MGNetworks
 
 import PostureFeatureInterface
 
-enum RecommandCell {
-    case recommand
-}
-
 public class PostureRecommandViewController: BaseViewController<PostureRecommandViewModel> {
 
     private var recommandData: [PostureRecommandModel] = []
