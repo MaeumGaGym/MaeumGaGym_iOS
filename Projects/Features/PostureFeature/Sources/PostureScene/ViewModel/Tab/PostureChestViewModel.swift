@@ -10,7 +10,7 @@ import MGLogger
 
 public enum ChestToggleButtonState {
     case checked
-    case unchecked
+    case unChecked
 }
 
 public enum PostureChestModelState {
@@ -39,8 +39,8 @@ public class PostureChestViewModel: BaseViewModel {
         var chestData: Observable<PosturePartModel>
     }
 
-    private let firstButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unchecked)
-    private let secondButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unchecked)
+    private let firstButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
+    private let secondButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
     private let chestModelStateSubject = BehaviorSubject<PostureChestModelState>(value: .all)
 
     private let chestDataSubject = PublishSubject<PosturePartModel>()
@@ -68,12 +68,12 @@ public class PostureChestViewModel: BaseViewModel {
                 let currentState = try? self?.firstButtonStateSubject.value()
 
                 switch currentState {
-                case .unchecked:
+                case .unChecked:
                     self?.firstButtonStateSubject.onNext(.checked)
-                    self?.secondButtonStateSubject.onNext(.unchecked)
+                    self?.secondButtonStateSubject.onNext(.unChecked)
                     self?.chestModelStateSubject.onNext(.body)
                 case .checked:
-                    self?.firstButtonStateSubject.onNext(.unchecked)
+                    self?.firstButtonStateSubject.onNext(.unChecked)
                     self?.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
@@ -86,12 +86,12 @@ public class PostureChestViewModel: BaseViewModel {
                 let currentState = try? self?.secondButtonStateSubject.value()
 
                 switch currentState {
-                case .unchecked:
+                case .unChecked:
                     self?.secondButtonStateSubject.onNext(.checked)
-                    self?.firstButtonStateSubject.onNext(.unchecked)
+                    self?.firstButtonStateSubject.onNext(.unChecked)
                     self?.chestModelStateSubject.onNext(.machine)
                 case .checked:
-                    self?.secondButtonStateSubject.onNext(.unchecked)
+                    self?.secondButtonStateSubject.onNext(.unChecked)
                     self?.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
@@ -107,7 +107,6 @@ public class PostureChestViewModel: BaseViewModel {
     }
 
     private func bindOutput(output: Output) {
-
         useCase.partData
             .subscribe(onNext: { partData in
                 self.chestDataSubject.onNext(partData)
