@@ -5,68 +5,112 @@ import RxCocoa
 import RxSwift
 
 import Core
+import Domain
+import MGLogger
 
-public enum chestToggleButtonState {
+public enum ChestToggleButtonState {
     case checked
     case unchecked
 }
 
+public enum PostureChestModelState {
+    case all
+    case body
+    case machine
+}
+
 public class PostureChestViewModel: BaseViewModel {
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+
+    private let useCase: PostureUseCase
 
     public struct Input {
-        let firstButtonTapped: Observable<Void>
-        let secondButtonTapped: Observable<Void>
+        let firstButtonTapped: Driver<Void>
+        let secondButtonTapped: Driver<Void>
+        let getChestData: Driver<Void>
     }
 
     public struct Output {
-        let chestModel: Observable<PostureExerciseModel>
-        let firstButtonState: Observable<chestToggleButtonState>
-        let secondButtonState: Observable<chestToggleButtonState>
+        let firstButtonState: Observable<ChestToggleButtonState>
+        let secondButtonState: Observable<ChestToggleButtonState>
+        let chestModelState:
+        Observable<PostureChestModelState>
+        var chestData: Observable<PosturePartModel>
     }
 
-    private let chestEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .chest)
-    private let firstButtonStateSubject = BehaviorSubject<chestToggleButtonState>(value: .unchecked)
-    private let secondButtonStateSubject = BehaviorSubject<chestToggleButtonState>(value: .unchecked)
+    private let firstButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unchecked)
+    private let secondButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unchecked)
+    private let chestModelStateSubject = BehaviorSubject<PostureChestModelState>(value: .all)
 
-    public init() {}
+    private let chestDataSubject = PublishSubject<PosturePartModel>()
+
+    public init(useCase: PostureUseCase) {
+        self.useCase = useCase
+    }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
+        let output = Output(
+            firstButtonState: firstButtonStateSubject.asObservable(),
+            secondButtonState:
+                secondButtonStateSubject.asObservable(),
+            chestModelState: chestModelStateSubject.asObservable(),
+            chestData: chestDataSubject.asObservable()
+        )
+
+        action(output)
+
+        self.bindOutput(output: output)
+
         input.firstButtonTapped
-            .subscribe(onNext: { [self] in
-                let currentState = try? firstButtonStateSubject.value()
+            .drive(onNext: { [weak self] _ in
+                MGLogger.debug("firstButtonTapped")
+                let currentState = try? self?.firstButtonStateSubject.value()
+
                 switch currentState {
                 case .unchecked:
-                    firstButtonStateSubject.onNext(.checked)
-                    secondButtonStateSubject.onNext(.unchecked)
-                    chestEntireModelSubject.onNext(.chestBody)
+                    self?.firstButtonStateSubject.onNext(.checked)
+                    self?.secondButtonStateSubject.onNext(.unchecked)
+                    self?.chestModelStateSubject.onNext(.body)
                 case .checked:
-                    firstButtonStateSubject.onNext(.unchecked)
-                    chestEntireModelSubject.onNext(.chest)
+                    self?.firstButtonStateSubject.onNext(.unchecked)
+                    self?.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
             }).disposed(by: disposeBag)
-        
+
         input.secondButtonTapped
-            .subscribe(onNext: { [self] in
-                let currentState = try? secondButtonStateSubject.value()
+            .drive(onNext: { [weak self] _ in
+                MGLogger.debug("firstButtonTapped")
+                let currentState = try? self?.secondButtonStateSubject.value()
+
                 switch currentState {
                 case .unchecked:
-                    secondButtonStateSubject.onNext(.checked)
-                    firstButtonStateSubject.onNext(.unchecked)
-                    chestEntireModelSubject.onNext(.chestMachine)
+                    self?.secondButtonStateSubject.onNext(.checked)
+                    self?.firstButtonStateSubject.onNext(.unchecked)
+                    self?.chestModelStateSubject.onNext(.machine)
                 case .checked:
-                    secondButtonStateSubject.onNext(.unchecked)
-                    chestEntireModelSubject.onNext(.chest)
+                    self?.secondButtonStateSubject.onNext(.unchecked)
+                    self?.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
             }).disposed(by: disposeBag)
-        
-        return Output(chestModel: chestEntireModelSubject.asObservable(),
-                      firstButtonState: firstButtonStateSubject.asObservable(),
-                      secondButtonState: secondButtonStateSubject.asObservable())
+
+        input.getChestData
+            .drive(onNext: { [weak self] _ in
+                self?.useCase.getPartData(type: .chest)
+            }).disposed(by: disposeBag)
+
+        return output
+    }
+
+    private func bindOutput(output: Output) {
+
+        useCase.partData
+            .subscribe(onNext: { partData in
+                self.chestDataSubject.onNext(partData)
+            }).disposed(by: disposeBag)
     }
 }
