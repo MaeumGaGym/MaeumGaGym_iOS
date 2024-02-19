@@ -1,9 +1,16 @@
-//
-//  PostureRepository.swift
-//  Data
-//
-//  Created by 이은호 on 2/19/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import RxSwift
 
-import Foundation
+import Domain
+import MGNetworks
+
+public class PostureRepository: PostureRepositoryInterface {
+    private let networkService: PostureService
+    
+    public func getRecommandData() -> Single<[PostureRecommandModel]> {
+        return networkService.requestRecommandData()
+    }
+    
+    public init(networkService: PostureService) {
+        self.networkService = networkService
+    }
+}
