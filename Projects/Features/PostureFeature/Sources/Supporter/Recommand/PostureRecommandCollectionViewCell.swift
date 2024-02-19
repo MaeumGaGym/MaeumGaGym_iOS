@@ -4,6 +4,7 @@ import SnapKit
 import Then
 
 import DSKit
+import Domain
 
 public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 
@@ -26,24 +27,16 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
         $0.textAlignment = .left
     }
 
-    public func setup(exerciseImage: UIImage, exerciseNameText: String, exercisePartText: String) {
-        self.postureImageView.image = exerciseImage
-        self.exerciseNameLabel.text = exerciseNameText
-        self.exercisePartLabel.text = exercisePartText
+    public func setup(with exerciseData: PostureRecommandExerciseModel) {
+        postureImageView.image = exerciseData.image
+        exerciseNameLabel.text = exerciseData.name
+        exercisePartLabel.text = exerciseData.part
 
-        addViews()
-        setupViews()
+        layout()
     }
 
-    private func addViews() {
-        [
-            postureImageView,
-            exerciseNameLabel,
-            exercisePartLabel
-        ].forEach { contentView.addSubview($0) }
-    }
-
-    private func setupViews() {
+    private func layout() {
+        addSubviews([postureImageView, exerciseNameLabel, exercisePartLabel])
 
         postureImageView.snp.makeConstraints {
             $0.width.equalToSuperview()
