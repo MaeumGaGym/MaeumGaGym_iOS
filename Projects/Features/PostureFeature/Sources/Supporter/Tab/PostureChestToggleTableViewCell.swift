@@ -16,7 +16,7 @@ public class PostureChestToggleTableViewCell: BaseTableViewCell {
     private var secondButtonCliked: Bool = false
 
     private var firstButton = MGToggleButton(type: .bareBody)
-    private var secondButton = MGToggleButton(type: .marchine)
+    private var secondButton = MGToggleButton(type: .machine)
 
     public func setup(firstType: ToggleButtonType, secondType: ToggleButtonType) {
         self.firstButton = MGToggleButton(type: firstType)

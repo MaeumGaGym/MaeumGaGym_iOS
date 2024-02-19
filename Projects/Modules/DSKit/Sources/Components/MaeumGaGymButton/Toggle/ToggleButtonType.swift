@@ -12,7 +12,7 @@ public enum ToggleButtonType {
     case image
     case album
     case bareBody
-    case marchine
+    case machine
     
     var message: String {
         switch self {
@@ -36,7 +36,7 @@ public enum ToggleButtonType {
             return "저녁"
         case .bareBody:
             return "맨몸"
-        case .marchine:
+        case .machine:
             return "기구"
         }
     }
@@ -63,7 +63,7 @@ public enum ToggleButtonType {
             return 16.0
         case .bareBody:
             return 18.0
-        case .marchine:
+        case .machine:
             return 18.0
         }
     }
@@ -90,7 +90,7 @@ public enum ToggleButtonType {
             return .black
         case .bareBody:
             return DSKitAsset.Colors.gray600.color
-        case .marchine:
+        case .machine:
             return DSKitAsset.Colors.gray600.color
         }
     }
@@ -117,7 +117,7 @@ public enum ToggleButtonType {
             return UIFont.Pretendard.bodyMedium
         case .bareBody:
             return UIFont.Pretendard.labelMedium
-        case .marchine:
+        case .machine:
             return UIFont.Pretendard.labelMedium
         }
     }
@@ -144,7 +144,7 @@ public enum ToggleButtonType {
             return DSKitAsset.Colors.gray50.color
         case .bareBody:
             return DSKitAsset.Colors.gray50.color
-        case .marchine:
+        case .machine:
             return DSKitAsset.Colors.gray50.color
         }
     }
@@ -171,7 +171,7 @@ public enum ToggleButtonType {
             return .white
         case .bareBody:
             return .white
-        case .marchine:
+        case .machine:
             return .white
         }
     }
@@ -198,7 +198,7 @@ public enum ToggleButtonType {
             return UIFont.Pretendard.titleSmall
         case .bareBody:
             return UIFont.Pretendard.labelMedium
-        case .marchine:
+        case .machine:
             return UIFont.Pretendard.labelMedium
         }
     }
@@ -225,7 +225,7 @@ public enum ToggleButtonType {
             return DSKitAsset.Colors.blue500.color
         case .bareBody:
             return DSKitAsset.Colors.blue500.color
-        case .marchine:
+        case .machine:
             return DSKitAsset.Colors.blue500.color
         }
     }
