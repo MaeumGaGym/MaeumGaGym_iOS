@@ -1,9 +1,7 @@
-//
-//  PostureRepositoryInterface.swift
-//  Domain
-//
-//  Created by 이은호 on 2/19/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+import RxSwift
+
+public protocol PostureRepositoryInterface {
+    func getRecommandData() -> Single<[PostureRecommandModel]>
+}
