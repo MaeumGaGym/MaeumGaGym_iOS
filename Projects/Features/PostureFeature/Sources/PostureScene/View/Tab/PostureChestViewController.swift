@@ -127,7 +127,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                     switch firstButtonState {
                     case .checked:
                         self.firstButton.buttonYesChecked(type: .bareBody)
-                    case .unchecked:
+                    case .unChecked:
                         self.firstButton.buttonNoChecked(type: .bareBody)
                     }
                 }).disposed(by: disposeBag)
@@ -137,7 +137,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                     switch secondButtonState {
                     case .checked:
                         self.secondButton.buttonYesChecked(type: .machine)
-                    case .unchecked:
+                    case .unChecked:
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
