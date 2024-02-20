@@ -1,13 +1,16 @@
 import UIKit
-import SnapKit
-import Then
+
 import RxSwift
 import RxCocoa
+
+import SnapKit
+import Then
+
 import Core
 import MGCameraKit
 
 public class DemoViewController: UIViewController {
-    
+
     private var cameraView = MGCamera(frame: CGRect(x: 0, y: 0, width: 430, height: 573)).then {
         $0.setAspectRatio(.full)
         $0.setBackgroundColor(.white)
