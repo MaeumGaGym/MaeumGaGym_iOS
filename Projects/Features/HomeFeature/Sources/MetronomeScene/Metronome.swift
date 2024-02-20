@@ -20,8 +20,6 @@ public class Metronome: MetronomeType {
 
     private var currentBuffer: AVAudioPCMBuffer?
 
-    public var beatCallback: ((Int) -> Void)?
-
     init(mainClickFile: URL, accentedClickFile: URL? = nil) {
         do {
             audioFileMainClick = try AVAudioFile(forReading: mainClickFile)
@@ -143,9 +141,5 @@ public class Metronome: MetronomeType {
         bufferBar.frameLength = AVAudioFrameCount(barArray.count)
 
         return bufferBar
-    }
-
-    private func handleBeat(beatIndex: Int) {
-        beatCallback?(beatIndex)
     }
 }
