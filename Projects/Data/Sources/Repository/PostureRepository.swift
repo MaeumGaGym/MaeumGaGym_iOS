@@ -15,6 +15,10 @@ public class PostureRepository: PostureRepositoryInterface {
         return networkService.requestPartData(type: type)
     }
 
+    public func getDetailData(type: PostureDetailType) -> Single<PostureDetailModel> {
+        return networkService.requestDetailData(type: type)
+    }
+
     public init(networkService: PostureService) {
         self.networkService = networkService
     }
