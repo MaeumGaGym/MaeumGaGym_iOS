@@ -18,6 +18,10 @@ public class MetronomeViewController: UIViewController {
 
     private var viewModel: MetronomeViewModel
 
+    private var colorChangeTimer: Timer?
+    private let colors: [UIColor] = [.red, .yellow, .orange, .green, .blue, .purple]
+    private var currentBitIndex = 0
+
     private lazy var navBar = MetronomeNavigationBar()
 
     private var exView = UIView().then {
@@ -58,7 +62,7 @@ public class MetronomeViewController: UIViewController {
     private var bitViews: [UIView] = []
 
     private lazy var bitPickerView = HorizontalPickerView().then {
-        $0.pickerSelectValue = 0
+        $0.pickerSelectValue = 3
         $0.delegate = self
     }
 
@@ -92,17 +96,9 @@ public class MetronomeViewController: UIViewController {
 
     private func setupViews() {
         view.addSubviews([navBar, exView, bpmTitle])
-        view.addSubview(tempoLabel)
-        view.addSubview(tempoIncrementButton)
-        view.addSubview(tempoDecrementButton)
-        view.addSubview(tempoSlider)
-        view.addSubview(bitTitle)
-        view.addSubview(bitPickerView)
-
-        view.addSubview(vibrateButton)
-        view.addSubview(stopButton)
-        view.addSubview(startButton)
-        view.addSubview(soundButton)
+        view.addSubviews([tempoLabel, tempoIncrementButton, tempoDecrementButton,
+                          tempoSlider, bitTitle, bitPickerView])
+        view.addSubviews([vibrateButton, stopButton, startButton, soundButton])
 
         navBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -178,54 +174,94 @@ public class MetronomeViewController: UIViewController {
     }
 
     private func setupActions() {
-        tempoIncrementButton.addTarget(self, action: #selector(incrementButtonTapped), for: .touchUpInside)
-        tempoDecrementButton.addTarget(self, action: #selector(decrementButtonTapped), for: .touchUpInside)
-        startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-        stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
-        vibrateButton.addTarget(self, action: #selector(vibrateButtonTapped), for: .touchUpInside)
-        tempoSlider.addTarget(self, action: #selector(tempoSliderValueChanged(_:)), for: .valueChanged)
+        tempoIncrementButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.tempo += 1
+                self?.updateTempoViews()
+            })
+            .disposed(by: disposeBag)
+
+        tempoDecrementButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.tempo -= 1
+                self?.updateTempoViews()
+            })
+            .disposed(by: disposeBag)
 
         startButton.rx.tap
-            .subscribe(onNext: { [self] in
-                    stopButton.isHidden = false
-                    startButton.isHidden = true
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.start()
+                self?.startColorChangeTimer()
+                self?.updateTempoViews()
+                self?.stopButton.isHidden = false
+                self?.startButton.isHidden = true
             })
             .disposed(by: disposeBag)
 
         stopButton.rx.tap
-            .subscribe(onNext: { [self] in
-                stopButton.isHidden = true
-                startButton.isHidden = false
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.stop()
+                self?.colorChangeTimer?.invalidate()
+                self?.resetBitViews()
+                self?.stopButton.isHidden = true
+                self?.startButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
+
+        vibrateButton.rx.tap
+            .subscribe(onNext: { _ in
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            })
+            .disposed(by: disposeBag)
+
+        tempoSlider.rx.value
+            .map { Int($0.rounded()) }
+            .subscribe(onNext: { [weak self] roundedValue in
+                self?.viewModel.tempo = roundedValue
+                self?.updateTempoViews()
+                self?.viewModel.stop()
+                self?.colorChangeTimer?.invalidate()
+                self?.resetBitViews()
             })
             .disposed(by: disposeBag)
     }
 
-    @objc private func tempoSliderValueChanged(_ sender: UISlider) {
-        let roundedValue = Int(sender.value.rounded())
-        viewModel.tempo = roundedValue
-        updateTempoViews()
+    private func startColorChangeTimer() {
+        colorChangeTimer?.invalidate()
+        colorChangeTimer = Timer.scheduledTimer(timeInterval: 60.0 / Double(viewModel.tempo),
+                                                target: self, selector: #selector(updateBitViewsColor),
+                                                userInfo: nil,
+                                                repeats: true)
     }
 
-    @objc private func incrementButtonTapped() {
-        viewModel.tempo += 1
-        updateTempoViews()
+    private func resetBitViews() {
+        for bitView in bitViews {
+            bitView.layer.removeAllAnimations()
+            bitView.backgroundColor = .gray
+        }
+        currentBitIndex = 0
     }
 
-    @objc private func decrementButtonTapped() {
-        viewModel.tempo -= 1
-        updateTempoViews()
-    }
+    @objc private func updateBitViewsColor() {
+        guard !bitViews.isEmpty else { return }
 
-    @objc private func startButtonTapped() {
-        viewModel.start()
-    }
+        UIView.animate(withDuration: 1.0) {
+            for index in self.currentBitIndex..<self.bitViews.count {
+                self.bitViews[index].backgroundColor = .gray
+            }
+        }
 
-    @objc private func stopButtonTapped() {
-        viewModel.stop()
-    }
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            if self.bitViews[self.currentBitIndex].backgroundColor == .gray {
+                self.bitViews[self.currentBitIndex].backgroundColor = DSKitAsset.Colors.blue400.color
+            }
 
-    @objc private func vibrateButtonTapped() {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            self.currentBitIndex += 1
+
+            if self.currentBitIndex >= self.bitViews.count {
+                self.currentBitIndex = 0
+            }
+        }
     }
 
     private func updateTempoViews() {
@@ -271,9 +307,18 @@ extension MetronomeViewController: HorizontalPickerViewDelegate {
         let totalWidth: CGFloat = CGFloat(rowCount) * viewWidth + CGFloat(rowCount - 1) * spacing
         let startingX: CGFloat = (view.frame.size.width - totalWidth) / 2.0
 
+        colorChangeTimer?.invalidate()
+
+        for bitView in bitViews {
+            bitView.layer.removeAllAnimations()
+            bitView.backgroundColor = .gray
+        }
+        currentBitIndex = 0
+
         for index in 0..<selectedLevel {
             let bitView = UIView()
-            bitView.backgroundColor = DSKitAsset.Colors.blue400.color
+            bitView.backgroundColor = .gray
+
             view.addSubview(bitView)
             bitViews.append(bitView)
 

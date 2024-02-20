@@ -14,10 +14,10 @@ public protocol MetronomeViewModelDelegate: AnyObject {
 
 public class MetronomeViewModel {
     weak var delegate: MetronomeViewModelDelegate?
-    
+
     public var isPlaying = false
 
-    private var metronome: MetronomeType
+    public var metronome: MetronomeType
     private let disposeBag = DisposeBag()
 
     var tempoRelay = BehaviorRelay<Int>(value: 120)
@@ -55,7 +55,7 @@ public class MetronomeViewModel {
 
     func stop() {
         guard isPlaying else { return }
-               
+
         isPlaying = false
         metronome.stop()
     }

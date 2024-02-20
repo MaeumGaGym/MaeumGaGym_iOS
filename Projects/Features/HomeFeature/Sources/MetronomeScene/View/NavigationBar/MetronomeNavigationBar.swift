@@ -7,7 +7,7 @@ import Core
 import DSKit
 
 final class MetronomeNavigationBar: UIView {
- 
+
     public var rightButtonTap: ControlEvent<Void> {
         return rightButton.rx.tap
     }
