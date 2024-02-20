@@ -174,83 +174,78 @@ public class MetronomeViewController: UIViewController {
     }
 
     private func setupActions() {
-        tempoIncrementButton.addTarget(self, action: #selector(incrementButtonTapped), for: .touchUpInside)
-        tempoDecrementButton.addTarget(self, action: #selector(decrementButtonTapped), for: .touchUpInside)
-        startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-        stopButton.addTarget(self, action: #selector(stopButtonTapped), for: .touchUpInside)
-        vibrateButton.addTarget(self, action: #selector(vibrateButtonTapped), for: .touchUpInside)
-        tempoSlider.addTarget(self, action: #selector(tempoSliderValueChanged(_:)), for: .valueChanged)
+        tempoIncrementButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.tempo += 1
+                self?.updateTempoViews()
+            })
+            .disposed(by: disposeBag)
+
+        tempoDecrementButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.tempo -= 1
+                self?.updateTempoViews()
+            })
+            .disposed(by: disposeBag)
 
         startButton.rx.tap
-            .subscribe(onNext: { [self] in
-                    stopButton.isHidden = false
-                    startButton.isHidden = true
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.start()
+                self?.startColorChangeTimer()
+                self?.updateTempoViews()
+                self?.stopButton.isHidden = false
+                self?.startButton.isHidden = true
             })
             .disposed(by: disposeBag)
 
         stopButton.rx.tap
-            .subscribe(onNext: { [self] in
-                stopButton.isHidden = true
-                startButton.isHidden = false
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.stop()
+                self?.colorChangeTimer?.invalidate()
+                self?.resetBitViews()
+                self?.stopButton.isHidden = true
+                self?.startButton.isHidden = false
+            })
+            .disposed(by: disposeBag)
+
+        vibrateButton.rx.tap
+            .subscribe(onNext: { _ in
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            })
+            .disposed(by: disposeBag)
+
+        tempoSlider.rx.value
+            .map { Int($0.rounded()) }
+            .subscribe(onNext: { [weak self] roundedValue in
+                self?.viewModel.tempo = roundedValue
+                self?.updateTempoViews()
+                self?.viewModel.stop()
+                self?.colorChangeTimer?.invalidate()
+                self?.resetBitViews()
             })
             .disposed(by: disposeBag)
     }
 
-    @objc private func tempoSliderValueChanged(_ sender: UISlider) {
-        let roundedValue = Int(sender.value.rounded())
-        viewModel.tempo = roundedValue
-        updateTempoViews()
-        
-        viewModel.stop()
-        
-        colorChangeTimer?.invalidate()
-
-        for bitView in bitViews {
-            bitView.layer.removeAllAnimations()
-            bitView.backgroundColor = .gray
-        }
-        currentBitIndex = 0
-    }
-    @objc private func incrementButtonTapped() {
-        viewModel.tempo += 1
-        updateTempoViews()
-    }
-
-    @objc private func decrementButtonTapped() {
-        viewModel.tempo -= 1
-        updateTempoViews()
-    }
-    @objc private func startButtonTapped() {
-        viewModel.start()
-
+    private func startColorChangeTimer() {
         colorChangeTimer?.invalidate()
         colorChangeTimer = Timer.scheduledTimer(timeInterval: 60.0 / Double(viewModel.tempo),
                                                 target: self, selector: #selector(updateBitViewsColor),
                                                 userInfo: nil,
                                                 repeats: true)
-
-        updateTempoViews()
     }
 
-    @objc private func stopButtonTapped() {
-        viewModel.stop()
-        colorChangeTimer?.invalidate()
-
+    private func resetBitViews() {
         for bitView in bitViews {
             bitView.layer.removeAllAnimations()
             bitView.backgroundColor = .gray
         }
         currentBitIndex = 0
-    }
-    @objc private func vibrateButtonTapped() {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
 
     @objc private func updateBitViewsColor() {
         guard !bitViews.isEmpty else { return }
 
         UIView.animate(withDuration: 1.0) {
-
             for index in self.currentBitIndex..<self.bitViews.count {
                 self.bitViews[index].backgroundColor = .gray
             }
