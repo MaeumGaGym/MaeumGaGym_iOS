@@ -41,13 +41,26 @@ public class PostureService {
         }
     }
 
-    private func requestChestData() ->
+    public func requestDetailData(type: PostureDetailType) -> Single<PostureDetailModel> {
+        switch type {
+        case .pushUp:
+            return requestPushUpData()
+        }
+    }
+
+    public init() {
+
+    }
+}
+
+private extension PostureService {
+    func requestChestData() ->
     Single<PosturePartModel> {
         return Single.just(
             PosturePartModel(
                 exerciseType: [
-                PosturePartExerciseTypeModel(exerciseName: "맨몸"),
-                PosturePartExerciseTypeModel(exerciseName: "기구")
+                    PosturePartExerciseTypeModel(exerciseName: "맨몸"),
+                    PosturePartExerciseTypeModel(exerciseName: "기구")
                 ],
                 allExerciseData: [
                     PosturePartExerciseModel(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스"),
@@ -83,13 +96,13 @@ public class PostureService {
         )
     }
 
-    private func requestBackData() ->
+    func requestBackData() ->
     Single<PosturePartModel> {
         return Single.just(
             PosturePartModel(
                 exerciseType: [
-                PosturePartExerciseTypeModel(exerciseName: "맨몸"),
-                PosturePartExerciseTypeModel(exerciseName: "기구")
+                    PosturePartExerciseTypeModel(exerciseName: "맨몸"),
+                    PosturePartExerciseTypeModel(exerciseName: "기구")
                 ],
                 allExerciseData: [
                     PosturePartExerciseModel(image: DSKitAsset.Assets.goodMorningExercise.image, name: "굿모닝 엑서사이즈"),
@@ -118,8 +131,35 @@ public class PostureService {
             )
         )
     }
+}
 
-    public init() {
-
+private extension PostureService {
+    func requestPushUpData() -> Single<PostureDetailModel>{
+        return Single.just(
+            PostureDetailModel(
+                detailImage: DSKitAsset.Assets.pushUpDetail.image,
+                titleTextData: PostureDetailTitleTextModel(englishName: "푸쉬업", koreanName: "팔굽혀펴기"),
+                exerciseKindData: [PostureDetailExerciseKindModel(exerciseTag: "맨몸"),
+                                   PostureDetailExerciseKindModel(exerciseTag: "가슴")],
+                exerciseWayData:
+                    PostureDetailInfoModel(titleText: "운동 방법", informationText: [
+                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
+                        PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
+                        PostureDetailInfoTextModel(text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다.")
+                    ]),
+                exerciseCautionData:
+                    PostureDetailInfoModel(titleText: "주의 사항", informationText: [
+                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
+                        PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.")
+                    ]),
+                relatedPickleData:
+                    PostureDetailPickleModel(titleText: "관련 피클", pickleImage: [
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest1.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest2.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest3.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest4.image),
+                    ])
+            )
+        )
     }
 }
