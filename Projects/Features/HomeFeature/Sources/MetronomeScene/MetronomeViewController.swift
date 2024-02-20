@@ -18,6 +18,10 @@ public class MetronomeViewController: UIViewController {
 
     private var viewModel: MetronomeViewModel
 
+    private var colorChangeTimer: Timer?
+    private let colors: [UIColor] = [.red, .yellow, .orange, .green, .blue, .purple]
+    private var currentBitIndex = 0
+
     private lazy var navBar = MetronomeNavigationBar()
 
     private var exView = UIView().then {
@@ -196,8 +200,17 @@ public class MetronomeViewController: UIViewController {
         let roundedValue = Int(sender.value.rounded())
         viewModel.tempo = roundedValue
         updateTempoViews()
-    }
+        
+        viewModel.stop()
+        
+        colorChangeTimer?.invalidate()
 
+        for bitView in bitViews {
+            bitView.layer.removeAllAnimations()
+            bitView.backgroundColor = .gray
+        }
+        currentBitIndex = 0
+    }
     @objc private func incrementButtonTapped() {
         viewModel.tempo += 1
         updateTempoViews()
@@ -207,17 +220,53 @@ public class MetronomeViewController: UIViewController {
         viewModel.tempo -= 1
         updateTempoViews()
     }
-
     @objc private func startButtonTapped() {
         viewModel.start()
+
+        colorChangeTimer?.invalidate()
+        colorChangeTimer = Timer.scheduledTimer(timeInterval: 60.0 / Double(viewModel.tempo),
+                                                target: self, selector: #selector(updateBitViewsColor),
+                                                userInfo: nil,
+                                                repeats: true)
+
+        updateTempoViews()
     }
 
     @objc private func stopButtonTapped() {
         viewModel.stop()
-    }
+        colorChangeTimer?.invalidate()
 
+        for bitView in bitViews {
+            bitView.layer.removeAllAnimations()
+            bitView.backgroundColor = .gray
+        }
+        currentBitIndex = 0
+    }
     @objc private func vibrateButtonTapped() {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+
+    @objc private func updateBitViewsColor() {
+        guard !bitViews.isEmpty else { return }
+
+        UIView.animate(withDuration: 1.0) {
+
+            for index in self.currentBitIndex..<self.bitViews.count {
+                self.bitViews[index].backgroundColor = .gray
+            }
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            if self.bitViews[self.currentBitIndex].backgroundColor == .gray {
+                self.bitViews[self.currentBitIndex].backgroundColor = DSKitAsset.Colors.blue400.color
+            }
+
+            self.currentBitIndex += 1
+
+            if self.currentBitIndex >= self.bitViews.count {
+                self.currentBitIndex = 0
+            }
+        }
     }
 
     private func updateTempoViews() {
@@ -263,9 +312,18 @@ extension MetronomeViewController: HorizontalPickerViewDelegate {
         let totalWidth: CGFloat = CGFloat(rowCount) * viewWidth + CGFloat(rowCount - 1) * spacing
         let startingX: CGFloat = (view.frame.size.width - totalWidth) / 2.0
 
+        colorChangeTimer?.invalidate()
+
+        for bitView in bitViews {
+            bitView.layer.removeAllAnimations()
+            bitView.backgroundColor = .gray
+        }
+        currentBitIndex = 0
+
         for index in 0..<selectedLevel {
             let bitView = UIView()
-            bitView.backgroundColor = DSKitAsset.Colors.blue400.color
+            bitView.backgroundColor = .gray
+
             view.addSubview(bitView)
             bitViews.append(bitView)
 
