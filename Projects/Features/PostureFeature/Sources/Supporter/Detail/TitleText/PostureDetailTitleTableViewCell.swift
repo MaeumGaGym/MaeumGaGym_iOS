@@ -4,8 +4,10 @@ import SnapKit
 import Then
 
 import DSKit
+import Core
+import Domain
 
-public class PostureDetailTitleTableViewCell: UITableViewCell {
+public class PostureDetailTitleTableViewCell: BaseTableViewCell{
 
     static let identifier: String = "PostureDetailTitleTableViewCell"
 
@@ -21,22 +23,9 @@ public class PostureDetailTitleTableViewCell: UITableViewCell {
         $0.textAlignment = .left
     }
 
-    public func setup(englishText: String, koreanText: String) {
-        self.englishTitle.text = englishText
-        self.koreanTitle.text = koreanText
+    public override func layout() {
+        contentView.addSubviews([englishTitle, koreanTitle])
 
-        addViews()
-        setupViews()
-    }
-
-    private func addViews() {
-        [
-            englishTitle,
-            koreanTitle
-        ].forEach { contentView.addSubview($0) }
-    }
-
-    private func setupViews() {
         englishTitle.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(32.0)
@@ -50,5 +39,12 @@ public class PostureDetailTitleTableViewCell: UITableViewCell {
             $0.bottom.equalToSuperview()
             $0.trailing.leading.equalToSuperview().inset(20.0)
         }
+    }
+}
+
+public extension PostureDetailTitleTableViewCell {
+    func setup(with model: PostureDetailTitleTextModel) {
+        englishTitle.text = model.englishName
+        koreanTitle.text = model.koreanName
     }
 }
