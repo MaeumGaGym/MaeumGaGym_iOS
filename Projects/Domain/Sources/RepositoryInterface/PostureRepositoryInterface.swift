@@ -7,7 +7,12 @@ public enum PosturePartType {
     case back
 }
 
+public enum PostureDetailType {
+    case pushUp
+}
+
 public protocol PostureRepositoryInterface {
     func getRecommandData() -> Single<[PostureRecommandModel]>
     func getPartData(type: PosturePartType) -> Single<PosturePartModel>
+    func getDetailData(type: PostureDetailType) -> Single<PostureDetailModel>
 }

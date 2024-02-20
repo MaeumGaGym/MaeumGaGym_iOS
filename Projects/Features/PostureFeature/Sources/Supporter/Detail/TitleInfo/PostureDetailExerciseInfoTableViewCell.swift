@@ -4,8 +4,10 @@ import SnapKit
 import Then
 
 import DSKit
+import Core
+import Domain
 
-public class PostureDetailExerciseInfoTableViewCell: UITableViewCell {
+public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureDetailExerciseInfoTableViewCell"
 

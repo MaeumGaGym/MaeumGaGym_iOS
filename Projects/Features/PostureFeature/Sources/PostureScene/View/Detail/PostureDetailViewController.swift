@@ -1,11 +1,20 @@
 import UIKit
-import SnapKit
-import Then
-import Core
+
 import RxFlow
 import RxCocoa
 import RxSwift
+
+import SnapKit
+import Then
+
+import Core
 import DSKit
+import Domain
+
+import MGLogger
+import MGNetworks
+import Data
+
 import PostureFeatureInterface
 
 public class PostureDetailViewController: BaseViewController<PostureDetailViewModel> {
@@ -27,6 +36,15 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         $0.backgroundColor = .white
         $0.separatorStyle = .none
     }
+    
+    var postureDetailModel: PostureDetailModel = PostureDetailModel(
+        detailImage: UIImage(),
+        titleTextData: PostureDetailTitleTextModel(englishName: "", koreanName: ""),
+        exerciseKindData: [PostureDetailExerciseKindModel](),
+        exerciseWayData: PostureDetailInfoModel(titleText: "", informationText: []),
+        exerciseCautionData: PostureDetailInfoModel(titleText: "", informationText: []),
+        relatedPickleData: PostureDetailPickleModel(titleText: "", pickleImage: [])
+    )
 
     var titleImageModel: PostureTitleImageModel!
     var titleLabelModel: PostureTitleLabelModel!
@@ -42,16 +60,6 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         postureDetailTableView.delegate = self
     }
 
-    public override func bindViewModel() {
-        super.bindViewModel()
-        titleImageModel = PostureTitleImageModel.pushUpModel
-        titleLabelModel = PostureTitleLabelModel.pushUpModel
-        titleTagModel = PostureTagLabelModel.pushUpModel
-        exerciseWayModel = PostureExerciseWayModel.pushUpModel
-        exerciseCautionModel = PostureExerciseCautionModel.pushUpModel
-        relatedPickleModel = PostureRelatedPickleModel.pushUpModel
-    }
-
     public override func layout() {
         super.layout()
 
@@ -63,6 +71,27 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
             $0.leading.trailing.equalToSuperview()
             $0.top.equalToSuperview().offset(105.0)
         }
+    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+       
+        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+
+        viewModel = PostureDetailViewModel(useCase: useCase)
+        
+        let input = PostureDetailViewModel.Input(
+            getDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+        )
+        
+        let output = viewModel.transform(input, action: { optput in
+            optput.detailData
+                .subscribe(onNext: { detailData in
+                    MGLogger.debug("Chest Data: \(detailData)")
+                    self.postureDetailModel = detailData
+                }).disposed(by: disposeBag)
+            
+        })
     }
 }
 
@@ -109,7 +138,8 @@ extension PostureDetailViewController: UITableViewDataSource {
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailImageTableViewCell.identifier,
                 for: indexPath) as? PostureDetailImageTableViewCell
-            cell?.setup(image: titleImageModel.data)
+            let model = postureDetailModel.detailImage
+            cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 1:

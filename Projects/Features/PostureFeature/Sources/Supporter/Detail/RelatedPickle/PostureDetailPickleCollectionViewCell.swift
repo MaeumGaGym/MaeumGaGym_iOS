@@ -16,17 +16,17 @@ public class PostureDetailPickleCollectionViewCell: UICollectionViewCell {
     public func setup(image: UIImage) {
         imageView.image = image
 
+        attribute()
+        layout()
+    }
+
+    private func attribute() {
         self.layer.cornerRadius = 8.0
-
-        addView()
-        setupView()
     }
 
-    private func addView() {
-        contentView.addSubview(imageView)
-    }
+    private func layout() {
+        contentView.addSubviews([imageView])
 
-    private func setupView() {
         imageView.snp.makeConstraints {
             $0.width.height.equalToSuperview()
             $0.center.equalToSuperview()
