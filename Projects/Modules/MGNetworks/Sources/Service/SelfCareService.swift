@@ -66,7 +66,7 @@ public class SelfCareService {
             )
         )
     }
-    
+
     public func requestMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
         return Single.just(
             SelfCareMyRoutineDetailModel(
