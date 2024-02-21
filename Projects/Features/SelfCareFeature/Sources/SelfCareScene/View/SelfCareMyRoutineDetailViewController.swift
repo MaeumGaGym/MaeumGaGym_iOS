@@ -19,7 +19,12 @@ import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel> {
 
-    private var myRoutineDetailModel: SelfCareMyRoutineDetailModel = SelfCareMyRoutineDetailModel(routineTitleData: SelfCareRoutineModel(routineNameText: "", usingState: false, sharingState: false), routinesData: [])
+    private var myRoutineDetailModel: SelfCareMyRoutineDetailModel = SelfCareMyRoutineDetailModel(
+        routineTitleData: SelfCareRoutineModel(
+            routineNameText: "",
+            usingState: false,
+            sharingState: false),
+        routinesData: [])
 
     private var headerView = UIView()
 
@@ -115,7 +120,8 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
         viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
 
-        let input = SelfCareMyRoutineDetailViewModel.Input(getMyRoutineDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+        let input = SelfCareMyRoutineDetailViewModel.Input(
+            getMyRoutineDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
 
         let output = viewModel.transform(input, action: { output in
             output.myRoutineDetailData

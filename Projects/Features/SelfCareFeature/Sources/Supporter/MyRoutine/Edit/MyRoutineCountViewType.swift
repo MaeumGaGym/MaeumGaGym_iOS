@@ -3,7 +3,7 @@ import Foundation
 public enum MyRoutineCountViewType {
     case number
     case set
-    
+
     var text: String {
         switch self {
         case .number:
