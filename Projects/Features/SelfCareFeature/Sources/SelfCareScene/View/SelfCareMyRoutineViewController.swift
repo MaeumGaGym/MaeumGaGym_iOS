@@ -1,32 +1,41 @@
 import UIKit
 
+import RxFlow
+import RxCocoa
+import RxSwift
+
 import SnapKit
 import Then
 
 import Core
 import DSKit
+import MGLogger
+
+import Domain
+import Data
+import MGNetworks
+
 import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel> {
-    private var myRoutineModel = SelfCareMyRoutineModel.myRoutine
     
+    private var myRoutineModel: SelfCareMyRoutineModel = SelfCareMyRoutineModel(titleTextData: SelfCareMyRoutineTextModel(titleText: "", infoText: ""), myRoutineData: [])
+
     private var containerView = UIView()
     private var headerView = UIView()
-    
+
     private let myRoutineTitleLabel = UILabel().then {
-        $0.text = "내 루틴"
         $0.textColor = .black
         $0.contentMode = .left
         $0.font = UIFont.Pretendard.titleLarge
     }
-    
+
     private let myRoutineSubTitleLabel = UILabel().then {
-        $0.text = "나만의 루틴을 구성하여\n규칙적인 운동을 해보세요."
         $0.numberOfLines = 2
         $0.textColor = DSKitAsset.Colors.gray600.color
         $0.font = UIFont.Pretendard.bodyMedium
     }
-    
+
     private var myRoutineTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
@@ -35,22 +44,23 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
         $0.register(MyRoutineTableViewCell.self,
                     forCellReuseIdentifier: MyRoutineTableViewCell.identifier)
     }
-    
+
     private var plusRoutineButton = SelfCareButton(type: .plusRoutine)
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-    }
-    
+
     public override func attribute() {
+        super.attribute()
+
+        view.backgroundColor = .white
         
+        myRoutineTitleLabel.text = myRoutineModel.titleTextData.titleText
+        myRoutineSubTitleLabel.text = myRoutineModel.titleTextData.infoText
+
         myRoutineTableView.delegate = self
         myRoutineTableView.dataSource = self
     }
     
     public override func layout() {
+        super.layout()
         
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 144.0))
         view.addSubview(headerView)
@@ -92,12 +102,27 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(58.0)
         }
+    }
+    
+    public override func bindViewModel() {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
         
+        viewModel = SelfCareMyRoutineViewModel(useCase: useCase)
+        
+        let input = SelfCareMyRoutineViewModel.Input(getMyRoutineData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+        
+        let output = viewModel.transform(input, action: { output in
+            output.myRoutineData
+                .subscribe(onNext: { myRoutineData in
+                    MGLogger.debug("myRoutineData: \(myRoutineData)")
+                    self.myRoutineModel = myRoutineData
+                }).disposed(by: disposeBag)
+        })
     }
 }
 extension SelfCareMyRoutineViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == myRoutineModel.data.count + 1 {
+        if indexPath.row == myRoutineModel.myRoutineData.count + 1 {
             return 100
         } else {
             return 94
@@ -106,10 +131,10 @@ extension SelfCareMyRoutineViewController: UITableViewDelegate {
 }
 extension SelfCareMyRoutineViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myRoutineModel.data.count + 1
+        myRoutineModel.myRoutineData.count + 1
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == myRoutineModel.data.count {
+        if indexPath.row == myRoutineModel.myRoutineData.count {
             let cell = UITableViewCell()
             cell.backgroundColor = .white
             cell.selectionStyle = .none
@@ -118,8 +143,8 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MyRoutineTableViewCell.identifier,
                 for: indexPath) as? MyRoutineTableViewCell
-            let routine = myRoutineModel.data[indexPath.row]
-            cell?.setup(name: routine.name, state: routine.routineState, shared: routine.sharedState)
+            let routine = myRoutineModel.myRoutineData[indexPath.row]
+            cell?.setup(with: routine)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         }
