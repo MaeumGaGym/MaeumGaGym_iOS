@@ -47,16 +47,13 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 
     private var plusRoutineButton = SelfCareButton(type: .plusRoutine)
 
-    private var routineModel: [SelfCareRoutineModel] = [] {
-        didSet {
-            myRoutineTableView.reloadData()
-        }
-    }
-
     public override func attribute() {
         super.attribute()
 
         view.backgroundColor = .white
+        
+        myRoutineTitleLabel.text = myRoutineModel.titleTextData.titleText
+        myRoutineSubTitleLabel.text = myRoutineModel.titleTextData.infoText
 
         myRoutineTableView.delegate = self
         myRoutineTableView.dataSource = self
@@ -111,11 +108,21 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
         
         viewModel = SelfCareMyRoutineViewModel(useCase: useCase)
+        
+        let input = SelfCareMyRoutineViewModel.Input(getMyRoutineData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+        
+        let output = viewModel.transform(input, action: { output in
+            output.myRoutineData
+                .subscribe(onNext: { myRoutineData in
+                    MGLogger.debug("myRoutineData: \(myRoutineData)")
+                    self.myRoutineModel = myRoutineData
+                }).disposed(by: disposeBag)
+        })
     }
 }
 extension SelfCareMyRoutineViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == routineModel.count + 1 {
+        if indexPath.row == myRoutineModel.myRoutineData.count + 1 {
             return 100
         } else {
             return 94
@@ -124,10 +131,10 @@ extension SelfCareMyRoutineViewController: UITableViewDelegate {
 }
 extension SelfCareMyRoutineViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        routineModel.count + 1
+        myRoutineModel.myRoutineData.count + 1
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == routineModel.count {
+        if indexPath.row == myRoutineModel.myRoutineData.count {
             let cell = UITableViewCell()
             cell.backgroundColor = .white
             cell.selectionStyle = .none
@@ -136,7 +143,7 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MyRoutineTableViewCell.identifier,
                 for: indexPath) as? MyRoutineTableViewCell
-            let routine = routineModel[indexPath.row]
+            let routine = myRoutineModel.myRoutineData[indexPath.row]
             cell?.setup(with: routine)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
