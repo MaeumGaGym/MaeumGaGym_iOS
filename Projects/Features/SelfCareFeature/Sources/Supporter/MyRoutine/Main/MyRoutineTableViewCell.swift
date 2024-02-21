@@ -39,7 +39,7 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         routineNameLabel.text = name
         
         routineState(routineState: state)
-        sharedViewStates(sharedState: shared)
+        SharedViewState(sharedState: shared)
 
         layout()
         
@@ -84,7 +84,7 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         }
     }
     
-    public func sharedViewStates(sharedState: SharedState) {
+    public func SharedViewState(sharedState: SharedState) {
         switch sharedState {
         case .yesShared:
             sharedView.isHidden = false
