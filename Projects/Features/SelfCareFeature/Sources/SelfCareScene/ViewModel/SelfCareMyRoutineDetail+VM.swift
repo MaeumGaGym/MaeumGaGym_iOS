@@ -8,8 +8,6 @@ import Core
 import Domain
 import MGLogger
 
-import Core
-
 public class SelfCareMyRoutineDetailViewModel: BaseViewModel {
     private let disposeBag = DisposeBag()
 
@@ -53,6 +51,3 @@ public class SelfCareMyRoutineDetailViewModel: BaseViewModel {
             }).disposed(by: disposeBag)
     }
 }
-
-
-

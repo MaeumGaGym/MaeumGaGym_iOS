@@ -71,7 +71,7 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
             $0.top.equalTo(myRoutineDetailTableView.snp.bottom)
         }
 
-        underBackView.addSubviews([underLine, buttonSpaceView,  plusPostureButton, editButton])
+        underBackView.addSubviews([underLine, buttonSpaceView, plusPostureButton, editButton])
 
         underLine.snp.makeConstraints {
             $0.trailing.leading.equalToSuperview()

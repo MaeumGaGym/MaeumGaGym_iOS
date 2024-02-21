@@ -10,7 +10,7 @@ public enum SelfCareButtonType {
     case edit
     case complete
     case plusTarget
-    
+
     var buttonImage: UIImage? {
         switch self {
         case .plusRoutine:
@@ -27,7 +27,7 @@ public enum SelfCareButtonType {
             return nil
         }
     }
-    
+
     var text: String {
         switch self {
         case .plusRoutine:
@@ -46,7 +46,7 @@ public enum SelfCareButtonType {
             return "목표 추가하기"
         }
     }
-    
+
     var textColor: UIColor {
         switch self {
         case .plusRoutine:
@@ -65,7 +65,7 @@ public enum SelfCareButtonType {
             return .white
         }
     }
-    
+
     var backgroundColor: UIColor {
         switch self {
         case .plusRoutine:
@@ -84,5 +84,4 @@ public enum SelfCareButtonType {
             return DSKitAsset.Colors.blue500.color
         }
     }
-
 }

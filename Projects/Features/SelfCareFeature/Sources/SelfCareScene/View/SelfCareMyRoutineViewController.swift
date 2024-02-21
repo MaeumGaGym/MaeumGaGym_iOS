@@ -115,7 +115,8 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 
         viewModel = SelfCareMyRoutineViewModel(useCase: useCase)
 
-        let input = SelfCareMyRoutineViewModel.Input(getMyRoutineData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+        let input = SelfCareMyRoutineViewModel.Input(
+            getMyRoutineData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
 
         let output = viewModel.transform(input, action: { output in
             output.myRoutineData
