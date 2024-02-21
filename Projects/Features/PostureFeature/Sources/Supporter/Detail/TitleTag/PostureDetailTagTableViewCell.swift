@@ -4,42 +4,101 @@ import SnapKit
 import Then
 
 import DSKit
+import Core
+import Domain
 
-public class PostureDetailTagTableViewCell: UITableViewCell {
+public class PostureDetailTagTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureDetailTagTableViewCell"
 
-    private var exerciseName = MGTagLabel(text: "맨몸")
-    private var exercisePart = MGTagLabel(text: "가슴")
-
-    public func setup(exerciseNameText: String, exercisePartText: String) {
-        self.exerciseName.updateData(text: "맨몸")
-        self.exercisePart.updateData(text: "가슴")
-
-        addViews()
-        setupViews()
-    }
-
-    private func addViews() {
-        [
-            exerciseName,
-            exercisePart
-        ].forEach { contentView.addSubview($0) }
-    }
-
-    private func setupViews() {
-        exerciseName.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(24.0)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalTo(60.0)
-            $0.height.equalTo(32.0)
+    private var detailTagCollectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+            $0.scrollDirection = .horizontal
+            $0.minimumLineSpacing = 10
+            $0.minimumInteritemSpacing = 10
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         }
 
-        exercisePart.snp.makeConstraints {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+            $0.register(PostureDetailTagCollectionViewCell.self,
+                        forCellWithReuseIdentifier: PostureDetailTagCollectionViewCell.identifier)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.showsHorizontalScrollIndicator = false
+            $0.showsVerticalScrollIndicator = false
+            $0.backgroundColor = .white
+        }
+        return collectionView
+    }()
+
+    private var postureDetailTagModel: [PostureDetailExerciseKindModel] = [] {
+        didSet {
+            detailTagCollectionView.reloadData()
+        }
+    }
+    
+    public override func attribute() {
+        super.attribute()
+        
+        backgroundColor = .white
+        detailTagCollectionView.delegate = self
+        detailTagCollectionView.dataSource = self
+    }
+
+    public override func layout() {
+        contentView.addSubviews([detailTagCollectionView])
+
+        detailTagCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
-            $0.leading.equalTo(exerciseName.snp.trailing).offset(10.0)
-            $0.width.equalTo(60.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(36.0)
         }
     }
 }
+
+public extension PostureDetailTagTableViewCell {
+    func setup(with model: [PostureDetailExerciseKindModel]) {
+        postureDetailTagModel = model
+    }
+}
+
+extension PostureDetailTagTableViewCell: UICollectionViewDelegateFlowLayout {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: 60.0, height: 36.0)
+    }
+}
+
+extension PostureDetailTagTableViewCell: UICollectionViewDelegate {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        _ = postureDetailTagModel[indexPath.row]
+    }
+}
+
+extension PostureDetailTagTableViewCell: UICollectionViewDataSource {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return postureDetailTagModel.count
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PostureDetailTagCollectionViewCell.identifier,
+            for: indexPath
+        ) as? PostureDetailTagCollectionViewCell
+        let model = postureDetailTagModel[indexPath.row]
+        cell?.setup(with: model)
+        return cell ?? UICollectionViewCell()
+    }
+}
+

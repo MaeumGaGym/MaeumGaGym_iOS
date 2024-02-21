@@ -16,7 +16,11 @@ import Core
 import DSKit
 import MGLogger
 
+import AuthenticationServices
+
 public class IntroViewController: BaseViewController<IntroViewModel> {
+
+    private var introModel: IntroModel?
 
     private var introImageView = MGProfileView(
         profileImage: MGProfileImage(
@@ -26,13 +30,11 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
     )
 
     private var mainTitle = MGLabel(
-        text: "이제 헬창이 되어보세요!",
         font: UIFont.Pretendard.titleMedium,
         isCenter: true
     )
 
     private var subTitle = MGLabel(
-        text: "저희의 좋은 서비스를 통해 즐거운 헬창 생활을\n즐겨보세요!",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color,
         numberOfLineCount: 2
@@ -106,17 +108,82 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
     public override func bindViewModel() {
          super.bindViewModel()
 
-         let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        let useCase = DefaultAuthUseCase(introRepository: IntroRepository(networkService: IntroService()))
          viewModel = IntroViewModel(authUseCase: useCase)
 
          let input = IntroViewModel.Input(
              goolgeButtonTapped: googleButton.rx.tap.asDriver(),
              appleButtonTapped: appleButton.rx.tap.asDriver(),
-             kakaoButtonTapped: kakaoButton.rx.tap.asDriver()
+             kakaoButtonTapped: kakaoButton.rx.tap.asDriver(),
+             getIntroData: Observable.just(()).asDriver(onErrorDriveWith: .never())
          )
 
-        viewModel.transform(input) { _ in 
-            
-        }
+        let ouput = viewModel.transform(input, action: { output in
+            output.introDatas
+                .subscribe(onNext: { introData in
+                    self.introModel = introData
+                    self.mainTitle.text = self.introModel?.mainTitle
+                    self.subTitle.text = self.introModel?.subTitle
+                })
+                .disposed(by: disposeBag)
+        })
+
+//        appleButton.rx.tap
+//            .bind {
+//                let appleProvider = ASAuthorizationAppleIDProvider()
+//                let request = appleProvider.createRequest()
+//                request.requestedScopes = [.fullName, .email]
+//
+//                let controller = ASAuthorizationController(authorizationRequests: [request])
+//                controller.delegate = self
+//                controller.performRequests()
+//            }
+//            .disposed(by: disposeBag)
      }
 }
+//
+//extension IntroViewController: ASAuthorizationControllerDelegate,
+//                               ASAuthorizationControllerPresentationContextProviding {
+//    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        return self.view.window!
+//    }
+//
+//    public func authorizationController(controller: ASAuthorizationController,
+//                                        didCompleteWithAuthorization authorization: ASAuthorization
+//    ) {
+//        switch authorization.credential {
+//        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+//            let userIdentifier = appleIDCredential.user
+//            let fullName = appleIDCredential.fullName
+//            let email = appleIDCredential.email
+//
+//            if  let authorizationCode = appleIDCredential.authorizationCode,
+//                let identityToken = appleIDCredential.identityToken,
+//                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+//                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+//                print("authorizationCode: \(authorizationCode)")
+//                print("identityToken: \(identityToken)")
+//                print("authCodeString: \(authCodeString)")
+//                print("identifyTokenString: \(identifyTokenString)")
+//            }
+//
+//            print("useridentifier: \(userIdentifier)")
+//            print("fullName: \(String(describing: fullName))")
+//            print("email: \(String(describing: email))")
+//
+//        case let passwordCredential as ASPasswordCredential:
+//            let username = passwordCredential.user
+//            let password = passwordCredential.password
+//
+//            print("username: \(username)")
+//            print("password: \(password)")
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+//        print("login failed - \(error.localizedDescription)")
+//    }
+//}

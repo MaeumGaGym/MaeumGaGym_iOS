@@ -4,18 +4,25 @@ import SnapKit
 import Then
 
 import DSKit
+import Core
+import Domain
 
-public class PostureDetailPickeTableViewCell: UITableViewCell {
+public class PostureDetailPickeTableViewCell: BaseTableViewCell {
     static let identifier: String = "PostureDetailPickeTableViewCell"
 
     private var pickleColellectionView: UICollectionView!
-    var data: [RelatedPickle] = []
 
     private let titleLabel = UILabel().then {
         $0.text = "관련 피클"
         $0.textColor = .black
         $0.font = UIFont.Pretendard.titleMedium
         $0.textAlignment = .left
+    }
+    
+    var pickleData: [PostureDetailPickleImageModel] = [] {
+        didSet {
+            pickleColellectionView.reloadData()
+        }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,10 +49,6 @@ public class PostureDetailPickeTableViewCell: UITableViewCell {
         setupViews()
     }
 
-    public func setupCell(model: PostureRelatedPickleModel) {
-        self.data = model.data
-    }
-
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,14 +63,22 @@ public class PostureDetailPickeTableViewCell: UITableViewCell {
             $0.top.equalToSuperview().offset(36.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.width.equalToSuperview()
+            $0.height.equalTo(32.0)
         }
 
         pickleColellectionView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(24.0)
             $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalToSuperview()
-            $0.height.equalTo(224.0)
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
+    }
+}
+
+public extension PostureDetailPickeTableViewCell {
+    func setup(with model: PostureDetailPickleModel) {
+        titleLabel.text = model.titleText
+        pickleData = model.pickleImage
     }
 }
 
@@ -86,7 +97,7 @@ extension PostureDetailPickeTableViewCell: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        _ = data[indexPath.row]
+        _ = pickleData[indexPath.row]
     }
 }
 
@@ -95,7 +106,7 @@ extension PostureDetailPickeTableViewCell: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return data.count
+        return pickleData.count
     }
 
     public func collectionView(
@@ -106,7 +117,7 @@ extension PostureDetailPickeTableViewCell: UICollectionViewDataSource {
             withReuseIdentifier: PostureDetailPickleCollectionViewCell.identifier,
             for: indexPath
         ) as? PostureDetailPickleCollectionViewCell
-        let model = data[indexPath.row]
+        let model = pickleData[indexPath.row]
         cell?.setup(image: model.image)
         return cell ?? UICollectionViewCell()
     }

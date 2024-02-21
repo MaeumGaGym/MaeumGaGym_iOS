@@ -1,14 +1,8 @@
-//
-//  MG+CameraButton.swift
-//  DSKit
-//
-//  Created by 박준하 on 1/22/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
-import Foundation
 import UIKit
+
+import SnapKit
 import Then
+
 import Core
 
 open class MGCameraFeatureButton: BaseButton {
@@ -24,14 +18,14 @@ open class MGCameraFeatureButton: BaseButton {
     public init(image: UIImage, radius: Double = 26.0, tintColor: UIColor = .white) {
         super.init(frame: .zero)
         
-        featureImageEdit(image: image.withRenderingMode(.alwaysTemplate), radius: radius, tintColor: tintColor)
+        setup(image: image.withRenderingMode(.alwaysTemplate), radius: radius, tintColor: tintColor)
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func layout() {
+    public override func layout() {
         super.layout()
         
         self.addSubviews([backgroundView, featureImageView])
@@ -47,8 +41,10 @@ open class MGCameraFeatureButton: BaseButton {
             $0.height.width.equalTo(24.0)
         }
     }
-    
-    public func featureImageEdit(image: UIImage, radius: Double, tintColor: UIColor) {
+}
+
+private extension MGCameraFeatureButton {
+    func setup(image: UIImage, radius: Double, tintColor: UIColor) {
         featureImageView.image = image
         featureImageView.tintColor = tintColor
         backgroundView.layer.cornerRadius = radius

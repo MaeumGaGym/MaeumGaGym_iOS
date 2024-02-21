@@ -12,7 +12,8 @@ public extension Project {
         internalDependencies: [TargetDependency] = [],  // 모듈간 의존성
         externalDependencies: [TargetDependency] = [],  // 외부 라이브러리 의존성
         interfaceDependencies: [TargetDependency] = [], // Feature Interface 의존성
-        hasResources: Bool = false
+        hasResources: Bool = false,
+        hasWidget: Bool = false
     ) -> Project {
         
         let configurationName: ConfigurationName = "Development"
@@ -24,7 +25,9 @@ public extension Project {
         
         var projectTargets: [Target] = []
         var schemes: [Scheme] = []
-                
+        
+        let widget: [Target] = hasWidget ? makeWidgetTarget() : []
+
         if targets.contains(.app) {
             let bundleSuffix = name.contains("Demo") ? "test" : "release"
             let infoPlist = name.contains("Demo") ? Project.demoInfoPlist : Project.appInfoPlist
@@ -107,6 +110,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
+                entitlements: .relativeToRoot("Supporting/AppleWithSign.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     deps
@@ -140,6 +144,7 @@ public extension Project {
             )
             
             projectTargets.append(target)
+            projectTargets += widget
         }
         
         
@@ -189,10 +194,34 @@ public extension Project {
             name: name,
             organizationName: Environment.workspaceName,
             packages: packages,
-            settings: .settings(configurations: XCConfig.project),
+            settings: .settings(base: Environment.baseSetting.merging(.codeSign),configurations: XCConfig.project),
             targets: projectTargets,
             schemes: scheme
         )
+    }
+    
+    static func makeSettingDictionary()-> SettingsDictionary {
+        return SettingsDictionary()
+            .automaticCodeSigning(devTeam: "92YDTRVDUA")
+            .merging(["VERSIONING_SYSTEM": "apple-generic",
+                      "BUILD_LIBRARY_FOR_DISTRIBUTION": "NO"])
+    }
+    
+    static func makeWidgetTarget()-> [Target] {
+        return [Target(name: "WidgetExtension",
+                       platform: .iOS,
+                       product: .appExtension,
+                       bundleId: Environment.bundlePrefix + ".WidgetExtension",
+                       deploymentTarget: Environment.deploymentTarget,
+                       infoPlist: .file(path: .relativeToRoot("WidgetExtension/Info.plist")),
+                       sources: [.glob(.relativeToRoot("WidgetExtension/**"))],
+                       resources: [.glob(pattern: .relativeToRoot("WidgetExtension/Resources/**"))],
+                       entitlements: .relativeToRoot("Supporting/WidgetExtension.entitlements"),
+                       dependencies: [.Modules.dsKit, .data, .domain],
+                       settings: .settings(configurations: [
+                        .debug(name: .debug, settings: makeSettingDictionary().merging(["MTL_ENABLE_DEBUG_INFO": "INCLUDE_SOURCE"])),
+                        .release(name: .release, settings: makeSettingDictionary().merging(["MTL_ENABLE_DEBUG_INFO": "NO"]))
+                       ]))]
     }
 }
 

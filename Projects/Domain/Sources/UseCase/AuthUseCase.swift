@@ -4,80 +4,71 @@ import RxSwift
 import RxCocoa
 
 import Core
-import KakaoSDKUser
 import Moya
 
 import TokenManager
 
-public enum AuthHandleableType {
-    case loginSuccess
-    case loginFailure
-}
-
 public protocol AuthUseCase {
-    func requestSignIn(token: String)
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
-    var signInResult: PublishSubject<Result<AuthHandleableType, Error>> { get }
+    func getIntroData()
+    func appleButtonTap() -> Single<String>
+    var appleSignupResult: PublishSubject<String> { get }
+    var introData: PublishSubject<IntroModel> { get }
 }
 
 public class DefaultAuthUseCase {
-    private let authRepository: AuthRepositoryInterface
+    private let introRepository: IntroRepositoryInterface
     private let disposeBag = DisposeBag()
     
-    private let keychainAuthorization = KeychainType.authorizationToken
+    public let introData = PublishSubject<IntroModel>()
+    public let appleSignupResult = PublishSubject<String>()
 
-
-    public init(authRepository: AuthRepositoryInterface) {
-        self.authRepository = authRepository
+    public init(introRepository: IntroRepositoryInterface) {
+        self.introRepository = introRepository
     }
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
     
-
-    public func getCSRFToken() -> Single<String> {
-        return authRepository.getCSRFToken()
-    }
-    
-    public func kakaoButtonTap() {
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    guard let self = self, let accessToken = oauthToken?.accessToken else { return }
-                        
-                    self.authRepository.kakaoToken(access_token: accessToken)
-                        .subscribe(onSuccess: { [weak self] _ in
-                            guard let self = self else { return }
-                            if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
-                                print("토큰 저장 성공")
-                            } else {
-                                print("토큰 저장 실패")
-                            }
-                            self.signInResult.onNext(.success(.loginSuccess))
-                        }, onFailure: { [weak self] error in
-                            self?.signInResult.onNext(.failure(error))
-                        })
-                        .disposed(by: self.disposeBag)
+    public func appleButtonTap() -> Single<String> {
+        introRepository.appleSignup()
+            .subscribe(
+                onSuccess: { [weak self] token in
+                    self?.appleSignupResult.onNext(token)
+                },
+                onFailure: { [weak self] error in
+                    self?.appleSignupResult.onError(error)
                 }
-            }
-        }
+            )
+            .disposed(by: disposeBag)
+    
+        return appleSignupResult.take(1).asSingle()
     }
     
-    public func requestSignIn(token: String) {
-        authRepository.requestSignIn(token: token)
-            .subscribe(onSuccess: { [weak self] _ in
-                self?.signInResult.onNext(.success(.loginSuccess))
-                print("성공")
-            }, onFailure: { [weak self] error in
-                self?.signInResult.onNext(.failure(error))
+    public func getIntroData() {
+        return introRepository.getIntroData()
+            .subscribe(onSuccess: { [weak self] introModel in
+                self?.introData.onNext(introModel)
+            },
+            onFailure: { error in
+                print("AuthUseCase getIntroData error occurred: \(error)")
             })
             .disposed(by: disposeBag)
     }
 
-    public var signInResult: PublishSubject<Result<AuthHandleableType, Error>> {
-        return PublishSubject<Result<AuthHandleableType, Error>>()
+    public func getCSRFToken() -> Single<String> {
+        return introRepository.getCSRFToken()
+    }
+    
+    public func kakaoButtonTap() {
+        return introRepository.kakaoToken()
+            .subscribe(onSuccess: { _ in
+                print("토큰 저장 성공")
+            }, onFailure: { error in
+                print("AuthUseCase getIntroData error occurred: \(error)")
+            })
+            .disposed(by: self.disposeBag)
+        
     }
 }

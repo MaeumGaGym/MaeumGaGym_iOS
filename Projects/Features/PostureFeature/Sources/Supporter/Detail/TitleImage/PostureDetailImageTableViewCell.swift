@@ -4,8 +4,9 @@ import SnapKit
 import Then
 
 import DSKit
+import Core
 
-public class PostureDetailImageTableViewCell: UITableViewCell {
+public class PostureDetailImageTableViewCell: BaseTableViewCell {
     static let identifier: String = "PostureDetailImageTableViewCell"
 
     private var postureImageView = UIImageView().then {
@@ -13,22 +14,19 @@ public class PostureDetailImageTableViewCell: UITableViewCell {
         $0.contentMode = .scaleAspectFit
     }
 
-    public func setup(image: UIImage) {
-        self.postureImageView.image = image
-
-        addView()
-        setupView()
-    }
-
-    private func addView() {
-        contentView.addSubview(postureImageView)
-    }
-
-    private func setupView() {
+    public override func layout() {
+        contentView.addSubviews([postureImageView])
+        
         postureImageView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalToSuperview()
             $0.top.equalToSuperview()
         }
+    }
+}
+
+public extension PostureDetailImageTableViewCell {
+    func setup(with image: UIImage) {
+        postureImageView.image = image
     }
 }

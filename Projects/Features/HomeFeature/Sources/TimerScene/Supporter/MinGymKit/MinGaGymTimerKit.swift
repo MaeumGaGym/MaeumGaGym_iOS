@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 
 open class MindGaGymKitTimer: NSObject, TimerControl {
-    
+
     private var initialTime: Double = 0.0
     private var time: Double = 0.0
     private var timer: Timer?
@@ -33,7 +33,7 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
         timer?.invalidate()
         timer = nil
     }
-    
+
     public func timerStop() {
         setInitTimeString()
         timer?.invalidate()
@@ -50,21 +50,21 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
         initialTime = 0.0
         setInitTimeString()
     }
-    
+
     public func presentTime() -> Double {
         return time
     }
-    
+
     public func setTimeString() {
         let timeString = timeString(from: time)
         timerSubject.onNext(timeString)
     }
-    
+
     public func setInitTimeString() {
         let timeString = initTimeString(from: time)
         timerSubject.onNext(timeString)
     }
-    
+
     private func timeString(from counter: Double) -> String {
         let totalSeconds = Int(counter) + 1
         let hours: String = String(format: "%02d", totalSeconds / 3600)
@@ -79,7 +79,7 @@ open class MindGaGymKitTimer: NSObject, TimerControl {
             return "00 : \(seconds)"
         }
     }
-    
+
     private func initTimeString(from counter: Double) -> String {
         let totalSeconds = Int(counter)
         let hours: String = String(format: "%02d", totalSeconds / 3600)

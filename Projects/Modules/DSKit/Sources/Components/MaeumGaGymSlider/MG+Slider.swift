@@ -13,7 +13,7 @@ public class MGSlider: UISlider {
     
     private func settings() {
         self.value = 180.0
-        self.minimumValue = 0
+        self.minimumValue = 1
         self.maximumValue = 300
         self.thumbTintColor = DSKitAsset.Colors.blue400.color
         self.minimumTrackTintColor = DSKitAsset.Colors.blue400.color

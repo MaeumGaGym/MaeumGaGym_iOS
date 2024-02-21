@@ -87,7 +87,9 @@ public class Metronome: MetronomeType {
         let beatLength = AVAudioFrameCount(audioFileMainClick.processingFormat.sampleRate * 60 / bpm)
         let barLength = beatLength * UInt32(beats)
 
-        guard let bufferMainClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: beatLength) else {
+        guard let bufferMainClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
+                                                     frameCapacity: beatLength
+        ) else {
             fatalError("Failed to create AVAudioPCMBuffer for main click")
         }
 
@@ -98,7 +100,9 @@ public class Metronome: MetronomeType {
             fatalError("Failed to read main click audio file: \(error)")
         }
 
-        guard let bufferAccentedClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: beatLength) else {
+        guard let bufferAccentedClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
+                                                         frameCapacity: beatLength
+        ) else {
             fatalError("Failed to create AVAudioPCMBuffer for accented click")
         }
 
@@ -109,13 +113,16 @@ public class Metronome: MetronomeType {
             fatalError("Failed to read accented click audio file: \(error)")
         }
 
-        guard let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat, frameCapacity: barLength) else {
+        guard let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
+                                               frameCapacity: barLength) else {
             fatalError("Failed to create AVAudioPCMBuffer for bar")
         }
 
         let channelCount = Int(audioFileMainClick.processingFormat.channelCount)
-        let accentedClickArray = Array(UnsafeBufferPointer(start: bufferAccentedClick.floatChannelData![0], count: channelCount * Int(beatLength)))
-        let mainClickArray = Array(UnsafeBufferPointer(start: bufferMainClick.floatChannelData![0], count: channelCount * Int(beatLength)))
+        let accentedClickArray = Array(UnsafeBufferPointer(start: bufferAccentedClick.floatChannelData![0],
+                                                           count: channelCount * Int(beatLength)))
+        let mainClickArray = Array(UnsafeBufferPointer(start: bufferMainClick.floatChannelData![0],
+                                                       count: channelCount * Int(beatLength)))
 
         var barArray = [Float]()
 
@@ -135,5 +142,4 @@ public class Metronome: MetronomeType {
 
         return bufferBar
     }
-
 }

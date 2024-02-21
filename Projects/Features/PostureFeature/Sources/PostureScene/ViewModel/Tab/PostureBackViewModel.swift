@@ -5,69 +5,112 @@ import RxCocoa
 import RxSwift
 
 import Core
+import Domain
+import MGLogger
 
-public enum backToggleButtonState {
+public enum BackToggleButtonState {
     case checked
     case unChecked
 }
 
+public enum PostureBackModelState {
+    case all
+    case body
+    case machine
+}
+
 public class PostureBackViewModel: BaseViewModel {
-    
-    let disposeBag = DisposeBag()
-    
+
+    private let disposeBag = DisposeBag()
+
+    private let useCase: PostureUseCase
+
     public struct Input {
-          let firstButtonTapped: Observable<Void>
-          let secondButtonTapped: Observable<Void>
+        let firstButtonTapped: Driver<Void>
+        let secondButtonTapped: Driver<Void>
+        let getBackData: Driver<Void>
       }
-      
+
       public struct Output {
-          let backModel: Observable<PostureExerciseModel>
-          let firstButtonState: Observable<backToggleButtonState>
-          let secondButtonState: Observable<backToggleButtonState>
+          let firstButtonState: Observable<BackToggleButtonState>
+          let secondButtonState: Observable<BackToggleButtonState>
+          let backModelState:
+          Observable<PostureBackModelState>
+          var backData: Observable<PosturePartModel>
       }
-      
-      private let backEntireModelSubject = BehaviorSubject<PostureExerciseModel>(value: .back)
-    private let firstButtonStateSubject = BehaviorSubject<backToggleButtonState> (value: .unChecked)
-    private let secondButtonStateSubject = BehaviorSubject<backToggleButtonState>(value: .unChecked)
-      
-      public init() {}
-      
-      public func transform(_ input: Input) -> Output {
-          input.firstButtonTapped
-              .subscribe(onNext: { [self] in
-                  let currentState = try? firstButtonStateSubject.value()
-                  switch currentState {
-                  case .unChecked:
-                      firstButtonStateSubject.onNext(.checked)
-                      secondButtonStateSubject.onNext(.unChecked)
-                      backEntireModelSubject.onNext(.backBody)
-                  case .checked:
-                      firstButtonStateSubject.onNext(.unChecked)
-                      backEntireModelSubject.onNext(.back)
-                  case .none:
-                      break
-                  }
-              }).disposed(by: disposeBag)
-          
-          input.secondButtonTapped
-              .subscribe(onNext: { [self] in
-                  let currentState = try? self.secondButtonStateSubject.value()
-                  switch currentState {
-                  case .unChecked:
-                      secondButtonStateSubject.onNext(.checked)
-                      firstButtonStateSubject.onNext(.unChecked)
-                      backEntireModelSubject.onNext(.backMachine)
-                  case .checked:
-                      secondButtonStateSubject.onNext(.unChecked)
-                      backEntireModelSubject.onNext(.back)
-                  case .none:
-                      break
-                  }
-              }).disposed(by: disposeBag)
-          
-          return Output(backModel: backEntireModelSubject.asObservable(),
-                        firstButtonState: firstButtonStateSubject.asObservable(),
-                        secondButtonState: secondButtonStateSubject.asObservable())
-      }
+
+    private let firstButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
+    private let secondButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
+    private let backModelStateSubject = BehaviorSubject<PostureBackModelState>(value: .all)
+
+    private let backDataSubject = PublishSubject<PosturePartModel>()
+
+    public init(useCase: PostureUseCase) {
+        self.useCase = useCase
+    }
+
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
+        let output = Output(
+            firstButtonState: firstButtonStateSubject.asObservable(),
+            secondButtonState:
+                secondButtonStateSubject.asObservable(),
+            backModelState: backModelStateSubject.asObservable(),
+            backData: backDataSubject.asObservable()
+        )
+
+        action(output)
+
+        self.bindOutput(output: output)
+
+        input.firstButtonTapped
+            .drive(onNext: { [weak self] _ in
+                MGLogger.debug("PostureBack firstButtonTapped")
+                let currentState = try? self?.firstButtonStateSubject.value()
+
+                switch currentState {
+                case .unChecked:
+                    self?.firstButtonStateSubject.onNext(.checked)
+                    self?.secondButtonStateSubject.onNext(.unChecked)
+                    self?.backModelStateSubject.onNext(.body)
+                case .checked:
+                    self?.firstButtonStateSubject.onNext(.unChecked)
+                    self?.backModelStateSubject.onNext(.all)
+                case .none:
+                    break
+                }
+            }).disposed(by: disposeBag)
+
+        input.secondButtonTapped
+            .drive(onNext: { [weak self] _ in
+                MGLogger.debug("PostureBack secondButtonTapped")
+                let currentState = try? self?.secondButtonStateSubject.value()
+
+                switch currentState {
+                case .unChecked:
+                    self?.secondButtonStateSubject.onNext(.checked)
+                    self?.firstButtonStateSubject.onNext(.unChecked)
+                    self?.backModelStateSubject.onNext(.machine)
+                case .checked:
+                    self?.secondButtonStateSubject.onNext(.unChecked)
+                    self?.backModelStateSubject.onNext(.all)
+                case .none:
+                    break
+                }
+            }).disposed(by: disposeBag)
+
+        input.getBackData
+            .drive(onNext: { [weak self] _ in
+                self?.useCase.getPartData(type: .back)
+            }).disposed(by: disposeBag)
+
+        return output
+    }
+
+    private func bindOutput(output: Output) {
+        useCase.partData
+            .subscribe(onNext: { partData in
+                self.backDataSubject.onNext(partData)
+            }).disposed(by: disposeBag)
+    }
 }
 

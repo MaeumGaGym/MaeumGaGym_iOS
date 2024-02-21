@@ -10,14 +10,14 @@ public protocol MakeLayout: AnyObject {
 
 public extension MakeLayout {
     func makeLayout() {
-        self.addSubViews()
-        self.makeConstraintsIfNeeded()
+        addSubViews()
+        makeConstraintsIfNeeded()
     }
     
     func makeConstraintsIfNeeded() {
-        if !self.didMakeConstraints {
-            self.makeConstraints()
-            self.didMakeConstraints = true
+        if !didMakeConstraints {
+            makeConstraints()
+            didMakeConstraints = true
         }
     }
 }
