@@ -43,7 +43,7 @@ public class IntroService: NSObject {
         return Single.create { [weak self] single in
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                    if let error = error {
+                    if error != nil {
                         single(.success(false))
                     } else {
                         guard let self = self, let accessToken = oauthToken?.accessToken else {

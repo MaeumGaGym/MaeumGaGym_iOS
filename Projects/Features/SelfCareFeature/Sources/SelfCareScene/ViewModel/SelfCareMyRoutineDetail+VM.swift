@@ -10,7 +10,7 @@ public class SelfCareMyRoutineDetailViewModel: BaseViewModel {
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }
-    
+
     public struct Input {
 
     }
@@ -23,6 +23,3 @@ public class SelfCareMyRoutineDetailViewModel: BaseViewModel {
 
     }
 }
-
-
-
