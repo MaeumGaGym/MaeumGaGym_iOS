@@ -67,6 +67,37 @@ public class SelfCareService {
         )
     }
 
+    public func requestMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
+        return Single.just(
+            SelfCareMyRoutineDetailModel(
+                routineTitleData: SelfCareRoutineModel(
+                    routineNameText: "주말 루틴",
+                    usingState: true,
+                    sharingState: true),
+                routinesData: [
+                    SelfCareMyRoutineDetailExerciseModel(
+                        exericseImage: DSKitAsset.Assets.pushUp.image,
+                        exerciseTitle: "푸쉬업",
+                        exerciseCount: 10,
+                        exerciseSet: 4
+                    ),
+                    SelfCareMyRoutineDetailExerciseModel(
+                        exericseImage: DSKitAsset.Assets.ratPullDown.image,
+                        exerciseTitle: "랫풀다운",
+                        exerciseCount: 20,
+                        exerciseSet: 4
+                    ),
+                    SelfCareMyRoutineDetailExerciseModel(
+                        exericseImage: DSKitAsset.Assets.babelBackSqt.image,
+                        exerciseTitle: "바밸 백스쿼트",
+                        exerciseCount: 20,
+                        exerciseSet: 3
+                    ),
+                ]
+            )
+        )
+    }
+
     public init() {
 
     }

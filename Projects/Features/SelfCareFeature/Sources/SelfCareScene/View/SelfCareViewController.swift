@@ -7,7 +7,7 @@ public class SelfCareViewController: UIViewController {
 
     private let telUILabel = MGLabel(text: "오운완", font: UIFont.Pretendard.titleLarge)
     private let textInformation = MGLabel(text: "오늘의 운동을 완료하고,\n내 모습을 사진으로 남겨보세요.", font: UIFont.Pretendard.bodyMedium, textColor: DSKitAsset.Colors.gray600.color)
-    
+
     let cameraButton = MGCheckButton(text: "오늘의 사진 올리기", textColor: .white, backColor: DSKitAsset.Colors.blue500.color)
 
     public override func viewDidLoad() {
@@ -30,7 +30,7 @@ public class SelfCareViewController: UIViewController {
             $0.top.equalTo(telUILabel.snp.bottom).offset(12.0)
             $0.leading.equalTo(telUILabel.snp.leading)
         }
-        
+
         cameraButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
             $0.centerX.equalToSuperview()
