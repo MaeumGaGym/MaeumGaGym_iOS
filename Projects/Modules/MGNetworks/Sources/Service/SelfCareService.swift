@@ -26,7 +26,42 @@ public class SelfCareService {
                         routineNameText: "평일 루틴",
                         usingState: false,
                         sharingState: false
-                    )
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
+                    SelfCareRoutineModel(
+                        routineNameText: "주말 루틴",
+                        usingState: true,
+                        sharingState: true
+                    ),
                 ]
             )
         )
