@@ -1,4 +1,6 @@
 import UIKit
+import MGNetworks
+import Photos
 
 import RxSwift
 import RxCocoa
@@ -33,6 +35,7 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
         $0.layer.cornerRadius = 26.0
         $0.setTitleColor(.black, for: .normal)
     }
+
     private var chageButton = UIButton().then {
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
         $0.setImage(DSKitAsset.Assets.turn.image, for: .normal)
@@ -94,14 +97,20 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
         super.bindViewModel()
 
         chageButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _  in
+            .subscribe(with: self, onNext: { owner, _ in
                 owner.reversal()
             })
             .disposed(by: disposeBag)
 
         captureButton.rx.tap
-            .subscribe(with: self, onNext: { owner, _  in
+            .subscribe(with: self, onNext: { owner, _ in
                 owner.capture()
+            })
+            .disposed(by: disposeBag)
+
+        photoButton.rx.tap
+            .subscribe(with: self, onNext: { owner, _ in
+                owner.requestAlbum()
             })
             .disposed(by: disposeBag)
     }
@@ -128,6 +137,65 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
         } else {
             cameraView.setCameraPosition(.front)
             print("front")
+        }
+    }
+
+    private func requestAlbum() {
+        self.requestAlbumAuthorization { isAuthorized in
+            if isAuthorized {
+                PhotoService.shared.getAlbums(mediaType: .image, completion: { [weak self] albums in
+                    DispatchQueue.main.async {
+                        let photoViewController = AlbumViewController(albums: albums)
+                        photoViewController.modalPresentationStyle = .fullScreen
+                        self?.present(photoViewController, animated: true)
+                    }
+                })
+            } else {
+                self.showAlertGoToSetting(
+                    title: "현재 앨범 사용에 대한 접근 권한이 없습니다.",
+                    message: "설정 > {앱 이름} 탭에서 접근을 활성화 할 수 있습니다."
+                )
+            }
+        }
+    }
+
+    func requestAlbumAuthorization(completion: @escaping (Bool) -> Void) {
+        if #available(iOS 14.0, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+                completion([.authorized, .limited].contains(where: { $0 == status }))
+            }
+        } else {
+            PHPhotoLibrary.requestAuthorization { status in
+                completion(status == .authorized)
+            }
+        }
+    }
+
+    func showAlertGoToSetting(title: String, message: String) {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        let cancelAlert = UIAlertAction(
+            title: "취소",
+            style: .cancel
+        ) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        let goToSettingAlert = UIAlertAction(
+            title: "설정으로 이동하기",
+            style: .default) { _ in
+                guard
+                    let settingURL = URL(string: UIApplication.openSettingsURLString),
+                    UIApplication.shared.canOpenURL(settingURL)
+                else { return }
+                UIApplication.shared.open(settingURL, options: [:])
+            }
+        [cancelAlert, goToSettingAlert]
+            .forEach(alertController.addAction(_:))
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
         }
     }
 

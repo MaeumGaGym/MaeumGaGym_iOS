@@ -20,10 +20,9 @@ import SelfCareFeatureInterface
 public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel> {
 
     private var myRoutineDetailModel: SelfCareMyRoutineDetailModel = SelfCareMyRoutineDetailModel(
-        routineTitleData: SelfCareRoutineModel(
-            routineNameText: "",
-            usingState: false,
-            sharingState: false),
+        routineTitleData: SelfCareRoutineModel(routineNameText: "",
+                                               usingState: false,
+                                               sharingState: false),
         routinesData: [])
 
     private var headerView = UIView()

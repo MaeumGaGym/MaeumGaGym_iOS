@@ -6,19 +6,19 @@ import RxCocoa
 import Core
 import DSKit
 
-final public class CameraNavigationBar: UIView {
+final public class AlbumNavigationBar: UIView {
 
     public var leftButtonTap: ControlEvent<Void> {
         return leftButton.rx.tap
     }
 
     private let leftButton = UIButton(type: .custom).then {
-        $0.setImage(DSKitAsset.Assets.pickleCancel.image, for: .normal)
+        $0.setImage(DSKitAsset.Assets.arrowLeft.image, for: .normal)
     }
 
     private let leftLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
-        $0.text = "사진 촬영"
+        $0.text = "사진 선택"
         $0.textColor = .white
     }
 
@@ -39,7 +39,7 @@ final public class CameraNavigationBar: UIView {
     }
 }
 
-private extension CameraNavigationBar {
+private extension AlbumNavigationBar {
     func setUI() {
         self.backgroundColor = .black
     }

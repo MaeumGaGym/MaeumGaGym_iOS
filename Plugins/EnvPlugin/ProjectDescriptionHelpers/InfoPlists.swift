@@ -35,6 +35,7 @@ public extension Project {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryAddUsageDescription": "사진을 저장할 수 있도록 해주세요",
         "NSCameraUsageDescription": "카메라 접근을 허용할 수 있도록 해주세요",
+        "NSPhotoLibraryUsageDescription": "애플리케이션이 앨범에 접근하여 사진을 불러오기 위해 필요합니다.",
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
@@ -90,6 +91,7 @@ public extension Project {
       "App Transport Security Settings": ["Allow Arbitrary Loads": true],
       "NSPhotoLibraryAddUsageDescription": "사진을 저장할 수 있도록 해주세요",
       "NSCameraUsageDescription": "카메라 접근을 허용할 수 있도록 해주세요",
+      "NSPhotoLibraryUsageDescription": "애플리케이션이 앨범에 접근하여 사진을 불러오기 위해 필요합니다.",
       "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true],
       "ITSAppUsesNonExemptEncryption": false,
 //      "UIUserInterfaceStyle": "Dark",
@@ -108,12 +110,5 @@ public extension Project {
           "kakaolink",
           "kakaoplus"
       ],
-      
-//      "GoogleService-Info": .dictionary([
-//          "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
-//          "REVERSED_CLIENT_ID": .string("com.googleusercontent.apps.49794141515-9gnqemglgiapma28nphc3oabfclbobem"),
-//          "PLIST_VERSION": .string("1"),
-//          "BUNDLE_ID": .string("com.maeumGaGym-health-iOS.test"),
-//      ]),
   ]
 }
