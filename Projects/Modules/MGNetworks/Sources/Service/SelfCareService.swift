@@ -98,6 +98,55 @@ public class SelfCareService {
         )
     }
 
+    public func requestMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
+        return Single.just(
+            SelfCareMyRoutineEditModel(
+                textFieldData: MyRoutineEditTextFieldModel(
+                    textFieldTitle: "제목", 
+                    textFieldText: "주말 루틴",
+                    textFieldPlaceholder: "제목을 입력해주세요."),
+                exerciseData: [
+                    MyRoutineEditExerciseModel(
+                        exerciseImage: DSKitAsset.Assets.pushUp.image,
+                        exerciseName: "푸쉬업",
+                        textFieldData: [
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "횟수",
+                                exerciseCount: 10),
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "세트",
+                                exerciseCount: 4)
+                        ]
+                    ),
+                    MyRoutineEditExerciseModel(
+                        exerciseImage: DSKitAsset.Assets.deeps.image,
+                        exerciseName: "딥스",
+                        textFieldData: [
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "횟수",
+                                exerciseCount: 10),
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "세트",
+                                exerciseCount: 3)
+                        ]
+                    ),
+                    MyRoutineEditExerciseModel(
+                        exerciseImage: DSKitAsset.Assets.jumpSqt.image,
+                        exerciseName: "점프 스쿼트",
+                        textFieldData: [
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "횟수",
+                                exerciseCount: 20),
+                            MyRouinteEditExerciseTextFieldModel(
+                                textFieldTitle: "세트",
+                                exerciseCount: 3)
+                        ]
+                    )
+                ]
+            )
+        )
+    }
+
     public init() {
 
     }
