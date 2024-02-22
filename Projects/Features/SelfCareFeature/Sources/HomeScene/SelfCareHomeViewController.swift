@@ -34,12 +34,12 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
     var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfile.image,
                                         userName: "박준하",
                                         userTimer: 123,
-                                        userBage: DSKitAsset.Assets.appleLogo.image)
+                                        userBage: DSKitAsset.Assets.bage1.image)
 
-    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "내루틴"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "목표"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "식단"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "오운완")]
+    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareMenuMyRoutine.image, menuName: "내루틴"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareGoul.image, menuName: "목표"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareFood.image, menuName: "식단"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareOunwan.image, menuName: "오운완")]
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self
@@ -59,7 +59,6 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
         super.configureNavigationBar()
 
         navigationController?.isNavigationBarHidden = true
-//        tableView.frame = tableView.frame.inset(by: UIEdgeInsets(top: .zero, left: 20, bottom: .zero, right: 20))
     }
 
     public override func attribute() {

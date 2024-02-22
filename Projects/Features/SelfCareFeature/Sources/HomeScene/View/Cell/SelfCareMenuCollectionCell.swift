@@ -16,7 +16,6 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
     static let identifier: String = "SelfCareMenuCollectionCell"
 
     private var menuImageView = UIImageView().then {
-        $0.backgroundColor = .red
         $0.layer.cornerRadius = 8.0
     }
 
