@@ -38,7 +38,7 @@ final public class AlbumViewController: BaseViewController<Any> {
         view.contentInset = .zero
         view.backgroundColor = .clear
         view.clipsToBounds = true
-        view.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.id)
+        view.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.id)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -118,9 +118,9 @@ extension AlbumViewController: UICollectionViewDataSource {
                                cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.id,
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.id,
                                                           for: indexPath
-            ) as? PhotoCell
+            ) as? AlbumCell
         else { fatalError() }
 
         PhotoService.shared.fetchImage(
