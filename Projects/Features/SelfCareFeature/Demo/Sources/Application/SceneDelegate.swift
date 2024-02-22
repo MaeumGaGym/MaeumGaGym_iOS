@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        let viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
 //        let viewController = SelfCareMyRoutineDetailViewController(viewModel)
 //        window?.configure(withRootViewController: viewController)
-        window?.configure(withRootViewController: CameraViewController(CameraViewModel()))
+        window?.configure(withRootViewController: SelfCareHomeViewController(SelfCareHomeViewModel()))
         window?.makeKeyAndVisible()
     }
 }
