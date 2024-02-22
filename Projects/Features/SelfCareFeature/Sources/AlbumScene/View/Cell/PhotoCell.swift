@@ -3,7 +3,7 @@ import UIKit
 import Then
 import SnapKit
 
-final public class PhotoCell: UICollectionViewCell {
+final public class AlbumCell: UICollectionViewCell {
     static public let id = "PhotoCell"
 
     private let imageView = UIImageView().then {
@@ -31,7 +31,7 @@ final public class PhotoCell: UICollectionViewCell {
     }
 }
 
-private extension PhotoCell {
+private extension AlbumCell {
     func layout() {
         contentView.addSubview(imageView)
 
