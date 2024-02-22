@@ -21,7 +21,7 @@ open class MGCaveatAlertViewController: UIViewController {
     private lazy var containerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 12.0
-        $0.alignment = .center
+        $0.alignment = .leading
     }
 
     private lazy var buttonStackView = UIStackView().then {
@@ -32,7 +32,7 @@ open class MGCaveatAlertViewController: UIViewController {
     private lazy var titleLabel: UILabel? = UILabel().then {
         $0.text = titleText
         $0.textAlignment = .center
-        $0.font = .systemFont(ofSize: 18.0, weight: .bold)
+        $0.font = UIFont.Pretendard.titleMedium
         $0.numberOfLines = 0
         $0.textColor = .black
     }
@@ -42,9 +42,9 @@ open class MGCaveatAlertViewController: UIViewController {
 
         let label = UILabel()
         label.text = messageText
-        label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16.0)
-        label.textColor = .gray
+        label.textAlignment = .left
+        label.font = UIFont.Pretendard.labelMedium
+        label.textColor = DSKitAsset.Colors.gray700.color
         label.numberOfLines = 0
 
         if let attributedMessageText = attributedMessageText {
