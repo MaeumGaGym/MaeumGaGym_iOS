@@ -6,6 +6,7 @@ public enum MGProfileType {
     case middleProfile
     case bigProfile
     case intro
+    case bage
     
     var size: CGFloat {
         switch self {
@@ -17,6 +18,8 @@ public enum MGProfileType {
             return 48.0
         case .intro:
             return 280.0
+        case .bage:
+            return 16.0
         }
     }
     
@@ -30,6 +33,8 @@ public enum MGProfileType {
             return 24.0
         case .intro:
             return 140.0
+        case .bage:
+            return 8.0
         }
     }
 }
