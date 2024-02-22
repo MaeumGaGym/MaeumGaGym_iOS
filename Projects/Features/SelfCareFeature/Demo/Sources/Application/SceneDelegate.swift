@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
-        let viewModel = SelfCareMyRoutineEditViewModel(useCase: useCase)
-        let viewController = SelfCareMyRoutineEditViewController(viewModel)
+        let viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
+        let viewController = SelfCareMyRoutineDetailViewController(viewModel)
         window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
