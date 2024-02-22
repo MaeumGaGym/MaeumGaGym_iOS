@@ -15,6 +15,10 @@ public class SelfCareRepository: SelfCareRepositoryInterface {
         return networkService.requestMyRoutineDetailData()
     }
 
+    public func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
+        return networkService.requestMyRoutineEditData()
+    }
+
     public init(networkService: SelfCareService) {
         self.networkService = networkService
     }
