@@ -5,6 +5,7 @@ import Then
 
 import Core
 import DSKit
+import Domain
 
 public class MyRoutineEditTableViewCell: BaseTableViewCell {
     static let identifier: String = "MyRoutineEditTableViewCell"
@@ -25,19 +26,11 @@ public class MyRoutineEditTableViewCell: BaseTableViewCell {
         $0.setImage(DSKitAsset.Assets.selfCareDelete.image, for: .normal)
     }
 
-    private let numberCountView = MyRoutineCountView(type: .number)
-
-    private let setCountView = MyRoutineCountView(type: .set)
-
-    public func setup(image: UIImage, name: String) {
-        exerciseImage.image = image
-        exerciseNameLabel.text = name
-
-        layout()
-    }
+    private let numberCountView = MyRoutineCountView()
+    private let setCountView = MyRoutineCountView()
 
     public override func layout() {
-        addSubview(containerView)
+        addSubviews([containerView])
         containerView.addSubviews([exerciseImage, exerciseNameLabel, deleteButton, numberCountView, setCountView])
 
         containerView.snp.makeConstraints {
@@ -75,5 +68,24 @@ public class MyRoutineEditTableViewCell: BaseTableViewCell {
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(36.0)
         }
+    }
+}
+
+public extension MyRoutineEditTableViewCell {
+    func setup(with model: MyRoutineEditExerciseModel) {
+        exerciseImage.image = model.exerciseImage
+        exerciseNameLabel.text = model.exerciseName
+
+        changeCountView(with: model)
+    }
+}
+
+private extension MyRoutineEditTableViewCell {
+    func changeCountView(with model: MyRoutineEditExerciseModel) {
+        numberCountView.setup(text: model.textFieldData[0].textFieldTitle)
+        setCountView.setup(text: model.textFieldData[1].textFieldTitle)
+
+        numberCountView.textFieldData(number: model.textFieldData[0].exerciseCount)
+        setCountView.textFieldData(number: model.textFieldData[1].exerciseCount)
     }
 }
