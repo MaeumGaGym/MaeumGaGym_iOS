@@ -16,9 +16,9 @@ public enum SelfCareButtonType {
         case .plusRoutine:
             return DSKitAsset.Assets.selfCarePlus.image
         case .deleteRotine:
-            return DSKitAsset.Assets.selfCarePlus.image
+            return DSKitAsset.Assets.selfCareTrash.image
         case .editRoutine:
-            return DSKitAsset.Assets.selfCarePlus.image
+            return DSKitAsset.Assets.selfCarePencil.image
         case .posturePlus:
             return DSKitAsset.Assets.selfCarePlus.image
         case .plusTarget:

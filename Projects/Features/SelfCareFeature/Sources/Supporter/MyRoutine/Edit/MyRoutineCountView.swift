@@ -44,18 +44,6 @@ public class MyRoutineCountView: BaseView {
         $0.textAlignment = .center
     }
 
-    public init(
-        type: MyRoutineCountViewType
-    ) {
-        super.init(frame: .zero)
-
-        countTextLabel.text = type.text
-    }
-
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     public override func layout() {
         addSubviews([countTextLabel, containerView])
         containerView.addSubviews([minusButton, numberTextField, plusButtonn])
@@ -90,5 +78,15 @@ public class MyRoutineCountView: BaseView {
             $0.trailing.equalToSuperview()
             $0.width.height.equalTo(36.0)
         }
+    }
+}
+
+public extension MyRoutineCountView {
+    func setup(text: String) {
+        countTextLabel.text = text
+    }
+    
+    func textFieldData(number: Int) {
+        numberTextField.text = "\(number)"
     }
 }

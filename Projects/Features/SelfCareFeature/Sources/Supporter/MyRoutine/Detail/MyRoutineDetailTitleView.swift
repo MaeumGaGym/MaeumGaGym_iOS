@@ -73,8 +73,10 @@ private extension MyRoutineDetailTitleView {
         switch state {
         case true:
             routineStateLabel.text = "사용중"
+            routineStateLabel.textColor = DSKitAsset.Colors.blue500.color
         case false:
             routineStateLabel.text = "보관중"
+            routineStateLabel.textColor = DSKitAsset.Colors.gray400.color
         }
     }
 
