@@ -39,7 +39,7 @@ open class BaseButton: UIButton {
         self.setBackgroundImage(backImage, for: .normal)
     }
 
-    open func setColor(textColor: UIColor, backColor: UIColor? = .clear) {
+    open func setColor(textColor: UIColor? = .black, backColor: UIColor? = .clear) {
         // 버튼의 배경 색을 변경하는 함수입니다.
         self.setTitleColor(textColor, for: .normal)
         self.backgroundColor = backColor
