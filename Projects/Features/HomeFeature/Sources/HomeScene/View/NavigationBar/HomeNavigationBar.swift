@@ -11,14 +11,13 @@ final class HomeNavigationBar: UIView {
     public var rightButtonTap: ControlEvent<Void> {
          return rightButton.rx.tap
      }
+
     private let logoImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.mainTitle.image.withRenderingMode(.alwaysOriginal)
         $0.contentMode = .scaleToFill
     }
 
-    private let rightButton = UIButton(type: .custom).then {
-        $0.setImage(DSKitAsset.Assets.setting.image, for: .normal)
-    }
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.setting.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal

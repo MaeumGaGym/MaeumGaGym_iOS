@@ -28,18 +28,19 @@ open class MGAgreeButton: BaseButton {
         $0.isHidden = true
     }
     
-    private let readMore = UIButton().then {
-        $0.setTitle("자세히 보기", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.labelSmall
-        $0.setTitleColor(DSKitAsset.Colors.gray300.color, for: .normal)
+    private let readMore = MGButton(
+        titleText: "자세히 보기",
+        font: UIFont.Pretendard.labelSmall,
+        textColor: DSKitAsset.Colors.gray300.color
+    ).then {
         $0.isHidden = false
     }
-    
+
     private let readMoreLine = MGLine(lineColor: DSKitAsset.Colors.gray300.color,
                                               lineWidth: 64.0,
                                               lineHeight: 1.0
     )
-        
+
     public init (
         text: agreeButtonTextType,
         font: UIFont? = UIFont.Pretendard.bodyMedium,

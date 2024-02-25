@@ -21,19 +21,22 @@ public class TimerEditView: BaseView {
         $0.layer.shadowRadius = 6
     }
 
-    private var firstButton = UIButton().then {
-        $0.setTitle("타이머 편집", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+    private var firstButton = MGButton(
+        titleText: "타이머 편집",
+        font: UIFont.Pretendard.labelMedium,
+        textColor: .black
+    ).then {
         $0.contentHorizontalAlignment = .left
-        $0.setTitleColor(.black, for: .normal)
     }
 
-    private var secondButton = UIButton().then {
-        $0.setTitle("설정", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+    private var secondButton = MGButton(
+        titleText: "설정",
+        font: UIFont.Pretendard.labelMedium,
+        textColor: .black
+    ).then {
         $0.contentHorizontalAlignment = .left
-        $0.setTitleColor(.black, for: .normal)
     }
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.isHidden = true

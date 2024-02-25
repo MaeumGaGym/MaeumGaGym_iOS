@@ -17,17 +17,11 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
 
     private var alaertView = TimerAlarmAlertView()
 
-    private var navBeforeButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.timerNavLeft.image, for: .normal)
-    }
+    private var navBeforeButton = MGImageButton(image: DSKitAsset.Assets.timerNavLeft.image)
 
-    private var navAddButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.timerNavPlus.image, for: .normal)
-    }
+    private var navAddButton = MGImageButton(image: DSKitAsset.Assets.timerNavPlus.image)
 
-    private var navEditButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.timerNavDots.image, for: .normal)
-    }
+    private var navEditButton = MGImageButton(image: DSKitAsset.Assets.timerNavDots.image)
 
     private var editView = TimerEditView()
 

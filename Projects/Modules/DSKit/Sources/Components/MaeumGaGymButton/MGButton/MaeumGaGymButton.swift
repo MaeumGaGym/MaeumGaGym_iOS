@@ -6,6 +6,7 @@ import Then
 import Core
 
 public class MGButton: BaseButton {
+
     public init(
         titleText: String,
         font: UIFont? = UIFont(),

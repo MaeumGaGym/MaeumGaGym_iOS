@@ -28,11 +28,11 @@ public class DSAlertViewController: UIViewController {
         $0.backgroundColor = .gray
     }
     
-    let caveatAlertButton = UIButton().then {
-        $0.backgroundColor = .red
-        $0.setTitle("caveatAlert", for: .normal)
-    }
-    
+    let caveatAlertButton = MGButton(
+        titleText: "caveatAlert",
+        backColor: .red
+    )
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         

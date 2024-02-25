@@ -39,16 +39,18 @@ public class MetronomeViewController: UIViewController {
         $0.font = UIFont.Pretendard.light
     }
 
-    private let tempoIncrementButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCarePlus.image, for: .normal)
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.layer.cornerRadius = 22.0
+    private let tempoIncrementButton = MGImageButton(
+        image: DSKitAsset.Assets.selfCarePlus.image,
+        backColor: DSKitAsset.Colors.gray50.color
+    ).then {
+        $0.setCornerRadius(radius: 22.0)
     }
 
-    private let tempoDecrementButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareMinus.image, for: .normal)
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.layer.cornerRadius = 22.0
+    private let tempoDecrementButton = MGImageButton(
+        image: DSKitAsset.Assets.selfCareMinus.image,
+        backColor: DSKitAsset.Colors.gray50.color
+    ).then {
+        $0.setCornerRadius(radius: 22.0)
     }
 
     private let tempoSlider = MGSlider()

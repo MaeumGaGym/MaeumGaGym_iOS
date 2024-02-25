@@ -42,17 +42,17 @@ public class TimerAlarmAlertView: BaseView {
         $0.text = "-00:00:00"
     }
 
-    private let clearButton = UIButton().then {
-        $0.setTitle("해제", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.titleSmall
-        $0.setTitleColor(DSKitAsset.Colors.blue500.color, for: .normal)
-    }
-
-    private let restartButton = UIButton().then {
-        $0.setTitle("다시 시작", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.titleSmall
-        $0.setTitleColor(DSKitAsset.Colors.blue500.color, for: .normal)
-    }
+    private let clearButton = MGButton(
+        titleText: "해제", 
+        font: UIFont.Pretendard.titleSmall,
+        textColor: DSKitAsset.Colors.blue500.color
+    )
+    
+    private let restartButton = MGButton(
+        titleText: "다시 시작",
+        font: UIFont.Pretendard.titleSmall,
+        textColor: DSKitAsset.Colors.blue500.color
+    )
 
     private let decorationLine = MGLine(lineHeight: 22.0).then {
         $0.layer.cornerRadius = 1
