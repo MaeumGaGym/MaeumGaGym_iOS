@@ -16,13 +16,12 @@ public class AddTimerView: BaseView {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 20.0
     }
-
-    private let addTimerLabel = UILabel().then {
-        $0.text = "타이머 추가"
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textAlignment = .left
-        $0.textColor = .black
-    }
+    
+    private let addTimerLabel = MGLabel(text: "타이머 추가",
+                                        font: UIFont.Pretendard.titleMedium,
+                                        textColor: .black,
+                                        isCenter: false
+    )
 
     private let timerPickerView = TimerPickerView()
 

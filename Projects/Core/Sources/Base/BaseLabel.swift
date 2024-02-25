@@ -33,15 +33,25 @@ open class BaseLabel: UILabel {
         self.font = font
     }
     
-    public func setColor(textColor: UIColor? = .black, backgroudColor: UIColor? = .black) {
+    public func setColor(textColor: UIColor? = nil, backgroudColor: UIColor? = nil) {
         // DSKit의 color를 받아줍니다.
-        self.textColor = textColor
-        self.backgroundColor = backgroudColor
+        if let textColor = textColor {
+            self.textColor = textColor
+        }
+        
+        if let backgroudColor = backgroudColor {
+            self.backgroundColor = backgroudColor
+        }
     }
 
-    public func setTextAlignmentAndNumberOfLines(alignment: NSTextAlignment, numberOfLines: Int) {
+    public func setTextAlignmentAndNumberOfLines(alignment: NSTextAlignment? = nil, numberOfLines: Int? = nil) {
         // numberOfLines와 Alignment를 받아줍니다.
-        self.numberOfLines = numberOfLines
-        self.textAlignment = alignment
+        if let alignment = alignment {
+            self.textAlignment = alignment
+        }
+        
+        if let lines = numberOfLines {
+            self.numberOfLines = lines
+        }
     }
 }

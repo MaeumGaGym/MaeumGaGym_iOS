@@ -5,12 +5,12 @@ import SnapKit
 import Then
 
 open class DSLabelVC: UIViewController {
-    
+
     private let telUILabel = MGLabel(
         text: "휴대폰 번호",
         font: UIFont.Pretendard.titleLarge
     )
-    
+
     private let textInformation = MGLabel(
         text: "본인확인을 위해 휴대폰 번호를 입력해 주세요.",
         font: UIFont.Pretendard.bodyMedium,

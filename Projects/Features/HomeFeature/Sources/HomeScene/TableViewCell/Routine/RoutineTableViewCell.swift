@@ -15,11 +15,10 @@ public class RoutineTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "RoutineTableViewCell"
 
-    private var nameTitle = UILabel().then {
-        $0.text = "오늘의 루틴"
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleMedium
-    }
+    private var nameTitle = MGLabel(text: "오늘의 루틴",
+                                    font: UIFont.Pretendard.titleMedium,
+                                    textColor: .black
+    )
 
     private var routineCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

@@ -20,14 +20,14 @@ open class DSTagLabelVC: UIViewController {
     func layout() {
         
         view.addSubviews([tagLabel1, tagLabel2])
-    
+
         tagLabel1.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalTo(60.0)
             $0.height.equalTo(36.0)   
         }
-        
+
         tagLabel2.snp.makeConstraints {
             $0.top.equalTo(tagLabel1.snp.bottom).offset(8.0)
             $0.leading.equalToSuperview().offset(20.0)
