@@ -30,7 +30,7 @@ public class MetronomeViewController: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private let bpmTitle = MGLabel(text: "BPM",
+    private let bpmTitle = MGLabel(text: HomeResourcesService.Title.bpm,
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )
@@ -54,7 +54,7 @@ public class MetronomeViewController: UIViewController {
 
     private let tempoSlider = MGSlider()
 
-    private let bitTitle = MGLabel(text: "비트수",
+    private let bitTitle = MGLabel(text: HomeResourcesService.Title.bitCount,
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )

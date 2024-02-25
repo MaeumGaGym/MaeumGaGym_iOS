@@ -16,7 +16,7 @@ public class RoutineTableViewCell: BaseTableViewCell {
 
     static let identifier: String = HomeResourcesService.identifier.routineTableViewCell
 
-    private var nameTitle = MGLabel(text: "오늘의 루틴",
+    private var nameTitle = MGLabel(text: HomeResourcesService.Title.todayRoutine,
                                     font: UIFont.Pretendard.titleMedium,
                                     textColor: .black
     )
