@@ -33,9 +33,10 @@ open class BaseButton: UIButton {
         // 버튼을 클릭했을 때의 이벤트를 넣습니다
     }
 
-    open func setImage(image: UIImage) {
+    open func setImage(image: UIImage, backImage: UIImage? = UIImage()) {
         // 버튼의 이미지를 넣는 함수입니다.
         self.setImage(image, for: .normal)
+        self.setBackgroundImage(backImage, for: .normal)
     }
 
     open func setColor(textColor: UIColor, backColor: UIColor? = .clear) {
