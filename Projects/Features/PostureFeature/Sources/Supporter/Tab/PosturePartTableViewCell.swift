@@ -16,12 +16,10 @@ public class PosturePartTableViewCell: BaseTableViewCell {
         $0.layer.cornerRadius = 8.0
     }
 
-    private let exerciseNameLabel = UILabel().then {
-        $0.textColor = .black
-        $0.backgroundColor = .clear
-        $0.textAlignment = .left
-        $0.font = UIFont.Pretendard.bodyMedium
-    }
+    private let exerciseNameLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                            textColor: .black,
+                                            isCenter: false
+    )
 
     public override func layout() {
         super.layout()

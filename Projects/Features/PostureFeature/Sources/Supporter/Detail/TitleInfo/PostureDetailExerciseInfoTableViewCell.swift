@@ -11,12 +11,11 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PostureDetailExerciseInfoTableViewCell"
 
-    private var exerciseWay = UILabel().then {
-        $0.text = "운동 방법"
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.font = UIFont.Pretendard.titleMedium
-    }
+    private var exerciseWay = MGLabel(text: "운동 방법",
+                                      font: UIFont.Pretendard.titleMedium,
+                                      textColor: .black,
+                                      isCenter: false
+    )
 
     private var exerciseInfo1 = MGPostureInfoLabel(
         titleNumber: "01",

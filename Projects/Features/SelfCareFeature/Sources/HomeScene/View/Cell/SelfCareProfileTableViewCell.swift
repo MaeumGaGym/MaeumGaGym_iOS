@@ -21,16 +21,14 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
                                      customImage: DSKitAsset.Assets.basicProfile.image),
         profileType: .bigProfile
     )
+    
+    private let userNameLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                    textColor: .black
+    )
 
-    private let userNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.labelLarge
-        $0.textColor = .black
-    }
-
-    private var userTimerLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-    }
+    private var userTimerLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                    textColor: DSKitAsset.Colors.gray400.color
+    )
 
     private var userBageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,

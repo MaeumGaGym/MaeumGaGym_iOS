@@ -7,10 +7,7 @@ import DSKit
 
 open class UserProfileView: UIView {
     
-    private lazy var userNameTitle = UILabel().then {
-        $0.numberOfLines = 1
-        $0.backgroundColor = .clear
-    }
+    private lazy var userNameTitle = MGLabel(numberOfLineCount: 1)
     
     private lazy var smallProfile = MGProfileView(profileImage: MGProfileImage(type: .custom, customImage: nil), profileType: .smallProfile)
     

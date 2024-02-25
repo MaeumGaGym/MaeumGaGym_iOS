@@ -15,16 +15,15 @@ open class MGAgreeButton: BaseButton {
     public var iconImageView = UIImageView().then {
         $0.image = DSKitAsset.Assets.noCheck.image
     }
+
+    private var textLabel = MGLabel(numberOfLineCount: 1)
     
-    private var textLabel = UILabel().then {
-        $0.numberOfLines = 1
-    }
-    
-    private let chooseLabel = UILabel().then {
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.text = "(선택)"
+    private let chooseLabel = MGLabel(text: "(선택)",
+                                      font: UIFont.Pretendard.bodyMedium,
+                                      textColor: DSKitAsset.Colors.gray400.color,
+                                      isCenter: false,
+                                      numberOfLineCount: 1
+    ).then {
         $0.isHidden = true
     }
     

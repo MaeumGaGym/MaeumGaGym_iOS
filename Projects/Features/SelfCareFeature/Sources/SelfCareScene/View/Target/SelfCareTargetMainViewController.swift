@@ -29,18 +29,16 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
     private var headerView = UIView()
     private var containerView = UIView()
-
-    private let targetTitleLabel = UILabel().then {
-        $0.textColor = .black
-        $0.contentMode = .left
-        $0.font = UIFont.Pretendard.titleLarge
-    }
-
-    private let targetSubTitleLabel = UILabel().then {
-        $0.numberOfLines = 1
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.font = UIFont.Pretendard.bodyMedium
-    }
+    
+    private let targetTitleLabel = MGLabel(font: UIFont.Pretendard.titleLarge,
+                                    textColor: .black,
+                                           isCenter: false
+    )
+    
+    private let targetSubTitleLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                    textColor: DSKitAsset.Colors.gray600.color,
+                                              numberOfLineCount: 1
+    )
 
     private var targetMainTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false

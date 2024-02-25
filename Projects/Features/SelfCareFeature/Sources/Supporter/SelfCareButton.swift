@@ -11,12 +11,11 @@ public class SelfCareButton: BaseButton {
     private var containerView = UIView()
 
     private var buttonImage = UIImageView()
-
-    private var buttonLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.labelLarge
-        $0.textAlignment = .left
-        $0.numberOfLines = 1
-    }
+    
+    private var buttonLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                      isCenter: false,
+                                      numberOfLineCount: 1
+    )
 
     public init (
         type: SelfCareButtonType

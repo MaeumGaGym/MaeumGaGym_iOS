@@ -10,12 +10,11 @@ import Core
 
 open class MGCheckButton: BaseButton {
     
-    public var textLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.labelLarge
-    }
-    
+    public var textLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                      isCenter: true,
+                                    numberOfLineCount: 1
+    )
+
     public init (
         text: String? = "",
         radius: Double? = 8.0,

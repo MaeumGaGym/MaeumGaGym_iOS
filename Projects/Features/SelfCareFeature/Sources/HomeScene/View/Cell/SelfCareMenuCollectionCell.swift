@@ -21,10 +21,9 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
         $0.layer.cornerRadius = 8.0
     }
 
-    private var menuLabel = UILabel().then {
-        $0.textColor = .black
-        $0.textAlignment = .center
-    }
+    private var menuLabel = MGLabel(textColor: .black,
+                                    isCenter: true
+    )
 // 보류
 //    private var arrowImageView = UIImageView().then {
 //        $0.image = UIImage(systemName: "chevron.right")

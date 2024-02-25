@@ -17,12 +17,11 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
     private let categoryTitleList = ["추천", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
 
-    private let titleText = UILabel().then {
-        $0.text = "자세"
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleLarge
-        $0.textAlignment = .left
-    }
+    private let titleText = MGLabel(text: "자세",
+                                    font: UIFont.Pretendard.titleLarge,
+                                    textColor: .black,
+                                    isCenter: false
+    )
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 

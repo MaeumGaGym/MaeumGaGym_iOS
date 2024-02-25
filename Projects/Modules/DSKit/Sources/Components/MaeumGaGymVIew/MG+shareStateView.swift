@@ -17,7 +17,7 @@ open class MGShareStateView: BaseView {
     }
     
     private let sharedImage = UIImageView().then {
-        $0.image = DSKitAsset.Assets.selfCareEarth.image
+        $0.image = DSKitAsset.Assets.earthIcon.image
     }
     
     override open func attribute() {

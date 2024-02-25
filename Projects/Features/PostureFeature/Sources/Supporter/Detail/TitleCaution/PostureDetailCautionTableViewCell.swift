@@ -8,12 +8,11 @@ import DSKit
 public class PostureDetailCautionTableViewCell: UITableViewCell {
     static let identifier: String = "PostureDetailCautionTableViewCell"
 
-    private var exerciseWay = UILabel().then {
-        $0.text = "주의사항"
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.font = UIFont.Pretendard.titleMedium
-    }
+    private var exerciseWay = MGLabel(text: "주의사항",
+                                      font: UIFont.Pretendard.titleMedium,
+                                      textColor: .black,
+                                      isCenter: false
+    )
 
     private var exerciseCaution1 = MGPostureInfoLabel(
         titleNumber: "01",

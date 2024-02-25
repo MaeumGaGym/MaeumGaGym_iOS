@@ -58,7 +58,7 @@ open class MGProfileView: UIView {
             if let customImg = maeumGaGymProfileImage.customImage {
                 self.profileImageView.image = customImg
             } else {
-                self.profileImageView.image = DSKitAsset.Assets.blueHome.image
+                self.profileImageView.image = DSKitAsset.Assets.blueHomeTapBar.image
                 self.backgroundColor = DSKitAsset.Colors.gray50.color
             }
         }
