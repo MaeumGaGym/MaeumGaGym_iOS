@@ -11,13 +11,14 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class SelfCareMenuTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "SelfCareMenuTableViewCell"
+    static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuTableViewCell
 
     private var nameTitle = UILabel().then {
-        $0.text = "자기관리"
+        $0.text = SelfCareResourcesService.Title.selfCare
         $0.textColor = .black
         $0.font = UIFont.Pretendard.titleMedium
     }

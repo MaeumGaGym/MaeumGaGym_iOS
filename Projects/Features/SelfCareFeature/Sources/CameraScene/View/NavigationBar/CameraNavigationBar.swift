@@ -6,13 +6,15 @@ import RxCocoa
 import Core
 import DSKit
 
+import MGNetworks
+
 final public class CameraNavigationBar: UIView {
 
     public var leftButtonTap: ControlEvent<Void> {
         return leftButton.rx.tap
     }
 
-    private let leftButton = MGImageButton(image: DSKitAsset.Assets.pickleCancel.image)
+    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.cameraCancle)
 
     private let leftLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
