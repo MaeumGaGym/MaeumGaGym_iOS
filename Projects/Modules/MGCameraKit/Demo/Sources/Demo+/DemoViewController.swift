@@ -7,6 +7,7 @@ import SnapKit
 import Then
 
 import Core
+import DSKit
 import MGCameraKit
 
 public class DemoViewController: UIViewController {
@@ -18,24 +19,25 @@ public class DemoViewController: UIViewController {
         $0.setCameraPosition(.back)
     }
     private var gridView: MGridView!
-    
-    private var captureButton = UIButton().then {
-        $0.backgroundColor = .red
-        $0.setTitle("사진", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-    }
-    
-    private var photoButton = UIButton().then {
-        $0.backgroundColor = .red
-        $0.setTitle("앨범", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-    }
-    private var chageButton = UIButton().then {
-        $0.backgroundColor = .red
-        $0.setTitle("뒤집기", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-    }
-    
+
+    private var captureButton = MGButton(
+        titleText: "사진",
+        textColor: .red,
+        backColor: .black
+    )
+
+    private var photoButton = MGButton(
+        titleText: "앨범",
+        textColor: .red,
+        backColor: .black
+    )
+
+    private var chageButton = MGButton(
+        titleText: "뒤집기",
+        textColor: .red,
+        backColor: .black
+    )
+
     private  var buttomStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.alignment = .center

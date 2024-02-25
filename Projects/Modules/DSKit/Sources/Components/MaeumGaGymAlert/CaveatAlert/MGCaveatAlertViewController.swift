@@ -104,14 +104,12 @@ open class MGCaveatAlertViewController: UIViewController {
                                   completion: (() -> Void)? = nil) {
         guard let title = title else { return }
 
-        let button = UIButton().then {
-            $0.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .bold)
-
-            $0.setTitle(title, for: .normal)
-            $0.setTitleColor(titleColor, for: .normal)
+        let button = MGButton(
+            titleText: title,
+            font: .systemFont(ofSize: 16.0, weight: .bold),
+            textColor: .gray
+        ).then {
             $0.setBackgroundImage(backgroundColor.image(), for: .normal)
-
-            $0.setTitleColor(.gray, for: .disabled)
             $0.setBackgroundImage(UIColor.gray.image(), for: .disabled)
 
             $0.layer.cornerRadius = 4.0

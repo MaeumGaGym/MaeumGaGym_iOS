@@ -28,9 +28,7 @@ public class TargetMainTableViewCell: BaseTableViewCell {
         $0.textColor = DSKitAsset.Colors.gray400.color
     }
 
-    private let dotsButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareDots.image, for: .normal)
-    }
+    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.selfCareDots.image)
 
     public func setup(with model: TargetContentModel) {
         changeTargetName(text: model.targetTitle)

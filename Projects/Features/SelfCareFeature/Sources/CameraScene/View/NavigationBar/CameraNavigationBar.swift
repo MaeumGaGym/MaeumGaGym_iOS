@@ -12,9 +12,7 @@ final public class CameraNavigationBar: UIView {
         return leftButton.rx.tap
     }
 
-    private let leftButton = UIButton(type: .custom).then {
-        $0.setImage(DSKitAsset.Assets.pickleCancel.image, for: .normal)
-    }
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.pickleCancel.image)
 
     private let leftLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium

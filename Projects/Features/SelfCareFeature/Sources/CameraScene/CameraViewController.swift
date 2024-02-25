@@ -24,23 +24,28 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
         $0.setCameraPosition(.back)
     }
 
-    private var captureButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.cameraButton.image, for: .normal)
-        $0.setTitleColor(.black, for: .normal)
+    private var captureButton = MGButton(
+        titleText: "",
+        image: DSKitAsset.Assets.cameraButton.image,
+        textColor: .black
+    )
+
+    private var photoButton = MGButton(
+        titleText: "",
+        image: DSKitAsset.Assets.image.image,
+        textColor: .black,
+        backColor: DSKitAsset.Colors.gray800.color
+    ).then {
+        $0.setCornerRadius(radius: 26.0)
     }
 
-    private var photoButton = UIButton().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray800.color
-        $0.setImage(DSKitAsset.Assets.image.image, for: .normal)
-        $0.layer.cornerRadius = 26.0
-        $0.setTitleColor(.black, for: .normal)
-    }
-
-    private var chageButton = UIButton().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray800.color
-        $0.setImage(DSKitAsset.Assets.turn.image, for: .normal)
-        $0.layer.cornerRadius = 26.0
-        $0.setTitleColor(.black, for: .normal)
+    private var chageButton = MGButton(
+        titleText: "",
+        image: DSKitAsset.Assets.turn.image,
+        textColor: .black,
+        backColor: DSKitAsset.Colors.gray800.color
+    ).then {
+        $0.setCornerRadius(radius: 26.0)
     }
 
     public override func configureNavigationBar() {

@@ -12,9 +12,7 @@ final class MetronomeNavigationBar: UIView {
         return rightButton.rx.tap
     }
 
-    private let rightButton = UIButton(type: .custom).then {
-        $0.setImage(DSKitAsset.Assets.timerNavDots.image, for: .normal)
-    }
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.timerNavDots.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal
