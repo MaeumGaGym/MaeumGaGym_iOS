@@ -7,4 +7,5 @@ public protocol SelfCareRepositoryInterface {
     func getMyRoutineDetailData() -> Single<
     SelfCareMyRoutineDetailModel>
     func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel>
+    func getTargetMainData() -> Single<SelfCareTargetMainModel>
 }
