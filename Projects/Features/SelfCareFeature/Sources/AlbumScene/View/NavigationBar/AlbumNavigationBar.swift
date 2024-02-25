@@ -16,11 +16,10 @@ final public class AlbumNavigationBar: UIView {
 
     private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.leftArrow)
 
-    private let leftLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.text = SelfCareResourcesService.Title.selectPicture
-        $0.textColor = .white
-    }
+    private let leftLabel = MGLabel(text: SelfCareResourcesService.Title.selectPicture,
+        font: UIFont.Pretendard.titleMedium,
+                                            textColor: .white
+    )
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton, leftLabel]).then {
         $0.axis = .horizontal

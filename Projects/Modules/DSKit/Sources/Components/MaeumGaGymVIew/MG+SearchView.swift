@@ -5,14 +5,14 @@ import Then
 open class MGSearchView: UIView {
     private var searchImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = DSKitAsset.Assets.postureSearch.image
+        $0.image = DSKitAsset.Assets.searchActIcon.image
     }
     
     private let searchTextField = MGSearchTextField()
     
     private var cancelImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = DSKitAsset.Assets.postureCancel.image
+        $0.image = DSKitAsset.Assets.cancle.image
         $0.isHidden = true
     }
     
@@ -23,8 +23,8 @@ open class MGSearchView: UIView {
         self.layer.cornerRadius = 8.0
         
         if (backgroundColor == DSKitAsset.Colors.gray800.color ) {
-            searchImage.image = DSKitAsset.Assets.pickleSearch.image
-            cancelImage.image = DSKitAsset.Assets.pickleCancel.image
+            searchImage.image = DSKitAsset.Assets.searchActIcon.image
+            cancelImage.image = DSKitAsset.Assets.searchActIcon.image
         }
         self.searchTextField.placeholder = "자세 검색"
         

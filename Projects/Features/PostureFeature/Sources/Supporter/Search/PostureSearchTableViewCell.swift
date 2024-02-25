@@ -15,19 +15,17 @@ public class PostureSearchTableViewCell: UITableViewCell {
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.cornerRadius = 8.0
     }
-    
-    private var exerciseNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = .black
-        $0.textAlignment = .left
-    }
-    
-    private var exercisePartLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.textAlignment = .left
-    }
-    
+
+    private var exerciseNameLabel = MGLabel(font: UIKit.UIFont.Pretendard.bodyMedium,
+                                      textColor: .black,
+                                      isCenter: false
+    )
+
+    private var exercisePartLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                      textColor: DSKitAsset.Colors.gray400.color,
+                                      isCenter: false
+    )
+
     public func setup(image: UIImage, name: String, part: String) {
         searchImageView.image = image
         exerciseNameLabel.text = name

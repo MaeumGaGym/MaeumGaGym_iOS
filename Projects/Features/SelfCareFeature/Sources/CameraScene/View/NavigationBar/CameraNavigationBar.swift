@@ -16,11 +16,10 @@ final public class CameraNavigationBar: UIView {
 
     private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.cameraCancle)
 
-    private let leftLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.text = "사진 촬영"
-        $0.textColor = .white
-    }
+    private let leftLabel = MGLabel(text: "사진 촬영",
+                                    font: UIFont.Pretendard.titleMedium,
+                                    textColor: .white
+    )
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton, leftLabel]).then {
         $0.axis = .horizontal

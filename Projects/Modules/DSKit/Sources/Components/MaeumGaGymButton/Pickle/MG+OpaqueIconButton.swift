@@ -14,11 +14,10 @@ open class MGOpaqueIconButton: BaseButton {
         $0.contentMode = .scaleAspectFit
     }
 
-    private var likeCountLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.font = UIFont.Pretendard.bodySmall
-        $0.textColor = .white
-    }
+    private var likeCountLabel = MGLabel(font: UIFont.Pretendard.bodySmall,
+                                         textColor: .white,
+                                         isCenter: true
+    )
 
     public init(
         type: PickleLogoType,

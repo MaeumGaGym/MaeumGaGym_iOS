@@ -5,12 +5,11 @@ import Then
 public class MGShareCell: UITableViewCell {
     
     public static let identifier = "MaeumGaGymShareCell"
-    
-    public var mainTitle = UILabel().then {
-        $0.textColor = UIColor.white
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.text = "공유"
-    }
+
+    public var mainTitle = MGLabel(text: "공유",
+                                   font: UIFont.Pretendard.titleMedium,
+                                   textColor: UIColor.white
+)
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

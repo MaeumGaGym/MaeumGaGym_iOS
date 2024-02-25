@@ -10,10 +10,9 @@ import Core
 
 public class MGToggleButton: BaseButton {
 
-    private let textLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
-    }
+    private var textLabel = MGLabel(isCenter: true,
+                                      numberOfLineCount: 1
+    )
 
     public init(type: ToggleButtonType) {
         super.init(frame: .zero)

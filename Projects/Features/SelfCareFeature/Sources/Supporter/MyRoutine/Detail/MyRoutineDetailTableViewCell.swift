@@ -19,19 +19,17 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
         $0.contentMode = .scaleToFill
     }
 
-    private var exerciseNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyLarge
-        $0.textColor = .black
-        $0.textAlignment = .left
-        $0.numberOfLines = 1
-    }
-
-    private var exerciseRoutineLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.textAlignment = .left
-        $0.numberOfLines = 1
-    }
+    private let exerciseNameLabel = MGLabel(font:  UIFont.Pretendard.bodyLarge,
+                                              textColor: .black,
+                                              isCenter: false,
+                                              numberOfLineCount: 1
+    )
+    
+    private var exerciseRoutineLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                              textColor: DSKitAsset.Colors.gray400.color,
+                                              isCenter: false,
+                                              numberOfLineCount: 1
+    )
 
     private var deatilImage = UIImageView().then {
         $0.image = DSKitAsset.Assets.right.image

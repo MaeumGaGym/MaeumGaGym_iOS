@@ -18,11 +18,10 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
         $0.layer.cornerRadius = 8.0
     }
 
-    private var exerciseTitleLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textColor = .black
-        $0.contentMode = .left
-    }
+    private var exerciseTitleLabel = MGLabel(font: UIFont.Pretendard.titleMedium,
+                                             textColor: .black,
+                                             isCenter: false
+    )
 
     private var seemoreButton = MaeumGaGymSeeMoreButton()
 

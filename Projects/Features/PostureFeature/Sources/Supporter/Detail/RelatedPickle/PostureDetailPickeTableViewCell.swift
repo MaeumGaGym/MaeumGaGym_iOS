@@ -12,12 +12,11 @@ public class PostureDetailPickeTableViewCell: BaseTableViewCell {
 
     private var pickleColellectionView: UICollectionView!
 
-    private let titleLabel = UILabel().then {
-        $0.text = "관련 피클"
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textAlignment = .left
-    }
+    private let titleLabel = MGLabel(text: "관련 피클",
+                                     font: UIFont.Pretendard.titleMedium,
+                                     textColor: .black,
+                                     isCenter: false
+    )
     
     var pickleData: [PostureDetailPickleImageModel] = [] {
         didSet {

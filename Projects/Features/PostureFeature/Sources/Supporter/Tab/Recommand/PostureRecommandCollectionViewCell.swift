@@ -15,17 +15,13 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
         $0.layer.cornerRadius = 8.0
     }
 
-    private var exerciseNameLabel = UILabel().then {
-        $0.textColor = .black
-        $0.backgroundColor = .clear
-        $0.textAlignment = .left
-    }
+    private var exerciseNameLabel = MGLabel(textColor: .black,
+                                      isCenter: false
+    )
 
-    private var exercisePartLabel = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.backgroundColor = .clear
-        $0.textAlignment = .left
-    }
+    private var exercisePartLabel = MGLabel(textColor: DSKitAsset.Colors.gray600.color,
+                                      isCenter: false
+    )
 
     private func layout() {
         addSubviews([postureImageView, exerciseNameLabel, exercisePartLabel])

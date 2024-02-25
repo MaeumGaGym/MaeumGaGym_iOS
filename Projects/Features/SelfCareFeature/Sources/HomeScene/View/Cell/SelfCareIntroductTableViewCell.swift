@@ -23,15 +23,12 @@ public class SelfCareIntroductTableViewCell: BaseTableViewCell {
         profileType: .smallProfile
     )
 
-    private let mainTitle = UILabel().then {
-        $0.font = UIFont.Pretendard.titleLarge
-    }
-
-    private let subTitle = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.numberOfLines = 2
-    }
+    private let mainTitle = MGLabel(font: UIFont.Pretendard.titleLarge)
+    
+    private let subTitle = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                   textColor: DSKitAsset.Colors.gray600.color,
+                                   numberOfLineCount: 2
+    )
 
     public func configure(with message: SelfCareIntroductModel) {
         titleImageView.configureImage(with: MGProfileImage(type: .custom,

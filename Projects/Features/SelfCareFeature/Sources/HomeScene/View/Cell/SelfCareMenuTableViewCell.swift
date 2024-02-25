@@ -17,11 +17,10 @@ public class SelfCareMenuTableViewCell: BaseTableViewCell {
 
     static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuTableViewCell
 
-    private var nameTitle = UILabel().then {
-        $0.text = SelfCareResourcesService.Title.selfCare
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleMedium
-    }
+    private var nameTitle = MGLabel(text: SelfCareResourcesService.Title.selfCare,
+                                    font: UIFont.Pretendard.titleMedium,
+                                    textColor: .black
+    )
 
     private var selfCareMenuCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
