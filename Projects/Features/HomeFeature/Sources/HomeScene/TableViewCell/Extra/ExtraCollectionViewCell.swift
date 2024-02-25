@@ -27,7 +27,8 @@ public class ExtraCollectionViewCell: UICollectionViewCell {
     }
 
     private var descriptionLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                           textColor: DSKitAsset.Colors.gray600.color,           numberOfLineCount: 0
+                                           textColor: DSKitAsset.Colors.gray600.color,
+                                           numberOfLineCount: 0
     )
 
     public override init(frame: CGRect) {

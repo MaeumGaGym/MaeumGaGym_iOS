@@ -24,7 +24,7 @@ public class StepTableViewCell: BaseTableViewCell {
                                                numberOfLineCount: 1
     )
 
-    private let workTitle = MGLabel(text: "걸음",
+    private let workTitle = MGLabel(text: HomeResourcesService.Title.step,
                                     font: UIFont.Pretendard.titleSmall,
                                     textColor: DSKitAsset.Colors.gray600.color,
                                     numberOfLineCount: 1
