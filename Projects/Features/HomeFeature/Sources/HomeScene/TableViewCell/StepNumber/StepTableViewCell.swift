@@ -13,10 +13,11 @@ import DSKit
 import Domain
 
 import MindGymKit
+import MGNetworks
 
 public class StepTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = "StepTableViewCell"
+    static public var identifier: String = HomeResourcesService.identifier.stepTableViewCell
 
     private lazy var stepNumberTitle = MGLabel(font: UIFont.Pretendard.titleLarge,
                                                textColor: DSKitAsset.Colors.blue800.color,

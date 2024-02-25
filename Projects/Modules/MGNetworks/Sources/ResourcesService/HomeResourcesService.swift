@@ -14,5 +14,6 @@ public enum HomeResourcesService {
     public enum identifier {
         public static let extraCollectionViewCell = "ExtraCollectionViewCell"
         public static let motivationMessageTableViewCell = "MotivationMessageTableViewCell"
+        public static let stepTableViewCell = "StepTableViewCell"
     }
 }
