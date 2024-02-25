@@ -35,7 +35,7 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
             self.navigationController?.pushVC(DSTextFieldViewController.self)
         case .label:
             MGLogger.verbose("label")
-            self.navigationController?.pushVC(DSLabelViewController.self)
+            self.navigationController?.pushVC(LabelTableViewController.self)
         case .line:
             MGLogger.verbose("line")
             self.navigationController?.pushVC(DSLineViewController.self)

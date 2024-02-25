@@ -19,7 +19,7 @@ public class ExtraCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .brown
     }
 
-    private var titleLabel = UILabel().then {
+    private var titleLabel = BaseLabel().then {
         $0.font = UIFont.Pretendard.titleMedium
         $0.textColor = .black
         $0.numberOfLines = 1
