@@ -18,7 +18,7 @@ import MGNetworks
 import SelfCareFeatureInterface
 
 public class SelfCareTargetMainViewController: BaseViewController<SelfCareTargetMainViewModel> {
-    
+
     private var targetMainModel: SelfCareTargetMainModel = SelfCareTargetMainModel(
         titleTextData:
             TargetTitleTextModel(
@@ -29,7 +29,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
     private var headerView = UIView()
     private var containerView = UIView()
-    
+
     private let targetTitleLabel = UILabel().then {
         $0.textColor = .black
         $0.contentMode = .left
@@ -41,7 +41,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         $0.textColor = DSKitAsset.Colors.gray600.color
         $0.font = UIFont.Pretendard.bodyMedium
     }
-    
+
     private var targetMainTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
@@ -50,9 +50,9 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         $0.register(TargetMainTableViewCell.self,
                     forCellReuseIdentifier: TargetMainTableViewCell.identifier)
     }
-    
+
     private var plusTargetButton = SelfCareButton(type: .plusTarget)
-    
+
     public override func attribute() {
         super.attribute()
 
@@ -64,7 +64,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         targetMainTableView.delegate = self
         targetMainTableView.dataSource = self
     }
-    
+
     public override func layout() {
         super.layout()
 
@@ -106,7 +106,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
             $0.height.equalTo(58.0)
         }
     }
-    
+
     public override func bindViewModel() {
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
 
