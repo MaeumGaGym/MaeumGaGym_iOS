@@ -11,9 +11,11 @@ import DSKit
 
 import Domain
 
+import MGNetworks
+
 public class SelfCareMenuCollectionCell: UICollectionViewCell {
 
-    static let identifier: String = "SelfCareMenuCollectionCell"
+    static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuCollectionCell
 
     private var menuImageView = UIImageView().then {
         $0.layer.cornerRadius = 8.0

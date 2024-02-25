@@ -11,13 +11,15 @@ import DSKit
 
 import Domain
 
+import MGNetworks
+
 public class SelfCareIntroductTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = "SelfCareIntroductTableViewCell"
+    static public var identifier: String = SelfCareResourcesService.identifier.selfCareIntroductTableViewCell
 
     private let titleImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,
-                                     customImage: DSKitAsset.Assets.selfCareMainImage.image),
+                                     customImage: SelfCareResourcesService.Assets.selfCareMain),
         profileType: .smallProfile
     )
 

@@ -26,13 +26,13 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
 
     private var captureButton = MGButton(
         titleText: "",
-        image: DSKitAsset.Assets.cameraButton.image,
+        image: SelfCareResourcesService.Assets.camera,
         textColor: .black
     )
 
     private var photoButton = MGButton(
         titleText: "",
-        image: DSKitAsset.Assets.image.image,
+        image: SelfCareResourcesService.Assets.photo,
         textColor: .black,
         backColor: DSKitAsset.Colors.gray800.color
     ).then {
@@ -41,7 +41,7 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
 
     private var chageButton = MGButton(
         titleText: "",
-        image: DSKitAsset.Assets.turn.image,
+        image: SelfCareResourcesService.Assets.ture,
         textColor: .black,
         backColor: DSKitAsset.Colors.gray800.color
     ).then {

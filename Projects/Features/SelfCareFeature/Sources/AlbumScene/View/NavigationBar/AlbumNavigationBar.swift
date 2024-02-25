@@ -6,17 +6,19 @@ import RxCocoa
 import Core
 import DSKit
 
+import MGNetworks
+
 final public class AlbumNavigationBar: UIView {
 
     public var leftButtonTap: ControlEvent<Void> {
         return leftButton.rx.tap
     }
 
-    private let leftButton = MGImageButton(image: DSKitAsset.Assets.arrowLeft.image)
+    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.leftArrow)
 
     private let leftLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
-        $0.text = "사진 선택"
+        $0.text = SelfCareResourcesService.Title.selectPicture
         $0.textColor = .white
     }
 

@@ -10,10 +10,11 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = "SelfCareProfileTableViewCell"
+    static public var identifier: String = SelfCareResourcesService.identifier.selfCareProfileTableViewCell
 
     private let profileImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,
