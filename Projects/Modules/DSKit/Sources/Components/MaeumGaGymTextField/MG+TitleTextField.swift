@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 import Then
 
-open class MGTitleTextField: UITextField {
+open class MGTitleTextField: UITextField, UITextFieldDelegate{
     
     private let placeholderLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyLarge
@@ -25,23 +25,46 @@ open class MGTitleTextField: UITextField {
         configure()
 
         tintColor = .black
-        backgroundColor = DSKitAsset.Colors.gray25.color
-        layer.cornerRadius = 8.0
-        layer.borderColor = DSKitAsset.Colors.gray50.color.cgColor
-        layer.borderWidth = 1.0
+        
     }
     
     private func configure() {
         addSubview(placeholderLabel)
-        
+
         placeholderLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(12.0)
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview()
             $0.height.equalTo(24.0)
         }
     }
-    
+
     public func setPlaceholder(placeholder: String) {
         placeholderLabel.text = placeholder
     }
+}
+
+public extension MGTitleTextField {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.3) {
+
+            self.backgroundColor = DSKitAsset.Colors.blue500.color
+        }
+        if textField.text != "" {
+            placeholderLabel.isHidden = false
+        } else {
+            placeholderLabel.isHidden = true
+        }
+        self.layoutIfNeeded()
+    }
+    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//            let currentText = textField.text ?? ""
+//            guard let stringRange = Range(range, in: currentText) else { return false }
+//            let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+//
+//            placeholderLabel.isHidden = !updatedText.isEmpty
+//
+//            return true
+//        }
 }
 

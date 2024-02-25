@@ -5,9 +5,15 @@ import RxSwift
 public protocol SelfCareUseCase {
     var myRoutineData: PublishSubject<SelfCareMyRoutineModel> { get }
     var myRoutineDetailData: PublishSubject<SelfCareMyRoutineDetailModel> { get }
+    var myRoutineEditData: PublishSubject<SelfCareMyRoutineEditModel> { get }
+
+    var targetMainData: PublishSubject<SelfCareTargetMainModel> { get }
 
     func getMyRoutineData()
     func getMyRoutineDetailData()
+    func getMyRoutineEditData()
+
+    func getTargetMainData()
 }
 
 public class DefaultSelfCareUseCase {
@@ -16,6 +22,9 @@ public class DefaultSelfCareUseCase {
 
     public let myRoutineData = PublishSubject<SelfCareMyRoutineModel>()
     public let myRoutineDetailData = PublishSubject<SelfCareMyRoutineDetailModel>()
+    public let myRoutineEditData = PublishSubject<SelfCareMyRoutineEditModel>()
+
+    public let targetMainData = PublishSubject<SelfCareTargetMainModel>()
 
     public init(repository: SelfCareRepositoryInterface) {
         self.repository = repository
@@ -41,6 +50,26 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
             },
                        onFailure: { error in
                 print("SelfCareUseCase getMyRoutineDetailData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+
+    public func getMyRoutineEditData() {
+        repository.getMyRoutineEditData()
+            .subscribe(onSuccess: { [weak self] myRoutineEditData in
+                self?.myRoutineEditData.onNext(myRoutineEditData)
+            },
+                       onFailure: { error in
+                print("SelfCareUseCase getMyRoutineEditData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+
+    public func getTargetMainData() {
+        repository.getTargetMainData()
+            .subscribe(onSuccess: { [weak self] targetMainData in
+                self?.targetMainData.onNext(targetMainData)
+            }, 
+                       onFailure: { error in
+                print("SelfCareUseCase getTargetMainData error occured: \(error)")
             }).disposed(by: disposeBag)
     }
 }

@@ -19,7 +19,7 @@ public class DSToggleButtonVC: UIViewController {
     var lunch = MGToggleButton(type: .lunch)
     var dinner = MGToggleButton(type: .dinner)
     var bareBody = MGToggleButton(type: .bareBody)
-    var marchine = MGToggleButton(type: .marchine)
+//    var marchine = MGToggleButton(type: .marchine)
 
 
     public override func viewDidLoad() {
@@ -42,7 +42,7 @@ public class DSToggleButtonVC: UIViewController {
             lunch,
             dinner,
             bareBody,
-            marchine
+//            marchine
         ].forEach { view.addSubview($0) }
         
         image.snp.makeConstraints {
@@ -115,12 +115,12 @@ public class DSToggleButtonVC: UIViewController {
             $0.height.equalTo(36.0)
         }
         
-        marchine.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(400.0)
-            $0.leading.equalToSuperview().offset(120.0)
-            $0.width.equalTo(60.0)
-            $0.height.equalTo(36.0)
-        }
+//        marchine.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide).offset(400.0)
+//            $0.leading.equalToSuperview().offset(120.0)
+//            $0.width.equalTo(60.0)
+//            $0.height.equalTo(36.0)
+//        }
     }
     
     func bind() {
@@ -172,8 +172,7 @@ public class DSToggleButtonVC: UIViewController {
                 self.lunch.buttonNoChecked(type: .lunch)
                 self.dinner.buttonNoChecked(type: .dinner)
             }).disposed(by: disposeBag)
-        
-        
+
         lunch.rx.tap
             .subscribe(onNext: {
                 self.lunch.buttonYesChecked(type: .lunch)
@@ -191,13 +190,13 @@ public class DSToggleButtonVC: UIViewController {
         bareBody.rx.tap
             .subscribe(onNext: {
                 self.bareBody.buttonYesChecked(type: .bareBody)
-                self.marchine.buttonNoChecked(type: .marchine)
+//                self.marchine.buttonNoChecked(type: .machine) // 이거 없어서 에러나요
             }).disposed(by: disposeBag)
         
-        marchine.rx.tap
-            .subscribe(onNext: {
-                self.marchine.buttonYesChecked(type: .marchine)
-                self.bareBody.buttonNoChecked(type: .bareBody)
-            }).disposed(by: disposeBag)
+//        marchine.rx.tap
+//            .subscribe(onNext: {
+//                self.marchine.buttonYesChecked(type: .marchine)
+//                self.bareBody.buttonNoChecked(type: .bareBody)
+//            }).disposed(by: disposeBag)
     }
 }

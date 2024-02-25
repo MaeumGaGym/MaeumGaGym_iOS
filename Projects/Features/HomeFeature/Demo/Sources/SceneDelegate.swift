@@ -18,10 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = MetronomeViewController(
-                viewModel: MetronomeViewModel(metronome: Metronome.sharedInstance)
-            )
-//            window?.configure(withRootViewController: TimerViewController(TimerViewModel()))
+//            window?.rootViewController = MetronomeViewController(
+//                viewModel: MetronomeViewModel(metronome: Metronome.sharedInstance)
+//            )
+            let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
+            let viewModel = HomeViewModel(useCase: useCase)
+            let viewController = HomeViewController(viewModel)
+            window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 }

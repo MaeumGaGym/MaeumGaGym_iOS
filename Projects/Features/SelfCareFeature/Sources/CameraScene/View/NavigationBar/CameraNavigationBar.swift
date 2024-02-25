@@ -19,6 +19,7 @@ final public class CameraNavigationBar: UIView {
     private let leftLabel = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
         $0.text = "사진 촬영"
+        $0.textColor = .white
     }
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton, leftLabel]).then {

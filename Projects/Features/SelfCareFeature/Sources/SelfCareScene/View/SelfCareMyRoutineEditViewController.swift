@@ -1,19 +1,52 @@
 import UIKit
 
+import RxFlow
+import RxCocoa
+import RxSwift
+
 import SnapKit
 import Then
 
 import Core
 import DSKit
+import MGLogger
+
+import Domain
+import Data
+import MGNetworks
+
 import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyRoutineEditViewModel> {
 
-    private var myRoutineEditModel = MyRoutineEditModel.routineData
+    private var myRoutineEditData: SelfCareMyRoutineEditModel =
+    SelfCareMyRoutineEditModel(
+        textFieldData:
+            MyRoutineEditTextFieldModel(
+            textFieldTitle: "",
+            textFieldText: "", 
+            textFieldPlaceholder: ""
+            ),
+        exerciseData: []
+    )
 
     private var headerView = UIView()
 
-    private var titleTextView = MGTitleTextView(type: .title)
+    private var titleTextView = MGTitleTextView()
+    
+    private var textFieldData: MyRoutineEditTextFieldModel = MyRoutineEditTextFieldModel(
+        textFieldTitle: "",
+        textFieldText: "",
+        textFieldPlaceholder: ""
+    ) {
+        didSet {
+            titleTextView.setup(
+                titleText: textFieldData.textFieldTitle,
+                placeholder: textFieldData.textFieldPlaceholder,
+                text: textFieldData.textFieldText
+            )
+        }
+    }
 
     private var myRoutineDetailTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -96,6 +129,24 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
             $0.leading.equalTo(buttonSpaceView.snp.trailing)
         }
     }
+
+    public override func bindViewModel() {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+
+        viewModel = SelfCareMyRoutineEditViewModel(useCase: useCase)
+
+        let input = SelfCareMyRoutineEditViewModel.Input(
+            getMyRoutineEditData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+
+        let output = viewModel.transform(input, action: { output in
+            output.myRoutineEditData
+                .subscribe(onNext: { myRoutineEditData in
+                    MGLogger.debug("myRoutineEditData: \(myRoutineEditData)")
+                    self.myRoutineEditData = myRoutineEditData
+                    self.textFieldData = myRoutineEditData.textFieldData
+                }).disposed(by: disposeBag)
+        })
+    }
 }
 
 extension SelfCareMyRoutineEditViewController: UITableViewDelegate {
@@ -106,15 +157,15 @@ extension SelfCareMyRoutineEditViewController: UITableViewDelegate {
 
 extension SelfCareMyRoutineEditViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myRoutineEditModel.data.count
+        myRoutineEditData.exerciseData.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MyRoutineEditTableViewCell.identifier,
             for: indexPath) as? MyRoutineEditTableViewCell
-        let editData = myRoutineEditModel.data[indexPath.row]
-        cell?.setup(image: editData.image, name: editData.name)
+        let editData = myRoutineEditData.exerciseData[indexPath.row]
+        cell?.setup(with: editData)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
