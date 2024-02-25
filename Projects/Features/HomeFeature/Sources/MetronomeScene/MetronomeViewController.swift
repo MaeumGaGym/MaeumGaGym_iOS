@@ -12,6 +12,8 @@ import AVFoundation
 
 import AudioToolbox
 
+import MGNetworks
+
 public class MetronomeViewController: UIViewController {
 
     public var disposeBag = DisposeBag()
@@ -37,14 +39,14 @@ public class MetronomeViewController: UIViewController {
                                      isCenter: true)
 
     private let tempoIncrementButton = MGImageButton(
-        image: DSKitAsset.Assets.selfCarePlus.image,
+        image: HomeResourcesService.Assets.blackPlus,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
     }
 
     private let tempoDecrementButton = MGImageButton(
-        image: DSKitAsset.Assets.selfCareMinus.image,
+        image: HomeResourcesService.Assets.blackMinus,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
