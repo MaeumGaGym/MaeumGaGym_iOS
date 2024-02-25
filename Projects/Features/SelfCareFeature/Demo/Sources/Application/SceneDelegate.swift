@@ -17,11 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
-//        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
-//        let viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
-//        let viewController = SelfCareMyRoutineDetailViewController(viewModel)
-//        window?.configure(withRootViewController: viewController)
-        window?.configure(withRootViewController: SelfCareHomeViewController(SelfCareHomeViewModel()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
+        let viewController = SelfCareTargetMainViewController(viewModel)
+        window?.configure(withRootViewController: viewController)
+        window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 }
