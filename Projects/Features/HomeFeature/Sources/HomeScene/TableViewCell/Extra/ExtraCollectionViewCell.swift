@@ -19,17 +19,16 @@ public class ExtraCollectionViewCell: UICollectionViewCell {
         $0.backgroundColor = .brown
     }
 
-    private var titleLabel = UILabel().then {
+    private var titleLabel = BaseLabel().then {
         $0.font = UIFont.Pretendard.titleMedium
         $0.textColor = .black
         $0.numberOfLines = 1
     }
 
-    private var descriptionLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.numberOfLines = 0
-    }
+    private var descriptionLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                           textColor: DSKitAsset.Colors.gray600.color,
+                                           numberOfLineCount: 0
+    )
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

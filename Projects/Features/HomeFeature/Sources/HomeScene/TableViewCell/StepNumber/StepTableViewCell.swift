@@ -18,18 +18,16 @@ public class StepTableViewCell: BaseTableViewCell {
 
     static public var identifier: String = "StepTableViewCell"
 
-    private lazy var stepNumberTitle = UILabel().then {
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.titleLarge
-        $0.textColor = DSKitAsset.Colors.blue800.color
-    }
+    private lazy var stepNumberTitle = MGLabel(font: UIFont.Pretendard.titleLarge,
+                                               textColor: DSKitAsset.Colors.blue800.color,
+                                               numberOfLineCount: 1
+    )
 
-    private let workTitle = UILabel().then {
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.titleSmall
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.text = "걸음"
-    }
+    private let workTitle = MGLabel(text: "걸음",
+                                    font: UIFont.Pretendard.titleSmall,
+                                    textColor: DSKitAsset.Colors.gray600.color,
+                                    numberOfLineCount: 1
+    )
 
     public func configure(with step: StepModel) {
         stepNumberTitle.text = "\(formattedLikeCount(step.stepCount))"

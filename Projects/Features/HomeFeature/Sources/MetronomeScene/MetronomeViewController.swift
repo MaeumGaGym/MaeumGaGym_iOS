@@ -27,17 +27,14 @@ public class MetronomeViewController: UIViewController {
     private var exView = UIView().then {
         $0.backgroundColor = .clear
     }
-
-    private let bpmTitle = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.blue400.color
-        $0.font = UIFont.Pretendard.bodyLarge
-        $0.text = "BPM"
-    }
-
-    private let tempoLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.font = UIFont.Pretendard.light
-    }
+    
+    private let bpmTitle = MGLabel(text: "BPM",
+                                   font: UIFont.Pretendard.bodyLarge,
+                                   textColor: DSKitAsset.Colors.blue400.color
+    )
+    
+    private let tempoLabel = MGLabel(font: UIFont.Pretendard.light,
+                                     isCenter: true)
 
     private let tempoIncrementButton = MGImageButton(
         image: DSKitAsset.Assets.selfCarePlus.image,
@@ -55,11 +52,10 @@ public class MetronomeViewController: UIViewController {
 
     private let tempoSlider = MGSlider()
 
-    private let bitTitle = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.blue400.color
-        $0.font = UIFont.Pretendard.bodyLarge
-        $0.text = "비트수"
-    }
+    private let bitTitle = MGLabel(text: "비트수",
+                                   font: UIFont.Pretendard.bodyLarge,
+                                   textColor: DSKitAsset.Colors.blue400.color
+    )
 
     private var bitViews: [UIView] = []
 
