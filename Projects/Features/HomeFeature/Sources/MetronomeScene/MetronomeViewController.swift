@@ -19,7 +19,7 @@ public class MetronomeViewController: UIViewController {
     private var viewModel: MetronomeViewModel
 
     private var colorChangeTimer: Timer?
-    private let colors: [UIColor] = [.red, .yellow, .orange, .green, .blue, .purple]
+
     private var currentBitIndex = 0
 
     private lazy var navBar = MetronomeNavigationBar()
