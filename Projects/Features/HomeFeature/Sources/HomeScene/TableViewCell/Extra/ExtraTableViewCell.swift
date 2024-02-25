@@ -14,7 +14,7 @@ import MGNetworks
 
 public class ExtraTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "ExtraTableViewCell"
+    static let identifier: String = HomeResourcesService.identifier.extraTableViewCell
 
     private var extraCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
