@@ -5,10 +5,11 @@ import Then
 
 import DSKit
 import Domain
+import MGNetworks
 
 public class PostureDetailTagCollectionViewCell: UICollectionViewCell {
 
-    static let identifier: String = "PostureDetailTagCollectionViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailTagCollectionViewCell
 
     private var tagLabel = MGTagLabel(text: "")
 

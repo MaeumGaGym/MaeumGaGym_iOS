@@ -15,7 +15,6 @@ import Domain
 import Data
 import MGNetworks
 
-
 public class PostureBackViewController: BaseViewController<PostureBackViewModel> {
 
     private var firstButton = MGToggleButton(type: .bareBody)

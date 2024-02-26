@@ -7,14 +7,17 @@ import Core
 import DSKit
 import Domain
 
+import MGNetworks
+
 public class PostureRecommandTableViewCell: BaseTableViewCell{
-    static let identifier: String = "PostureRecommandTableViewCell"
+
+    static let identifier: String = PostureResourcesService.Identifier.postureRecommandTableViewCell
     
     private let containerView = UIView()
 
     private var titleImageLogo = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
 

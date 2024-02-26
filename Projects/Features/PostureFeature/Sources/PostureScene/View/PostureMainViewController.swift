@@ -111,6 +111,3 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
       }).disposed(by: self.disposeBag)
    }
 }
-
-
-

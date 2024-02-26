@@ -46,13 +46,6 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         relatedPickleData: PostureDetailPickleModel(titleText: "", pickleImage: [])
     )
 
-    var titleImageModel: PostureTitleImageModel!
-    var titleLabelModel: PostureTitleLabelModel!
-    var titleTagModel: PostureTagLabelModel!
-    var exerciseWayModel: PostureExerciseWayModel!
-    var exerciseCautionModel: PostureExerciseCautionModel!
-    var relatedPickleModel: PostureRelatedPickleModel!
-
     public override func attribute() {
         super.attribute()
 
@@ -146,35 +139,40 @@ extension PostureDetailViewController: UITableViewDataSource {
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTitleTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTitleTableViewCell
-            cell?.setup(englishText: titleLabelModel.englishName, koreanText: titleLabelModel.koreanName)
+            let model = postureDetailModel.titleTextData
+            cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 2:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTagTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTagTableViewCell
-            cell?.setup(exerciseNameText: titleTagModel.exerciseType, exercisePartText: titleTagModel.exercisePart)
+            let model = postureDetailModel.exerciseKindData
+            cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 3:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailExerciseInfoTableViewCell.identifier,
                 for: indexPath) as? PostureDetailExerciseInfoTableViewCell
-            cell?.setup(model: PostureExerciseWayModel.pushUpModel)
+            let model = postureDetailModel.exerciseWayData
+            cell?.setup(model: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 4:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailCautionTableViewCell.identifier,
                 for: indexPath) as? PostureDetailCautionTableViewCell
-            cell?.setup(model: PostureExerciseCautionModel.pushUpModel)
+            let model = postureDetailModel.exerciseCautionData
+            cell?.setup(model: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 5:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailPickeTableViewCell.identifier,
                 for: indexPath) as? PostureDetailPickeTableViewCell
-            cell?.setupCell(model: PostureRelatedPickleModel.pushUpModel)
+            let model = postureDetailModel.relatedPickleData
+            cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 6:
