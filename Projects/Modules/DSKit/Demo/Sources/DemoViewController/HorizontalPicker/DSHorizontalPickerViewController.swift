@@ -1,11 +1,3 @@
-//
-//  DSHorizontalPickerViewController.swift
-//  DSKit
-//
-//  Created by 박준하 on 2/14/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 import SnapKit
 import Then
@@ -17,15 +9,14 @@ public class DSHorizontalPickerViewController: UIViewController {
         let view = HorizontalPickerView()
         view.pickerSelectValue = 0
         view.delegate = self
-        view.backgroundColor = .green
-        
+
         return view
     }()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpLayout()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
     }
 
 }
@@ -49,6 +40,5 @@ extension DSHorizontalPickerViewController {
             $0.center.equalToSuperview()
             $0.height.equalTo(120)
         }
-        
     }
 }
