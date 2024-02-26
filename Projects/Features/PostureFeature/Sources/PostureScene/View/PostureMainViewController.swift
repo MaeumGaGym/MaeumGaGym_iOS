@@ -25,12 +25,11 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         PostureResourcesService.Title.postureMainTitle7
     ]
 
-    private let titleText = UILabel().then {
-        $0.text = PostureResourcesService.Title.postureTitle
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleLarge
-        $0.textAlignment = .left
-    }
+    private let titleText = MGLabel(text: PostureResourcesService.Title.postureTitle,
+                                    font: UIFont.Pretendard.titleLarge,
+                                    textColor: .black,
+                                    isCenter: false
+        )
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
