@@ -15,21 +15,13 @@ import MGNetworks
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
 
-    private let categoryTitleList = [
-        PostureResourcesService.Title.postureMainTitle1,
-        PostureResourcesService.Title.postureMainTitle2,
-        PostureResourcesService.Title.postureMainTitle3,
-        PostureResourcesService.Title.postureMainTitle4,
-        PostureResourcesService.Title.postureMainTitle5,
-        PostureResourcesService.Title.postureMainTitle6,
-        PostureResourcesService.Title.postureMainTitle7
-    ]
-    
+    private let categoryTitleList = ["추천", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
+
     private let titleText = MGLabel(text: "자세",
                                     font: UIFont.Pretendard.titleLarge,
                                     textColor: .black,
                                     isCenter: false
-        )
+    )
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
@@ -119,6 +111,3 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
       }).disposed(by: self.disposeBag)
    }
 }
-
-
-
