@@ -13,6 +13,8 @@ public class PostureDetailTitleTableViewCell: BaseTableViewCell{
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailTitleTableViewCell
 
+    private var containerView = BaseView()
+
     private var englishTitle = MGLabel(font: UIFont.Pretendard.titleMedium,
                                       textColor: DSKitAsset.Colors.gray600.color,
                                       isCenter: false
@@ -24,28 +26,32 @@ public class PostureDetailTitleTableViewCell: BaseTableViewCell{
     )
 
     public override func layout() {
-        contentView.addSubviews([englishTitle, koreanTitle])
+        super.layout()
+        contentView.addSubviews([containerView])
+        containerView.addSubviews([englishTitle, koreanTitle])
+        
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(32.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.bottom.equalToSuperview()
+        }
 
         englishTitle.snp.makeConstraints {
-            $0.width.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(32.0)
-            $0.top.equalToSuperview().offset(32.0)
-            $0.trailing.leading.equalToSuperview().inset(20.0)
         }
 
         koreanTitle.snp.makeConstraints {
-            $0.width.equalToSuperview()
+            $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(48.0)
-            $0.bottom.equalToSuperview()
-            $0.trailing.leading.equalToSuperview().inset(20.0)
         }
     }
 }
 
 public extension PostureDetailTitleTableViewCell {
     func setup(with model: PostureDetailTitleTextModel) {
-        englishTitle.text = model.englishName
-        koreanTitle.text = model.koreanName
+        englishTitle.changeText(text: model.englishName)
+        koreanTitle.changeText(text: model.koreanName)
     }
 }
     

@@ -13,6 +13,8 @@ public class PostureDetailTagTableViewCell: BaseTableViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailTagTableViewCell
 
+    private var containerView = BaseView()
+
     private var detailTagCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
@@ -37,22 +39,29 @@ public class PostureDetailTagTableViewCell: BaseTableViewCell {
             detailTagCollectionView.reloadData()
         }
     }
-    
+
     public override func attribute() {
         super.attribute()
-        
+
         backgroundColor = .white
         detailTagCollectionView.delegate = self
         detailTagCollectionView.dataSource = self
     }
 
     public override func layout() {
-        contentView.addSubviews([detailTagCollectionView])
+        super.layout()
 
-        detailTagCollectionView.snp.makeConstraints {
+        contentView.addSubviews([containerView])
+        containerView.addSubviews([detailTagCollectionView])
+
+        containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.height.equalTo(36.0)
+            $0.bottom.equalToSuperview()
+        }
+
+        detailTagCollectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
@@ -70,15 +79,6 @@ extension PostureDetailTagTableViewCell: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return CGSize(width: 60.0, height: 36.0)
-    }
-}
-
-extension PostureDetailTagTableViewCell: UICollectionViewDelegate {
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        _ = postureDetailTagModel[indexPath.row]
     }
 }
 

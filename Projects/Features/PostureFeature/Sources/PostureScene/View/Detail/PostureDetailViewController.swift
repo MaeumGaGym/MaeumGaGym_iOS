@@ -59,10 +59,10 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         view.addSubview(postureDetailTableView)
 
         postureDetailTableView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
             $0.top.equalToSuperview().offset(105.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.width.height.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
@@ -83,8 +83,8 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
                     MGLogger.debug("Chest Data: \(detailData)")
                     self.postureDetailModel = detailData
                 }).disposed(by: disposeBag)
-            
-        })
+            }
+        )
     }
 }
 
@@ -106,8 +106,8 @@ extension PostureDetailViewController: UITableViewDelegate {
             return 204
         case 5:
             return 394
-        case 6:
-            return 40
+//        case 6:
+//            return 40
         default:
             return UITableView.automaticDimension
         }
@@ -119,7 +119,7 @@ extension PostureDetailViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return 7
+        return 6
     }
 
     public func tableView(
@@ -175,9 +175,9 @@ extension PostureDetailViewController: UITableViewDataSource {
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
-        case 6:
-            let cell = UITableViewCell()
-            return cell
+//        case 6:
+//            let cell = UITableViewCell()
+//            return cell
         default:
             return UITableViewCell()
         }

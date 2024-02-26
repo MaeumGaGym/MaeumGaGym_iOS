@@ -91,5 +91,6 @@ public enum PostureResourcesService {
         public static let postureDetailTagCollectionViewCell: String = "PostureDetailTagCollectionViewCell"
         public static let postureDetailTagTableViewCell: String = "PostureDetailTagTableViewCell"
         public static let postureDetailTitleTableViewCell: String = "PostureDetailTitleTableViewCell"
+        public static let postureDetailTextViewCollectionViewCell: String = "PostureDetailTextViewCollectionViewCell"
     }
 }

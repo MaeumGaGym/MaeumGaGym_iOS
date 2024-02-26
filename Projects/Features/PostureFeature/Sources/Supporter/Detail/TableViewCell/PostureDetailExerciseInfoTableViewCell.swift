@@ -13,49 +13,39 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailExerciseInfoTableViewCell
 
+    private var containerView = BaseView()
+
     private var exerciseWay = MGLabel(text: PostureResourcesService.Title.execiseWayTitle,
                                       font: UIFont.Pretendard.titleMedium,
                                       textColor: .black,
                                       isCenter: false
     )
-
-    private var exerciseInfo1 = MGPostureInfoLabel(
-        titleNumber: "",
-        text: ""
-    )
-    private var exerciseInfo2 = MGPostureInfoLabel(
-        titleNumber: "",
-        text: ""
-    )
-    private var exerciseInfo3 = MGPostureInfoLabel(
-        titleNumber: "",
-        text: ""
-    )
-
-    public func setup(model: PostureDetailInfoModel) {
-        let exerciseInfos = model.informationText
-        guard exerciseInfos.count >= 3 else {
-            print("운동 정보가 충분하지 않습니다.")
-            return
+    
+    private var detaiTextCollectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
+            $0.scrollDirection = .horizontal
+            $0.minimumLineSpacing = 10
+            $0.minimumInteritemSpacing = 10
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
         }
-        self.exerciseInfo1.updateData(textNum: "01", text: exerciseInfos[0].text)
-        self.exerciseInfo2.updateData(textNum: "02", text: exerciseInfos[1].text, numberOfLines: 2)
-        self.exerciseInfo3.updateData(textNum: "03", text: exerciseInfos[2].text)
 
-        addViews()
-        setupViews()
-    }
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+            $0.register(PostureDetailTagCollectionViewCell.self,
+                        forCellWithReuseIdentifier: PostureDetailTagCollectionViewCell.identifier)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.showsHorizontalScrollIndicator = false
+            $0.showsVerticalScrollIndicator = false
+            $0.backgroundColor = .white
+        }
+        return collectionView
+    }()
 
-    private func addViews() {
-        [
-            exerciseWay,
-            exerciseInfo1,
-            exerciseInfo2,
-            exerciseInfo3
-        ].forEach { contentView.addSubview($0) }
-    }
+    
 
-    private func setupViews() {
+    public override func layout() {
+        super.layout()
+
+        contentView.addSubviews([exerciseWay, exerciseInfo1, exerciseInfo2, exerciseInfo3])
 
         exerciseWay.snp.makeConstraints {
             $0.top.equalToSuperview().offset(36.0)
@@ -81,5 +71,15 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalToSuperview()
         }
+    }
+}
+
+public extension PostureDetailExerciseInfoTableViewCell {
+    func setup(model: PostureDetailInfoModel) {
+        let exerciseInfos = model.informationText
+
+        self.exerciseInfo1.updateData(textNum: "01", text: exerciseInfos[0].text)
+        self.exerciseInfo2.updateData(textNum: "02", text: exerciseInfos[1].text, numberOfLines: 2)
+        self.exerciseInfo3.updateData(textNum: "03", text: exerciseInfos[2].text)
     }
 }
