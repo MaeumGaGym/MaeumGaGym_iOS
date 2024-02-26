@@ -12,7 +12,7 @@ open class MGSearchView: UIView {
     
     private var cancelImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = DSKitAsset.Assets.cancle.image
+        $0.image = DSKitAsset.Assets.blackCancel.image
         $0.isHidden = true
     }
     

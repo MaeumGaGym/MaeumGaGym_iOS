@@ -14,7 +14,7 @@ import DSKit
 
 public class DSCameraButtonVC: UIViewController {
     
-    var cameraFeatureButton = MGCameraFeatureButton(image: DSKitAsset.Assets.image.image)
+    var cameraFeatureButton = MGCameraFeatureButton(image: DSKitAsset.Assets.imageActIcon.image)
     
     public override func viewDidLoad() {
         super.viewDidLoad()

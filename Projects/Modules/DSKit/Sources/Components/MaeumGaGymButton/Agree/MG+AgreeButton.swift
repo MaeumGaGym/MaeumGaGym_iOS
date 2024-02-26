@@ -13,7 +13,7 @@ open class MGAgreeButton: BaseButton {
     public var checked: Bool = false
     
     public var iconImageView = UIImageView().then {
-        $0.image = DSKitAsset.Assets.noCheck.image
+        $0.image = DSKitAsset.Assets.noCheckActIcon.image
     }
 
     private var textLabel = MGLabel(numberOfLineCount: 1)
@@ -108,12 +108,12 @@ open class MGAgreeButton: BaseButton {
     
     public func buttonYesChecked() {
         checked = true
-        iconImageView.image = DSKitAsset.Assets.yesCheck.image
+        iconImageView.image = DSKitAsset.Assets.yesCheckActIcon.image
     }
     
     public func buttonNoChecked() {
         checked = false
-        iconImageView.image = DSKitAsset.Assets.noCheck.image
+        iconImageView.image = DSKitAsset.Assets.noCheckActIcon.image
     }
     
     public func editButtonType(text: String, readMoreType: Bool? = false) {
