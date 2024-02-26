@@ -16,12 +16,14 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
         $0.layer.cornerRadius = 8.0
     }
 
-    private var exerciseNameLabel = MGLabel(textColor: .black,
-                                      isCenter: false
+    private var exerciseNameLabel = MGLabel(font: UIFont.Pretendard.labelMedium, 
+                                            textColor: .black,
+                                            isCenter: false
     )
 
-    private var exercisePartLabel = MGLabel(textColor: PostureResourcesService.Colors.gray600,
-                                      isCenter: false
+    private var exercisePartLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                            textColor: PostureResourcesService.Colors.gray600,
+                                            isCenter: false
     )
 
     private func layout() {
@@ -52,8 +54,8 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 public extension PostureRecommandCollectionViewCell {
     func setup(with exerciseData: PostureRecommandExerciseModel) {
         postureImageView.image = exerciseData.image
-        exerciseNameLabel.text = exerciseData.name
-        exercisePartLabel.text = exerciseData.part
+        exerciseNameLabel.changeText(text: exerciseData.name)
+        exercisePartLabel.changeText(text: exerciseData.part)
 
         layout()
     }
