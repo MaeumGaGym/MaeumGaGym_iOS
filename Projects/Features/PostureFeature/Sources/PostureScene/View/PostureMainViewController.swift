@@ -15,10 +15,18 @@ import MGNetworks
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
 
-    private let categoryTitleList = ["추천", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
+    private let categoryTitleList = [
+        PostureResourcesService.Title.postureMainTitle1,
+        PostureResourcesService.Title.postureMainTitle2,
+        PostureResourcesService.Title.postureMainTitle3,
+        PostureResourcesService.Title.postureMainTitle4,
+        PostureResourcesService.Title.postureMainTitle5,
+        PostureResourcesService.Title.postureMainTitle6,
+        PostureResourcesService.Title.postureMainTitle7
+    ]
 
     private let titleText = UILabel().then {
-        $0.text = "자세"
+        $0.text = PostureResourcesService.Title.postureTitle
         $0.textColor = .black
         $0.font = UIFont.Pretendard.titleLarge
         $0.textAlignment = .left
