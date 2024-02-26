@@ -5,14 +5,15 @@ import Then
 
 import DSKit
 import Core
+import MGNetworks
 
 public class PostureSearchTableViewCell: UITableViewCell {
-    
-    public static let identifier: String = "PostureSearchTableViewCell"
-    
+
+    public static let identifier: String = PostureResourcesService.Identifier.postureSearchTableViewCell
+
     private var searchImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
     
@@ -24,7 +25,7 @@ public class PostureSearchTableViewCell: UITableViewCell {
     
     private var exercisePartLabel = UILabel().then {
         $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray400
         $0.textAlignment = .left
     }
     
