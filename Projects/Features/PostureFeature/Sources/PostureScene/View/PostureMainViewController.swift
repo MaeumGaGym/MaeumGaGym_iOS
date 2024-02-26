@@ -24,8 +24,8 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         PostureResourcesService.Title.postureMainTitle6,
         PostureResourcesService.Title.postureMainTitle7
     ]
-
-    private let titleText = MGLabel(text: PostureResourcesService.Title.postureTitle,
+    
+    private let titleText = MGLabel(text: "자세",
                                     font: UIFont.Pretendard.titleLarge,
                                     textColor: .black,
                                     isCenter: false
