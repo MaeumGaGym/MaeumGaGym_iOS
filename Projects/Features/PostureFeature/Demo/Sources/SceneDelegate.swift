@@ -3,6 +3,10 @@ import UIKit
 import RxFlow
 
 import Core
+import Domain
+import Data
+
+import MGNetworks
 import PostureFeature
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -16,8 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+            let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+            let viewModel = PostureDetailViewModel(useCase: useCase)
+            let viewController = PostureDetailViewController(viewModel)
             window?.rootViewController = UINavigationController(
-                rootViewController: PostureMainViewController(PostureMainViewModel()))
+                rootViewController: viewController)
         window?.makeKeyAndVisible()
     }
 }
