@@ -9,7 +9,7 @@ import Domain
 
 public class PosturePartTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "PostureChestTableViewCell"
+    static let identifier: String = "PosturePartTableViewCell"
 
     private let postureImageView = UIImageView().then {
         $0.backgroundColor = .clear
