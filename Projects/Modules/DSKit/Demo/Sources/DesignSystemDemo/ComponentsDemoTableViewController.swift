@@ -44,7 +44,7 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
             self.navigationController?.pushVC(DSProfileViewController.self)
         case .alert:
             MGLogger.verbose("alert")
-            self.navigationController?.pushVC(DSAlertViewController.self)
+            self.navigationController?.pushVC(AlertViewControllerTableViewController.self)
         case .bottomSheet:
             MGLogger.verbose("bottomSheet")
             self.navigationController?.pushVC(DSBottomSheetViewController.self)
