@@ -7,11 +7,13 @@ import Core
 import PostureFeatureInterface
 import DSKit
 
+import MGNetworks
+
 public class PostureSearchViewController: BaseViewController<PostureSearchViewModel> {
     
     private var searchModel = PostureSearchModel.second
     
-    private var searchBarView = MGSearchView(backgroundColor: DSKitAsset.Colors.gray50.color)
+    private var searchBarView = MGSearchView(backgroundColor: PostureResourcesService.Colors.gray50)
     
     private var postureSearchTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false

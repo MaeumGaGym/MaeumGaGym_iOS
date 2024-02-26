@@ -7,9 +7,11 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PosturePartTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "PostureChestTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.posturePartTableViewCell
 
     private let postureImageView = UIImageView().then {
         $0.backgroundColor = .clear
