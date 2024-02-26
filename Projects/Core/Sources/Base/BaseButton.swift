@@ -55,8 +55,8 @@ open class BaseButton: UIButton {
         self.setTitle(text, for: .normal)
     }
 
-    open func setFont(font: UIFont) {
-        // 버튼의 titleLabel font를 설정하는 함수입니다.
-        self.titleLabel?.font = font
-    }
+//    open func setFont(font: UIFont) {
+//        // 버튼의 titleLabel font를 설정하는 함수입니다.
+//        self.titleLabel?.font = font
+//    }
 }

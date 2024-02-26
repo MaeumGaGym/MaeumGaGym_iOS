@@ -19,7 +19,6 @@ public class MGButton: BaseButton {
 
         self.setTitle(text: titleText)
         self.setImage(image: image ?? UIImage())
-        self.setFont(font: font ?? UIFont())
         self.setImage(image: image ?? UIImage(), backImage: backImage ?? UIImage())
         self.setColor(textColor: textColor ?? .black, backColor: backColor ?? .clear)
     }
