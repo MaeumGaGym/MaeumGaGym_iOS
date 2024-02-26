@@ -7,17 +7,20 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PostureDetailPickeTableViewCell: BaseTableViewCell {
-    static let identifier: String = "PostureDetailPickeTableViewCell"
+
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailPickeTableViewCell
 
     private var pickleColellectionView: UICollectionView!
 
-    private let titleLabel = MGLabel(text: "관련 피클",
+    private let titleLabel = MGLabel(text: PostureResourcesService.Title.relatedPickleTitle,
                                      font: UIFont.Pretendard.titleMedium,
                                      textColor: .black,
                                      isCenter: false
     )
-    
+
     var pickleData: [PostureDetailPickleImageModel] = [] {
         didSet {
             pickleColellectionView.reloadData()
@@ -121,3 +124,5 @@ extension PostureDetailPickeTableViewCell: UICollectionViewDataSource {
         return cell ?? UICollectionViewCell()
     }
 }
+
+ 

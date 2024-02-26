@@ -7,10 +7,12 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PostureDetailTitleTableViewCell: BaseTableViewCell{
 
-    static let identifier: String = "PostureDetailTitleTableViewCell"
-    
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailTitleTableViewCell
+
     private var englishTitle = MGLabel(font: UIFont.Pretendard.titleMedium,
                                       textColor: DSKitAsset.Colors.gray600.color,
                                       isCenter: false
@@ -20,7 +22,6 @@ public class PostureDetailTitleTableViewCell: BaseTableViewCell{
                                       textColor: .black,
                                       isCenter: false
     )
-
 
     public override func layout() {
         contentView.addSubviews([englishTitle, koreanTitle])
@@ -47,3 +48,5 @@ public extension PostureDetailTitleTableViewCell {
         koreanTitle.text = model.koreanName
     }
 }
+    
+

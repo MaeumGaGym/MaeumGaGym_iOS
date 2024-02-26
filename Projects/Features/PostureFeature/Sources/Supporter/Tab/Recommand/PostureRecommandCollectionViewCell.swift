@@ -5,13 +5,14 @@ import Then
 
 import DSKit
 import Domain
+import MGNetworks
 
 public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 
-    static let identifier: String = "PostureRecommandCollectionViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureRecommandCollectionViewCell
 
     private var postureImageView = UIImageView().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
 
@@ -19,7 +20,7 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
                                       isCenter: false
     )
 
-    private var exercisePartLabel = MGLabel(textColor: DSKitAsset.Colors.gray600.color,
+    private var exercisePartLabel = MGLabel(textColor: PostureResourcesService.Colors.gray600,
                                       isCenter: false
     )
 
