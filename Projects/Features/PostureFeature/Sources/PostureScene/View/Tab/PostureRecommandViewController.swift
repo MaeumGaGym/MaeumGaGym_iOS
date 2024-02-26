@@ -39,10 +39,8 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
         view.addSubviews([recommandTableView])
 
         recommandTableView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(676)
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalToSuperview()
         }
     }
     
@@ -72,7 +70,7 @@ extension PostureRecommandViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return 2
+        return recommandData.count
     }
 
     public func tableView(
@@ -84,7 +82,7 @@ extension PostureRecommandViewController: UITableViewDataSource {
             for: indexPath
         ) as? PostureRecommandTableViewCell
         let model = recommandData[indexPath.row]
-        cell?.selecCell(model: model)
+        cell?.setup(with: model)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
