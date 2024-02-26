@@ -4,36 +4,37 @@ import SnapKit
 import Then
 
 import DSKit
+import Domain
+import MGNetworks
 
 public class PostureDetailCautionTableViewCell: UITableViewCell {
-    static let identifier: String = "PostureDetailCautionTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailCautionTableViewCell
 
     private var exerciseWay = UILabel().then {
-        $0.text = "주의사항"
+        $0.text = PostureResourcesService.Title.cautionTitle
         $0.textColor = .black
         $0.textAlignment = .left
         $0.font = UIFont.Pretendard.titleMedium
     }
 
     private var exerciseCaution1 = MGPostureInfoLabel(
-        titleNumber: "01",
-        text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."
+        titleNumber: "",
+        text: ""
     )
 
     private var exerciseCaution2 = MGPostureInfoLabel(
-        titleNumber: "02",
-        text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.",
-        numberOfLines: 2
+        titleNumber: "",
+        text: ""
     )
 
-    public func setup(model: PostureExerciseCautionModel) {
-        let exerciseInfos = model.data
+    public func setup(model: PostureDetailInfoModel) {
+        let exerciseInfos = model.informationText
         guard exerciseInfos.count >= 2 else {
             print("운동 정보가 충분하지 않습니다.")
             return
         }
-        self.exerciseCaution1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
-        self.exerciseCaution2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way, numberOfLines: 2)
+        self.exerciseCaution1.updateData(textNum: "01", text: exerciseInfos[0].text)
+        self.exerciseCaution2.updateData(textNum: "01", text: exerciseInfos[1].text, numberOfLines: 2)
 
         addViews()
         setupViews()

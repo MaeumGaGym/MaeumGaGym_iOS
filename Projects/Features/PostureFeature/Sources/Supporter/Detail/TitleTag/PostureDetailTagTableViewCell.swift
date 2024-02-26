@@ -7,9 +7,11 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PostureDetailTagTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "PostureDetailTagTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailTagTableViewCell
 
     private var detailTagCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {

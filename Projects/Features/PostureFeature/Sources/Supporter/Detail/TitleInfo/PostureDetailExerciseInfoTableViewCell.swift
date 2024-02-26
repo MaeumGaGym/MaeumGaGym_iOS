@@ -7,40 +7,41 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "PostureDetailExerciseInfoTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailExerciseInfoTableViewCell
 
     private var exerciseWay = UILabel().then {
-        $0.text = "운동 방법"
+        $0.text = PostureResourcesService.Title.execiseWayTitle
         $0.textColor = .black
         $0.textAlignment = .left
         $0.font = UIFont.Pretendard.titleMedium
     }
 
     private var exerciseInfo1 = MGPostureInfoLabel(
-        titleNumber: "01",
-        text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."
+        titleNumber: "",
+        text: ""
     )
     private var exerciseInfo2 = MGPostureInfoLabel(
-        titleNumber: "02",
-        text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.",
-        numberOfLines: 2
+        titleNumber: "",
+        text: ""
     )
     private var exerciseInfo3 = MGPostureInfoLabel(
-        titleNumber: "03",
-        text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다."
+        titleNumber: "",
+        text: ""
     )
 
-    public func setup(model: PostureExerciseWayModel) {
-        let exerciseInfos = model.data
+    public func setup(model: PostureDetailInfoModel) {
+        let exerciseInfos = model.informationText
         guard exerciseInfos.count >= 3 else {
             print("운동 정보가 충분하지 않습니다.")
             return
         }
-        self.exerciseInfo1.updateData(textNum: exerciseInfos[0].num, text: exerciseInfos[0].way)
-        self.exerciseInfo2.updateData(textNum: exerciseInfos[1].num, text: exerciseInfos[1].way, numberOfLines: 2)
-        self.exerciseInfo3.updateData(textNum: exerciseInfos[2].num, text: exerciseInfos[2].way)
+        self.exerciseInfo1.updateData(textNum: "01", text: exerciseInfos[0].text)
+        self.exerciseInfo2.updateData(textNum: "02", text: exerciseInfos[1].text, numberOfLines: 2)
+        self.exerciseInfo3.updateData(textNum: "03", text: exerciseInfos[2].text)
 
         addViews()
         setupViews()

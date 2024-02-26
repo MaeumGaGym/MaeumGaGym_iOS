@@ -7,13 +7,15 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PostureDetailTitleTableViewCell: BaseTableViewCell{
 
-    static let identifier: String = "PostureDetailTitleTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailTitleTableViewCell
 
     private var englishTitle = UILabel().then {
         $0.font = UIFont.Pretendard.titleMedium
-        $0.textColor = DSKitAsset.Colors.gray600.color
+        $0.textColor = PostureResourcesService.Colors.gray600
         $0.textAlignment = .left
     }
 
