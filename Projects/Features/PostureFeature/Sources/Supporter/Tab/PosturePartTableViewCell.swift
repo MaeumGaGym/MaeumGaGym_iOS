@@ -7,19 +7,23 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 public class PosturePartTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "PostureChestTableViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.posturePartTableViewCell
 
     private let postureImageView = UIImageView().then {
         $0.backgroundColor = .clear
         $0.layer.cornerRadius = 8.0
     }
 
-    private let exerciseNameLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                            textColor: .black,
-                                            isCenter: false
-    )
+    private let exerciseNameLabel = UILabel().then {
+        $0.textColor = .black
+        $0.backgroundColor = .clear
+        $0.textAlignment = .left
+        $0.font = UIFont.Pretendard.bodyMedium
+    }
 
     public override func layout() {
         super.layout()
