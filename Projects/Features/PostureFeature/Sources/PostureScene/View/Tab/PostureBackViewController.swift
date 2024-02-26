@@ -30,7 +30,11 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var backData: PosturePartModel = PosturePartModel(exerciseType: [], allExerciseData: [], bodyExerciseData: [], machineExerciseData: [])
+    private var backData: PosturePartModel = PosturePartModel(exerciseType: [], 
+                                                              allExerciseData: [],
+                                                              bodyExerciseData: [],
+                                                              machineExerciseData: []
+    )
 
     private var backExerciesData: [PosturePartExerciseModel] = [] {
         didSet {
@@ -47,10 +51,10 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
 
     public override func layout() {
         super.layout()
+
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
 
-        headerView.addSubview(firstButton)
-        headerView.addSubview(secondButton)
+        headerView.addSubviews([firstButton, secondButton])
 
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
@@ -67,7 +71,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         }
 
         postureBackTableView.tableHeaderView = headerView
-        view.addSubview(postureBackTableView)
+        view.addSubviews([postureBackTableView])
 
         postureBackTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
@@ -139,7 +143,8 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
-        })
+            }
+        )
     }
 }
 
