@@ -105,15 +105,15 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         let output = viewModel.transform(input, action: { output in
             output.backData
                 .subscribe(onNext: { backData in
-                    MGLogger.debug("Chest Data: \(backData)")
+                    MGLogger.debug("backData: \(backData)")
                     self.backData = backData
                     self.backExerciesData = backData.allExerciseData
                 }).disposed(by: disposeBag)
 
             output.backModelState
-                .subscribe(onNext: { chestModelState in
-                    MGLogger.debug("Chest Model State: \(chestModelState)")
-                    switch chestModelState {
+                .subscribe(onNext: { backModelState in
+                    MGLogger.debug("backModelState: \(backModelState)")
+                    switch backModelState {
                     case .all:
                         self.backExerciesData = self.backData.allExerciseData
                     case .body:
