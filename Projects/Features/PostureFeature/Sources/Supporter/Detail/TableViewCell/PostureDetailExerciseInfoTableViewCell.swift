@@ -15,23 +15,20 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
 
     private var containerView = BaseView()
 
-    private var exerciseWay = MGLabel(text: PostureResourcesService.Title.execiseWayTitle,
-                                      font: UIFont.Pretendard.titleMedium,
+    private var titleLabel = MGLabel(font: UIFont.Pretendard.titleMedium,
                                       textColor: .black,
                                       isCenter: false
     )
-    
-    private var detaiTextCollectionView: UICollectionView = {
+
+    private var detailTextCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
-            $0.scrollDirection = .horizontal
-            $0.minimumLineSpacing = 10
-            $0.minimumInteritemSpacing = 10
-            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
+            $0.scrollDirection = .vertical
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         }
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
-            $0.register(PostureDetailTagCollectionViewCell.self,
-                        forCellWithReuseIdentifier: PostureDetailTagCollectionViewCell.identifier)
+            $0.register(PostureDetailTextCollectionViewCell.self,
+                        forCellWithReuseIdentifier: PostureDetailTextCollectionViewCell.identifier)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.showsHorizontalScrollIndicator = false
             $0.showsVerticalScrollIndicator = false
@@ -40,46 +37,83 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
         return collectionView
     }()
 
-    
+    private var detailTextModel: [PostureDetailInfoTextModel] = [] {
+        didSet {
+            detailTextCollectionView.reloadData()
+        }
+    }
+
+    public override func attribute() {
+        super.attribute()
+
+        backgroundColor = .white
+        detailTextCollectionView.delegate = self
+        detailTextCollectionView.dataSource = self
+    }
 
     public override func layout() {
         super.layout()
 
-        contentView.addSubviews([exerciseWay, exerciseInfo1, exerciseInfo2, exerciseInfo3])
+        contentView.addSubviews([containerView])
+        containerView.addSubviews([titleLabel, detailTextCollectionView])
 
-        exerciseWay.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(36.0)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalToSuperview()
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24.0)
+            $0.trailing.leading.equalToSuperview().inset(20.0)
+            $0.bottom.equalToSuperview()
+        }
+
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(12.0)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(32.0)
         }
 
-        exerciseInfo1.snp.makeConstraints {
-            $0.top.equalTo(exerciseWay.snp.bottom).offset(24.0)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalToSuperview()
-        }
-
-        exerciseInfo2.snp.makeConstraints {
-            $0.top.equalTo(exerciseInfo1.snp.bottom).offset(16.0)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalToSuperview()
-        }
-
-        exerciseInfo3.snp.makeConstraints {
-            $0.top.equalTo(exerciseInfo2.snp.bottom).offset(16.0)
-            $0.leading.equalToSuperview().offset(20.0)
-            $0.width.equalToSuperview()
+        detailTextCollectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(24.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }
 
 public extension PostureDetailExerciseInfoTableViewCell {
-    func setup(model: PostureDetailInfoModel) {
-        let exerciseInfos = model.informationText
+    func setup(with model: PostureDetailInfoModel) {
+        detailTextModel = model.infoText
+        titleLabel.changeText(text: model.titleText)
+    }
+}
 
-        self.exerciseInfo1.updateData(textNum: "01", text: exerciseInfos[0].text)
-        self.exerciseInfo2.updateData(textNum: "02", text: exerciseInfos[1].text, numberOfLines: 2)
-        self.exerciseInfo3.updateData(textNum: "03", text: exerciseInfos[2].text)
+extension PostureDetailExerciseInfoTableViewCell: UICollectionViewDelegateFlowLayout {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let lineCount = detailTextModel[indexPath.row].text.components(separatedBy: "\n").count - 1
+
+        return CGSize(width: detailTextCollectionView.frame.width, height: 32.0 + (CGFloat(lineCount) * 20.0))
+    }
+}
+
+extension PostureDetailExerciseInfoTableViewCell: UICollectionViewDataSource {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return detailTextModel.count
+    }
+
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PostureDetailTextCollectionViewCell.identifier,
+            for: indexPath
+        ) as? PostureDetailTextCollectionViewCell
+        let model = detailTextModel
+        cell?.setup(index: indexPath.row + 1, with: model)
+        return cell ?? UICollectionViewCell()
     }
 }
