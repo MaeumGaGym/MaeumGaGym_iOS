@@ -1,6 +1,8 @@
 import UIKit
+
 import SnapKit
 import Then
+
 import Core
 
 open class MGPostureInfoLabel: BaseLabel {

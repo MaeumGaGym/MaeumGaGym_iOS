@@ -103,4 +103,3 @@ extension PostureDetailTagTableViewCell: UICollectionViewDataSource {
         return cell ?? UICollectionViewCell()
     }
 }
-

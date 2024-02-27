@@ -11,7 +11,7 @@ public class PostureDetailTagCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailTagCollectionViewCell
 
-    private var tagLabel = MGTagLabel(text: "")
+    private var tagLabel = MGTagLabel()
 
     private func layout() {
         contentView.addSubviews([tagLabel])

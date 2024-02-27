@@ -19,25 +19,25 @@ import PostureFeatureInterface
 
 public class PostureDetailViewController: BaseViewController<PostureDetailViewModel> {
 
-    var postureDetailTableView = UITableView().then {
+    private var postureDetailTableView = UITableView().then {
         $0.register(PostureDetailImageTableViewCell.self,
                     forCellReuseIdentifier: PostureDetailImageTableViewCell.identifier)
         $0.register(PostureDetailTitleTableViewCell.self,
                     forCellReuseIdentifier: PostureDetailTitleTableViewCell.identifier)
         $0.register(PostureDetailTagTableViewCell.self,
                     forCellReuseIdentifier: PostureDetailTagTableViewCell.identifier)
-        $0.register(PostureDetailExerciseInfoTableViewCell.self,
-                    forCellReuseIdentifier: PostureDetailExerciseInfoTableViewCell.identifier)
-        $0.register(PostureDetailExerciseInfoTableViewCell.self,
-                    forCellReuseIdentifier: PostureDetailExerciseInfoTableViewCell.identifier)
+        $0.register(PostureDetailInfoTableViewCell.self,
+                    forCellReuseIdentifier: PostureDetailInfoTableViewCell.identifier)
+        $0.register(PostureDetailInfoTableViewCell.self,
+                    forCellReuseIdentifier: PostureDetailInfoTableViewCell.identifier)
         $0.register(PostureDetailPickeTableViewCell.self,
                     forCellReuseIdentifier: PostureDetailPickeTableViewCell.identifier)
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
     }
-    
-    var postureDetailModel: PostureDetailModel = PostureDetailModel(
+
+    private var postureDetailModel: PostureDetailModel = PostureDetailModel(
         detailImage: UIImage(),
         titleTextData: PostureDetailTitleTextModel(englishName: "", koreanName: ""),
         exerciseKindData: [PostureDetailExerciseKindModel](),
@@ -65,18 +65,18 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
             $0.leading.trailing.equalToSuperview()
         }
     }
-    
+
     public override func bindViewModel() {
         super.bindViewModel()
-       
+
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
 
         viewModel = PostureDetailViewModel(useCase: useCase)
-        
+
         let input = PostureDetailViewModel.Input(
             getDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never())
         )
-        
+
         let output = viewModel.transform(input, action: { optput in
             optput.detailData
                 .subscribe(onNext: { detailData in
@@ -163,16 +163,16 @@ extension PostureDetailViewController: UITableViewDataSource {
             return cell ?? UITableViewCell()
         case 3:
             let cell = postureDetailTableView.dequeueReusableCell(
-                withIdentifier: PostureDetailExerciseInfoTableViewCell.identifier,
-                for: indexPath) as? PostureDetailExerciseInfoTableViewCell
+                withIdentifier: PostureDetailInfoTableViewCell.identifier,
+                for: indexPath) as? PostureDetailInfoTableViewCell
             let model = postureDetailModel.exerciseWayData
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 4:
             let cell = postureDetailTableView.dequeueReusableCell(
-                withIdentifier: PostureDetailExerciseInfoTableViewCell.identifier,
-                for: indexPath) as? PostureDetailExerciseInfoTableViewCell
+                withIdentifier: PostureDetailInfoTableViewCell.identifier,
+                for: indexPath) as? PostureDetailInfoTableViewCell
             let model = postureDetailModel.exerciseCautionData
             cell?.setup(with: model)
             cell?.selectionStyle = .none

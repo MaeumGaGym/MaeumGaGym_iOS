@@ -9,7 +9,7 @@ import Domain
 
 import MGNetworks
 
-public class PostureDetailTitleTableViewCell: BaseTableViewCell{
+public class PostureDetailTitleTableViewCell: BaseTableViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailTitleTableViewCell
 
@@ -27,6 +27,7 @@ public class PostureDetailTitleTableViewCell: BaseTableViewCell{
 
     public override func layout() {
         super.layout()
+
         contentView.addSubviews([containerView])
         containerView.addSubviews([englishTitle, koreanTitle])
         
@@ -54,5 +55,3 @@ public extension PostureDetailTitleTableViewCell {
         koreanTitle.changeText(text: model.koreanName)
     }
 }
-    
-
