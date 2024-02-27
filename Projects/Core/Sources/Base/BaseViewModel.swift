@@ -4,7 +4,8 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-public protocol BaseViewModel {
+public protocol BaseViewModel: ViewModel {
+        
     associatedtype Input
     associatedtype Output
 

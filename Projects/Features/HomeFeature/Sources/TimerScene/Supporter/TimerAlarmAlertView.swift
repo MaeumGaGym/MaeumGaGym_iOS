@@ -21,7 +21,7 @@ public class TimerAlarmAlertView: BaseView {
         $0.layer.shadowRadius = 6
     }
     private let timerImage = UIImageView().then {
-        $0.image = DSKitAsset.Assets.homeTimerLogo.image
+        $0.image = DSKitAsset.Assets.timerActIcon.image
     }
 
     private let timerTitleLabel = UILabel().then {

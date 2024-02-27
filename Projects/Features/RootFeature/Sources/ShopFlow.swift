@@ -14,7 +14,7 @@ class ShopFlow: Flow {
     init() {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "샵", image: DSKitAsset.Assets.blackShop.image, selectedImage: DSKitAsset.Assets.blueShop.image)
+        viewController.tabBarItem = UITabBarItem(title: "샵", image: DSKitAsset.Assets.blackShopTapBar.image, selectedImage: DSKitAsset.Assets.blueShopTapBar.image)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 

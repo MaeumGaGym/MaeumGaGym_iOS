@@ -11,4 +11,9 @@ public enum AppStep: Step {
     case pickleRequired
     
     case otherDestination
+    
+    case initialization
+    
+    //selfCore
+    case myProfileRequired
 }

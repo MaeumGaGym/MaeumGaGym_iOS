@@ -13,11 +13,11 @@ open class UserProfileView: UIView {
     
     public init(
         userName: String,
-        userProfileImage: UIImage? = DSKitAsset.Assets.basicProfile.image
+        userProfileImage: UIImage? = DSKitAsset.Assets.basicProfileIcon.image
     ) {
         super.init(frame: .zero)
         
-        setupUI(text: userName, image: userProfileImage ?? DSKitAsset.Assets.basicProfile.image)
+        setupUI(text: userName, image: userProfileImage ?? DSKitAsset.Assets.basicProfileIcon.image)
     }
     
     required public init?(coder: NSCoder) {

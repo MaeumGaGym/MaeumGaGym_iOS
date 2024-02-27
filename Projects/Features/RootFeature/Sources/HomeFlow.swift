@@ -12,9 +12,9 @@ import HomeFeature
 import HomeFeatureInterface
 
 public class HomeFlow: Flow {
-    
+
     public var repository: HomeRepositoryInterface
-    
+
     public var root: Presentable {
         return self.rootViewController
     }
@@ -23,15 +23,15 @@ public class HomeFlow: Flow {
 
     init(repository: HomeRepositoryInterface) {
         self.repository = repository
-        
+
         let useCase = DefaultHomeUseCase(repository: repository)
         let viewModel = HomeViewModel(useCase: useCase)
         let viewController = HomeViewController(viewModel)
-        
+
         viewController.view.backgroundColor = DSKitAsset.Colors.gray25.color
         viewController.tabBarItem = UITabBarItem(title: "홈",
-                                                 image: DSKitAsset.Assets.blackHome.image,
-                                                 selectedImage: DSKitAsset.Assets.blueHome.image
+                                                 image: DSKitAsset.Assets.blackHomeTapBar.image,
+                                                 selectedImage: DSKitAsset.Assets.blueHomeTapBar.image
         )
 
         self.rootViewController.setViewControllers([viewController], animated: false)
@@ -42,7 +42,7 @@ public class HomeFlow: Flow {
 
         switch step {
         case .otherDestination:
-            rootViewController.tabBarItem.image = DSKitAsset.Assets.blackHome.image
+            rootViewController.tabBarItem.image = DSKitAsset.Assets.blackHomeTapBar.image
             return .none
         default:
             return .none

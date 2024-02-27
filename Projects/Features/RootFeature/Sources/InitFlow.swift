@@ -13,9 +13,7 @@ import Domain
 import MGNetworks
 
 import HomeFeatureInterface
-
-public class AppFlow: Flow {
-
+public class InitFlow: Flow {
     public var root: Presentable {
         return self.rootViewController
     }
@@ -31,13 +29,14 @@ public class AppFlow: Flow {
 
         switch step {
         case .tabBarIsRequired:
-            return navigateToTabBarScreen()
+            return setupTabBar()
         default:
             return .none
         }
     }
 
-    private func navigateToTabBarScreen() -> FlowContributors {
+    private func setupTabBar() -> FlowContributors {
+
         let homeService = HomeService()
         let homeRepository = HomeRepository(networkService: homeService)
         let homeFlow = HomeFlow(repository: homeRepository)
@@ -47,16 +46,18 @@ public class AppFlow: Flow {
         let pickleFlow = PickleFlow()
         let selfCareFlow = SelfCareFlow()
 
-        Flows.whenReady(flow1: homeFlow, flow2: postureFlow, flow3: shopFlow, flow4: pickleFlow, flow5: selfCareFlow) { [unowned self] homeRoot, postureRoot, shopRoot, pickleRoot, selfCareRoot in
-            self.rootViewController.viewControllers = [homeRoot, postureRoot, shopRoot, pickleRoot, selfCareRoot]
-        }
+        let flows: [Flow] = [homeFlow, postureFlow, shopFlow, pickleFlow, selfCareFlow]
 
+        Flows.use(flows, when: .ready, block: { [weak self] root in
+            guard let `self` = self else { return }
+            self.rootViewController.viewControllers = root
+        })
         return .multiple(flowContributors: [
-            .contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeIsRequired)),
-            .contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: AppStep.postureIsRequired)),
-            .contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired)),
-            .contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: AppStep.pickleRequired)),
-            .contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired))
+            FlowContributor.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeIsRequired)),
+            FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: AppStep.postureIsRequired)),
+            FlowContributor.contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired)),
+            FlowContributor.contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: AppStep.pickleRequired)),
+            FlowContributor.contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired)),
         ])
     }
 
