@@ -4,15 +4,15 @@ public struct PostureDetailModel {
     public var detailImage: UIImage
     public var titleTextData: PostureDetailTitleTextModel
     public var exerciseKindData: [PostureDetailExerciseKindModel]
-    public var exerciseWayData: [PostureDetailInfoTextModel]
-    public var exerciseCautionData: [PostureDetailInfoTextModel]
+    public var exerciseWayData: PostureDetailInfoModel
+    public var exerciseCautionData: PostureDetailInfoModel
     public var relatedPickleData: PostureDetailPickleModel
 
     public init(detailImage: UIImage, 
                 titleTextData: PostureDetailTitleTextModel,
                 exerciseKindData: [PostureDetailExerciseKindModel],
-                exerciseWayData: [PostureDetailInfoTextModel],
-                exerciseCautionData: [PostureDetailInfoTextModel],
+                exerciseWayData: PostureDetailInfoModel,
+                exerciseCautionData: PostureDetailInfoModel,
                 relatedPickleData: PostureDetailPickleModel)
     {
         self.detailImage = detailImage
@@ -39,6 +39,16 @@ public struct PostureDetailExerciseKindModel {
     
     public init(exerciseTag: String) {
         self.exerciseTag = exerciseTag
+    }
+}
+
+public struct PostureDetailInfoModel {
+    public var titleText: String
+    public var infoText: [PostureDetailInfoTextModel]
+
+    public init(titleText: String, infoText: [PostureDetailInfoTextModel]) {
+        self.titleText = titleText
+        self.infoText = infoText
     }
 }
 
