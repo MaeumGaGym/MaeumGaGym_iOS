@@ -11,9 +11,14 @@ public struct PostureSearchModel {
 public struct PostureSearchContentModel {
     public var exerciseImage: UIImage
     public var exerciseName: String
+    public var exercisePart: String
 
-    public init(exerciseImage: UIImage, exerciseName: String) {
+    public init(exerciseImage: UIImage, 
+                exerciseName: String,
+                exercisePart: String
+    ) {
         self.exerciseImage = exerciseImage
         self.exerciseName = exerciseName
+        self.exercisePart = exercisePart
     }
 }
