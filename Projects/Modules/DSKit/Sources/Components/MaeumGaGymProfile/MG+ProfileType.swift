@@ -5,6 +5,7 @@ public enum MGProfileType {
     case smallProfile
     case middleProfile
     case bigProfile
+    case maxProfile
     case intro
     case bage
     
@@ -20,6 +21,8 @@ public enum MGProfileType {
             return 280.0
         case .bage:
             return 16.0
+        case .maxProfile:
+            return 120.0
         }
     }
     
@@ -35,6 +38,8 @@ public enum MGProfileType {
             return 140.0
         case .bage:
             return 8.0
+        case .maxProfile:
+            return 60.0
         }
     }
 }
