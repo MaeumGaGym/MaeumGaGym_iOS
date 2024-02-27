@@ -1,51 +1,80 @@
 import UIKit
 
+import RxFlow
+import RxCocoa
+import RxSwift
+
 import SnapKit
 import Then
 
 import Core
-import PostureFeatureInterface
 import DSKit
+import Domain
 
+import MGLogger
 import MGNetworks
+import Data
+
+import PostureFeatureInterface
 
 public class PostureSearchViewController: BaseViewController<PostureSearchViewModel> {
-    
-    private var searchModel = PostureSearchModel.second
-    
-    private var searchBarView = MGSearchView(backgroundColor: PostureResourcesService.Colors.gray50)
-    
+
+    private var searchModel = PostureSearchModel(searchResultData: [])
+
+    private var searchBarView = MGSearchView()
+
     private var postureSearchTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
-        
         $0.register(PostureSearchTableViewCell.self, forCellReuseIdentifier: PostureSearchTableViewCell.identifier)
     }
-    
+
     public override func attribute() {
         super.attribute()
 
         postureSearchTableView.dataSource = self
         postureSearchTableView.delegate = self
     }
-    
+
     override public func layout() {
-        [searchBarView, postureSearchTableView].forEach { view.addSubview($0) }
-        
+        super.layout()
+
+        view.addSubviews([searchBarView, postureSearchTableView])
+
         searchBarView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(40.0)
         }
-        
+
         postureSearchTableView.snp.makeConstraints {
             $0.top.equalTo(searchBarView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
+    }
+
+    public override func bindViewModel() {
+        super.bindViewModel()
+
+        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+
+        viewModel = PostureSearchViewModel(useCase: useCase)
+
+        let input = PostureSearchViewModel.Input(
+            getSearchData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+        )
+
+        let output = viewModel.transform(input, action: { optput in
+            optput.searchData
+                .subscribe(onNext: { searchData in
+                    MGLogger.debug("searchData: \(searchData)")
+                    self.searchModel = searchData
+                }).disposed(by: disposeBag)
+            }
+        )
     }
 }
 
@@ -60,17 +89,14 @@ extension PostureSearchViewController: UITableViewDelegate {
 
 extension PostureSearchViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchModel.data.count
+        searchModel.searchResultData.count
     }
-    
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostureSearchTableViewCell.identifier, for: indexPath) as? PostureSearchTableViewCell
-        
-        let exercise = searchModel.data[indexPath.row]
-        cell?.setup(image: exercise.image, name: exercise.exerciseName, part: exercise.exercisePart)
+        let model = searchModel.searchResultData[indexPath.row]
+        cell?.setup(with: model)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
-    
-    
 }

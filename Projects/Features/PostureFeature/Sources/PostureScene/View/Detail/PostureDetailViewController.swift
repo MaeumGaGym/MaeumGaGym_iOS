@@ -79,7 +79,7 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         let output = viewModel.transform(input, action: { optput in
             optput.detailData
                 .subscribe(onNext: { detailData in
-                    MGLogger.debug("Chest Data: \(detailData)")
+                    MGLogger.debug("detailData: \(detailData)")
                     self.postureDetailModel = detailData
                 }).disposed(by: disposeBag)
             }
