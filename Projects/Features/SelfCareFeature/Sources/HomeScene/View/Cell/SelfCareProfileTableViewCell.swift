@@ -18,7 +18,7 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
     private let profileImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,
-                                     customImage: DSKitAsset.Assets.basicProfile.image),
+                                     customImage: DSKitAsset.Assets.basicProfileIcon.image),
         profileType: .bigProfile
     )
     

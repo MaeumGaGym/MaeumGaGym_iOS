@@ -1,5 +1,4 @@
 import UIKit
-import DSKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

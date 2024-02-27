@@ -32,7 +32,7 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         $0.isHidden = true
     }
 
-    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.selfCareDots.image)
+    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
 
     public func setup(with model: SelfCareRoutineModel) {
         routineNameLabel.text = model.routineNameText

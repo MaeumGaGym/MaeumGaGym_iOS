@@ -32,7 +32,7 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
     )
 
     private var deatilImage = UIImageView().then {
-        $0.image = DSKitAsset.Assets.right.image
+        $0.image = DSKitAsset.Assets.rightArrow.image
         $0.layer.cornerRadius = 40.0
     }
 
