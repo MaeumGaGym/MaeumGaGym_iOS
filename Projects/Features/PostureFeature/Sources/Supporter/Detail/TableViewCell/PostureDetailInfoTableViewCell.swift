@@ -9,7 +9,7 @@ import Domain
 
 import MGNetworks
 
-public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
+public class PostureDetailInfoTableViewCell: BaseTableViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailExerciseInfoTableViewCell
 
@@ -77,14 +77,14 @@ public class PostureDetailExerciseInfoTableViewCell: BaseTableViewCell {
     }
 }
 
-public extension PostureDetailExerciseInfoTableViewCell {
+public extension PostureDetailInfoTableViewCell {
     func setup(with model: PostureDetailInfoModel) {
         detailTextModel = model.infoText
         titleLabel.changeText(text: model.titleText)
     }
 }
 
-extension PostureDetailExerciseInfoTableViewCell: UICollectionViewDelegateFlowLayout {
+extension PostureDetailInfoTableViewCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -96,7 +96,7 @@ extension PostureDetailExerciseInfoTableViewCell: UICollectionViewDelegateFlowLa
     }
 }
 
-extension PostureDetailExerciseInfoTableViewCell: UICollectionViewDataSource {
+extension PostureDetailInfoTableViewCell: UICollectionViewDataSource {
     public func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
