@@ -1,11 +1,3 @@
-//
-//  ProfileNavigationBar.swift
-//  SelfCareFeatureInterface
-//
-//  Created by 박준하 on 2/27/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 
 import RxSwift
