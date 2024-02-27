@@ -11,10 +11,8 @@ public class PostureDetailTextViewCollectionViewCell: UICollectionViewCell {
 
     static let identifier: String = PostureResourcesService.Identifier.postureDetailTextViewCollectionViewCell
 
-    private var detailTextLabel = MGPostureInfoLabel(
-        titleNumber: "",
-        text: ""
-    )
+    private var detailTextLabel = MGPostureInfoLabel()
+
     private func layout() {
         contentView.addSubviews([detailTextLabel])
 
@@ -25,9 +23,9 @@ public class PostureDetailTextViewCollectionViewCell: UICollectionViewCell {
 }
 
 public extension PostureDetailTextViewCollectionViewCell {
-    func setup(with model: PostureDetailModel, index: Int) {
-        detailTextLabel.updateData(textNum: "0\(index)",
-                                   text: model.exerciseWayData[index].text
+    func setup( index: Int, with model: PostureDetailInfoTextModel) {
+        detailTextLabel.setup(index: index,
+                              text: model.text
         )
 
         layout()
