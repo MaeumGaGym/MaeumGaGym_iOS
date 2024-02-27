@@ -48,6 +48,35 @@ public class PostureService {
         }
     }
 
+    public func requestSearchData() -> Single<PostureSearchModel> {
+        return.just(
+            PostureSearchModel(
+                searchResultData: [
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.airSqt,
+                                              exerciseName: "에어 스쿼트", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.archPushUp,
+                                              exerciseName: "아치 푸시업", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelLow,
+                                              exerciseName: "바벨 로우", exercisePart: "팔"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelBackSqt,
+                                              exerciseName: "바벨 백 스쿼트", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelBgrSplitSqt,
+                                              exerciseName: "바벨 불가리안 스플릿 스쿼트", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.bodySplitSqt,
+                                              exerciseName: "바디 스플릿 스쿼트", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.clapPushUp,
+                                              exerciseName: "클랩 푸시업", exercisePart: "가슴"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.invertedLow,
+                                              exerciseName: "인버티드 로우", exercisePart: "하체"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.pullUp,
+                                              exerciseName: "풀업", exercisePart: "등"),
+                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.weightDeeps,
+                                              exerciseName: "중량 딥스", exercisePart: "가슴"),
+                ]
+            )
+        )
+    }
+
     public init() {
 
     }
