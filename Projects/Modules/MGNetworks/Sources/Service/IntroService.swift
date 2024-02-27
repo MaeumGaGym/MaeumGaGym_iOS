@@ -81,7 +81,7 @@ public class IntroService: NSObject {
     }
     
     public func requestIntroData() -> Single<IntroModel> {
-        return Single.just(IntroModel(image: DSKitAsset.Assets.blueHomeTapBar.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
+        return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
     public func appleSignup() -> Single<String> {

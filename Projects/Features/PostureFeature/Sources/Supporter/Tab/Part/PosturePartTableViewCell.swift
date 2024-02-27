@@ -14,7 +14,7 @@ public class PosturePartTableViewCell: BaseTableViewCell {
     static let identifier: String = PostureResourcesService.Identifier.posturePartTableViewCell
 
     private let postureImageView = UIImageView().then {
-        $0.backgroundColor = .clear
+        $0.backgroundColor = PostureResourcesService.Colors.gray25
         $0.layer.cornerRadius = 8.0
     }
 
@@ -25,7 +25,7 @@ public class PosturePartTableViewCell: BaseTableViewCell {
 
     public override func layout() {
         super.layout()
-        
+
         contentView.addSubviews([postureImageView, exerciseNameLabel])
 
         postureImageView.snp.makeConstraints {
@@ -45,6 +45,6 @@ public class PosturePartTableViewCell: BaseTableViewCell {
 public extension PosturePartTableViewCell {
     func setup(with exerciseData: PosturePartExerciseModel) {
         postureImageView.image = exerciseData.image
-        exerciseNameLabel.text = exerciseData.name
+        exerciseNameLabel.changeText(text: exerciseData.name)
     }
 }

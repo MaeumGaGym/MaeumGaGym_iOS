@@ -14,13 +14,6 @@ public class PostureDetailPickleCollectionViewCell: UICollectionViewCell {
         $0.contentMode = .scaleAspectFit
     }
 
-    public func setup(image: UIImage) {
-        imageView.image = image
-
-        attribute()
-        layout()
-    }
-
     private func attribute() {
         self.layer.cornerRadius = 8.0
     }
@@ -32,5 +25,14 @@ public class PostureDetailPickleCollectionViewCell: UICollectionViewCell {
             $0.width.height.equalToSuperview()
             $0.center.equalToSuperview()
         }
+    }
+}
+
+public extension PostureDetailPickleCollectionViewCell {
+    func setup(image: UIImage) {
+        imageView.image = image
+
+        attribute()
+        layout()
     }
 }
