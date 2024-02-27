@@ -26,7 +26,7 @@ public class TargetMainTableViewCell: BaseTableViewCell {
                                               numberOfLineCount: 1
     )
 
-    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.selfCareDots.image)
+    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
 
     public func setup(with model: TargetContentModel) {
         changeTargetName(text: model.targetTitle)

@@ -14,15 +14,15 @@ public enum SelfCareButtonType {
     var buttonImage: UIImage? {
         switch self {
         case .plusRoutine:
-            return DSKitAsset.Assets.selfCarePlus.image
+            return DSKitAsset.Assets.blackPlus.image
         case .deleteRotine:
-            return DSKitAsset.Assets.selfCareTrash.image
+            return DSKitAsset.Assets.trashActIcon.image
         case .editRoutine:
-            return DSKitAsset.Assets.selfCarePencil.image
+            return DSKitAsset.Assets.pencilActIcon.image
         case .posturePlus:
-            return DSKitAsset.Assets.selfCarePlus.image
+            return DSKitAsset.Assets.blackPlus.image
         case .plusTarget:
-            return DSKitAsset.Assets.selfCarePlus.image
+            return DSKitAsset.Assets.blackPlus.image
         default:
             return nil
         }

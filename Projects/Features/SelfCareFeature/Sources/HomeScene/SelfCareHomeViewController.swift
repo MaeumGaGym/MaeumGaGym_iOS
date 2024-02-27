@@ -31,15 +31,15 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
                                             mainText: SelfCareResourcesService.Title.selfCare,
                                             subText: SelfCareResourcesService.Title.introductsSelfCare)
 
-    var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfile.image,
+    var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfileIcon.image,
                                         userName: "박준하",
                                         userTimer: 123,
                                         userBage: SelfCareResourcesService.Assets.bage)
 
-    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareMenuMyRoutine.image, menuName: "내루틴"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareGoul.image, menuName: "목표"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareFood.image, menuName: "식단"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareOunwan.image, menuName: "오운완")]
+    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "내루틴"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "목표"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "식단"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "오운완")]
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self

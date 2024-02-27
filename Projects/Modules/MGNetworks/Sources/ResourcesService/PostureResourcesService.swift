@@ -4,8 +4,8 @@ import DSKit
 
 public enum PostureResourcesService {
     public enum Assets {
-        public static let blueArmIcon = DSKitAsset.Assets.blueArmIcon.image
-        public static let blueDumbelIcon = DSKitAsset.Assets.blueDumbelIcon.image
+        public static let blueArmIcon = DSKitAsset.Assets.appleLogo.image
+        public static let blueDumbelIcon = DSKitAsset.Assets.appleLogo.image
         public static let airSqt = DSKitAsset.Assets.airSqt.image
         public static let archPushUp = DSKitAsset.Assets.archPushUp.image
         public static let babelBackSqt = DSKitAsset.Assets.babelBackSqt.image

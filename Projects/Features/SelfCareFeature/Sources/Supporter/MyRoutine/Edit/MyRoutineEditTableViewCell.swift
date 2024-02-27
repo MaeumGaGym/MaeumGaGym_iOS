@@ -22,7 +22,7 @@ public class MyRoutineEditTableViewCell: BaseTableViewCell {
         $0.font = UIFont.Pretendard.bodyMedium
     }
 
-    private var deleteButton = MGImageButton(image: DSKitAsset.Assets.selfCareDelete.image)
+    private var deleteButton = MGImageButton(image: DSKitAsset.Assets.appleLogo.image)
 
     private let numberCountView = MyRoutineCountView()
     private let setCountView = MyRoutineCountView()

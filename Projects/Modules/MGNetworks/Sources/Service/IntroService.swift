@@ -122,4 +122,3 @@ extension IntroService: ASAuthorizationControllerDelegate {
         appleSignupSubject.onError(error)
     }
 }
-
