@@ -61,8 +61,7 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         postureDetailTableView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(105.0)
             $0.leading.trailing.equalToSuperview()
-            $0.width.height.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 
@@ -101,11 +100,15 @@ extension PostureDetailViewController: UITableViewDelegate {
         case 2:
             return 60
         case 3:
+            //352
             let model = postureDetailModel.exerciseWayData.infoText
             var lineCount = 0
             for data in model {
                 lineCount += data.text.components(separatedBy: "\n").count - 1
             }
+            print("\(lineCount)")
+            print("\(model.count)")
+            print(92 + (model.count * 48) + (lineCount * 20))
             return CGFloat(92 + (model.count * 48) + (lineCount * 20))
         case 4:
             let model = postureDetailModel.exerciseCautionData.infoText
@@ -115,7 +118,7 @@ extension PostureDetailViewController: UITableViewDelegate {
             }
             return CGFloat(92 + (model.count * 48) + (lineCount * 20))
         case 5:
-            return 394
+            return 360
 //        case 6:
 //            return 40
         default:
