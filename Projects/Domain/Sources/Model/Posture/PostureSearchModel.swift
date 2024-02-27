@@ -1,9 +1,19 @@
-//
-//  PostureSearchModel.swift
-//  Domain
-//
-//  Created by 이은호 on 2/27/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
+import UIKit
 
-import Foundation
+public struct PostureSearchModel {
+    public var searchResultData: [PostureSearchContentModel]
+
+    public init(searchResultData: [PostureSearchContentModel]) {
+        self.searchResultData = searchResultData
+    }
+}
+
+public struct PostureSearchContentModel {
+    public var exerciseImage: UIImage
+    public var exerciseName: String
+
+    public init(exerciseImage: UIImage, exerciseName: String) {
+        self.exerciseImage = exerciseImage
+        self.exerciseName = exerciseName
+    }
+}
