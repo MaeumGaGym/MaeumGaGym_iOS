@@ -21,7 +21,7 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
 
     private var searchModel = PostureSearchModel(searchResultData: [])
 
-    private var searchBarView = MGSearchView(backgroundColor: PostureResourcesService.Colors.gray50)
+    private var searchBarView = MGSearchView()
 
     private var postureSearchTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
