@@ -5,9 +5,11 @@ import Then
 
 import DSKit
 import Core
+import MGNetworks
 
 public class PostureDetailImageTableViewCell: BaseTableViewCell {
-    static let identifier: String = "PostureDetailImageTableViewCell"
+
+    static let identifier: String = PostureResourcesService.Identifier.postureDetailImageTableViewCell
 
     private var postureImageView = UIImageView().then {
         $0.backgroundColor = .gray
@@ -15,8 +17,10 @@ public class PostureDetailImageTableViewCell: BaseTableViewCell {
     }
 
     public override func layout() {
+        super.layout()
+
         contentView.addSubviews([postureImageView])
-        
+
         postureImageView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalToSuperview()
