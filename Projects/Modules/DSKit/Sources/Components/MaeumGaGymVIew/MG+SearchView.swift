@@ -16,8 +16,11 @@ open class MGSearchView: BaseView {
     }
 
     public let searchTextField = UITextField().then {
-        $0.tintColor = DSKitAsset.Colors.gray300.color
-        $0.placeholder = "자세 검색"
+        $0.tintColor = DSKitAsset.Colors.blue500.color
+        $0.font = UIFont.Pretendard.bodyMedium
+        let placeholder = "자세 검색"
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: DSKitAsset.Colors.gray300.color]
+        $0.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: placeholderAttributes)
     }
 
     private var cancelButton = UIButton().then {
