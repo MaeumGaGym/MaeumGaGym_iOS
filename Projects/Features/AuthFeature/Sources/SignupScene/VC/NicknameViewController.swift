@@ -32,7 +32,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
 
     private let nicknameTF = MGTextField(placeholder: "닉네임")
 
-    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.cancle.image)
+    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image)
 
     private var checkButton = MGCheckButton(text: "회원가입")
 

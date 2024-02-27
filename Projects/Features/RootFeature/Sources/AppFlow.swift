@@ -41,7 +41,7 @@ public class AppFlow: Flow {
         let homeService = HomeService()
         let homeRepository = HomeRepository(networkService: homeService)
         let homeFlow = HomeFlow(repository: homeRepository)
-        
+
         let postureFlow = PostureFlow()
         let shopFlow = ShopFlow()
         let pickleFlow = PickleFlow()
@@ -61,6 +61,6 @@ public class AppFlow: Flow {
     }
 
     public init() {
-        
+
     }
 }

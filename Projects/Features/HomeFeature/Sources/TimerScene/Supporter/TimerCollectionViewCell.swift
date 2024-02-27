@@ -13,7 +13,7 @@ public class TimerCollectionViewCell: UICollectionViewCell {
     private var containerView = UIView()
 
     private var checkImage = UIImageView().then {
-        $0.image = DSKitAsset.Assets.yesCheck.image
+        $0.image = DSKitAsset.Assets.yesCheckActIcon.image
         $0.isHidden = true
     }
 

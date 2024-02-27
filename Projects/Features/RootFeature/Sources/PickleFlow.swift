@@ -15,7 +15,7 @@ class PickleFlow: Flow {
     init() {
         let viewController = PickleViewController()
         viewController.view.backgroundColor = .white
-        viewController.tabBarItem = UITabBarItem(title: "피클", image: DSKitAsset.Assets.blackPickle.image, selectedImage: DSKitAsset.Assets.bluePickle.image)
+        viewController.tabBarItem = UITabBarItem(title: "피클", image: DSKitAsset.Assets.bluePickleTapBar.image, selectedImage: DSKitAsset.Assets.bluePickleTapBar.image)
         rootViewController.setViewControllers([viewController], animated: false)
     }
 

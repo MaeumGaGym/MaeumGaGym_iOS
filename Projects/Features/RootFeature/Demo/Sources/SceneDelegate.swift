@@ -2,6 +2,7 @@ import UIKit
 import RootFeature
 import RxFlow
 import Core
+import Foundation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -9,7 +10,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var coordinator = FlowCoordinator()
     var mainFlow: AppFlow!
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
