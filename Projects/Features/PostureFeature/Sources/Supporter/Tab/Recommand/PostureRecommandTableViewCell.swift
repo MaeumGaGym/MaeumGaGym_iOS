@@ -12,7 +12,7 @@ import MGNetworks
 public class PostureRecommandTableViewCell: BaseTableViewCell{
 
     static let identifier: String = PostureResourcesService.Identifier.postureRecommandTableViewCell
-    
+
     private let containerView = UIView()
 
     private var titleImageLogo = UIImageView().then {
@@ -64,7 +64,7 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
     public override func layout() {
         addSubviews([containerView, exerciseCollectionView])
         containerView.addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton])
-        
+
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
@@ -93,10 +93,12 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
             $0.trailing.bottom.equalToSuperview()
         }
     }
+}
 
-    public func selecCell(model: PostureRecommandModel) {
+public extension PostureRecommandTableViewCell {
+    func setup(with model: PostureRecommandModel) {
         titleImageLogo.image = model.titleImage
-        exerciseTitleLabel.text = model.titleText
+        exerciseTitleLabel.changeText(text: model.titleText)
         recommandExerciseData = model.exerciseData
     }
 }
@@ -108,15 +110,6 @@ extension PostureRecommandTableViewCell: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return CGSize(width: 148.0, height: 200.0)
-    }
-}
-
-extension PostureRecommandTableViewCell: UICollectionViewDelegate {
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        _ = recommandExerciseData[indexPath.row]
     }
 }
 
