@@ -13,11 +13,14 @@ public enum SelfCareResourcesService {
         public static let selfCareMain = DSKitAsset.Assets.mainLogo.image
         
         public static let bage = DSKitAsset.Assets.whiteAdd.image
+        
+        public static let baseProfile = DSKitAsset.Assets.basicProfileIcon.image
     }
     public enum Title {
         public static let selectPicture = "사진 선택"
         public static let selfCare = "자기관리"
         public static let introductsSelfCare = "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요."
+        public static let myProfileEdit = "내 정보 변경"
     }
     public enum identifier {
         public static let albumCell = "AlbumCell"
