@@ -148,15 +148,17 @@ private extension PostureService {
                 exerciseWayData:
                     PostureDetailInfoModel(
                         titleText: PostureResourcesService.Title.execiseWayTitle,
-                        informationText: [
+                        infoText:
+                    [
                         PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
                         PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
                         PostureDetailInfoTextModel(text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다.")
                     ]),
                 exerciseCautionData:
                     PostureDetailInfoModel(
-                        titleText: PostureResourcesService.Title.cautionTitle, 
-                        informationText: [
+                        titleText: PostureResourcesService.Title.cautionTitle,
+                        infoText:
+                    [
                         PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
                         PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.")
                     ]),
