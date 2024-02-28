@@ -93,7 +93,6 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
             .asDriver(onErrorDriveWith: .never())
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureChestViewModel(useCase: useCase)
 
         let input = PostureChestViewModel.Input(

@@ -69,7 +69,6 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         super.bindViewModel()
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureDetailViewModel(useCase: useCase)
 
         let input = PostureDetailViewModel.Input(

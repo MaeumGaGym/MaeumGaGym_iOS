@@ -43,18 +43,19 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
             $0.width.equalToSuperview()
         }
     }
-    
+
     public override func bindViewModel() {
         super.bindViewModel()
-        
+
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        
+        viewModel = PostureRecommandViewModel(useCase: useCase)
+
         let input = PostureRecommandViewModel.Input(
             getRecommandData:
                 Observable.just(())
                 .asDriver(onErrorDriveWith: .never())
         )
-        
+
         let output = viewModel.transform(input, action: { output in
             output.recommandData
                 .subscribe(onNext: { recommandData in

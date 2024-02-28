@@ -91,7 +91,6 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
             .asDriver(onErrorDriveWith: .never())
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureBackViewModel(useCase: useCase)
 
         let input = PostureBackViewModel.Input(
