@@ -60,7 +60,6 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
         super.bindViewModel()
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureSearchViewModel(useCase: useCase)
 
         let input = PostureSearchViewModel.Input(
