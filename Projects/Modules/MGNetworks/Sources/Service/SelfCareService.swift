@@ -168,6 +168,14 @@ public class SelfCareService {
         )
     }
 
+    public func requestTargetDtailData() -> Single<SelfCareTargetDetailModel> {
+        return Single.just(SelfCareTargetDetailModel(titleTextData: "공부하기",
+                                                     startDateData: "12월 26일 (화) 오전 8:00",
+                                                     endDateData: "2024년 01월 01일 (월) 오후 9:00",
+                                                     textData: "새해가 다가오기 전까지 열심히 공부하자.\n한 해의 끝도 공부와 함께.")
+        )
+    }
+
     public init() {
 
     }
