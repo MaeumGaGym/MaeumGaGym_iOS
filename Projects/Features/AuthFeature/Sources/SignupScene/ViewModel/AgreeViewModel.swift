@@ -7,6 +7,8 @@ import RxSwift
 import Core
 
 public class AgreeViewModel: BaseViewModel {
+    
+    public typealias ViewModel = AgreeViewModel
 
     public struct Input {
         let allAgreeButtonTap: Signal<Void>

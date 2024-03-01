@@ -70,7 +70,7 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
 
     public override func layout() {
         view.addSubviews([tableView])
-
+    
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -153,8 +153,6 @@ extension SelfCareHomeViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
-            AppStepper.shared.steps.accept(AppStep.myProfileRequired)
-        }
+
     }
 }

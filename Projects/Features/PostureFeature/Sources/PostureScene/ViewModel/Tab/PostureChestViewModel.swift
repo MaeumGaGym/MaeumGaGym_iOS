@@ -20,6 +20,8 @@ public enum PostureChestModelState {
 }
 
 public class PostureChestViewModel: BaseViewModel {
+    
+    public typealias ViewModel = PostureChestViewModel
 
     private let disposeBag = DisposeBag()
 

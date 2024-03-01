@@ -68,7 +68,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     public override func layout() {
         view.addSubviews([naviBar, tableView])
-
+        
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
         }

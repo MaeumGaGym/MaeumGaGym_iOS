@@ -1,7 +1,9 @@
 import Foundation
 import UIKit
+
 import RxFlow
 import RxCocoa
+import RxSwift
 
 public class AppStepper: Stepper {
     public static let shared = AppStepper()
@@ -9,10 +11,10 @@ public class AppStepper: Stepper {
     public var steps = PublishRelay<Step>()
     
     public var initialStep: Step {
-        return AppStep.initialization
+        return MGStep.initialization
     }
     
-    public init(steps: PublishRelay<Step> = PublishRelay<Step>()) {
-        self.steps = steps
+    public init() {
+    
     }
 }

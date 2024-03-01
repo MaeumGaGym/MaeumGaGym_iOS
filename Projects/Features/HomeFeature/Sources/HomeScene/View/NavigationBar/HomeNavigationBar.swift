@@ -62,7 +62,7 @@ extension HomeNavigationBar {
         logoImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.equalToSuperview().inset(20)
-            make.width.equalTo(129)
+            make.width.height.equalTo(42)
         }
 
         rightItemsStackView.snp.makeConstraints { make in

@@ -5,6 +5,9 @@ import RxSwift
 import Core
 
 public class TimerViewModel: BaseViewModel {
+    
+    public typealias ViewModel = TimerViewModel
+
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }

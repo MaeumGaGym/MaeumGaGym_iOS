@@ -16,7 +16,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
     public var steps = PublishRelay<Step>()
 
     public var initialStep: Step {
-        AppStep.homeIsRequired
+        MGStep.homeIsRequired
     }
 
     private var bottomConstraint: Constraint?
