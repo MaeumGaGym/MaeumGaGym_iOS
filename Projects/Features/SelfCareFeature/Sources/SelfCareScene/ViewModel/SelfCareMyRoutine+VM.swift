@@ -9,6 +9,7 @@ import Domain
 import MGLogger
 
 public class SelfCareMyRoutineViewModel: BaseViewModel {
+    public typealias ViewModel = SelfCareMyRoutineViewModel
 
     private let disposeBag = DisposeBag()
 

@@ -7,6 +7,9 @@ import RxSwift
 import Core
 
 public class SelfCareHomeViewModel: BaseViewModel {
+    
+    public typealias ViewModel = SelfCareHomeViewModel
+
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
     }

@@ -9,6 +9,8 @@ import Domain
 import MGLogger
 
 public class PostureSearchViewModel: BaseViewModel {
+    
+    public typealias ViewModel = PostureSearchViewModel
 
     private let disposeBag = DisposeBag()
 

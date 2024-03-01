@@ -7,6 +7,8 @@ import HomeFeatureInterface
 import MGLogger
 
 public class HomeViewModel: HomeViewModelType {
+    
+    public typealias ViewModel = HomeViewModel
 
     public var disposeBag: DisposeBag = DisposeBag()
 

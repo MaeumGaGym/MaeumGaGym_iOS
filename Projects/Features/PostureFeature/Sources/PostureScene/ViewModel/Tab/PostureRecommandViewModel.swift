@@ -7,8 +7,9 @@ import RxSwift
 import Core
 import Domain
 
-
 public class PostureRecommandViewModel: BaseViewModel {
+
+    public typealias ViewModel = PostureRecommandViewModel
     
     private var disposeBag = DisposeBag()
     
