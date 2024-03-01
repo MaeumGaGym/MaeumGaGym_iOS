@@ -32,22 +32,13 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
 
     private var headerView = UIView()
 
-    private var titleTextView = MGTitleTextView()
+    private var titleTextView = MGTitleTextFieldView(titleText: "textFieldData.textFieldTitle", textLimit: 3, placeholder: "textFieldData.textFieldPlaceholder")
     
     private var textFieldData: MyRoutineEditTextFieldModel = MyRoutineEditTextFieldModel(
         textFieldTitle: "",
         textFieldText: "",
         textFieldPlaceholder: ""
-    ) {
-        didSet {
-            titleTextView.setup(
-                titleText: textFieldData.textFieldTitle,
-                placeholder: textFieldData.textFieldPlaceholder,
-                text: textFieldData.textFieldText
-            )
-        }
-    }
-
+    )
     private var myRoutineDetailTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
