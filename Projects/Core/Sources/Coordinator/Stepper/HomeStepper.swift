@@ -1,20 +1,17 @@
 import Foundation
-import UIKit
-
 import RxFlow
 import RxCocoa
-import RxSwift
 
-public class AppStepper: Stepper {
-    public static let shared = AppStepper()
+public class HomeStepper: Stepper {
+    public static let shared = HomeStepper()
     
     public var steps = PublishRelay<Step>()
     
     public var initialStep: Step {
-        return AppStep.initialization
+        return AppStep.home
     }
     
     public init() {
-    
+        
     }
 }
