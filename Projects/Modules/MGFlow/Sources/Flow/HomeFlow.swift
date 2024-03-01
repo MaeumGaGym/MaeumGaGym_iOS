@@ -32,7 +32,7 @@ public class HomeFlow: Flow {
     }
 
     public func navigate(to step: Step) -> FlowContributors {
-        guard let step = step as? AppStep else { return .none }
+        guard let step = step as? MGStep else { return .none }
 
         switch step {
         case .home:
@@ -68,7 +68,6 @@ public class HomeFlow: Flow {
     private func navigateToStepViewScreen() -> FlowContributors {
 
         let redVC = RedViewController()
-
         rootViewController.pushViewController(redVC, animated: true)
         MainTabBarContoller.shared.tabBar.isHidden = true
 

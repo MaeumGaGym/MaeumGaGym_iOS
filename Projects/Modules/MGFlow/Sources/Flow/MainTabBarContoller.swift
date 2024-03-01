@@ -21,15 +21,6 @@ public class MainTabBarContoller: UITabBarController {
     }
 
     private func setupTabBar() {
-        tabBar.tintColor = .red
-        self.tabBar.unselectedItemTintColor = .blue
-
-        tabBar.backgroundImage = UIImage()
-        tabBar.shadowImage = UIImage()
-        tabBar.clipsToBounds = true
-
-        tabBar.tintColor = DSKitAsset.Colors.blue500.color
-        tabBar.unselectedItemTintColor = .white
-        tabBar.backgroundColor = DSKitAsset.Colors.gray100.color
+        self.tabBar.tintColor = DSKitAsset.Colors.blue500.color
     }
 }

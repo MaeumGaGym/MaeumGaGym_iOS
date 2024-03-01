@@ -28,7 +28,7 @@ public class InitFlow: Flow {
     private let selfCareFlow = SelfCareFlow()
 
     public func navigate(to step: Step) -> FlowContributors {
-        guard let step = step as? AppStep else { return .none }
+        guard let step = step as? MGStep else { return .none }
 
         switch step {
         case .initialization:
@@ -47,11 +47,11 @@ public class InitFlow: Flow {
             self.rootViewController.viewControllers = root
         })
         return .multiple(flowContributors: [
-            FlowContributor.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.home)),
-            FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: AppStep.postureIsRequired)),
-            FlowContributor.contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: AppStep.shopIsRequired)),
-            FlowContributor.contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: AppStep.pickleRequired)),
-            FlowContributor.contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: AppStep.selfCareIsRequired)),
+            FlowContributor.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: MGStep.home)),
+            FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: MGStep.postureIsRequired)),
+            FlowContributor.contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: MGStep.shopIsRequired)),
+            FlowContributor.contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: MGStep.pickleRequired)),
+            FlowContributor.contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: MGStep.selfCareIsRequired)),
         ])
     }
 

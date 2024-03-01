@@ -8,7 +8,7 @@ public class HomeStepper: Stepper {
     public var steps = PublishRelay<Step>()
     
     public var initialStep: Step {
-        return AppStep.home
+        return MGStep.home
     }
     
     public init() {

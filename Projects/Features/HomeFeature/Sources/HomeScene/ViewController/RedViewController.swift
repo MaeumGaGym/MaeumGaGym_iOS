@@ -43,7 +43,7 @@ public class RedViewController: UIViewController, Stepper {
         
         backButton.rx.tap
             .subscribe(onNext: {
-                HomeStepper.shared.steps.accept(AppStep.homeBack)
+                HomeStepper.shared.steps.accept(MGStep.homeBack)
             }).disposed(by: disposeBag)
     }
 }

@@ -16,7 +16,7 @@ public class PickleFlow: Flow {
     }
 
     public func navigate(to step: Step) -> FlowContributors {
-        guard let step = step as? AppStep else { return .none }
+        guard let step = step as? MGStep else { return .none }
 
         switch step {
         case .pickle:

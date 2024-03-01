@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         mainFlow = HomeFlow()
 
-        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: AppStep.home))
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.home))
         Flows.use(mainFlow, when: .created) { root in
             self.window?.rootViewController = root
             self.window?.makeKey()

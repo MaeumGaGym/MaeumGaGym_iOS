@@ -11,7 +11,7 @@ public class AppStepper: Stepper {
     public var steps = PublishRelay<Step>()
     
     public var initialStep: Step {
-        return AppStep.initialization
+        return MGStep.initialization
     }
     
     public init() {
