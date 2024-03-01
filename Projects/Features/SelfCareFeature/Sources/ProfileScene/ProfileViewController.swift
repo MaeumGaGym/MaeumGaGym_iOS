@@ -4,10 +4,17 @@ import SelfCareFeatureInterface
 import MGNetworks
 import Domain
 
+import RxSwift
+import RxCocoa
+import RxFlow
+
 import DSKit
 import Core
 
-final public class SelfCareProfileViewController: BaseViewController<ProfileEditViewModel> {
+final public class SelfCareProfileViewController: BaseViewController<ProfileEditViewModel>, Stepper {
+    
+    public var steps = PublishRelay<Step>()
+
     private lazy var navBar = SelfCareProfileNavigationBar()
 
     private lazy var userProfileImageView = MGProfileView(

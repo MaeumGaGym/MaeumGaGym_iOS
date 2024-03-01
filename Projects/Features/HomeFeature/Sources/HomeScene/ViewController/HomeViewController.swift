@@ -54,6 +54,10 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         $0.register(ExtraTableViewCell.self,
                     forCellReuseIdentifier: ExtraTableViewCell.identifier)
     }
+    
+    public var testButton = UIButton().then {
+        $0.backgroundColor = .red
+    }
 
     public override func configureNavigationBar() {
         super.configureNavigationBar()
@@ -68,7 +72,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     public override func layout() {
         view.addSubviews([naviBar, tableView])
-
+        
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
         }
@@ -79,6 +83,19 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
             $0.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+        
+        view.addSubview(testButton)
+        
+        testButton.snp.makeConstraints {
+            $0.width.height.equalTo(100)
+            $0.center.equalToSuperview()
+        }
+        
+        testButton.rx.tap
+            .subscribe(onNext: {
+                print("asdf")
+                HomeStepper.shared.steps.accept(AppStep.homeStepRequired)       
+            }).disposed(by: disposeBag)
     }
 
     private func addCells() {
