@@ -4,15 +4,6 @@ import Core
 final class MGStackViewExtensionTests: XCTestCase {
     public var stackView = UIStackView()
 
-    override class func setUp() {
-        super.setUp()
-        
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func test_세개의_서브뷰를_스택뷰안에_넣었을_경우() {
         // Given
         let view1 = UIView()
