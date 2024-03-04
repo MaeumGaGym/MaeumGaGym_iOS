@@ -4,7 +4,6 @@ import Core
 
 public enum APIType {
     
-    //Token
     case CSRFToken
     
     // Oauth
