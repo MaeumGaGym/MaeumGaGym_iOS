@@ -16,7 +16,6 @@ extension Array where Element: Equatable {
     }
 }
 
-
 extension Array {
     mutating func move(at index: Index, to newIndex: Index) {
         guard self.indices.contains(index),
