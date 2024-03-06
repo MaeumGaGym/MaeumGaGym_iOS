@@ -2,6 +2,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import RxFlow
 
 import SnapKit
 import Then
@@ -12,8 +13,13 @@ import Domain
 
 import Data
 import MGNetworks
+import PostureFeatureInterface
 
-public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
+public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
+    
+    public var steps = PublishRelay<Step>()
+    
+    private lazy var naviBar = PostureMainNavigationBar()
 
     private let categoryTitleList = [
         PostureResourcesService.Title.postureMainTitle1,
@@ -30,6 +36,12 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
                                     textColor: .black,
                                     isCenter: false
     )
+    
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 20, bottom: .zero, right: 20))
+    }
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
@@ -74,9 +86,14 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
     }
 
     public override func layout() {
-        view.addSubviews([titleText,
+        view.addSubviews([naviBar,
+                          titleText,
                           pagingTabBar,
                           containerView])
+
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         titleText.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -118,4 +135,16 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
       }).disposed(by: self.disposeBag)
    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
+        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+        viewModel = PostureMainViewModel(useCase: useCase)
+        
+        let input = PostureMainViewModel.Input(
+            searchButtonTapped: searchButtonTapped
+        )
+    }
 }

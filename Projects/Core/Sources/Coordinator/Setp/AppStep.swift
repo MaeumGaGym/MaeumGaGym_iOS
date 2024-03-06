@@ -25,7 +25,7 @@ public enum MGStep: Step {
 
     // posture
     case postureMainIsRequired
-    case postureDetailIsRequired
+    case postureDetailIsRequired(withDetailId: Int)
     case postureSearchIsRequired
 
     // posture - tab
@@ -34,6 +34,7 @@ public enum MGStep: Step {
     case postureBackIsRequired
     case postureShoulderIsRequired
     case postureArmIsRequired
+    case postureStomachIsRequired
     case postureFrontlegIsRequired
 
     //pickle
@@ -48,4 +49,8 @@ public enum MGStep: Step {
     // selfCore
     case selfCoreHome
     case myProfileRequired
+    
+    case postureIsRequired
+    case shopIsRequired
+    case selfCareIsRequired
 }

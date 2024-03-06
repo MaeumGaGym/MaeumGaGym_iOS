@@ -21,8 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let windowScene = (scene as? UIWindowScene) else { return }
             window = UIWindow(windowScene: windowScene)
             let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-            let viewModel = PostureSearchViewModel(useCase: useCase)
-            let viewController = PostureSearchViewController(viewModel)
+            let viewModel = PostureMainViewModel(useCase: useCase)
+            let viewController = PostureMainViewController(viewModel)
             window?.rootViewController = UINavigationController(
                 rootViewController: viewController)
             window?.makeKeyAndVisible()
