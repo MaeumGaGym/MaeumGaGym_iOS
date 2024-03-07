@@ -10,6 +10,8 @@ public extension TargetDependency.SPM {
     static let SnapKit = TargetDependency.external(name: "SnapKit")
     static let Then = TargetDependency.external(name: "Then")
     static let RxFlow = TargetDependency.external(name: "RxFlow")
+    static let RxTest = TargetDependency.external(name: "RxTest")
+    static let RxBlocking = TargetDependency.external(name: "RxBlocking")
     static let Swinject = TargetDependency.external(name: "Swinject")
     static let Moya = TargetDependency.external(name: "Moya")
     static let RxMoya = TargetDependency.external(name: "RxMoya")
@@ -17,5 +19,7 @@ public extension TargetDependency.SPM {
     static let kingfisher = TargetDependency.external(name: "Kingfisher")
     static let MindGymKit = TargetDependency.external(name: "MindGymKit")
     static let KakaoSDK = TargetDependency.external(name: "KakaoSDK")
+    static let Mango = TargetDependency.external(name: "Mango")
+    static let SnapshotTesting = TargetDependency.external(name: "SnapshotTesting")
 }
 
