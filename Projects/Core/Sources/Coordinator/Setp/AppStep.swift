@@ -22,14 +22,21 @@ public enum MGStep: Step {
     // home - Metronome
     case homeMetronomeSettingRequired
     case homeMetronomeBitSoundRequired
-        
+
     // posture
-    case posture
-    case postureIsRequired
-    case selfCareIsRequired
-    case shopIsRequired
-    case startRequired
-    
+    case postureMainIsRequired
+    case postureDetailIsRequired(withDetailId: Int)
+    case postureSearchIsRequired
+
+    // posture - tab
+    case postureRecommandIsRequired
+    case postureChestIsRequired
+    case postureBackIsRequired
+    case postureShoulderIsRequired
+    case postureArmIsRequired
+    case postureStomachIsRequired
+    case postureFrontlegIsRequired
+
     //pickle
     case pickle
     case pickleRequired
@@ -42,4 +49,8 @@ public enum MGStep: Step {
     // selfCore
     case selfCoreHome
     case myProfileRequired
+    
+    case postureIsRequired
+    case shopIsRequired
+    case selfCareIsRequired
 }

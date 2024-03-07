@@ -50,6 +50,7 @@ public enum PostureResourcesService {
         public static let postureChestTest5 = DSKitAsset.Assets.postureChestTest5.image
         public static let postureChestTest6 = DSKitAsset.Assets.postureChestTest6.image
         public static let postureChestTest7 = DSKitAsset.Assets.postureChestTest7.image
+        public static let blackSearchActIcon = DSKitAsset.Assets.blackSearchActIcon.image
     }
 
     public enum Colors {

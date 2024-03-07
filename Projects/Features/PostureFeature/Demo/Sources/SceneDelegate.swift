@@ -1,30 +1,35 @@
 import UIKit
-
-import RxFlow
-
-import Core
-import Domain
-import Data
-
-import MGNetworks
 import PostureFeature
+import RxFlow
+import Core
+
+import Data
+import Domain
+import MGNetworks
+
+import MGFlow
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
     var coordinator = FlowCoordinator()
-    
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions) {
-            guard let windowScene = (scene as? UIWindowScene) else { return }
-            window = UIWindow(windowScene: windowScene)
-            let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-            let viewModel = PostureSearchViewModel(useCase: useCase)
-            let viewController = PostureSearchViewController(viewModel)
-            window?.rootViewController = UINavigationController(
-                rootViewController: viewController)
-            window?.makeKeyAndVisible()
+    var mainFlow: PostureFlow!
+
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let scene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(frame: scene.coordinateSpace.bounds)
+        window?.windowScene = scene
+
+        mainFlow = PostureFlow()
+
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.postureMainIsRequired))
+        Flows.use(mainFlow, when: .created) { root in
+            self.window?.rootViewController = root
+            self.window?.makeKey()
         }
+        window?.makeKeyAndVisible()
+    }
 }
