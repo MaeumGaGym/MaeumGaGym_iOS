@@ -5,11 +5,10 @@ import RxCocoa
 
 import Core
 import Domain
-import HomeFeatureInterface
 
 import MGLogger
 
-public class PostureMainViewModel: HomeViewModelType {
+public class PostureMainViewModel: BaseViewModel {
     
     public typealias ViewModel = PostureMainViewModel
 

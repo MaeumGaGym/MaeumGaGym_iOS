@@ -40,7 +40,7 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
     public override func configureNavigationBar() {
         super.configureNavigationBar()
         navigationController?.isNavigationBarHidden = true
-        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 20, bottom: .zero, right: 20))
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
     }
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
@@ -96,7 +96,7 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         }
 
         titleText.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(48.0)
         }
