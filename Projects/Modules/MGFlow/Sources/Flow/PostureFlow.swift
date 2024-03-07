@@ -61,7 +61,7 @@ public class PostureFlow: Flow {
         postureService = PostureService()
         postureRepository = PostureRepository(networkService: postureService)
         useCase = DefaultPostureUseCase(repository: postureRepository)
-        viewModel = PostureMainViewModel()
+        viewModel = PostureMainViewModel(useCase: useCase)
     }
 
     private func setupViewController() {

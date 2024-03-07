@@ -94,7 +94,7 @@ public extension Project {
         
         
         if targets.contains(.demo) {
-            let deps: [TargetDependency] = [.target(name: name)]
+            let deps: [TargetDependency] = [.target(name: name), .Modules.mgFlow]
 
             var demoInfoPlist = Project.demoInfoPlist
 
