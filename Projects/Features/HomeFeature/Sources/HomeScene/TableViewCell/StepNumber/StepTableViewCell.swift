@@ -31,7 +31,7 @@ public class StepTableViewCell: BaseTableViewCell {
     )
 
     public func configure(with step: StepModel) {
-        stepNumberTitle.text = "\(formattedLikeCount(step.stepCount))"
+        stepNumberTitle.text = "\(formattedLikeCount(Int(step.stepCount)))"
     }
 
     public override func commonInit() {

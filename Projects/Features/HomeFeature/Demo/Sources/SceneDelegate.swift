@@ -8,12 +8,14 @@ import Domain
 import MGNetworks
 
 import MGFlow
+import HealthKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator = FlowCoordinator()
     var mainFlow: HomeFlow!
+    let healthStore = HKHealthStore()
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -32,4 +34,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         window?.makeKeyAndVisible()
     }
+
+//    var window: UIWindow?
+//    var coordinator = FlowCoordinator()
+//
+//    func scene(
+//        _ scene: UIScene,
+//        willConnectTo session: UISceneSession,
+//        options connectionOptions: UIScene.ConnectionOptions) {
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(windowScene: windowScene)
+//            window?.rootViewController = MetronomeViewController(
+//                viewModel: MetronomeViewModel(metronome: Metronome.sharedInstance)
+//            )
+////            window?.configure(withRootViewController: TimerViewController(TimerViewModel()))
+//        window?.makeKeyAndVisible()
+//    }
 }

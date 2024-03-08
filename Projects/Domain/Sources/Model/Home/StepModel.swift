@@ -1,9 +1,9 @@
 import UIKit
 
 public struct StepModel {
-    public var stepCount: Int
+    public var stepCount: Double
     
-    public init(stepCount: Int) {
+    public init(stepCount: Double) {
         self.stepCount = stepCount
     }
 }
