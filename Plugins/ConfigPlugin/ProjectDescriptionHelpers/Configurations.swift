@@ -1,10 +1,3 @@
-//
-//  Configurations.swift
-//  EnvPlugin
-//
-//  Created by 박준하 on 1/23/24.
-//
-
 import Foundation
 import ProjectDescription
 
