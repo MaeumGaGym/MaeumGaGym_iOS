@@ -40,4 +40,10 @@ final class HomeUnitTests: RxTestCase<String> {
 
         assertSnapshot(of: viewController, as: .image(on: .iPhone13ProMax))
     }
+
+    func test_홈_루틴_스크린샷_저장() {
+        var cell = RoutineTableViewCell()
+
+//        assertSnapshot(of: cell, as: .image(on: .iPhone13ProMax))
+    }
 }

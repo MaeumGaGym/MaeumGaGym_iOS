@@ -30,6 +30,4 @@ public class IntroRepository: IntroRepositoryInterface {
     public func appleSignup() -> RxSwift.Single<String> {
         return networkService.appleSignup()
     }
-    
-    
 }

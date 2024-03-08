@@ -1,4 +1,5 @@
 import UIKit
+import HealthKit
 import RootFeature
 import RxFlow
 import Core
@@ -21,12 +22,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let stepper = AppStepper()
         let initFlow = InitFlow()
+        let healthStore = HKHealthStore()
 
         coordinator.coordinate(flow: initFlow, with: stepper)
         Flows.use(initFlow, when: .created) { root in
             self.window?.backgroundColor = UIColor.white
             self.window?.rootViewController = root
             self.window?.makeKey()
+        }
+
+        if HKHealthStore.isHealthDataAvailable() {
+            let allTypes = Set([HKObjectType.workoutType(),
+                                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!])
+
+            healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
+                if success {
+                    print("\(success) 성공")
+                } else {
+                    print("\(error) 성공하지 못했습니다")
+                }
+            }
         }
         window?.makeKeyAndVisible()
     }

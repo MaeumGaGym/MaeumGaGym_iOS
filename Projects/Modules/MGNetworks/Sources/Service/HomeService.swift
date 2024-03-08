@@ -5,6 +5,11 @@ import RxCocoa
 
 import Domain
 
+import MGLogger
+
+import MindGymKit
+import Combine
+
 public class HomeService {
     public func requestServiceState() -> Single<ServiceStateModel> {
         return Single.just(ServiceStateModel(isAvailable: true))
@@ -14,8 +19,29 @@ public class HomeService {
         return Single.just(MotivationMessageModel(text: "가능성은 한계를 넘는다.", author: "Kimain"))
     }
 
-    public func requestStepNumber() -> Single<StepModel> {
-        return Single.just(StepModel(stepCount: 112771))
+    public func requestStepNumber() -> Observable<StepModel> {
+        return Observable<Int>.interval(.seconds(5), scheduler: MainScheduler.instance)
+            .flatMapLatest { _ in
+                self.fetchStepCount().asObservable()
+            }
+    }
+
+    private func fetchStepCount() -> Single<StepModel> {
+        return Single.create { single in
+            let provider = HealthKitStepCountProvider()
+            provider.fetchTodayStepCount { stepCount in
+                if let count = stepCount {
+                    MGLogger.debug("성공했습니다 걷기 데이터입니다 \(count)")
+                    single(.success(StepModel(stepCount: count)))
+                } else {
+                    MGLogger.error("치명적으로 실패했습니다, 걷기 데이터를 가져오는데 실패했습니다.")
+                    single(.failure(StepModel(stepCount: 0) as! Error))
+                }
+                
+                MGLogger.debug("\(String(describing: stepCount))자리입니다")
+            }
+            return Disposables.create()
+        }
     }
 
     public func requestRoutines() -> Single<[RoutineModel]> {

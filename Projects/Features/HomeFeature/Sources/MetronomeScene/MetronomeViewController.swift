@@ -29,12 +29,12 @@ public class MetronomeViewController: UIViewController {
     private var exView = UIView().then {
         $0.backgroundColor = .clear
     }
-    
+
     private let bpmTitle = MGLabel(text: HomeResourcesService.Title.bpm,
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )
-    
+
     private let tempoLabel = MGLabel(font: UIFont.Pretendard.light,
                                      isCenter: true)
 
