@@ -8,7 +8,9 @@ import Domain
 
 import MGLogger
 
-public class PostureMainViewModel: BaseViewModel {
+public typealias PostureViewModelType = BaseViewModel
+
+public class PostureMainViewModel: PostureViewModelType {
     
     public typealias ViewModel = PostureMainViewModel
 
@@ -41,8 +43,8 @@ public class PostureMainViewModel: BaseViewModel {
         input.searchButtonTapped
             .drive(onNext: { [weak self] _ in
                 self?.onSettingButtonTap?()
-                PostureStepper.shared.steps.accept(MGStep.postureSearchIsRequired)
-                MGLogger.debug("searchButtonTapped")
+                print("Sdfsdfsf")
+   PostureStepper.shared.steps.accept(MGStep.postureSearchIsRequired)
             }).disposed(by: disposeBag)
 
         return output

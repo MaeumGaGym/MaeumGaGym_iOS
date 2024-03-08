@@ -17,9 +17,15 @@ import Data
 
 import PostureFeatureInterface
 
-public class PostureSearchViewController: BaseViewController<PostureSearchViewModel> {
+public class PostureSearchViewController: BaseViewController<PostureSearchViewModel>, Stepper {
+
+    public var steps = PublishRelay<Step>()
 
     private var searchModel = PostureSearchModel(searchResultData: [])
+
+    private var containerView = BaseView()
+
+    private var beforeButton = BaseButton()
 
     private var searchBarView = MGSearchView()
 
@@ -34,6 +40,7 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     public override func attribute() {
         super.attribute()
 
+        beforeButton.setImage(image: PostureResourcesService.Assets.postureLeftArrow)
         postureSearchTableView.dataSource = self
         postureSearchTableView.delegate = self
     }
@@ -41,11 +48,25 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     override public func layout() {
         super.layout()
 
-        view.addSubviews([searchBarView, postureSearchTableView])
+        view.addSubviews([containerView, postureSearchTableView])
+        containerView.addSubviews([beforeButton, searchBarView])
+
+        containerView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(48.0)
+        }
+
+        beforeButton.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(12.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.width.height.equalTo(24.0)
+        }
 
         searchBarView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.top.equalToSuperview().inset(4.0)
+            $0.leading.equalTo(beforeButton.snp.trailing).offset(12.0)
+            $0.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(40.0)
         }
 
@@ -65,6 +86,10 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
         let input = PostureSearchViewModel.Input(
             getSearchData: Observable.just(()).asDriver(onErrorDriveWith: .never())
         )
+        
+        beforeButton.rx.tap.subscribe(onNext: {
+            PostureStepper.shared.steps.accept(MGStep.postureBack)
+        }).disposed(by: disposeBag)
 
         let output = viewModel.transform(input, action: { optput in
             optput.searchData

@@ -50,6 +50,8 @@ public class PostureFlow: Flow {
             return navigateToSearchViewScreen()
         case .postureSearchIsRequired:
             return navigateToSearchViewScreen()
+        case .postureBack:
+            return popupViewController()
         case .postureDetailIsRequired(withDetailId: 0):
             return navigateToSearchViewScreen()
         default:
@@ -73,13 +75,21 @@ public class PostureFlow: Flow {
         rootViewController.view.backgroundColor = .white
         rootViewController.tabBarItem = UITabBarItem(title: "자세", image: DSKitAsset.Assets.maeumGaGymBlackPeopleTapBar.image, selectedImage: DSKitAsset.Assets.maeumGaGymBluePeopleTapBar.image)
         rootViewController.setViewControllers([viewController], animated: false)
-        return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: HomeStepper.shared))
+        return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: PostureStepper.shared))
     }
     
     private func navigateToSearchViewScreen() -> FlowContributors {
         let vc = PostureSearchViewController(PostureSearchViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
         MainTabBarContoller.shared.tabBar.isHidden = false
+        return .none
+    }
+
+    private func popupViewController() -> FlowContributors {
+        rootViewController.popToRootViewController(animated: true)
+        if rootViewController.viewControllers.count == 1 {
+            MainTabBarContoller.shared.tabBar.isHidden = false
+        }
         return .none
     }
 }
