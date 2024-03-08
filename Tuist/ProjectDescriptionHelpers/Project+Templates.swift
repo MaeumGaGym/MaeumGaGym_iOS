@@ -85,6 +85,7 @@ public extension Project {
                 infoPlist: .default,
                 sources: ["Sources/**/*.swift"],
                 resources: hasResources ? [.glob(pattern: "Resources/**", excluding: [])] : [],
+                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 dependencies: deps + internalDependencies + externalDependencies,
                 settings: .settings(base: settings, configurations: XCConfig.framework)
             )
