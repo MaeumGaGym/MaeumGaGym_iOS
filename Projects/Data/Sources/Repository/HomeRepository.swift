@@ -17,7 +17,7 @@ public class HomeRepository: HomeRepositoryInterface {
     }
 
     public func getStepNumber() -> Single<StepModel> {
-        return networkService.requestStepNumber()
+        return networkService.requestStepNumber().asSingle()
     }
 
     public func getRoutines() -> Single<[RoutineModel]> {

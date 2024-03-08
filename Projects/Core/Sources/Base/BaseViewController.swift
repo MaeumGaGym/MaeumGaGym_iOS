@@ -48,6 +48,11 @@ open class BaseViewController<T>: UIViewController {
     open func configureNavigationBar() {
         // 내비게이션 바의 모양과 동작을 사용자 지정하고 네비게이션 관련 코드를 설정하는 함수입니다.
     }
+    
+    open func permissionControlHandling() {
+        // 권한 관련으로 핸들링 하는 작업입니다. (ex 카메라의 접근 해도 될까요?)
+    }
+
 
     open func setupKeyboardHandling() {
         // 키보드 인벤트처리를 하는 함수입니다.
