@@ -27,6 +27,7 @@ public enum MGStep: Step {
     case postureMainIsRequired
     case postureDetailIsRequired(withDetailId: Int)
     case postureSearchIsRequired
+    case postureBack
 
     // posture - tab
     case postureRecommandIsRequired

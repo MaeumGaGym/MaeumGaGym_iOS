@@ -44,7 +44,7 @@ extension PostureMainNavigationBar {
 // MARK: - UI & Layout
 extension PostureMainNavigationBar {
     private func setUI() {
-        self.backgroundColor = DSKitAsset.Colors.gray25.color
+        self.backgroundColor = .clear
     }
 
     private func setLayout() {

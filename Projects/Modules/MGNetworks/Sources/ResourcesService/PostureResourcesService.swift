@@ -51,6 +51,7 @@ public enum PostureResourcesService {
         public static let postureChestTest6 = DSKitAsset.Assets.postureChestTest6.image
         public static let postureChestTest7 = DSKitAsset.Assets.postureChestTest7.image
         public static let blackSearchActIcon = DSKitAsset.Assets.blackSearchActIcon.image
+        public static let postureLeftArrow = DSKitAsset.Assets.leftOpenArrow.image
     }
 
     public enum Colors {
@@ -62,8 +63,8 @@ public enum PostureResourcesService {
 
     public enum Title {
         public static let postureTitle = "자세"
-        public static let postureBodyTitle = "맨몸 운동"
-        public static let postureMachineTitle = "기구 운동"
+        public static let postureBodyTitle = "가슴 운동"
+        public static let postureMachineTitle = "어깨 운동"
         public static let bodyTitle = "맨몸"
         public static let machineTitle = "기구"
         public static let execiseWayTitle = "운동 방법"

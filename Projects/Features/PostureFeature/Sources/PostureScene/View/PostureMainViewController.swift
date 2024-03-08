@@ -141,10 +141,15 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         
         let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+        
         viewModel = PostureMainViewModel(useCase: useCase)
         
         let input = PostureMainViewModel.Input(
             searchButtonTapped: searchButtonTapped
         )
+        
+        let ouput = viewModel.transform(input, action: { output in
+            
+        })
     }
 }
