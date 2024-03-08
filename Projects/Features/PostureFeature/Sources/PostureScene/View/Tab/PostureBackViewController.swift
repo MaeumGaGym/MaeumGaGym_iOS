@@ -15,7 +15,6 @@ import Domain
 import Data
 import MGNetworks
 
-
 public class PostureBackViewController: BaseViewController<PostureBackViewModel> {
 
     private var firstButton = MGToggleButton(type: .bareBody)
@@ -31,7 +30,11 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var backData: PosturePartModel = PosturePartModel(exerciseType: [], allExerciseData: [], bodyExerciseData: [], machineExerciseData: [])
+    private var backData: PosturePartModel = PosturePartModel(exerciseType: [], 
+                                                              allExerciseData: [],
+                                                              bodyExerciseData: [],
+                                                              machineExerciseData: []
+    )
 
     private var backExerciesData: [PosturePartExerciseModel] = [] {
         didSet {
@@ -48,10 +51,10 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
 
     public override func layout() {
         super.layout()
+
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 60))
 
-        headerView.addSubview(firstButton)
-        headerView.addSubview(secondButton)
+        headerView.addSubviews([firstButton, secondButton])
 
         firstButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12.0)
@@ -68,7 +71,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         }
 
         postureBackTableView.tableHeaderView = headerView
-        view.addSubview(postureBackTableView)
+        view.addSubviews([postureBackTableView])
 
         postureBackTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
@@ -88,7 +91,6 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
             .asDriver(onErrorDriveWith: .never())
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureBackViewModel(useCase: useCase)
 
         let input = PostureBackViewModel.Input(
@@ -102,15 +104,15 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         let output = viewModel.transform(input, action: { output in
             output.backData
                 .subscribe(onNext: { backData in
-                    MGLogger.debug("Chest Data: \(backData)")
+                    MGLogger.debug("backData: \(backData)")
                     self.backData = backData
                     self.backExerciesData = backData.allExerciseData
                 }).disposed(by: disposeBag)
 
             output.backModelState
-                .subscribe(onNext: { chestModelState in
-                    MGLogger.debug("Chest Model State: \(chestModelState)")
-                    switch chestModelState {
+                .subscribe(onNext: { backModelState in
+                    MGLogger.debug("backModelState: \(backModelState)")
+                    switch backModelState {
                     case .all:
                         self.backExerciesData = self.backData.allExerciseData
                     case .body:
@@ -140,7 +142,8 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
-        })
+            }
+        )
     }
 }
 

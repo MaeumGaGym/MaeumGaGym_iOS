@@ -20,6 +20,8 @@ import MGLogger
 import TokenManager
 
 public class IntroViewModel: AuthViewModelType {
+    
+    public typealias ViewModel = IntroViewModel
 
     public var disposeBag: RxSwift.DisposeBag
 

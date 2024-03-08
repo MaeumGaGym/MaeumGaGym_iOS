@@ -5,27 +5,26 @@ import Then
 
 import DSKit
 import Domain
+import MGNetworks
 
 public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 
-    static let identifier: String = "PostureRecommandCollectionViewCell"
+    static let identifier: String = PostureResourcesService.Identifier.postureRecommandCollectionViewCell
 
     private var postureImageView = UIImageView().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
 
-    private var exerciseNameLabel = UILabel().then {
-        $0.textColor = .black
-        $0.backgroundColor = .clear
-        $0.textAlignment = .left
-    }
+    private var exerciseNameLabel = MGLabel(font: UIFont.Pretendard.labelMedium, 
+                                            textColor: .black,
+                                            isCenter: false
+    )
 
-    private var exercisePartLabel = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.backgroundColor = .clear
-        $0.textAlignment = .left
-    }
+    private var exercisePartLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                            textColor: PostureResourcesService.Colors.gray600,
+                                            isCenter: false
+    )
 
     private func layout() {
         addSubviews([postureImageView, exerciseNameLabel, exercisePartLabel])
@@ -55,8 +54,8 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 public extension PostureRecommandCollectionViewCell {
     func setup(with exerciseData: PostureRecommandExerciseModel) {
         postureImageView.image = exerciseData.image
-        exerciseNameLabel.text = exerciseData.name
-        exercisePartLabel.text = exerciseData.part
+        exerciseNameLabel.changeText(text: exerciseData.name)
+        exercisePartLabel.changeText(text: exerciseData.part)
 
         layout()
     }

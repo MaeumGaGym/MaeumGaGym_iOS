@@ -11,18 +11,19 @@ import DSKit
 
 import Domain
 
+import MGNetworks
+
 public class SelfCareMenuCollectionCell: UICollectionViewCell {
 
-    static let identifier: String = "SelfCareMenuCollectionCell"
+    static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuCollectionCell
 
     private var menuImageView = UIImageView().then {
         $0.layer.cornerRadius = 8.0
     }
 
-    private var menuLabel = UILabel().then {
-        $0.textColor = .black
-        $0.textAlignment = .center
-    }
+    private var menuLabel = MGLabel(textColor: .black,
+                                    isCenter: true
+    )
 // 보류
 //    private var arrowImageView = UIImageView().then {
 //        $0.image = UIImage(systemName: "chevron.right")

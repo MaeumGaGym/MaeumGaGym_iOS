@@ -2,6 +2,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import RxFlow
 
 import SnapKit
 import Then
@@ -12,16 +13,34 @@ import Domain
 
 import Data
 import MGNetworks
+import PostureFeatureInterface
 
-public class PostureMainViewController: BaseViewController<PostureMainViewModel> {
+public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
+    
+    public var steps = PublishRelay<Step>()
+    
+    private lazy var naviBar = PostureMainNavigationBar()
 
-    private let categoryTitleList = ["추천", "가슴", "등", "어깨", "팔", "복근", "앞 허벅지"]
+    private let categoryTitleList = [
+        PostureResourcesService.Title.postureMainTitle1,
+        PostureResourcesService.Title.postureMainTitle2,
+        PostureResourcesService.Title.postureMainTitle3,
+        PostureResourcesService.Title.postureMainTitle4,
+        PostureResourcesService.Title.postureMainTitle5,
+        PostureResourcesService.Title.postureMainTitle6,
+        PostureResourcesService.Title.postureMainTitle7
+    ]
 
-    private let titleText = UILabel().then {
-        $0.text = "자세"
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleLarge
-        $0.textAlignment = .left
+    private let titleText = MGLabel(text: PostureResourcesService.Title.postureTitle,
+                                    font: UIFont.Pretendard.titleLarge,
+                                    textColor: .black,
+                                    isCenter: false
+    )
+    
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
     }
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
@@ -67,12 +86,17 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
     }
 
     public override func layout() {
-        view.addSubviews([titleText,
+        view.addSubviews([naviBar,
+                          titleText,
                           pagingTabBar,
                           containerView])
 
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+
         titleText.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(20.0)
             $0.height.equalTo(48.0)
         }
@@ -111,7 +135,21 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
       }).disposed(by: self.disposeBag)
    }
+    
+    public override func bindViewModel() {
+        super.bindViewModel()
+        
+        let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
+        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+        
+        viewModel = PostureMainViewModel(useCase: useCase)
+        
+        let input = PostureMainViewModel.Input(
+            searchButtonTapped: searchButtonTapped
+        )
+        
+        let ouput = viewModel.transform(input, action: { output in
+            
+        })
+    }
 }
-
-
-

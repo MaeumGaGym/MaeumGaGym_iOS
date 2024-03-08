@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 import RxSwift
 import RxCocoa
@@ -6,7 +7,7 @@ import RxCocoa
 import BaseFeatureDependency
 import Core
 
-public protocol HomeViewControllable: ViewControllable {}
+// public protocol HomeViewControllable: ViewControllable {}
 public protocol HomeCoordintable {
     var onSettingButtonTap: (() -> Void)? { get set }
     var onStepNumberButtonTap: (() -> Void)? { get set}
@@ -17,5 +18,5 @@ public protocol HomeCoordintable {
     var disposeBag: DisposeBag { get set }
 }
 
-public typealias HomeViewModelType = BaseViewModel & HomeCoordintable
-public typealias HomePresentable = (vc: HomeViewControllable, vm: any HomeViewModelType)
+public typealias HomeViewModelType = BaseViewModel
+public typealias HomePresentable = (vc: UIViewController, vm: any HomeViewModelType)

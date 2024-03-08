@@ -13,33 +13,33 @@ open class MGAgreeButton: BaseButton {
     public var checked: Bool = false
     
     public var iconImageView = UIImageView().then {
-        $0.image = DSKitAsset.Assets.noCheck.image
+        $0.image = DSKitAsset.Assets.noCheckActIcon.image
     }
+
+    private var textLabel = MGLabel(numberOfLineCount: 1)
     
-    private var textLabel = UILabel().then {
-        $0.numberOfLines = 1
-    }
-    
-    private let chooseLabel = UILabel().then {
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.text = "(선택)"
+    private let chooseLabel = MGLabel(text: "(선택)",
+                                      font: UIFont.Pretendard.bodyMedium,
+                                      textColor: DSKitAsset.Colors.gray400.color,
+                                      isCenter: false,
+                                      numberOfLineCount: 1
+    ).then {
         $0.isHidden = true
     }
     
-    private let readMore = UIButton().then {
-        $0.setTitle("자세히 보기", for: .normal)
-        $0.titleLabel?.font = UIFont.Pretendard.labelSmall
-        $0.setTitleColor(DSKitAsset.Colors.gray300.color, for: .normal)
+    private let readMore = MGButton(
+        titleText: "자세히 보기",
+        font: UIFont.Pretendard.labelSmall,
+        textColor: DSKitAsset.Colors.gray300.color
+    ).then {
         $0.isHidden = false
     }
-    
+
     private let readMoreLine = MGLine(lineColor: DSKitAsset.Colors.gray300.color,
                                               lineWidth: 64.0,
                                               lineHeight: 1.0
     )
-        
+
     public init (
         text: agreeButtonTextType,
         font: UIFont? = UIFont.Pretendard.bodyMedium,
@@ -108,12 +108,12 @@ open class MGAgreeButton: BaseButton {
     
     public func buttonYesChecked() {
         checked = true
-        iconImageView.image = DSKitAsset.Assets.yesCheck.image
+        iconImageView.image = DSKitAsset.Assets.yesCheckActIcon.image
     }
     
     public func buttonNoChecked() {
         checked = false
-        iconImageView.image = DSKitAsset.Assets.noCheck.image
+        iconImageView.image = DSKitAsset.Assets.noCheckActIcon.image
     }
     
     public func editButtonType(text: String, readMoreType: Bool? = false) {

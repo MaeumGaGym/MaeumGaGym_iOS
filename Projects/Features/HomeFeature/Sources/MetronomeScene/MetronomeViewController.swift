@@ -12,6 +12,8 @@ import AVFoundation
 
 import AudioToolbox
 
+import MGNetworks
+
 public class MetronomeViewController: UIViewController {
 
     public var disposeBag = DisposeBag()
@@ -19,7 +21,7 @@ public class MetronomeViewController: UIViewController {
     private var viewModel: MetronomeViewModel
 
     private var colorChangeTimer: Timer?
-    private let colors: [UIColor] = [.red, .yellow, .orange, .green, .blue, .purple]
+
     private var currentBitIndex = 0
 
     private lazy var navBar = MetronomeNavigationBar()
@@ -28,36 +30,34 @@ public class MetronomeViewController: UIViewController {
         $0.backgroundColor = .clear
     }
 
-    private let bpmTitle = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.blue400.color
-        $0.font = UIFont.Pretendard.bodyLarge
-        $0.text = "BPM"
+    private let bpmTitle = MGLabel(text: HomeResourcesService.Title.bpm,
+                                   font: UIFont.Pretendard.bodyLarge,
+                                   textColor: DSKitAsset.Colors.blue400.color
+    )
+
+    private let tempoLabel = MGLabel(font: UIFont.Pretendard.light,
+                                     isCenter: true)
+
+    private let tempoIncrementButton = MGImageButton(
+        image: HomeResourcesService.Assets.blackPlus,
+        backColor: DSKitAsset.Colors.gray50.color
+    ).then {
+        $0.setCornerRadius(radius: 22.0)
     }
 
-    private let tempoLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.font = UIFont.Pretendard.light
-    }
-
-    private let tempoIncrementButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCarePlus.image, for: .normal)
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.layer.cornerRadius = 22.0
-    }
-
-    private let tempoDecrementButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareMinus.image, for: .normal)
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.layer.cornerRadius = 22.0
+    private let tempoDecrementButton = MGImageButton(
+        image: HomeResourcesService.Assets.blackMinus,
+        backColor: DSKitAsset.Colors.gray50.color
+    ).then {
+        $0.setCornerRadius(radius: 22.0)
     }
 
     private let tempoSlider = MGSlider()
 
-    private let bitTitle = UILabel().then {
-        $0.textColor = DSKitAsset.Colors.blue400.color
-        $0.font = UIFont.Pretendard.bodyLarge
-        $0.text = "비트수"
-    }
+    private let bitTitle = MGLabel(text: HomeResourcesService.Title.bitCount,
+                                   font: UIFont.Pretendard.bodyLarge,
+                                   textColor: DSKitAsset.Colors.blue400.color
+    )
 
     private var bitViews: [UIView] = []
 

@@ -13,10 +13,8 @@ public class DSTextFieldViewController: UIViewController {
     private let nicknameLabel = MGLabel(text: "닉네임")
     private let nicknameInfo = MGLabel(text: "자신만의 닉네임을 입력해 주세요.", font: UIFont.Pretendard.bodyMedium)
     
-    private let cancelButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.cancle.image, for: .normal)
-    }
-    
+    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.blackCancel.image)
+
     public let completeButton = MGCheckButton(text: "완료")
     
     public let nicknameTF = MGTextField(placeholder: "닉네임")

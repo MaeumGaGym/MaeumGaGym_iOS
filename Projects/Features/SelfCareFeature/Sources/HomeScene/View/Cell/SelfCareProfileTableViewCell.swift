@@ -10,26 +10,25 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = "SelfCareProfileTableViewCell"
+    static public var identifier: String = SelfCareResourcesService.identifier.selfCareProfileTableViewCell
 
     private let profileImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,
-                                     customImage: DSKitAsset.Assets.basicProfile.image),
+                                     customImage: DSKitAsset.Assets.basicProfileIcon.image),
         profileType: .bigProfile
     )
+    
+    private let userNameLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                    textColor: .black
+    )
 
-    private let userNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.labelLarge
-        $0.textColor = .black
-    }
-
-    private var userTimerLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-    }
+    private var userTimerLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                    textColor: DSKitAsset.Colors.gray400.color
+    )
 
     private var userBageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,

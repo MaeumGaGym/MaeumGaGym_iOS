@@ -30,11 +30,11 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
     private var containerView = UIView()
     private var headerView = UIView()
 
-    private let myRoutineTitleLabel = UILabel().then {
-        $0.textColor = .black
-        $0.contentMode = .left
-        $0.font = UIFont.Pretendard.titleLarge
-    }
+    private let myRoutineTitleLabel = MGLabel(font: UIFont.Pretendard.titleLarge,
+                                              textColor: .black,
+                                              isCenter: false
+    )
+
 
     private let myRoutineSubTitleLabel = UILabel().then {
         $0.numberOfLines = 2

@@ -10,16 +10,16 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class RoutineTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "RoutineTableViewCell"
+    static let identifier: String = HomeResourcesService.identifier.routineTableViewCell
 
-    private var nameTitle = UILabel().then {
-        $0.text = "오늘의 루틴"
-        $0.textColor = .black
-        $0.font = UIFont.Pretendard.titleMedium
-    }
+    private var nameTitle = MGLabel(text: HomeResourcesService.Title.todayRoutine,
+                                    font: UIFont.Pretendard.titleMedium,
+                                    textColor: .black
+    )
 
     private var routineCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

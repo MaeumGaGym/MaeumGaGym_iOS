@@ -11,14 +11,13 @@ import Core
 
 public class MaeumGaGymSeeMoreButton: BaseButton {
     
-    private let seemoreLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.text = "더보기"
-    }
+    private let seemoreLabel = MGLabel(text: "더보기",
+        font: UIFont.Pretendard.bodyMedium,
+                                       textColor: DSKitAsset.Colors.gray400.color
+    )
     
     private let rigthArrowImageView = UIImageView().then {
-        $0.image = DSKitAsset.Assets.right.image
+        $0.image = DSKitAsset.Assets.rightArrow.image
     }
     
     public override func layout() {

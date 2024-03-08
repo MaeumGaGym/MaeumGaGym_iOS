@@ -18,6 +18,8 @@ import Domain
 
 import HomeFeatureInterface
 
+import HealthKit
+
 enum HomeCell {
     case motivationMessage
     case stepNumber
@@ -205,7 +207,7 @@ extension HomeViewController: UITableViewDataSource {
             ) as? StepTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: stepModels!)
+            cell.configure(with: stepModels ?? StepModel(stepCount: 0))
             cell.layer.cornerRadius = 16.0
 
             return cell

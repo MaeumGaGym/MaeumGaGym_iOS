@@ -44,9 +44,7 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
     private var deleteRoutineButton = SelfCareButton(type: .deleteRotine)
     private var editRoutineButton = SelfCareButton(type: .editRoutine)
-    private var dotsButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareDots.image, for: .normal)
-    }
+    private var dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
 
     public override func attribute() {
         super.attribute()

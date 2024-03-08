@@ -6,12 +6,9 @@ import RxSwift
 import RxCocoa
 
 open class MGLabel: BaseLabel {
-        
-    private var textLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.backgroundColor = .clear
-    }
-    
+
+    private var textLabel = BaseLabel()
+
     public init(
         text: String? = "",
         font: UIFont? = UIFont.Pretendard.titleLarge,
@@ -27,40 +24,43 @@ open class MGLabel: BaseLabel {
                 isCencter: isCenter ?? true,
                 numberOfLineCount: numberOfLineCount
         )
-        
     }
-    
+
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI(text: String?, font: UIFont?, textColor: UIColor?, isCencter: Bool, numberOfLineCount: Int) {
-        
+
         if isCencter == true {
-            textLabel.textAlignment = .center
+            textLabel.setTextAlignmentAndNumberOfLines(alignment: .center)
         } else {
-            textLabel.textAlignment = .left
+            textLabel.setTextAlignmentAndNumberOfLines(alignment: .left)
         }
-        
+
         textLabel.text = text
-        textLabel.textColor = textColor
-  
+        textLabel.setColor(textColor: textColor)
+
         if let font = font {
-            textLabel.font = font
+            textLabel.setPretendardFont(font: font)
         }
-        
-        textLabel.numberOfLines = numberOfLineCount
+
+        textLabel.setTextAlignmentAndNumberOfLines(numberOfLines: numberOfLineCount)
     }
-    
+
+    public func changeText(text: String?) {
+        textLabel.text = text
+    }
+
     public override func layout() {
         super.layout()
-        
+
         self.addSubview(textLabel)
 
         self.textLabel.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
+
         self.snp.makeConstraints {
             switch textLabel.font {
             case UIFont.Pretendard.titleLarge:

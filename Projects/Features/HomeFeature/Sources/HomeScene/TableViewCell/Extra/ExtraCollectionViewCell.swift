@@ -10,26 +10,26 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class ExtraCollectionViewCell: UICollectionViewCell {
 
-    static let identifier: String = "ExtraCollectionViewCell"
+    static let identifier: String = HomeResourcesService.identifier.extraCollectionViewCell
 
     private var iconImageView = UIImageView().then {
         $0.backgroundColor = .brown
     }
 
-    private var titleLabel = UILabel().then {
+    private var titleLabel = BaseLabel().then {
         $0.font = UIFont.Pretendard.titleMedium
         $0.textColor = .black
         $0.numberOfLines = 1
     }
 
-    private var descriptionLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.numberOfLines = 0
-    }
+    private var descriptionLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                           textColor: DSKitAsset.Colors.gray600.color,
+                                           numberOfLineCount: 0
+    )
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

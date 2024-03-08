@@ -11,15 +11,15 @@ public enum PickleLogoType: String, RawRepresentable {
     public var imageLogo: UIImage? {
         switch self {
         case .heart:
-            return DSKitAsset.Assets.heart.image
+            return DSKitAsset.Assets.heartActIcon.image
         case .comment:
-            return DSKitAsset.Assets.comment.image
+            return DSKitAsset.Assets.commentActIcon.image
         case .share:
-            return DSKitAsset.Assets.share.image
+            return DSKitAsset.Assets.shareActIcon.image
         case .dots:
-            return DSKitAsset.Assets.dots.image
+            return DSKitAsset.Assets.dotsActIcon.image
         case .redHart:
-            return DSKitAsset.Assets.redHaert.image
+            return DSKitAsset.Assets.redHaertActIcon.image
         }
     }
 

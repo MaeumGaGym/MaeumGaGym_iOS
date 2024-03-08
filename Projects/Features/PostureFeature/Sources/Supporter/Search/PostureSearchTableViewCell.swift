@@ -5,67 +5,67 @@ import Then
 
 import DSKit
 import Core
+import Domain
 
-public class PostureSearchTableViewCell: UITableViewCell {
-    
-    public static let identifier: String = "PostureSearchTableViewCell"
-    
+import MGNetworks
+
+public class PostureSearchTableViewCell: BaseTableViewCell {
+
+    public static let identifier: String = PostureResourcesService.Identifier.postureSearchTableViewCell
+
+    private var containerView = BaseView()
+
     private var searchImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
-    
-    private var exerciseNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = .black
-        $0.textAlignment = .left
-    }
-    
-    private var exercisePartLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodyMedium
-        $0.textColor = DSKitAsset.Colors.gray400.color
-        $0.textAlignment = .left
-    }
-    
-    public func setup(image: UIImage, name: String, part: String) {
-        searchImageView.image = image
-        exerciseNameLabel.text = name
-        exercisePartLabel.text = part
-        
-        addViews()
-        setupViews()
-    }
-    
-    private func addViews() {
-        addSubviews([searchImageView, exerciseNameLabel, exercisePartLabel])
-    }
-    
-    private func setupViews() {
+
+    private var exerciseNameLabel = MGLabel(font: UIKit.UIFont.Pretendard.bodyMedium,
+                                      textColor: .black,
+                                      isCenter: false
+    )
+
+    private var exercisePartLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                      textColor: PostureResourcesService.Colors.gray400,
+                                      isCenter: false
+    )
+
+    public override func layout() {
+        super.layout()
+
+        addSubviews([searchImageView, containerView])
+        containerView.addSubviews([exerciseNameLabel, exercisePartLabel])
+
         searchImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(16.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.height.equalTo(64.0)
         }
-        
-        exerciseNameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(26.0)
+
+        containerView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(26.0)
             $0.leading.equalTo(searchImageView.snp.trailing).offset(18.0)
-            $0.width.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+
+        exerciseNameLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(20.0)
         }
-        
+
         exercisePartLabel.snp.makeConstraints {
             $0.top.equalTo(exerciseNameLabel.snp.bottom).offset(4.0)
-            $0.leading.equalTo(searchImageView.snp.trailing).offset(18.0)
-            $0.width.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(20.0)
         }
     }
-    
-    
-    
-    
-    
-    
+}
+
+public extension PostureSearchTableViewCell {
+    func setup(with model: PostureSearchContentModel) {
+        searchImageView.image = model.exerciseImage
+        exerciseNameLabel.changeText(text: model.exerciseName)
+        exercisePartLabel.changeText(text: model.exercisePart)
+    }
 }

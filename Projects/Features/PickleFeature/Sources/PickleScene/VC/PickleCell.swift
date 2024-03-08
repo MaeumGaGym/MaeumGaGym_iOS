@@ -7,6 +7,8 @@ import Core
 import RxSwift
 import Pickle
 
+import MGNetworks
+
 struct BottomSheetItem {
     let icon: UIImage
     let title: String
@@ -16,15 +18,15 @@ public class PickleCell: PickleCollectionViewCell {
     
     private let disposeBag = DisposeBag()
     
-    public static let identifier = "PickleCell"
+    public static let identifier = PickleResourcesService.identifier.pickleCell
         
-    let alertView1 = MGAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
+    let alertView1 = MGAlertOnlyTitleView(title: PickleResourcesService.Title.notSupportingComments).then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
     }
     
-    let alertView2 = MGAlertOnlyTitleView(title: "아직 개발중입니다!").then {
+    let alertView2 = MGAlertOnlyTitleView(title: PickleResourcesService.Title.underDevelopment).then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
@@ -62,7 +64,7 @@ public class PickleCell: PickleCollectionViewCell {
         self.contentStackView.addArrangedSubviews(heartButton, commentButton, shareButton, dotButton)
         
         bottomSheetItems = [
-            BottomSheetItem(icon: DSKitAsset.Assets.pencil.image, title: "신고")
+            BottomSheetItem(icon: DSKitAsset.Assets.pencilActIcon.image, title: "신고")
          ]
         
         bottomSheetViewController.bottomSheetDelegate = self

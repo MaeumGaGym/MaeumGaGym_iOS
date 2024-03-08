@@ -1,4 +1,5 @@
 import UIKit
+import HomeFeatureInterface
 
 import RxSwift
 import RxCocoa
@@ -6,15 +7,15 @@ import RxCocoa
 import Core
 import DSKit
 
+import MGNetworks
+
 final class MetronomeNavigationBar: UIView {
 
     public var rightButtonTap: ControlEvent<Void> {
         return rightButton.rx.tap
     }
 
-    private let rightButton = UIButton(type: .custom).then {
-        $0.setImage(DSKitAsset.Assets.timerNavDots.image, for: .normal)
-    }
+    private let rightButton = MGImageButton(image: HomeResourcesService.Assets.rightNVButton)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal

@@ -23,6 +23,10 @@ public class SelfCareRepository: SelfCareRepositoryInterface {
         return networkService.requestTargetMainData()
     }
 
+    public func getTargetDetailData() -> Single<SelfCareTargetDetailModel> {
+        return networkService.requestTargetDtailData()
+    }
+
     public init(networkService: SelfCareService) {
         self.networkService = networkService
     }

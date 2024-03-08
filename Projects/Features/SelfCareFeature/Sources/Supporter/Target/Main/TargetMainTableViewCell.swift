@@ -16,21 +16,17 @@ public class TargetMainTableViewCell: BaseTableViewCell {
         $0.layer.cornerRadius = 16.0
     }
 
-    private var targetNameLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.labelLarge
-        $0.textColor = .black
-        $0.numberOfLines = 1
-    }
+    private var targetNameLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                              textColor: .black,
+                                              numberOfLineCount: 1
+    )
 
-    private var targetPeriodLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.bodySmall
-        $0.numberOfLines = 1
-        $0.textColor = DSKitAsset.Colors.gray400.color
-    }
+    private var targetPeriodLabel = MGLabel(font: UIFont.Pretendard.bodySmall,
+                                              textColor: DSKitAsset.Colors.gray400.color,
+                                              numberOfLineCount: 1
+    )
 
-    private let dotsButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareDots.image, for: .normal)
-    }
+    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
 
     public func setup(with model: TargetContentModel) {
         changeTargetName(text: model.targetTitle)

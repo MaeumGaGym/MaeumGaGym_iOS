@@ -15,17 +15,23 @@ public enum TimerButtonType: String {
     public var imageLogo: UIImage? {
         switch self {
         case .close:
-            return DSKitAsset.Assets.close.image
+//            return DSKitAsset.Assets.close.image // 여기 바뀌어주세요
+            return DSKitAsset.Assets.earthIcon.image
         case .start:
-            return DSKitAsset.Assets.playFilled.image
+//            return DSKitAsset.Assets.playFilled.image
+            return DSKitAsset.Assets.earthIcon.image
         case .stop:
-            return DSKitAsset.Assets.pause.image
+//            return DSKitAsset.Assets.pause.image
+            return DSKitAsset.Assets.earthIcon.image
         case .restart:
-            return DSKitAsset.Assets.redo.image
+//            return DSKitAsset.Assets.redo.image
+            return DSKitAsset.Assets.earthIcon.image
         case .vibration:
-            return DSKitAsset.Assets.vibration.image
+//            return DSKitAsset.Assets.vibration.image
+            return DSKitAsset.Assets.earthIcon.image
         case .sound:
-            return DSKitAsset.Assets.volume.image
+//            return DSKitAsset.Assets.volume.image
+            return DSKitAsset.Assets.earthIcon.image
         }
     }
     

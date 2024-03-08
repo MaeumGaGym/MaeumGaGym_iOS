@@ -7,6 +7,8 @@ import HomeFeatureInterface
 import MGLogger
 
 public class HomeViewModel: HomeViewModelType {
+    
+    public typealias ViewModel = HomeViewModel
 
     public var disposeBag: DisposeBag = DisposeBag()
 
@@ -61,6 +63,7 @@ public class HomeViewModel: HomeViewModelType {
         input.settingButtonTapped
             .drive(onNext: { [weak self] _ in
                 self?.onSettingButtonTap?()
+                HomeStepper.shared.steps.accept(MGStep.homeStepRequired)
                 MGLogger.debug("SeetingButtonTapped")
             }).disposed(by: disposeBag)
 

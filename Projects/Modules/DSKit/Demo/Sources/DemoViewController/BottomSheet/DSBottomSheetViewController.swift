@@ -24,8 +24,8 @@ public class DSBottomSheetViewController: UIViewController {
         view.backgroundColor = .lightGray
         
         bottomSheetItems = [
-             BottomSheetItem(icon: DSKitAsset.Assets.heart.image, title: "수정"),
-             BottomSheetItem(icon: DSKitAsset.Assets.heart.image, title: "삭제")
+             BottomSheetItem(icon: DSKitAsset.Assets.heartActIcon.image, title: "수정"),
+             BottomSheetItem(icon: DSKitAsset.Assets.heartActIcon.image, title: "삭제")
          ]
 
         bottomSheetViewController.bottomSheetDelegate = self
@@ -46,9 +46,9 @@ public class DSBottomSheetViewController: UIViewController {
         bottomSheetView?.layer.shadowOffset = CGSize(width: 0, height: 5.0)
         bottomSheetView?.layer.shadowRadius = 5
         bottomSheetView?.layer.shadowOpacity = 0.5
-        
-        let hideButton = UIButton(type: .system)
-         hideButton.setTitle("Hide BottomSheet", for: .normal)
+
+        let hideButton = MGButton(titleText: "Hide BottomSheet")
+
          hideButton.addTarget(self, action: #selector(hideBottomSheet), for: .touchUpInside)
 
          view.addSubview(hideButton)

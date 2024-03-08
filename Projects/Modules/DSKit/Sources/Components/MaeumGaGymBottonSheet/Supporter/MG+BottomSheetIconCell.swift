@@ -11,11 +11,10 @@ public class MGBottomSheetIconCell: UITableViewCell {
         $0.tintColor = .white
     }
 
-    public var mainTitle = UILabel().then {
-        $0.textColor = UIColor.white
-        $0.font = UIFont.Pretendard.labelLarge
-    }
-    
+    public var mainTitle = MGLabel(font: UIFont.Pretendard.labelLarge,
+                                   textColor: UIColor.white
+ )
+
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

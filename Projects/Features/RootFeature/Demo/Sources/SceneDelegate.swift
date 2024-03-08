@@ -1,27 +1,49 @@
 import UIKit
+import HealthKit
 import RootFeature
 import RxFlow
 import Core
+import Foundation
+
+import MGFlow
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator = FlowCoordinator()
-    var mainFlow: AppFlow!
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let scene = (scene as? UIWindowScene) else { return }
 
-        window = UIWindow(windowScene: windowScene)
+        window = UIWindow(frame: scene.coordinateSpace.bounds)
+        window?.windowScene = scene
 
-        mainFlow = AppFlow()
+        let stepper = AppStepper()
+        let initFlow = InitFlow()
+        let healthStore = HKHealthStore()
 
-        Flows.use(mainFlow, when: .created) { root in
+        coordinator.coordinate(flow: initFlow, with: stepper)
+        Flows.use(initFlow, when: .created) { root in
+            self.window?.backgroundColor = UIColor.white
             self.window?.rootViewController = root
+            self.window?.makeKey()
         }
 
-        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: AppStep.tabBarIsRequired))
+        if HKHealthStore.isHealthDataAvailable() {
+            let allTypes = Set([HKObjectType.workoutType(),
+                                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!])
 
+            healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
+                if success {
+                    print("\(success) 성공")
+                } else {
+                    print("\(error) 성공하지 못했습니다")
+                }
+            }
+        }
         window?.makeKeyAndVisible()
     }
 }

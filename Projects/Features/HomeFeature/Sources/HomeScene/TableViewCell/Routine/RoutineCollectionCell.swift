@@ -10,30 +10,31 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class RoutineCollectionCell: UICollectionViewCell {
 
-    static let identifier: String = "RoutineCollectionCell"
+    static let identifier: String = HomeResourcesService.identifier.routineCollectionCell
 
     private var routineImageView = UIImageView().then {
         $0.backgroundColor = .red
         $0.layer.cornerRadius = 24.0
     }
 
-    private var nameLabel = UILabel().then {
-        $0.textColor = .black
-        $0.textAlignment = .center
-    }
+    private var nameLabel = MGLabel(
+        textColor: .black,
+        isCenter: true
+    )
 
-    private var setsLabel = UILabel().then {
-        $0.textColor = .darkGray
-        $0.textAlignment = .center
-    }
+    private var setsLabel = MGLabel(
+        textColor: .darkGray,
+        isCenter: true
+    )
 
-    private var repsLabel = UILabel().then {
-        $0.textColor = .darkGray
-        $0.textAlignment = .center
-    }
+    private var repsLabel = MGLabel(
+        textColor: .darkGray,
+        isCenter: true
+    )
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -39,7 +39,7 @@ public class HomeTimerView: UIView {
     }
 
     private let alarmImage = UIImageView().then {
-        $0.image = DSKitAsset.Assets.homeTimerBell.image
+        $0.image = DSKitAsset.Assets.timerActIcon.image
     }
 
     private var timerAlarmTitle = UILabel().then {

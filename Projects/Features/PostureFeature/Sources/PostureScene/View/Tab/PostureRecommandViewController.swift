@@ -39,24 +39,23 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
         view.addSubviews([recommandTableView])
 
         recommandTableView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(676)
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalToSuperview()
         }
     }
-    
+
     public override func bindViewModel() {
         super.bindViewModel()
-        
+
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        
+        viewModel = PostureRecommandViewModel(useCase: useCase)
+
         let input = PostureRecommandViewModel.Input(
             getRecommandData:
                 Observable.just(())
                 .asDriver(onErrorDriveWith: .never())
         )
-        
+
         let output = viewModel.transform(input, action: { output in
             output.recommandData
                 .subscribe(onNext: { recommandData in
@@ -72,7 +71,7 @@ extension PostureRecommandViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return 2
+        return recommandData.count
     }
 
     public func tableView(
@@ -84,7 +83,7 @@ extension PostureRecommandViewController: UITableViewDataSource {
             for: indexPath
         ) as? PostureRecommandTableViewCell
         let model = recommandData[indexPath.row]
-        cell?.selecCell(model: model)
+        cell?.setup(with: model)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }

@@ -2,9 +2,10 @@ import UIKit
 
 import Then
 import SnapKit
+import MGNetworks
 
 final public class AlbumCell: UICollectionViewCell {
-    static public let id = "PhotoCell"
+    static public let id = SelfCareResourcesService.identifier.albumCell
 
     private let imageView = UIImageView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false

@@ -7,22 +7,24 @@ import Core
 import DSKit
 import Domain
 
+import MGNetworks
+
 public class PostureRecommandTableViewCell: BaseTableViewCell{
-    static let identifier: String = "PostureRecommandTableViewCell"
-    
+
+    static let identifier: String = PostureResourcesService.Identifier.postureRecommandTableViewCell
+
     private let containerView = UIView()
 
     private var titleImageLogo = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.backgroundColor = PostureResourcesService.Colors.gray50
         $0.layer.cornerRadius = 8.0
     }
 
-    private var exerciseTitleLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textColor = .black
-        $0.contentMode = .left
-    }
+    private var exerciseTitleLabel = MGLabel(font: UIFont.Pretendard.titleMedium,
+                                             textColor: .black,
+                                             isCenter: false
+    )
 
     private var seemoreButton = MaeumGaGymSeeMoreButton()
 
@@ -62,7 +64,7 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
     public override func layout() {
         addSubviews([containerView, exerciseCollectionView])
         containerView.addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton])
-        
+
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
@@ -91,10 +93,12 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
             $0.trailing.bottom.equalToSuperview()
         }
     }
+}
 
-    public func selecCell(model: PostureRecommandModel) {
+public extension PostureRecommandTableViewCell {
+    func setup(with model: PostureRecommandModel) {
         titleImageLogo.image = model.titleImage
-        exerciseTitleLabel.text = model.titleText
+        exerciseTitleLabel.changeText(text: model.titleText)
         recommandExerciseData = model.exerciseData
     }
 }
@@ -106,15 +110,6 @@ extension PostureRecommandTableViewCell: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         return CGSize(width: 148.0, height: 200.0)
-    }
-}
-
-extension PostureRecommandTableViewCell: UICollectionViewDelegate {
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        _ = recommandExerciseData[indexPath.row]
     }
 }
 

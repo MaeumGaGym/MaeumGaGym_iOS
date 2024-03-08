@@ -35,7 +35,7 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
             self.navigationController?.pushVC(DSTextFieldViewController.self)
         case .label:
             MGLogger.verbose("label")
-            self.navigationController?.pushVC(DSLabelViewController.self)
+            self.navigationController?.pushVC(LabelTableViewController.self)
         case .line:
             MGLogger.verbose("line")
             self.navigationController?.pushVC(DSLineViewController.self)
@@ -44,7 +44,7 @@ public class ComponentsDemoTableViewController: BaseDesignSystemTableViewControl
             self.navigationController?.pushVC(DSProfileViewController.self)
         case .alert:
             MGLogger.verbose("alert")
-            self.navigationController?.pushVC(DSAlertViewController.self)
+            self.navigationController?.pushVC(AlertViewControllerTableViewController.self)
         case .bottomSheet:
             MGLogger.verbose("bottomSheet")
             self.navigationController?.pushVC(DSBottomSheetViewController.self)

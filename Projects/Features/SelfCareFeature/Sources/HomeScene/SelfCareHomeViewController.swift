@@ -27,19 +27,19 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
     private var cellList: [UITableViewCell] = []
     private var cells: [SelfCareCell] = []
 
-    var introducts = SelfCareIntroductModel(image: DSKitAsset.Assets.selfCareMainImage.image,
-                                            mainText: "자기관리",
-                                            subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요.")
+    var introducts = SelfCareIntroductModel(image: DSKitAsset.Assets.airSqt.image,
+                                            mainText: SelfCareResourcesService.Title.selfCare,
+                                            subText: SelfCareResourcesService.Title.introductsSelfCare)
 
-    var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfile.image,
+    var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfileIcon.image,
                                         userName: "박준하",
                                         userTimer: 123,
-                                        userBage: DSKitAsset.Assets.bage1.image)
+                                        userBage: SelfCareResourcesService.Assets.bage)
 
-    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareMenuMyRoutine.image, menuName: "내루틴"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareGoul.image, menuName: "목표"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareFood.image, menuName: "식단"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.selfCareOunwan.image, menuName: "오운완")]
+    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "내루틴"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "목표"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "식단"),
+                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "오운완")]
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self
@@ -70,7 +70,7 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
 
     public override func layout() {
         view.addSubviews([tableView])
-
+    
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -151,13 +151,8 @@ extension SelfCareHomeViewController: UITableViewDataSource {
             return cell
         }
     }
-//    
-//    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.showCaveatPopUp(title: "회원탈퇴",
-//                              message: "정말 탈퇴하실건가요?\n30일 뒤에 활동이 모두 삭제돼요.",
-//                              leftActionTitle: "취소",
-//                              rightActionTitle: "탈퇴",
-//                              leftActionCompletion: { print("취소")},
-//                              rightActionCompletion: { print("탈퇴") })
-//    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    }
 }

@@ -7,6 +7,10 @@ let project = Project.makeModule(
     targets: [.dynamicFramework],
     internalDependencies: [
         .core,
+        .SPM.Mango,
+        .SPM.SnapshotTesting,
+        .SPM.RxBlocking,
+        .SPM.RxTest,
         .sdk(name: "XCTest", type: .framework, status: .required)
     ]
 )

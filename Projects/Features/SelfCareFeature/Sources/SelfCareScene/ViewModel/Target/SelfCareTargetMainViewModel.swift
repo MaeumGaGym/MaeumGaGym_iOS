@@ -9,6 +9,8 @@ import Domain
 import MGLogger
 
 public class SelfCareTargetMainViewModel: BaseViewModel {
+    
+    public typealias ViewModel = SelfCareTargetMainViewModel
 
     private let disposeBag = DisposeBag()
 

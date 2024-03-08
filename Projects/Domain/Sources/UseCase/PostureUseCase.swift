@@ -6,10 +6,12 @@ public protocol PostureUseCase {
     var recommandData: PublishSubject<[PostureRecommandModel]> { get }
     var partData: PublishSubject<PosturePartModel> { get }
     var detailData: PublishSubject<PostureDetailModel> { get }
+    var searchData: PublishSubject<PostureSearchModel> { get }
 
     func getRecommandData()
     func getPartData(type: PosturePartType)
     func getDetailData(type: PostureDetailType)
+    func getSearchData()
 }
 
 public class DefaultPostureUseCase {
@@ -19,6 +21,7 @@ public class DefaultPostureUseCase {
     public let recommandData = PublishSubject<[PostureRecommandModel]>()
     public let partData = PublishSubject<PosturePartModel>()
     public let detailData = PublishSubject<PostureDetailModel>()
+    public let searchData = PublishSubject<PostureSearchModel>()
 
     public init(repository: PostureRepositoryInterface) {
         self.repository = repository
@@ -54,6 +57,16 @@ extension DefaultPostureUseCase: PostureUseCase {
             },
             onFailure: { error in
                 print("PostureUseCase getDetailData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+
+    public func getSearchData() {
+        repository.getSearchData()
+            .subscribe(onSuccess: { [weak self] searchData in
+                self?.searchData.onNext(searchData)
+            },
+            onFailure: { error in
+                print("PostureUseCase getSearchData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
 }

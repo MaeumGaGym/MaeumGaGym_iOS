@@ -13,11 +13,11 @@ public class StatusLayoutView: BaseView {
 
     }
 
-    private var messageLabel = UILabel().then {
-        $0.textColor = .red
-        $0.numberOfLines = 0
-        $0.textAlignment = .center
-        $0.font = .systemFont(ofSize: 16.0, weight: .semibold)
+    private var messageLabel = MGLabel(font: .systemFont(ofSize: 16.0, weight: .semibold),
+                                       textColor: .red,
+                                       isCenter: true,
+                                       numberOfLineCount: 0
+    ).then {
         $0.sizeToFit()
     }
     

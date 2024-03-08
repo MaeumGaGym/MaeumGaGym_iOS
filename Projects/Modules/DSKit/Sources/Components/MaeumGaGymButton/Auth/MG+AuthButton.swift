@@ -13,11 +13,10 @@ open class MGAuthButton: BaseButton {
         $0.contentMode = .scaleAspectFit
     }
 
-    public let textLabel = UILabel().then {
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
-        $0.font = UIFont.Pretendard.bodyMedium
-    }
+    public let textLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                      isCenter: true,
+                                      numberOfLineCount: 1
+    )
 
     public init(
         type: AuthLogoType,

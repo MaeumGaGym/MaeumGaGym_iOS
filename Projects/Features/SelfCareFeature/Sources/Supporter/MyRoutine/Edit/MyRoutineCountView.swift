@@ -25,15 +25,9 @@ public class MyRoutineCountView: BaseView {
         $0.layer.borderWidth = 1
     }
 
-    private var minusButton = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCareMinus.image, for: .normal)
-        $0.backgroundColor = .clear
-    }
+    private var minusButton = MGImageButton(image: DSKitAsset.Assets.blackMinus.image)
 
-    private var plusButtonn = UIButton().then {
-        $0.setImage(DSKitAsset.Assets.selfCarePlus.image, for: .normal)
-        $0.backgroundColor = .clear
-    }
+    private var plusButtonn = MGImageButton(image: DSKitAsset.Assets.blackPlus.image)
 
     private var numberTextField = UITextField().then {
         $0.font = UIFont.Pretendard.bodyMedium

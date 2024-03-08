@@ -16,7 +16,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
     public var steps = PublishRelay<Step>()
 
     public var initialStep: Step {
-        AppStep.homeIsRequired
+        MGStep.homeIsRequired
     }
 
     private let agreeLabel = MGLabel(

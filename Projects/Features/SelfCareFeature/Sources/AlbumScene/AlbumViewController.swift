@@ -119,7 +119,7 @@ extension AlbumViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.id,
-                                                          for: indexPath
+                                                    for: indexPath
             ) as? AlbumCell
         else { fatalError() }
 

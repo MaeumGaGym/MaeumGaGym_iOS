@@ -8,12 +8,14 @@ public protocol SelfCareUseCase {
     var myRoutineEditData: PublishSubject<SelfCareMyRoutineEditModel> { get }
 
     var targetMainData: PublishSubject<SelfCareTargetMainModel> { get }
+    var targetDetailData: PublishSubject<SelfCareTargetDetailModel> { get }
 
     func getMyRoutineData()
     func getMyRoutineDetailData()
     func getMyRoutineEditData()
 
     func getTargetMainData()
+    func getTargetDetailData()
 }
 
 public class DefaultSelfCareUseCase {
@@ -25,6 +27,7 @@ public class DefaultSelfCareUseCase {
     public let myRoutineEditData = PublishSubject<SelfCareMyRoutineEditModel>()
 
     public let targetMainData = PublishSubject<SelfCareTargetMainModel>()
+    public let targetDetailData = PublishSubject<SelfCareTargetDetailModel>()
 
     public init(repository: SelfCareRepositoryInterface) {
         self.repository = repository
@@ -70,6 +73,15 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
             }, 
                        onFailure: { error in
                 print("SelfCareUseCase getTargetMainData error occured: \(error)")
+            }).disposed(by: disposeBag)
+    }
+
+    public func getTargetDetailData() {
+        repository.getTargetDetailData()
+            .subscribe(onSuccess: { [weak self] targetDetailData in
+                self?.targetDetailData.onNext(targetDetailData)
+            }, onFailure: { error in
+                print("SelfCareUseCase getTargetDetailData error occured: \(error)")
             }).disposed(by: disposeBag)
     }
 }

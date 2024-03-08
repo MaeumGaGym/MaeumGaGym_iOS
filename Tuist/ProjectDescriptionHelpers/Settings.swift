@@ -1,10 +1,3 @@
-//
-//  Settings.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by 박준하 on 2/16/24.
-//
-
 import ProjectDescription
 
 public extension SettingsDictionary{

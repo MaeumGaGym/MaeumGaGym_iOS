@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 import RxSwift
 import RxCocoa
@@ -6,7 +7,7 @@ import RxCocoa
 import BaseFeatureDependency
 import Core
 
-public protocol AuthViewControllable: ViewControllable {}
+//public protocol AuthViewControllable: ViewControllable {}
 public protocol AuthCoordintable {
 //    var goolgeButtonTap: (() -> Void)? { get set }
 //    var appleButtonTap: (() -> Void)? { get set }
@@ -16,4 +17,4 @@ public protocol AuthCoordintable {
 }
 
 public typealias AuthViewModelType = BaseViewModel & AuthCoordintable
-public typealias AuthPresentable = (vc: AuthViewControllable, vm: any AuthViewModelType)
+public typealias AuthPresentable = (vc: UIViewController, vm: any AuthViewModelType)

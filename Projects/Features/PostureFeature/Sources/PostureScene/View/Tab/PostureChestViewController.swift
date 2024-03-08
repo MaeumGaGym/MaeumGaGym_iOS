@@ -32,7 +32,11 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var chestData: PosturePartModel = PosturePartModel(exerciseType: [], allExerciseData: [], bodyExerciseData: [], machineExerciseData: [])
+    private var chestData: PosturePartModel = PosturePartModel(exerciseType: [], 
+                                                               allExerciseData: [],
+                                                               bodyExerciseData: [],
+                                                               machineExerciseData: []
+    )
 
     private var chestExerciesData: [PosturePartExerciseModel] = [] {
         didSet {
@@ -89,7 +93,6 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
             .asDriver(onErrorDriveWith: .never())
 
         let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-
         viewModel = PostureChestViewModel(useCase: useCase)
 
         let input = PostureChestViewModel.Input(
@@ -141,11 +144,10 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
-        })
-
+            }
+        )
     }
 }
-
 
 extension PostureChestViewController: UITableViewDelegate {
     public func tableView(

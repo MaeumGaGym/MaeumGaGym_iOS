@@ -7,20 +7,17 @@ import DSKit
 
 open class UserProfileView: UIView {
     
-    private lazy var userNameTitle = UILabel().then {
-        $0.numberOfLines = 1
-        $0.backgroundColor = .clear
-    }
+    private lazy var userNameTitle = MGLabel(numberOfLineCount: 1)
     
     private lazy var smallProfile = MGProfileView(profileImage: MGProfileImage(type: .custom, customImage: nil), profileType: .smallProfile)
     
     public init(
         userName: String,
-        userProfileImage: UIImage? = DSKitAsset.Assets.basicProfile.image
+        userProfileImage: UIImage? = DSKitAsset.Assets.basicProfileIcon.image
     ) {
         super.init(frame: .zero)
         
-        setupUI(text: userName, image: userProfileImage ?? DSKitAsset.Assets.basicProfile.image)
+        setupUI(text: userName, image: userProfileImage ?? DSKitAsset.Assets.basicProfileIcon.image)
     }
     
     required public init?(coder: NSCoder) {

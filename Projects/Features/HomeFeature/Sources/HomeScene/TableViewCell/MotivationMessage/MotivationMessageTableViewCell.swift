@@ -10,21 +10,19 @@ import Core
 import DSKit
 
 import Domain
+import MGNetworks
 
 public class MotivationMessageTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = "MotivationMessageTableViewCell"
+    static public var identifier: String = HomeResourcesService.identifier.motivationMessageTableViewCell
 
-    private let messageLabel = UILabel().then {
-        $0.numberOfLines = 0
-        $0.font = UIFont.Pretendard.titleMedium
-        $0.textColor = DSKitAsset.Colors.blue500.color
-    }
+    private let messageLabel = MGLabel(font: UIFont.Pretendard.titleMedium, textColor: DSKitAsset.Colors.blue500.color, numberOfLineCount: 0
+    )
 
-    private let authorLabel = UILabel().then {
-        $0.font = UIFont.Pretendard.labelMedium
-        $0.textColor = DSKitAsset.Colors.gray500.color
-    }
+    private let authorLabel = MGLabel(
+        font: UIFont.Pretendard.labelMedium,
+        textColor:  DSKitAsset.Colors.gray500.color
+    )
 
     public func configure(with message: MotivationMessageModel) {
         messageLabel.text = "\"\(message.text)\""
