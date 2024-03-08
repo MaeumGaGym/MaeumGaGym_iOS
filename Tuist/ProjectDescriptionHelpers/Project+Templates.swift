@@ -94,6 +94,7 @@ public extension Project {
         
         
         if targets.contains(.demo) {
+
             let deps: [TargetDependency] = [.target(name: name), .Modules.mgFlow]
 
             var demoInfoPlist = Project.demoInfoPlist
@@ -110,7 +111,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
-                entitlements: .relativeToRoot("Supporting/AppleWithSign.entitlements"),
+                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     deps
@@ -282,7 +283,6 @@ extension Scheme {
 
 extension Project {
     static let appSchemes: [Scheme] = [
-        // PROD API, debug scheme
         .init(
             name: "\(Environment.workspaceName)-DEV",
             shared: true,
@@ -297,7 +297,6 @@ extension Project {
             profileAction: .profileAction(configuration: "Development"),
             analyzeAction: .analyzeAction(configuration: "Development")
         ),
-        // Test API, debug scheme
         .init(
             name: "\(Environment.workspaceName)-Test",
             shared: true,
@@ -312,7 +311,6 @@ extension Project {
             profileAction: .profileAction(configuration: "Test"),
             analyzeAction: .analyzeAction(configuration: "Test")
         ),
-        // Test API, release scheme
         .init(
             name: "\(Environment.workspaceName)-QA",
             shared: true,
@@ -322,7 +320,6 @@ extension Project {
             profileAction: .profileAction(configuration: "QA"),
             analyzeAction: .analyzeAction(configuration: "QA")
         ),
-        // PROD API, release scheme
         .init(
             name: "\(Environment.workspaceName)-PROD",
             shared: true,
@@ -332,7 +329,6 @@ extension Project {
             profileAction: .profileAction(configuration: "PROD"),
             analyzeAction: .analyzeAction(configuration: "PROD")
         ),
-        // Test API, debug scheme, Demo App Target
         .makeDemoAppTestScheme()
     ]
 }
