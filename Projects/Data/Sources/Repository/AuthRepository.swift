@@ -9,7 +9,7 @@ import RxMoya
 import Domain
 import MGNetworks
 
-public class IntroRepository: IntroRepositoryInterface {
+public class IntroRepository: AuthRepositoryInterface {
     private let networkService: IntroService
 
     public init(networkService: IntroService) {
