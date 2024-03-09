@@ -11,13 +11,9 @@ import Core
 import DSKit
 import MGLogger
 
-public class AgreeViewController: BaseViewController<AgreeViewModel> {
+public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper {
 
     public var steps = PublishRelay<Step>()
-
-    public var initialStep: Step {
-        MGStep.homeIsRequired
-    }
 
     private let agreeLabel = MGLabel(
         text: "약관동의",
@@ -65,15 +61,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
             $0.trailing.equalToSuperview().offset(-20.0)
             $0.height.equalTo(58.0)
         }
-    }
-
-    public override func bindActions() {
-        checkButton.rx.tap
-            .subscribe(onNext: {
-                self.navigationController?.pushViewController(
-                    NicknameViewController(NicknameViewModel()),
-                    animated: false)
-            })
     }
 
     public override func bindViewModel() {
@@ -143,7 +130,8 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
                 .disposed(by: disposeBag)
 
             output.nextButtonClicked
-                .drive(onNext: { message in// 네비게이션 컨트롤러 확인
+                .drive(onNext: { message in
+                    AuthStepper.shared.steps.accept(MGStep.authNickNameIsRequired)
                     MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)
