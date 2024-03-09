@@ -5,10 +5,14 @@ import RxCocoa
 import RxSwift
 
 import Core
+import Domain
+import MGNetworks
 
 public class AgreeViewModel: BaseViewModel {
     
     public typealias ViewModel = AgreeViewModel
+    
+    private let useCase: AuthUseCase
 
     public struct Input {
         let allAgreeButtonTap: Signal<Void>
@@ -28,9 +32,11 @@ public class AgreeViewModel: BaseViewModel {
         let nextButtonClicked: Driver<Bool>
     }
 
-    public init() {
-
+    public init(useCase: AuthUseCase) {
+        self.useCase = useCase
     }
+    
+    public var onNextButtonTap: (() -> Void)?
     
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asDriver(onErrorJustReturn: "")
@@ -39,14 +45,9 @@ public class AgreeViewModel: BaseViewModel {
         let thirdAgreeClickedMessage = input.thirdAgreeButtonTap.map { "세 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
         let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map { "네 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
         let nextButtonClicked = input.nextButtonTap.map { true }.asDriver(onErrorJustReturn: false)
+        
+        let output = Output(allAgreeButtonClickedMessage: allAgreeClickedMessage, firstAgreeButtonClickedMessage: firstAgreeClickedMessage, secondAgreeButtonClickedMessage: secondAgreeClickedMessage, thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage, fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage, nextButtonClicked: nextButtonClicked)
 
-        return Output(
-            allAgreeButtonClickedMessage: allAgreeClickedMessage,
-            firstAgreeButtonClickedMessage: firstAgreeClickedMessage,
-            secondAgreeButtonClickedMessage: secondAgreeClickedMessage,
-            thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage,
-            fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage,
-            nextButtonClicked: nextButtonClicked
-        )
+        return output
     }
 }
