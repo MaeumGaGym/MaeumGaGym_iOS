@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         mainFlow = AuthFlow()
 
-        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.authNickNameIsRequired))
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.authIntroIsRequired))
         Flows.use(mainFlow, when: .created) { root in
             self.window?.rootViewController = root
             self.window?.makeKey()
