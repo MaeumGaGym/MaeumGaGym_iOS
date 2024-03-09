@@ -1,13 +1,16 @@
 import UIKit
-import AuthFeatureInterface
-import RxFlow
-import Core
-import AuthFeature
 
+import RxFlow
+
+import Core
 import Domain
 import Data
 
+import MGFlow
 import MGNetworks
+import AuthFeature
+
+import AuthFeatureInterface
 
 import KakaoSDKAuth
 import KakaoSDKCommon
@@ -23,19 +26,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
+    
+    var coordinator = FlowCoordinator()
+    var mainFlow: AuthFlow!
 
     func scene(_ scene: UIScene,
-               willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let scene = (scene as? UIWindowScene) else { return }
         KakaoSDK.initSDK(appKey: "44df4ecfe4e1218c17550a6ab201d87d")
 
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
+        window = UIWindow(frame: scene.coordinateSpace.bounds)
+        window?.windowScene = scene
 
-        let useCase = DefaultAuthUseCase(introRepository: IntroRepository(networkService: IntroService()))
-        let viewModel = IntroViewModel(authUseCase: useCase)
-        let viewController = IntroViewController(viewModel)
-        window?.configure(withRootViewController: viewController)
+        mainFlow = AuthFlow()
+
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.authNickNameIsRequired))
+        Flows.use(mainFlow, when: .created) { root in
+            self.window?.rootViewController = root
+            self.window?.makeKey()
+        }
         window?.makeKeyAndVisible()
     }
 
