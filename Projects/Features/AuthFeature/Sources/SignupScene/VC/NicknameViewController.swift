@@ -15,10 +15,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
 
     public var steps = PublishRelay<Step>()
 
-    public var initialStep: Step {
-        MGStep.homeIsRequired
-    }
-
     private var bottomConstraint: Constraint?
 
     private let nicknameTitle = MGLabel(text: "닉네임",
@@ -32,7 +28,9 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
 
     private let nicknameTF = MGTextField(placeholder: "닉네임")
 
-    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image)
+    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image).then {
+        $0.isEnabled = true
+    }
 
     private var checkButton = MGCheckButton(text: "회원가입")
 
@@ -87,13 +85,21 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
             $0.width.equalTo(24)
             $0.height.equalTo(24)
         }
-
+        
         checkButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.trailing.equalToSuperview().offset(-20.0)
             $0.height.equalTo(58.0)
         }
+    }
+    
+    public override func bindActions() {
+        checkButton.rx.tap
+            .subscribe(onNext: {
+                print("sdfsdfsdf")
+//                AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+            })
     }
     
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {

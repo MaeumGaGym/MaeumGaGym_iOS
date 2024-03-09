@@ -122,7 +122,7 @@ open class MGAgreeView: UIView {
         }
     }
 
-    public func updateAllAgreeButtonState() {        
+    public func updateAllAgreeButtonState() {
         if allAgreeButtonState == true {
             allAgreeButton.buttonYesChecked()
         } else {
