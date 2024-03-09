@@ -18,13 +18,13 @@ public protocol AuthUseCase {
 }
 
 public class DefaultAuthUseCase {
-    private let introRepository: IntroRepositoryInterface
+    private let introRepository: AuthRepositoryInterface
     private let disposeBag = DisposeBag()
     
     public let introData = PublishSubject<IntroModel>()
     public let appleSignupResult = PublishSubject<String>()
 
-    public init(introRepository: IntroRepositoryInterface) {
+    public init(introRepository: AuthRepositoryInterface) {
         self.introRepository = introRepository
     }
 }

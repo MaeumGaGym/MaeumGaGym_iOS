@@ -15,8 +15,8 @@ import Core
 public class AuthFlow: Flow {
 
     private var rootViewController: UINavigationController!
-    var postureService: IntroService!
-    var postureRepository: IntroRepository!
+    var authService: AuthService!
+    var authRepository: AuthRepository!
     var useCase: DefaultAuthUseCase!
     var viewModel: AgreeViewModel!
     var viewController: AgreeViewController!
@@ -50,9 +50,9 @@ public class AuthFlow: Flow {
     }
 
     private func setupService() {
-        postureService = IntroService()
-        postureRepository = IntroRepository(networkService: postureService)
-        useCase = DefaultAuthUseCase(introRepository: postureRepository)
+        authService = AuthService()
+        authRepository = AuthRepository(networkService: authService)
+        useCase = DefaultAuthUseCase(introRepository: authRepository)
         viewModel = AgreeViewModel(useCase: useCase)
     }
 
