@@ -10,10 +10,9 @@ import MGFlow
 import MGNetworks
 import AuthFeature
 
-import AuthFeatureInterface
-
 import KakaoSDKAuth
 import KakaoSDKCommon
+import AuthFeatureInterface
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -26,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-    
+
     var coordinator = FlowCoordinator()
     var mainFlow: AuthFlow!
 

@@ -9,11 +9,11 @@ import Domain
 import MGNetworks
 
 public class AgreeViewModel: BaseViewModel {
-    
+
     public typealias ViewModel = AgreeViewModel
-    
+
     private let useCase: AuthUseCase
-    
+
     public var disposeBag: DisposeBag = DisposeBag()
 
     public struct Input {
@@ -25,7 +25,7 @@ public class AgreeViewModel: BaseViewModel {
         let fourthAgreeButtonTap: Signal<Void>
         let nextButtonTap: Signal<Void>
     }
-    
+
     public struct Output {
         let navButtonTapped: Driver<Void>
         let allAgreeButtonClickedMessage: Driver<String>
@@ -39,11 +39,11 @@ public class AgreeViewModel: BaseViewModel {
     public init(useCase: AuthUseCase) {
         self.useCase = useCase
     }
-    
+
     public var onNextButtonTap: (() -> Void)?
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
-        
+
         let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asDriver(onErrorJustReturn: "")
         let firstAgreeClickedMessage = input.firstAgreeButtonTap.map { "첫 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
         let secondAgreeClickedMessage = input.secondAgreeButtonTap.map { "두 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")

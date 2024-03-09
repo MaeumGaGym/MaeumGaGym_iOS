@@ -74,7 +74,6 @@ public class AuthFlow: Flow {
 
     private func navigateToNicknameViewScreen() -> FlowContributors {
         let vc = NicknameViewController(NicknameViewModel(useCase: self.useCase))
-        vc.navigationItem.hidesBackButton = true
         rootViewController.pushViewController(vc, animated: true)
         return .none
     }
@@ -88,7 +87,7 @@ public class AuthFlow: Flow {
     }
 
     private func popupViewController() -> FlowContributors {
-        rootViewController.popToRootViewController(animated: true)
+        rootViewController.popViewController(animated: true)
         return .none
     }
 }

@@ -15,7 +15,7 @@ import Domain
 import MGLogger
 import MGNetworks
 
-public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper {
+public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureRecognizerDelegate, Stepper {
 
     public var steps = PublishRelay<Step>()
 
@@ -47,9 +47,14 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper {
         self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
     }
 
+    public override func attribute() {
+        super.attribute()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+
     public override func layout() {
         view.addSubviews([naviBar, agreeLabel, textInformation, agreeTermsView, checkButton])
-        
+
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
         }
@@ -81,10 +86,10 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper {
 
     public override func bindViewModel() {
         super.bindViewModel()
-        
+
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
         let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        
+
         viewModel = AgreeViewModel(useCase: useCase)
 
         let input = AgreeViewModel.Input(
