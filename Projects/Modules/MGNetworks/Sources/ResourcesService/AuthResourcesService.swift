@@ -11,6 +11,7 @@ public enum AuthResourcesService {
         public static let yesCheck = DSKitAsset.Assets.yesCheckActIcon.image
         public static let cancel = DSKitAsset.Assets.circleCancel.image
         public static let mainLogo = DSKitAsset.Assets.mainLogo.image
+        public static let leftArrow = DSKitAsset.Assets.blackLeftBarArrow.image
     }
 
     public enum Colors {
