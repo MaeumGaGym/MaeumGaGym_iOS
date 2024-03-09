@@ -8,8 +8,6 @@ import RxMoya
 import Moya
 
 import Core
-
-import AuthFeatureInterface
 import Domain
 import MGNetworks
 
@@ -18,9 +16,10 @@ import KakaoSDKUser
 import MGLogger
 
 import TokenManager
+import AuthFeatureInterface
 
 public class IntroViewModel: AuthViewModelType {
-    
+
     public typealias ViewModel = IntroViewModel
 
     public var disposeBag: RxSwift.DisposeBag
@@ -74,6 +73,7 @@ public class IntroViewModel: AuthViewModelType {
         input.goolgeButtonTapped
             .drive(onNext: { [weak self] _ in
                 print("goolgeButtonTapped")
+                AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
             })
             .disposed(by: disposeBag)
 

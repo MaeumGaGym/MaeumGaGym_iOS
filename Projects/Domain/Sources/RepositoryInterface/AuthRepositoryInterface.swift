@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public protocol IntroRepositoryInterface {
+public protocol AuthRepositoryInterface {
     func kakaoToken() -> Single<Bool>
     func getCSRFToken() -> Single<String>
     func getIntroData() -> Single<IntroModel>

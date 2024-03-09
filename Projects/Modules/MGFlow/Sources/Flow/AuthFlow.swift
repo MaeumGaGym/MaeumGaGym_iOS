@@ -15,11 +15,11 @@ import Core
 public class AuthFlow: Flow {
 
     private var rootViewController: UINavigationController!
-    var postureService: IntroService!
-    var postureRepository: IntroRepository!
+    var authService: AuthService!
+    var authRepository: AuthRepository!
     var useCase: DefaultAuthUseCase!
-    var viewModel: AgreeViewModel!
-    var viewController: AgreeViewController!
+    var viewModel: IntroViewModel!
+    var viewController: IntroViewController!
 
     public var root: Presentable {
         return self.rootViewController
@@ -32,7 +32,6 @@ public class AuthFlow: Flow {
 
     public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? MGStep else { return .none }
-
         switch step {
         case .authIntroIsRequired:
             return setupAuthMainScreen()
@@ -50,14 +49,14 @@ public class AuthFlow: Flow {
     }
 
     private func setupService() {
-        postureService = IntroService()
-        postureRepository = IntroRepository(networkService: postureService)
-        useCase = DefaultAuthUseCase(introRepository: postureRepository)
-        viewModel = AgreeViewModel(useCase: useCase)
+        authService = AuthService()
+        authRepository = AuthRepository(networkService: authService)
+        useCase = DefaultAuthUseCase(authRepository: authRepository)
+        viewModel = IntroViewModel(authUseCase: useCase)
     }
 
     private func setupViewController() {
-        viewController = AgreeViewController(viewModel)
+        viewController = IntroViewController(viewModel)
         rootViewController = UINavigationController(rootViewController: viewController)
     }
 
@@ -67,39 +66,28 @@ public class AuthFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: AuthStepper.shared))
     }
 
-    private func navigateToIntroViewScreen() -> FlowContributors {
-        let vc = IntroViewController(IntroViewModel(authUseCase: self.useCase))
-        rootViewController.present(vc, animated: true)
-        MainTabBarContoller.shared.tabBar.isHidden = true
-        return .none
-    }
-
     private func navigateToAgreeViewScreen() -> FlowContributors {
         let vc = AgreeViewController(AgreeViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
-        MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
 
     private func navigateToNicknameViewScreen() -> FlowContributors {
         let vc = NicknameViewController(NicknameViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
-        MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
 
     private func navigateToCompleteViewScreen() -> FlowContributors {
         let vc = CompleteSignUpViewController(CompleteViewModel())
         rootViewController.pushViewController(vc, animated: true)
+        vc.navigationItem.hidesBackButton = true
         MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
 
     private func popupViewController() -> FlowContributors {
-        rootViewController.popToRootViewController(animated: true)
-        if rootViewController.viewControllers.count == 1 {
-            MainTabBarContoller.shared.tabBar.isHidden = true
-        }
+        rootViewController.popViewController(animated: true)
         return .none
     }
 }

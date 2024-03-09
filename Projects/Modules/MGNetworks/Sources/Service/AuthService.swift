@@ -12,7 +12,7 @@ import DSKit
 import KakaoSDKUser
 import TokenManager
 
-public class IntroService: NSObject {
+public class AuthService: NSObject {
     
     let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
@@ -102,7 +102,7 @@ public class IntroService: NSObject {
     }
 }
 
-extension IntroService: ASAuthorizationControllerDelegate {
+extension AuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization
     ) {

@@ -7,7 +7,7 @@ import RxSwift
 import Core
 
 public class CompleteViewModel: BaseViewModel {
-    
+
     public typealias ViewModel = CompleteViewModel
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
@@ -17,7 +17,7 @@ public class CompleteViewModel: BaseViewModel {
     public struct Input {
 
     }
-    
+
     public struct Output {
 
     }
