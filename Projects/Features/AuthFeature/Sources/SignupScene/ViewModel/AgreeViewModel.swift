@@ -51,7 +51,13 @@ public class AgreeViewModel: BaseViewModel {
         let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map { "네 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
         let nextButtonClicked = input.nextButtonTap.map { true }.asDriver(onErrorJustReturn: false)
 
-        let output = Output(navButtonTapped: input.navButtonTapped.asDriver(), allAgreeButtonClickedMessage: allAgreeClickedMessage, firstAgreeButtonClickedMessage: firstAgreeClickedMessage, secondAgreeButtonClickedMessage: secondAgreeClickedMessage, thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage, fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage, nextButtonClicked: nextButtonClicked)
+        let output = Output(navButtonTapped: input.navButtonTapped.asDriver(),
+                            allAgreeButtonClickedMessage: allAgreeClickedMessage,
+                            firstAgreeButtonClickedMessage: firstAgreeClickedMessage,
+                            secondAgreeButtonClickedMessage: secondAgreeClickedMessage,
+                            thirdAgreeButtonClickedMessage: thirdAgreeClickedMessage,
+                            fourthAgreeButtonClickedMessage: fourthAgreeClickedMessage,
+                            nextButtonClicked: nextButtonClicked)
 
         action(output)
 

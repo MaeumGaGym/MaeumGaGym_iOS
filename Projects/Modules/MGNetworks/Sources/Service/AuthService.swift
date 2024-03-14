@@ -12,14 +12,9 @@ import DSKit
 import TokenManager
 
 import KakaoSDKUser
-import GoogleSignIn
 
 public class AuthService: NSObject {
-    
-    let config = GIDConfiguration(clientID: "9435200486-2epc0q27qhose5v9gkjr5vfa7o97md9u.apps.googleusercontent.com")
-    
-    
-    
+
 //    GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { user, error in
 //        if let error = error { return }
 //        guard let user = user else { return }
@@ -42,11 +37,11 @@ public class AuthService: NSObject {
             .mapString()
     }
     
-    public func googleTokenState() -> Single<Bool> {
-        return Single.create { [weak self] single in
+//    public func googleTokenState() -> Single<Bool> {
+//        return Single.create { [weak self] single in
             
-        }
-    }
+//        }
+//    }
     
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()

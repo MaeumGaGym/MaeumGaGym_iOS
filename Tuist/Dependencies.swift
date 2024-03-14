@@ -16,7 +16,7 @@ let dependencies = Dependencies(
         .remote(url: "https://github.com/kakao/kakao-ios-sdk", requirement: .branch("master")),
         .remote(url: "https://github.com/MaeumGaGym/Mango", requirement: .upToNextMajor(from: "101.0.0")),
         .remote(url: "https://github.com/pointfreeco/swift-snapshot-testing", requirement: .upToNextMajor(from: "1.15.4")),
-        .remote(url: "https://github.com/google/GoogleSignIn-iOS.git", requirement: .exact("6.1.0")),
+        .remote(url: "https://github.com/google/GoogleSignIn-iOS.git", requirement: .upToNextMajor(from: "7.0.0"))
     ], baseSettings: Settings.settings(
         configurations: XCConfig.framework
     )),
