@@ -19,6 +19,9 @@ import BaseFeatureDependency
 import AuthenticationServices
 
 public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
+    
+//    let config = GIDConfiguration(clientID: "9435200486-2epc0q27qhose5v9gkjr5vfa7o97md9u.apps.googleusercontent.com")
+
 
     public var steps = PublishRelay<Step>()
 
