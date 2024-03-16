@@ -2,14 +2,20 @@ name: "refactoring"
 description: "코드를 이렇게 수정할려고 합니다 🥊"
 labels: 리펙토링
 body:
-
   - type: textarea
     attributes:
-      label: 설명
+      label: UI
+      description: |
+        [이미지/영상 추가] 지금은 이렇지만 디자인에 맞춰서 이렇게 바꿀게요! 📸🎥
+      placeholder: |
+        여기에 파일을 드래그하거나 클릭하여 업로드하세요.
+  - type: textarea
+    attributes:
+      label: 리펙토링
       description: |
         이 코드보다는 이 코드가 좀 더 효율적인 것 같습니다! 🤓
       placeholder: |
-        이 코드는 메모리 릭이 발생합니다. 😭
+        이 코드는 문제가 발생할 것 같아요.. 😭
   - type: textarea
     attributes:
       label: 추가사항

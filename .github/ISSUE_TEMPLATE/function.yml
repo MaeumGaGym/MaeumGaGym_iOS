@@ -2,10 +2,16 @@ name: "function"
 description: "이 기능을 추가할려고 합니다. 💪🏿"
 labels: 기능
 body:
-
   - type: textarea
     attributes:
-      label: 이것도 설명해주시면 좋겠습니다!
+      label: UI
+      description: |
+        [이미지/영상 추가] 개발하고자 하는 기능을 더 잘 설명할 수 있도록 이미지나 영상을 첨부해주세요.📸🎥
+      placeholder: |
+        여기에 파일을 드래그하거나 클릭하여 업로드하세요.
+  - type: textarea
+    attributes:
+      label: 설명
       description: |
         [Explain] 어떤 기능을 말씀하시는 건가요? 🥴
       placeholder: |

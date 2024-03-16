@@ -5,7 +5,7 @@ body:
 
   - type: textarea
     attributes:
-      label: 이것도 설명해주시면 좋겠습니다!
+      label: 설명
       description: |
         [Explain] 어떤 부분을 말씀하시는 것인가요? 😏
       placeholder: |
