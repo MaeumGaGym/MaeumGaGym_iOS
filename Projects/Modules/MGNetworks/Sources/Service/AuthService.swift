@@ -9,13 +9,39 @@ import Moya
 
 import Domain
 import DSKit
-import KakaoSDKUser
 import TokenManager
 
-public class IntroService: NSObject {
+import KakaoSDKUser
+
+public class AuthService: NSObject {
+
+//    GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { user, error in
+//        if let error = error { return }
+//        guard let user = user else { return }
+//     
+//        print(user)
+//    }
     
     let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
+    
+    let googleProvider = MoyaProvider<GoogleAPI>()
+    
+    public func googleSignup(nickname: String, accessToken: String) -> Single<String> {
+        return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
+            .mapString()
+    }
+    
+    public func googleLogin() -> Single<String> {
+        return googleProvider.rx.request(.googleLogin)
+            .mapString()
+    }
+    
+//    public func googleTokenState() -> Single<Bool> {
+//        return Single.create { [weak self] single in
+            
+//        }
+//    }
     
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()
@@ -102,7 +128,7 @@ public class IntroService: NSObject {
     }
 }
 
-extension IntroService: ASAuthorizationControllerDelegate {
+extension AuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization
     ) {

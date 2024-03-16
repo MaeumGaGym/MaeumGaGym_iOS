@@ -1,0 +1,14 @@
+name: 버그 보고
+description: 버그 보고서 제출
+title: "[버그]: "
+labels: ["bug", "triage"]
+projects: ["octo-org/1", "octo-org/44"]
+assignees:
+octocat body:
+type: markdown attributes: value: | 이 버그 보고서를 작성해주셔서 감사합니다!
+type: input id: contact attributes: label: 연락처 description: 더 많은 정보가 필요할 경우 연락드릴 수 있는 방법은 무엇인가요? placeholder: 예) email@example.com validations: required: false
+type: textarea id: what-happened attributes: label: 무슨 일이 발생했나요? description: 또한, 어떤 일이 발생하기를 기대했나요? placeholder: 보이는 것을 알려주세요! value: "버그가 발생했습니다!" validations: required: true
+type: dropdown id: version attributes: label: 버전 description: 우리 소프트웨어의 어떤 버전을 사용하고 계신가요? options: - 1.0.2 (기본) - 1.0.3 (엣지) default: 0 validations: required: true
+type: dropdown id: browsers attributes: label: 어떤 브라우저에서 문제를 겪고 계신가요? multiple: true options: - Firefox - Chrome - Safari - Microsoft Edge
+type: textarea id: logs attributes: label: 관련 로그 출력 description: 관련 로그 출력을 복사하여 붙여넣어 주세요. 이는 자동으로 코드 형식으로 포맷될 것이므로 백틱은 필요 없습니다. render: shell
+type: checkboxes id: terms attributes: label: 행동 규범 description: 이 문제를 제출함으로써 행동 규범을 따르는 데 동의합니다. options: - label: 이 프로젝트의 행동 규범을 따르겠습니다. required: true

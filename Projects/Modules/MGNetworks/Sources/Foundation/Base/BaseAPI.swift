@@ -22,7 +22,7 @@ extension BaseAPI {
         case .kakao:
             appURL += "/kakao"
         case .google:
-            appURL += ""
+            appURL += "/google"
         case .apple:
             appURL += ""
         }

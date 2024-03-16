@@ -18,21 +18,21 @@ public protocol AuthUseCase {
 }
 
 public class DefaultAuthUseCase {
-    private let introRepository: IntroRepositoryInterface
+    private let authRepository: AuthRepositoryInterface
     private let disposeBag = DisposeBag()
     
     public let introData = PublishSubject<IntroModel>()
     public let appleSignupResult = PublishSubject<String>()
 
-    public init(introRepository: IntroRepositoryInterface) {
-        self.introRepository = introRepository
+    public init(authRepository: AuthRepositoryInterface) {
+        self.authRepository = authRepository
     }
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
     
     public func appleButtonTap() -> Single<String> {
-        introRepository.appleSignup()
+        authRepository.appleSignup()
             .subscribe(
                 onSuccess: { [weak self] token in
                     self?.appleSignupResult.onNext(token)
@@ -47,7 +47,7 @@ extension DefaultAuthUseCase: AuthUseCase {
     }
     
     public func getIntroData() {
-        return introRepository.getIntroData()
+        return authRepository.getIntroData()
             .subscribe(onSuccess: { [weak self] introModel in
                 self?.introData.onNext(introModel)
             },
@@ -58,11 +58,11 @@ extension DefaultAuthUseCase: AuthUseCase {
     }
 
     public func getCSRFToken() -> Single<String> {
-        return introRepository.getCSRFToken()
+        return authRepository.getCSRFToken()
     }
     
     public func kakaoButtonTap() {
-        return introRepository.kakaoToken()
+        return authRepository.kakaoToken()
             .subscribe(onSuccess: { _ in
                 print("토큰 저장 성공")
             }, onFailure: { error in

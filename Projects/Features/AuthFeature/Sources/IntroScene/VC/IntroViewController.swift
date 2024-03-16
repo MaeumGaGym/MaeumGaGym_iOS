@@ -4,21 +4,26 @@ import RxFlow
 import RxCocoa
 import RxSwift
 
-import Then
 import SnapKit
-
-import BaseFeatureDependency
-import Data
-import MGNetworks
-import Domain
+import Then
 
 import Core
+import Data
 import DSKit
-import MGLogger
 
+import Domain
+import MGLogger
+import MGNetworks
+
+import BaseFeatureDependency
 import AuthenticationServices
 
-public class IntroViewController: BaseViewController<IntroViewModel> {
+public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
+    
+//    let config = GIDConfiguration(clientID: "9435200486-2epc0q27qhose5v9gkjr5vfa7o97md9u.apps.googleusercontent.com")
+
+
+    public var steps = PublishRelay<Step>()
 
     private var introModel: IntroModel?
 
@@ -108,7 +113,7 @@ public class IntroViewController: BaseViewController<IntroViewModel> {
     public override func bindViewModel() {
          super.bindViewModel()
 
-        let useCase = DefaultAuthUseCase(introRepository: IntroRepository(networkService: IntroService()))
+        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
          viewModel = IntroViewModel(authUseCase: useCase)
 
          let input = IntroViewModel.Input(
