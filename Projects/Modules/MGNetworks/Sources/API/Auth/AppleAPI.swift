@@ -1,15 +1,13 @@
 import Foundation
 
-import Alamofire
 import Moya
 import Core
-
-import TokenManager
+import Alamofire
 
 public enum AppleAPI {
-    case appleLogin
     case appleSignup(nickname: String, accessToken: String)
-    case appleRecovery
+    case appleLogin(accessToken: String)
+    case appleRecovery(accessToken: String)
 }
 
 extension AppleAPI: BaseAPI {
@@ -18,10 +16,10 @@ extension AppleAPI: BaseAPI {
 
     public var path: String {
         switch self {
-        case .appleLogin:
-            return "/login"
         case .appleSignup:
             return "/signup"
+        case .appleLogin:
+            return "/login"
         case .appleRecovery:
             return "/recovery"
         }
@@ -29,10 +27,10 @@ extension AppleAPI: BaseAPI {
 
     public var method: Moya.Method {
         switch self {
-        case .appleLogin:
-            return .get
         case .appleSignup:
             return .post
+        case .appleLogin:
+            return .get
         case .appleRecovery:
             return .put
         }
@@ -46,8 +44,16 @@ extension AppleAPI: BaseAPI {
                 "access_token": accessToken
             ]
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
-        case .appleLogin, .appleRecovery:
-            return .requestPlain
+        case let .appleLogin(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case let .appleRecovery(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
         }
     }
 
