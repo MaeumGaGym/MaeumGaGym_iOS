@@ -27,7 +27,12 @@ public class AuthRepository: AuthRepositoryInterface {
     public func getIntroData() -> Single<IntroModel>  {
         return networkService.requestIntroData()
     }
+
     public func appleSignup() -> RxSwift.Single<String> {
         return networkService.appleSignup()
+    }
+
+    public func appleSingup(nickname: String, accessToken: String) -> Single<String> {
+        return networkService.appleSignup(nickname: nickname, accessToken: accessToken)
     }
 }

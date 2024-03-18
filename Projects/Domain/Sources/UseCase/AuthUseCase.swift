@@ -7,12 +7,14 @@ import Core
 import Moya
 
 import TokenManager
+import AuthenticationServices
 
 public protocol AuthUseCase {
     func kakaoButtonTap()
     func getCSRFToken() -> Single<String>
     func getIntroData()
     func appleButtonTap() -> Single<String>
+//    func appleNickNameButtonTap() -> Single<String>
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
@@ -23,6 +25,8 @@ public class DefaultAuthUseCase {
     
     public let introData = PublishSubject<IntroModel>()
     public let appleSignupResult = PublishSubject<String>()
+    public let appleNicknameSignupResult = PublishSubject<String>()
+
 
     public init(authRepository: AuthRepositoryInterface) {
         self.authRepository = authRepository
@@ -30,6 +34,7 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
+    
     
     public func appleButtonTap() -> Single<String> {
         authRepository.appleSignup()
@@ -69,6 +74,9 @@ extension DefaultAuthUseCase: AuthUseCase {
                 print("AuthUseCase getIntroData error occurred: \(error)")
             })
             .disposed(by: self.disposeBag)
-        
     }
+
+//    public func appleNickNameButtonTap(nickname: String) -> Single<String> {
+//        return authRepository.appleSingup(nickname: nickname, accessToken: TokenManagerImpl().get(key: .authorizationToken)).mapString
+//    }
 }
