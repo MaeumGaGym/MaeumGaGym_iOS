@@ -15,10 +15,6 @@ public class CompleteSignUpViewController: BaseViewController<CompleteViewModel>
 
     public var steps = PublishRelay<Step>()
 
-    public var initialStep: Step {
-        MGStep.homeIsRequired
-    }
-
     private let mainLogo = UIImageView().then {
         $0.image = DSKitAsset.Assets.mainLogo.image
     }

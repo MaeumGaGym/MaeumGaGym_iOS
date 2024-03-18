@@ -8,6 +8,7 @@ public extension TargetDependency.SPM {
     static let RxSwift = TargetDependency.external(name: "RxSwift")
     static let RxCocoa = TargetDependency.external(name: "RxCocoa")
     static let SnapKit = TargetDependency.external(name: "SnapKit")
+    static let GoogleLogin = TargetDependency.external(name: "GoogleSignIn")
     static let Then = TargetDependency.external(name: "Then")
     static let RxFlow = TargetDependency.external(name: "RxFlow")
     static let RxTest = TargetDependency.external(name: "RxTest")
@@ -23,3 +24,6 @@ public extension TargetDependency.SPM {
     static let SnapshotTesting = TargetDependency.external(name: "SnapshotTesting")
 }
 
+//public extension Package {
+//    static let googleSignIn = Package.remote(url: "https://github.com/google/GoogleSignIn-iOS", requirement: .upToNextMajor(from: "7.0.0"))
+//}

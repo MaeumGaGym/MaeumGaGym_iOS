@@ -2,6 +2,13 @@ import RxFlow
 import UIKit
 
 public enum MGStep: Step {
+
+    // Auth
+    case authIntroIsRequired
+    case authAgreeIsRequired
+    case authNickNameIsRequired
+    case authCompleteIsRequired
+    case authBack
     
     // home - main
     case home

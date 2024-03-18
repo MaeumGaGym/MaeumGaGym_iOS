@@ -22,9 +22,9 @@ extension BaseAPI {
         case .kakao:
             appURL += "/kakao"
         case .google:
-            appURL += ""
+            appURL += "/google"
         case .apple:
-            appURL += ""
+            appURL += "/apple"
         }
 
         guard let url = URL(string: appURL) else {

@@ -53,12 +53,12 @@ public extension Project {
             "kakaoplus"
         ],
         
-//        "GoogleService-Info": .dictionary([
-//            "CLIENT_ID": .string("49794141515-9gnqemglgiapma28nphc3oabfclbobem.apps.googleusercontent.com"),
-//            "REVERSED_CLIENT_ID": .string("com.googleusercontent.apps.49794141515-9gnqemglgiapma28nphc3oabfclbobem"),
-//            "PLIST_VERSION": .string("1"),
-//            "BUNDLE_ID": .string("com.maeumGaGym-health-iOS"),
-//        ]),
+        "GoogleService-Info": .dictionary([
+            "CLIENT_ID": .string("9435200486-2epc0q27qhose5v9gkjr5vfa7o97md9u.apps.googleusercontent.com"),
+            "REVERSED_CLIENT_ID": .string("com.googleusercontent.apps.9435200486-2epc0q27qhose5v9gkjr5vfa7o97md9u"),
+            "PLIST_VERSION": .string("1"),
+            "BUNDLE_ID": .string("com.maeumGaGym-health-iOS.release"),
+        ]),
     ]
     
     static let demoInfoPlist: [String: InfoPlist.Value] = [

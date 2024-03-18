@@ -9,15 +9,17 @@ import Then
 
 import Core
 import DSKit
-import MGLogger
+import Data
 
-public class AgreeViewController: BaseViewController<AgreeViewModel> {
+import Domain
+import MGLogger
+import MGNetworks
+
+public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureRecognizerDelegate, Stepper {
 
     public var steps = PublishRelay<Step>()
 
-    public var initialStep: Step {
-        MGStep.homeIsRequired
-    }
+    private var naviBar = AuthNavigationBarBar()
 
     private let agreeLabel = MGLabel(
         text: "약관동의",
@@ -39,11 +41,26 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
 
     private var checkButton = MGCheckButton(text: "확인")
 
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
+
+    public override func attribute() {
+        super.attribute()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+
     public override func layout() {
-        view.addSubviews([agreeLabel, textInformation, agreeTermsView, checkButton])
+        view.addSubviews([naviBar, agreeLabel, textInformation, agreeTermsView, checkButton])
+
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         agreeLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(76.0)
+            $0.top.equalTo(naviBar.snp.bottom).offset(20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalTo(125.0)
         }
@@ -67,19 +84,16 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
         }
     }
 
-    public override func bindActions() {
-        checkButton.rx.tap
-            .subscribe(onNext: {
-                self.navigationController?.pushViewController(
-                    NicknameViewController(NicknameViewModel()),
-                    animated: false)
-            })
-    }
-
     public override func bindViewModel() {
         super.bindViewModel()
 
+        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
+        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+
+        viewModel = AgreeViewModel(useCase: useCase)
+
         let input = AgreeViewModel.Input(
+            navButtonTapped: navButtonTapped,
             allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(),
             firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(),
             secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(),
@@ -143,7 +157,8 @@ public class AgreeViewController: BaseViewController<AgreeViewModel> {
                 .disposed(by: disposeBag)
 
             output.nextButtonClicked
-                .drive(onNext: { message in// 네비게이션 컨트롤러 확인
+                .drive(onNext: { message in
+                    AuthStepper.shared.steps.accept(MGStep.authNickNameIsRequired)
                     MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)

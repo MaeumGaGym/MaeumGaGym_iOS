@@ -9,13 +9,32 @@ import Moya
 
 import Domain
 import DSKit
-import KakaoSDKUser
 import TokenManager
 
-public class IntroService: NSObject {
-    
+import KakaoSDKUser
+
+public class AuthService: NSObject {
+
     let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
+    let googleProvider = MoyaProvider<GoogleAPI>()
+    let appleProvider = MoyaProvider<AppleAPI>()
+    
+    public func googleSignup(nickname: String, accessToken: String) -> Single<String> {
+        return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
+            .mapString()
+    }
+    
+    public func googleLogin() -> Single<String> {
+        return googleProvider.rx.request(.googleLogin)
+            .mapString()
+    }
+    
+//    public func googleTokenState() -> Single<Bool> {
+//        return Single.create { [weak self] single in
+            
+//        }
+//    }
     
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()
@@ -84,6 +103,21 @@ public class IntroService: NSObject {
         return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
+    public func appleLogin() -> Single<String> {
+        return appleProvider.rx.request(.appleLogin)
+            .mapString()
+    }
+    
+    public func appleSignup(nickname: String, accessToken: String) -> Single<String> {
+        return appleProvider.rx.request(.appleSignup(nickname: nickname, accessToken: accessToken))
+            .mapString()
+    }
+    
+    public func appleRecovery() -> Single<String> {
+        return appleProvider.rx.request(.appleRecovery)
+            .mapString()
+    }
+    
     public func appleSignup() -> Single<String> {
         let appleProvider = ASAuthorizationAppleIDProvider()
         let request = appleProvider.createRequest()
@@ -102,7 +136,7 @@ public class IntroService: NSObject {
     }
 }
 
-extension IntroService: ASAuthorizationControllerDelegate {
+extension AuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
@@ -112,6 +146,7 @@ extension IntroService: ASAuthorizationControllerDelegate {
                let tokenString = String(data: identityToken, encoding: .utf8) {
                 appleSignupSubject.onNext(tokenString)
                 appleSignupSubject.onCompleted()
+                TokenManagerImpl().save(token: tokenString, with: keychainAuthorization)
             }
         default:
             break

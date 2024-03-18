@@ -1,23 +1,27 @@
 import UIKit
 
-import RxFlow
-import RxCocoa
 import RxSwift
+import RxCocoa
+import RxFlow
 
 import SnapKit
 import Then
 
 import Core
 import DSKit
-import MGLogger
+import Data
 
-public class NicknameViewController: BaseViewController<NicknameViewModel> {
+import Domain
+import MGLogger
+import MGNetworks
+
+import AuthFeatureInterface
+
+public class NicknameViewController: BaseViewController<NicknameViewModel>, Stepper {
 
     public var steps = PublishRelay<Step>()
 
-    public var initialStep: Step {
-        MGStep.homeIsRequired
-    }
+    private lazy var naviBar = AuthNavigationBarBar()
 
     private var bottomConstraint: Constraint?
 
@@ -32,9 +36,17 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
 
     private let nicknameTF = MGTextField(placeholder: "닉네임")
 
-    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image)
+    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image).then {
+        $0.isEnabled = true
+    }
 
     private var checkButton = MGCheckButton(text: "회원가입")
+
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
 
     public override func attribute() {
         super.attribute()
@@ -56,14 +68,19 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
     }
 
     public override func layout() {
-        view.addSubviews([nicknameTitle,
-                               textInformation,
-                               nicknameTF,
-                               cancelButton,
-                               checkButton])
+        view.addSubviews([naviBar,
+                          nicknameTitle,
+                          textInformation,
+                          nicknameTF,
+                          cancelButton,
+                          checkButton])
+
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         nicknameTitle.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
+            $0.top.equalTo(naviBar.snp.bottom).offset(20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.width.equalTo(165.0)
         }
@@ -87,13 +104,31 @@ public class NicknameViewController: BaseViewController<NicknameViewModel> {
             $0.width.equalTo(24)
             $0.height.equalTo(24)
         }
-
+        
         checkButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.trailing.equalToSuperview().offset(-20.0)
             $0.height.equalTo(58.0)
         }
+    }
+    
+    public override func bindViewModel() {
+        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
+        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        
+        viewModel = NicknameViewModel(useCase: useCase)
+        
+        let input = NicknameViewModel.Input(navButtonTapped: navButtonTapped, nextButtonTap: checkButton.rx.tap.asSignal())
+        
+        let output = viewModel.transform(input, action: {
+            ouput in
+            ouput.nextButtonClicked
+                .drive(onNext: { message in
+                    AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+                    MGLogger.verbose(message)
+                }).disposed(by: disposeBag)
+        })
     }
     
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
