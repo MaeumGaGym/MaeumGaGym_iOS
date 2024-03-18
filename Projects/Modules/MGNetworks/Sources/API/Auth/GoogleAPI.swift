@@ -43,17 +43,17 @@ extension GoogleAPI: BaseAPI {
                 "nickname": nickname,
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .googleLogin(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .googleRecovery(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 

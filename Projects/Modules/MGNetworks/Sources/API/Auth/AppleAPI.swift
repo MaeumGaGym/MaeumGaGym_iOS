@@ -43,17 +43,17 @@ extension AppleAPI: BaseAPI {
                 "nickname": nickname,
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .appleLogin(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .appleRecovery(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 

@@ -43,17 +43,17 @@ extension KakaoAPI: BaseAPI {
                 "nickname": nickname,
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .kakaoLogin(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .kakaoRecovery(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 
