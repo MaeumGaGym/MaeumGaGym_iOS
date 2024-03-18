@@ -15,17 +15,10 @@ import KakaoSDKUser
 
 public class AuthService: NSObject {
 
-//    GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { user, error in
-//        if let error = error { return }
-//        guard let user = user else { return }
-//     
-//        print(user)
-//    }
-    
     let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
-    
     let googleProvider = MoyaProvider<GoogleAPI>()
+    let appleProvider = MoyaProvider<AppleAPI>()
     
     public func googleSignup(nickname: String, accessToken: String) -> Single<String> {
         return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
@@ -110,6 +103,21 @@ public class AuthService: NSObject {
         return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
+    public func appleLogin() -> Single<String> {
+        return appleProvider.rx.request(.appleLogin)
+            .mapString()
+    }
+    
+    public func appleSignup(nickname: String, accessToken: String) -> Single<String> {
+        return appleProvider.rx.request(.appleSignup(nickname: nickname, accessToken: accessToken))
+            .mapString()
+    }
+    
+    public func appleRecovery() -> Single<String> {
+        return appleProvider.rx.request(.appleRecovery)
+            .mapString()
+    }
+    
     public func appleSignup() -> Single<String> {
         let appleProvider = ASAuthorizationAppleIDProvider()
         let request = appleProvider.createRequest()
@@ -138,6 +146,7 @@ extension AuthService: ASAuthorizationControllerDelegate {
                let tokenString = String(data: identityToken, encoding: .utf8) {
                 appleSignupSubject.onNext(tokenString)
                 appleSignupSubject.onCompleted()
+                TokenManagerImpl().save(token: tokenString, with: keychainAuthorization)
             }
         default:
             break

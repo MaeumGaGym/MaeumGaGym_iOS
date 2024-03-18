@@ -4,11 +4,11 @@ import MGLogger
 
 final class IntroServiceTests: XCTestCase {
 
-    var introService: IntroService!
+    var introService: AuthService!
         
         override func setUp() {
             super.setUp()
-            introService = IntroService()
+            introService = AuthService()
         }
         
         func testRequestToken() {

@@ -106,7 +106,7 @@ public class IntroViewModel: AuthViewModelType {
         
         useCase.appleSignupResult
             .subscribe(onNext: { token in
-                MGLogger.debug("여기 토큰 \(token)")
+                MGLogger.debug("\(token)")
             })
             .disposed(by: disposeBag)
     }
