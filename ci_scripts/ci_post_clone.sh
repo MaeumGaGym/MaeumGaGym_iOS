@@ -6,6 +6,8 @@ git clone https://$GITHUB_TOKEN@github.com/MaeumGaGym/MaeumagGym-iOS-ignoreds.gi
 
 cp -R MaeumagGym-iOS-ignoreds/xcconfigs ../
 
-.tuist-bin/tuist fetch
+curl -Ls https://install.tuist.io | bash
 
-.tuist-bin/tuist generate
+tuist fetch
+
+tuist generate
