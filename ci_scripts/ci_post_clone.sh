@@ -10,6 +10,8 @@ rm -rf MaeumagGym-iOS-ignoreds
 cd ..
 
 curl https://mise.jdx.dev/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+
 mise install
 
 mise x tuist fetch
