@@ -114,21 +114,21 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     }
     
     public override func bindViewModel() {
-        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        
-        viewModel = NicknameViewModel(useCase: useCase)
-        
-        let input = NicknameViewModel.Input(navButtonTapped: navButtonTapped, nextButtonTap: checkButton.rx.tap.asSignal())
-        
-        let output = viewModel.transform(input, action: {
-            ouput in
-            ouput.nextButtonClicked
-                .drive(onNext: { message in
-                    AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
-                    MGLogger.verbose(message)
-                }).disposed(by: disposeBag)
-        })
+//        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
+//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+//        
+//        viewModel = NicknameViewModel(useCase: useCase)
+//        
+//        let input = NicknameViewModel.Input(navButtonTapped: navButtonTapped, nextButtonTap: checkButton.rx.tap.asSignal())
+//        
+//        let output = viewModel.transform(input, action: {
+//            ouput in
+//            ouput.nextButtonClicked
+//                .drive(onNext: { message in
+//                    AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+//                    MGLogger.verbose(message)
+//                }).disposed(by: disposeBag)
+//        })
     }
     
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
