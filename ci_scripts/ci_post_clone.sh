@@ -14,6 +14,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 mise install
 
-mise exex -- tuist fetch
+mise exec -- tuist fetch
 
-mise exex -- tuist generate
+mise exec -- tuist generate
