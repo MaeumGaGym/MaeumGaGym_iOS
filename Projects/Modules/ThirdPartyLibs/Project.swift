@@ -18,6 +18,7 @@ let project = Project.makeModule(
         .SPM.Lottie,
         .SPM.kingfisher,
         .SPM.KakaoSDK,
-        .SPM.MindGymKit
+        .SPM.MindGymKit,
+//        .SPM.Alamofire
     ]
 )
