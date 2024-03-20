@@ -18,7 +18,7 @@ public extension Project {
         
         let configurationName: ConfigurationName = "Development"
         let hasDynamicFramework = targets.contains(.dynamicFramework)
-        let deploymentTarget = Environment.deploymentTarget
+        let deploymentTarget = DeploymentTarget.iOS(targetVersion: "15.0", devices: .iphone)
         let platform = Environment.platform
         
         let baseSettings: SettingsDictionary = .baseSettings.setCodeSignManual()
