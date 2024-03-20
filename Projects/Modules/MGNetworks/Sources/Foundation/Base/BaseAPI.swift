@@ -6,6 +6,7 @@ import Alamofire
 import Moya
 
 import Core
+import Kingfisher
 
 public protocol BaseAPI: TargetType {
     static var apiType: APIType { get set }

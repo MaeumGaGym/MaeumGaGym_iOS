@@ -5,6 +5,7 @@ GITHUB_TOKEN=${GITHUB_TOKEN}
 git clone https://$GITHUB_TOKEN@github.com/MaeumGaGym/MaeumagGym-iOS-ignoreds.git
 pwd
 cp -R MaeumagGym-iOS-ignoreds/xcconfigs ../
+cp -R MaeumagGym-iOS-ignoreds/Config.swift ../Projects/Core/Sources
 rm -rf MaeumagGym-iOS-ignoreds
 
 cd ..
