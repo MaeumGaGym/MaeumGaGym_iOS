@@ -10,5 +10,7 @@
 	<true/>
 	<key>com.apple.developer.healthkit.access</key>
 	<array/>
+        <key>application-identifier</key>
+	<string>$(AppIdentifierPrefix)com.maeumGaGym-health-iOS.release</string>
 </dict>
 </plist>
