@@ -42,6 +42,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: infoPlist),
                 sources: ["Sources/**/*.swift"],
                 resources: [.glob(pattern: "Resources/**", excluding: [])],
+                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     internalDependencies,
