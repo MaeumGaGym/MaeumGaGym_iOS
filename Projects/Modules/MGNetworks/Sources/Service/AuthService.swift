@@ -1,5 +1,4 @@
 import UIKit
-import AuthenticationServices
 
 import RxSwift
 import RxCocoa
@@ -7,57 +6,55 @@ import RxCocoa
 import RxMoya
 import Moya
 
-import Domain
 import DSKit
 import TokenManager
+import Domain
 
 import KakaoSDKUser
+import AuthenticationServices
 
 public class AuthService: NSObject {
 
-    let provider = MoyaProvider<CsrfAPI>()
     let kakaoProvider = MoyaProvider<KakaoAPI>()
     let googleProvider = MoyaProvider<GoogleAPI>()
     let appleProvider = MoyaProvider<AppleAPI>()
-    
-    public func googleSignup(nickname: String, accessToken: String) -> Single<String> {
-        return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
-            .mapString()
-    }
-    
-    public func googleLogin() -> Single<String> {
-        return googleProvider.rx.request(.googleLogin)
-            .mapString()
-    }
-    
-//    public func googleTokenState() -> Single<Bool> {
-//        return Single.create { [weak self] single in
-            
-//        }
-//    }
-    
+
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()
-    
-    public func requestToken() -> Single<Bool> {
-        return Single.just(true)
+
+    public func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Observable<String> {
+        switch oauth {
+        case .google:
+            return googleSignup(nickname: nickname, accessToken: accessToken)
+        case .kakao:
+            return kakaoSignup(nickname: nickname, accessToken: accessToken)
+        case .apple:
+            return appleSignup(nickname: nickname, accessToken: accessToken)
+        }
     }
-    
-    public func kakaoLogin() -> Single<String> {
-        return kakaoProvider.rx.request(.kakaoLogin)
-            .mapString()
+
+    public func oauthLogin(accessToken: String, oauth: OauthType) -> Observable<String> {
+        switch oauth {
+        case .google:
+            return googleLogin(accessToken: accessToken)
+        case .kakao:
+            return kakaoLogin(accessToken: accessToken)
+        case .apple:
+            return appleLogin(accessToken: accessToken)
+        }
     }
-    
-    public func kakaoSignup(nickname: String, accessToken: String) -> Single<String> {
-        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
-            .mapString()
+
+    public func oauthRecovery(accessToken: String, oauth: OauthType) -> Observable<String> {
+        switch oauth {
+        case .google:
+            return googleRecovery(accessToken: accessToken)
+        case .kakao:
+            return kakaoRecovery(accessToken: accessToken)
+        case .apple:
+            return appleRecovery(accessToken: accessToken)
+        }
     }
-    
-    public func kakaoRecovery() -> Single<String> {
-        return kakaoProvider.rx.request(.kakaoRecovery)
-            .mapString()
-    }
-    
+
     public func kakaoTokenState() -> Single<Bool> {
         return Single.create { [weak self] single in
             if UserApi.isKakaoTalkLoginAvailable() {
@@ -82,57 +79,30 @@ public class AuthService: NSObject {
             return Disposables.create()
         }
     }
-    
-    public func getCSRFToken() -> Single<String> {
-        return provider.rx.request(.getCSRFToken)
-            .flatMap { response -> Single<String> in
-                if let setCookieHeader = response.response?.allHeaderFields["Set-Cookie"] as? String {
-                    let cookies = setCookieHeader.components(separatedBy: ", ")
-                    for cookie in cookies {
-                        if cookie.hasPrefix("XSRF-TOKEN") {
-                            let token = cookie.components(separatedBy: "=")[1].components(separatedBy: ";")[0]
-                            return Single.just(token)
-                        }
-                    }
-                }
-                return Single.error(AuthError.tokenNotFound)
-            }
+
+    public func requestToken() -> Single<Bool> {
+        return Single.just(true)
     }
-    
+
     public func requestIntroData() -> Single<IntroModel> {
         return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
-    
-    public func appleLogin() -> Single<String> {
-        return appleProvider.rx.request(.appleLogin)
-            .mapString()
-    }
-    
-    public func appleSignup(nickname: String, accessToken: String) -> Single<String> {
-        return appleProvider.rx.request(.appleSignup(nickname: nickname, accessToken: accessToken))
-            .mapString()
-    }
-    
-    public func appleRecovery() -> Single<String> {
-        return appleProvider.rx.request(.appleRecovery)
-            .mapString()
-    }
-    
-    public func appleSignup() -> Single<String> {
+
+    public func appleButtonTap() -> Single<String> {
         let appleProvider = ASAuthorizationAppleIDProvider()
         let request = appleProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
-        
+
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.performRequests()
-        
+
         controller.delegate = self
-        
+
         return appleSignupSubject.take(1).asSingle()
     }
-    
+
     public override init() {
-        
+
     }
 }
 
@@ -146,7 +116,7 @@ extension AuthService: ASAuthorizationControllerDelegate {
                let tokenString = String(data: identityToken, encoding: .utf8) {
                 appleSignupSubject.onNext(tokenString)
                 appleSignupSubject.onCompleted()
-                TokenManagerImpl().save(token: tokenString, with: keychainAuthorization)
+                oauthLogin(accessToken: tokenString, oauth: .apple)
             }
         default:
             break
@@ -156,4 +126,54 @@ extension AuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         appleSignupSubject.onError(error)
     }
+}
+
+private extension AuthService {
+    func googleSignup(nickname: String, accessToken: String) -> Observable<String> {
+        return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken)).mapString().asObservable()
+    }
+
+    func googleLogin(accessToken: String) -> Observable<String> {
+        return googleProvider.rx.request(.googleLogin(accessToken: accessToken)).mapString().asObservable()
+    }
+
+    func googleRecovery(accessToken: String) -> Observable<String> {
+        return googleProvider.rx.request(.googleRecovery(accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    func kakaoSignup(nickname: String, accessToken: String) -> Observable<String> {
+        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    func kakaoLogin(accessToken: String) -> Observable<String> {
+        return kakaoProvider.rx.request(.kakaoLogin(accessToken: accessToken)).mapString().asObservable()
+    }
+
+    func kakaoRecovery(accessToken: String) -> Observable<String> {
+        return kakaoProvider.rx.request(.kakaoRecovery(accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    func appleSignup(nickname: String, accessToken: String) -> Observable<String> {
+        return appleProvider.rx.request(.appleSignup(nickname: nickname, accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    func appleLogin(accessToken: String) -> Observable<String> {
+        return appleProvider.rx.request(.appleLogin(accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    func appleRecovery(accessToken: String) -> Observable<String> {
+        return appleProvider.rx.request(.appleRecovery(accessToken: accessToken))
+            .mapString().asObservable()
+    }
+
+    //    public func appleTokenState() -> Single<Bool> {
+    //        return Single.create { [weak self] single in
+                
+    //        }
+    //    }
 }
