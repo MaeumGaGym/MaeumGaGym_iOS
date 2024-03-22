@@ -2,11 +2,11 @@ import ProjectDescription
 
 public extension Project {
     static let appInfoPlist: [String: InfoPlist.Value] = [
-        "CFBundleShortVersionString": "1.0.0",
+        "CFBundleShortVersionString": "0.0.0",
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
         "CFBundleIdentifier": "com.maeumGaGym-health-iOS.release",
-        "CFBundleDisplayName": "Maeumgajim",
+        "CFBundleDisplayName": "마음가짐",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
             "UIApplicationSupportsMultipleScenes": false,
@@ -62,7 +62,7 @@ public extension Project {
     ]
     
     static let demoInfoPlist: [String: InfoPlist.Value] = [
-      "CFBundleShortVersionString": "1.0.0",
+      "CFBundleShortVersionString": "0.0.0",
       "CFBundleDevelopmentRegion": "ko",
       "CFBundleVersion": "1",
       "CFBundleIdentifier": "com.maeumGaGym-health-iOS.test",

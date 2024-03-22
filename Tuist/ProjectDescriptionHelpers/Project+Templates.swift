@@ -86,7 +86,7 @@ public extension Project {
                 infoPlist: .default,
                 sources: ["Sources/**/*.swift"],
                 resources: hasResources ? [.glob(pattern: "Resources/**", excluding: [])] : [],
-                entitlements: .relativeToRoot("Supporting/마음가짐Demo.entitlements"),
+//                entitlements: .relativeToRoot("Supporting/마음가짐Demo.entitlements"),
                 dependencies: deps + internalDependencies + externalDependencies,
                 settings: .settings(base: settings, configurations: XCConfig.framework)
             )
@@ -113,7 +113,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
-                entitlements: .relativeToRoot("Supporting/마음가짐Demo.entitlements"),
+//                entitlements: .relativeToRoot("Supporting/마음가짐Demo.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     deps
