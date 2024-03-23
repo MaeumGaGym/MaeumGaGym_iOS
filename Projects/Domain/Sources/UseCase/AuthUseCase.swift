@@ -6,14 +6,14 @@ import RxCocoa
 import Core
 import Moya
 
+import MGLogger
 import TokenManager
 import AuthenticationServices
 
 public protocol AuthUseCase {
     func kakaoButtonTap()
-    func getCSRFToken() -> Single<String>
     func getIntroData()
-    func appleButtonTap() -> Single<String>
+    func appleButtonTap()
 //    func appleNickNameButtonTap() -> Single<String>
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
@@ -34,21 +34,34 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-    
-    
-    public func appleButtonTap() -> Single<String> {
-        authRepository.appleSignup()
+
+    public func appleButtonTap() {
+        authRepository.appleButtonTap()
             .subscribe(
-                onSuccess: { [weak self] token in
-                    self?.appleSignupResult.onNext(token)
+                onSuccess: { [self] token in
+                    appleSignupResult.onNext(token)
+                    TokenManagerImpl().save(token: token, with: KeychainType.authorizationToken)
+                    authRepository.oauthLogin(accessToken: token, oauth: .apple)
+                        .subscribe(onNext: { element in
+                            MGLogger.debug("\(element)")
+                            AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+                        }, onError: { error in
+                            MGLogger.debug("appleLogin : \(error)")
+                            self.authRepository.oauthRecovery(accessToken: token, oauth: .apple)
+                                .subscribe(onNext: { element in
+                                    MGLogger.debug("\(element)")
+                                }, onError: { error in
+                                    MGLogger.debug("\(error)")
+                                    AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
+                                }).disposed(by: self.disposeBag)
+                        }
+                        ).disposed(by: disposeBag)
                 },
                 onFailure: { [weak self] error in
                     self?.appleSignupResult.onError(error)
                 }
             )
             .disposed(by: disposeBag)
-    
-        return appleSignupResult.take(1).asSingle()
     }
     
     public func getIntroData() {
@@ -62,10 +75,6 @@ extension DefaultAuthUseCase: AuthUseCase {
             .disposed(by: disposeBag)
     }
 
-    public func getCSRFToken() -> Single<String> {
-        return authRepository.getCSRFToken()
-    }
-    
     public func kakaoButtonTap() {
         return authRepository.kakaoToken()
             .subscribe(onSuccess: { _ in
