@@ -51,6 +51,10 @@ open class MGLabel: BaseLabel {
     public func changeText(text: String?) {
         textLabel.text = text
     }
+    
+    public func changeFont(font: UIFont?) {
+        textLabel.font = font
+    }
 
     public override func layout() {
         super.layout()
