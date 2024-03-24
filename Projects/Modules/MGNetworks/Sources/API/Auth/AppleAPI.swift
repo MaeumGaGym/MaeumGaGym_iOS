@@ -11,7 +11,7 @@ public enum AppleAPI {
 }
 
 extension AppleAPI: BaseAPI {
-
+ 
     public static var apiType: APIType = .apple
 
     public var path: String {
@@ -39,11 +39,13 @@ extension AppleAPI: BaseAPI {
     public var task: Moya.Task {
         switch self {
         case let .appleSignup(nickname, accessToken):
-            let parameters: [String: Any] = [
-                "nickname": nickname,
+            let bodyParameters: [String: Any] = [
+                "nickname": nickname
+            ]
+            let urlParameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
         case let .appleLogin(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
