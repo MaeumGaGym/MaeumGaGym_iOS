@@ -2,6 +2,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Moya
 
 public enum OauthType {
     case google
@@ -14,8 +15,8 @@ public protocol AuthRepositoryInterface {
     func kakaoToken() -> Single<Bool>
     func appleToken() -> Single<Bool>
     func appleButtonTap() -> Single<String>
-    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Observable<SignupResponseDTO>
-    func oauthLogin(accessToken: String, oauth: OauthType) -> Observable<LoginResponseDTO>
-    func oauthRecovery(accessToken: String, oauth: OauthType) -> Observable<RecoveryResponseDTO>
+    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Observable<Response>
+    func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
+    func oauthRecovery(accessToken: String, oauth: OauthType) -> Observable<Response>
     func getIntroData() -> Single<IntroModel>
 }
