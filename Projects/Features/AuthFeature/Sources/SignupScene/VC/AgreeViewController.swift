@@ -15,7 +15,7 @@ import Domain
 import MGLogger
 import MGNetworks
 
-public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureRecognizerDelegate, Stepper {
+public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, UIGestureRecognizerDelegate {
 
     public var steps = PublishRelay<Step>()
 
