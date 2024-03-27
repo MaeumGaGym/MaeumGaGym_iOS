@@ -73,7 +73,7 @@ public class AuthFlow: Flow {
     }
 
     private func navigateToNicknameViewScreen() -> FlowContributors {
-        let vc = NicknameViewController(NicknameViewModel(useCase: self.useCase))
+        let vc = NicknameViewController(NicknameViewModel())
         rootViewController.pushViewController(vc, animated: true)
         return .none
     }

@@ -22,6 +22,7 @@ public extension TargetDependency.SPM {
     static let KakaoSDK = TargetDependency.external(name: "KakaoSDK")
     static let Mango = TargetDependency.external(name: "Mango")
     static let SnapshotTesting = TargetDependency.external(name: "SnapshotTesting")
+//    static let Alamofire = TargetDependency.external(name: "Alamofire")
 }
 
 //public extension Package {

@@ -18,7 +18,7 @@ public extension Project {
         
         let configurationName: ConfigurationName = "Development"
         let hasDynamicFramework = targets.contains(.dynamicFramework)
-        let deploymentTarget = Environment.deploymentTarget
+        let deploymentTarget = DeploymentTarget.iOS(targetVersion: "15.0", devices: .iphone)
         let platform = Environment.platform
         
         let baseSettings: SettingsDictionary = .baseSettings.setCodeSignManual()
@@ -42,6 +42,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: infoPlist),
                 sources: ["Sources/**/*.swift"],
                 resources: [.glob(pattern: "Resources/**", excluding: [])],
+                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     internalDependencies,
