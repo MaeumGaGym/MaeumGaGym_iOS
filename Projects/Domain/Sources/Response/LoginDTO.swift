@@ -13,3 +13,8 @@ public struct SignupResponseDTO: Decodable {
 public struct RecoveryResponseDTO: Decodable {
     public let status: Int
 }
+
+enum AuthErrorType: Error {
+    case notFound400
+    case notInt
+}
