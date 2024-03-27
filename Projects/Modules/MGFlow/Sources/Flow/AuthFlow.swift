@@ -41,6 +41,8 @@ public class AuthFlow: Flow {
             return navigateToNicknameViewScreen()
         case .authCompleteIsRequired:
             return navigateToCompleteViewScreen()
+        case .initialization:
+            return navigateToMain()
         case .authBack:
             return popupViewController()
         default:
@@ -73,7 +75,7 @@ public class AuthFlow: Flow {
     }
 
     private func navigateToNicknameViewScreen() -> FlowContributors {
-        let vc = NicknameViewController(NicknameViewModel())
+        let vc = NicknameViewController(NicknameViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
         return .none
     }
@@ -84,6 +86,18 @@ public class AuthFlow: Flow {
         vc.navigationItem.hidesBackButton = true
         MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
+    }
+    
+    private func navigateToMain() -> FlowContributors {
+        let profileFlow = InitFlow()
+               Flows.use(profileFlow, when: .created) { [weak self] root in
+                   self?.rootViewController.pushViewController(root, animated: true)
+               }
+
+        return .one(flowContributor: .contribute(
+            withNextPresentable: profileFlow,
+            withNextStepper: OneStepper(withSingleStep: MGStep.initialization)
+        ))
     }
 
     private func popupViewController() -> FlowContributors {
