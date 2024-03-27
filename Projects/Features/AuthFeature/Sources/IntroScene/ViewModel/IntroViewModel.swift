@@ -39,10 +39,6 @@ public class IntroViewModel: AuthViewModelType {
         var introDatas: Observable<IntroModel>
     }
 
-//    public var goolgeButtonTap: (() -> Void)?
-//    public var appleButtonTap: (() -> Void)?
-//    public var kakaoButtonTap: (() -> Bool)?
-
     private let introModelSubject = PublishSubject<IntroModel>()
 
     public init(authUseCase: AuthUseCase) {
@@ -58,20 +54,8 @@ public class IntroViewModel: AuthViewModelType {
 
         bindOutput(output: output)
 
-        useCase.getCSRFToken()
-            .subscribe(onSuccess: { token in
-                if TokenManagerImpl().save(token: token, with: self.keychainCSRF) {
-                    print("토큰 저장 성공")
-                } else {
-                    print("토큰 저장 실패")
-                }
-            }, onFailure: { error in
-                print("Error: \(error)")
-            })
-            .disposed(by: disposeBag)
-
         input.goolgeButtonTapped
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { _ in
                 print("goolgeButtonTapped")
                 AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
             })
