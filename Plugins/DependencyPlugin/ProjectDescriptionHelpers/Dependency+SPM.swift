@@ -8,7 +8,7 @@ public extension TargetDependency.SPM {
     static let RxSwift = TargetDependency.external(name: "RxSwift")
     static let RxCocoa = TargetDependency.external(name: "RxCocoa")
     static let SnapKit = TargetDependency.external(name: "SnapKit")
-    static let GoogleLogin = TargetDependency.external(name: "GoogleSignIn")
+//    static let GoogleLogin = TargetDependency.external(name: "GoogleSignIn")
     static let Then = TargetDependency.external(name: "Then")
     static let RxFlow = TargetDependency.external(name: "RxFlow")
     static let RxTest = TargetDependency.external(name: "RxTest")
