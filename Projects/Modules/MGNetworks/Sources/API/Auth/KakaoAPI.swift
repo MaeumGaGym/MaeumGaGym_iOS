@@ -39,11 +39,13 @@ extension KakaoAPI: BaseAPI {
     public var task: Moya.Task {
         switch self {
         case let .kakaoSignup(nickname, accessToken):
-            let parameters: [String: Any] = [
-                "nickname": nickname,
+            let bodyParameters: [String: Any] = [
+                "nickname": nickname
+            ]
+            let urlParameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
         case let .kakaoLogin(accessToken):
             let parameters: [String: Any] = [
                 "access_token": accessToken
