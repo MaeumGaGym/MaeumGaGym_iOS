@@ -14,9 +14,7 @@ public protocol AuthUseCase {
     func kakaoButtonTap()
     func getIntroData()
     func appleButtonTap()
-    func nextButtonTap(nickname: String)
-    func setOauthType(oauthType: OauthType)
-//    func appleNickNameButtonTap() -> Single<String>
+    func changeNickname(nickname: String)
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
@@ -26,6 +24,7 @@ public class DefaultAuthUseCase {
     private let disposeBag = DisposeBag()
     
     open var oauthType: OauthType!
+    public var nicknameText: String = ""
     
     public let introData = PublishSubject<IntroModel>()
     public let appleSignupResult = PublishSubject<String>()
@@ -37,30 +36,38 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-    public func setOauthType(oauthType: OauthType) {
-        self.oauthType = oauthType
+
+    public func changeNickname(nickname: String) {
+        self.nicknameText = nickname
     }
 
-    public func nextButtonTap(nickname: String) {
+    public func nextButtonTap() {
         let accessToken = TokenManagerImpl().get(key: KeychainType.authorizationToken)!
-        authRepository.oauthSignup(nickname: nickname,
-                                   accessToken: accessToken,
-                                   oauth: self.oauthType)
-        .subscribe(onNext: { [self] element in
-            MGLogger.debug("nicknameButtonTap : \(element)")
-            authRepository.oauthLogin(accessToken: accessToken, oauth: self.oauthType)
+        authRepository.nicknameCheck(nickname: nicknameText)
+            .subscribe(onSuccess: { [self] element in
+                MGLogger.debug("nicknameButtonTap nickname ✅ \(element)")
+                authRepository.oauthSignup(nickname: nicknameText,
+                                           accessToken: accessToken,
+                                           oauth: self.oauthType)
                 .subscribe(onSuccess: { [self] element in
-                    MGLogger.debug("nicknameButtonTap Login : \(element)")
-                    AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+                    MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
+                    authRepository.oauthLogin(accessToken: accessToken, oauth: self.oauthType)
+                        .subscribe(onSuccess: { element in
+                            MGLogger.debug("nicknameButtonTap Login ✅ \(element)")
+                            AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+                        }, onFailure: { error in
+                            MGLogger.debug("nicknameButtonTap Login(여기선 절대 에러가 나면 안됩니다...) ❌ \(error)")
+                        }).disposed(by: disposeBag)
                 }, onFailure: { error in
-                    MGLogger.debug("nicknameButtonTap Login Error : \(error)")
+                    MGLogger.debug("nicknameButtonTap Signup(여기선 절대 에러가 나면 안됩니다...) ❌ \(error)")
                 }).disposed(by: disposeBag)
-        }, onError: { error in
-            MGLogger.debug("nicnameButtonTap Error : \(error)")
-        }).disposed(by: disposeBag)
+            }, onFailure: { error in
+                MGLogger.debug("nicknameButtonTap nickname 중복 ❌ \(error)")
+            }).disposed(by: disposeBag)
     }
-    
+
     public func appleButtonTap() {
+        oauthType = .apple
         authRepository.appleButtonTap()
             .subscribe(onSuccess: { [self] token in
                 MGLogger.debug("appleButtonTap token ✅ \(token)")
@@ -83,58 +90,13 @@ extension DefaultAuthUseCase: AuthUseCase {
                             }, onFailure: { error in
                                 MGLogger.debug("appleButtonTap recovery ❌ \(error)")
                                 AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
-                            })
+                            }).disposed(by: disposeBag)
                     }).disposed(by: disposeBag)
             }, onFailure: { error in
                 MGLogger.debug("appleButtonTap token error ❌ \(error)")
             }).disposed(by: disposeBag)
     }
 
-//    public func appleButtonTap() {
-//        authRepository.appleButtonTap()
-//            .subscribe(onSuccess: { [self] token in
-//                    TokenManagerImpl().save(token: token, with: KeychainType.authorizationToken)
-//                    authRepository.oauthLogin(accessToken: token, oauth: .apple)
-//                        .subscribe(onSuccess: { element in
-////                            TokenManagerImpl().save(token: (element.response?.allHeaderFields["Authorization"] as? String)!, with: .authorizationToken)
-////                            TokenManagerImpl().save(token: (element.response?.allHeaderFields["RF-TOKEN"] as? String)!, with: .refreshToken)
-//                            MGLogger.debug("loginㄴㅇㄹㄴㅇㄹ : \(element.response?.description)")
-////                            MGLogger.debug("login : \(TokenManagerImpl().get(key: .authorizationToken))")
-////                            MGLogger.debug("login : \(TokenManagerImpl().get(key: .refreshToken))")
-//
-//                            AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
-//                        }, onFailure: { [self] error in
-//                            MGLogger.debug("appleLogin : \(error)")
-//                            authRepository.oauthRecovery(accessToken: token, oauth: .apple)
-//                                .subscribe(onNext: { element in
-//                                    MGLogger.debug("success : \(element)")
-//                                }, onError: { [self] recoveryError in
-//                                    MGLogger.debug("error !!!! \(recoveryError)")
-//                                    authRepository.oauthSignup(nickname: "이은호", accessToken: token, oauth: .apple)
-//                                        .subscribe(onNext: { element in
-//                                            MGLogger.debug("signup : \(element)")
-//                                            self.authRepository.oauthLogin(accessToken: token, oauth: .apple).subscribe(onSuccess: { response in
-//                                                MGLogger.debug("login : \(String(describing: response.response?.headers))")
-//                                            }, onFailure: { error in
-//                                                MGLogger.debug("login error : \(error)")
-//                                            }
-//                                            ).disposed(by: self.disposeBag)
-//                                        }, onError: { error in
-//                                            MGLogger.debug("signup error : \(error)")
-//                                        }
-//                                        ).disposed(by: disposeBag)
-////                                    AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
-//                                }).disposed(by: disposeBag)
-//                        }
-//                        ).disposed(by: disposeBag)
-//                },
-//                onFailure: { [weak self] error in
-//                    self?.appleSignupResult.onError(error)
-//                }
-//            )
-//            .disposed(by: disposeBag)
-//    }
-    
     public func getIntroData() {
         return authRepository.getIntroData()
             .subscribe(onSuccess: { [weak self] introModel in
@@ -155,8 +117,4 @@ extension DefaultAuthUseCase: AuthUseCase {
             })
             .disposed(by: self.disposeBag)
     }
-
-//    public func appleNickNameButtonTap(nickname: String) -> Single<String> {
-//        return authRepository.appleSingup(nickname: nickname, accessToken: TokenManagerImpl().get(key: .authorizationToken)).mapString
-//    }
 }
