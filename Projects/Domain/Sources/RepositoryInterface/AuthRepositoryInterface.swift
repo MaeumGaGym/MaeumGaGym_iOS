@@ -15,8 +15,9 @@ public protocol AuthRepositoryInterface {
     func kakaoToken() -> Single<Bool>
     func appleToken() -> Single<Bool>
     func appleButtonTap() -> Single<String>
-    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Observable<Response>
+    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response>
     func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
-    func oauthRecovery(accessToken: String, oauth: OauthType) -> Observable<Response>
+    func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response>
+    func nicknameCheck(nickname: String) -> Single<Response>
     func getIntroData() -> Single<IntroModel>
 }
