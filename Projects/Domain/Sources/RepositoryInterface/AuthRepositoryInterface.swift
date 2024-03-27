@@ -4,6 +4,8 @@ import RxSwift
 import RxCocoa
 import Moya
 
+import KakaoSDKAuth
+
 public enum OauthType {
     case google
     case kakao
@@ -11,9 +13,7 @@ public enum OauthType {
 }
 
 public protocol AuthRepositoryInterface {
-    func googleToken() -> Single<Bool>
-    func kakaoToken() -> Single<Bool>
-    func appleToken() -> Single<Bool>
+    func kakaoButtonTap() -> Single<OAuthToken?>
     func appleButtonTap() -> Single<String>
     func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response>
     func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
