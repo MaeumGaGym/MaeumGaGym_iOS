@@ -8,22 +8,11 @@ import Moya
 import RxMoya
 
 import Domain
+import KakaoSDKAuth
 
 public class AuthRepository: AuthRepositoryInterface {
 
     private let networkService: AuthService
-
-    public func googleToken() -> Single<Bool> {
-        return networkService.kakaoTokenState()
-    }
-
-    public func kakaoToken() -> Single<Bool> {
-        return networkService.kakaoTokenState()
-    }
-
-    public func appleToken() -> Single<Bool> {
-        return networkService.kakaoTokenState()
-    }
 
     public func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
         return networkService.oauthSingup(nickname: nickname, accessToken: accessToken, oauth: oauth)
@@ -47,6 +36,10 @@ public class AuthRepository: AuthRepositoryInterface {
 
     public func appleButtonTap() -> Single<String> {
         return networkService.appleButtonTap()
+    }
+    
+    public func kakaoButtonTap() -> Single<OAuthToken?> {
+        return networkService.kakaoButtonTap()
     }
 
     public init(networkService: AuthService) {
