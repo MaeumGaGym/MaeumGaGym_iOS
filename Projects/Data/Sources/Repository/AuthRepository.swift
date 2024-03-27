@@ -25,16 +25,20 @@ public class AuthRepository: AuthRepositoryInterface {
         return networkService.kakaoTokenState()
     }
 
-    public func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Observable<SignupResponseDTO> {
+    public func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
         return networkService.oauthSingup(nickname: nickname, accessToken: accessToken, oauth: oauth)
     }
 
-    public func oauthLogin(accessToken: String, oauth: OauthType) -> Observable<LoginResponseDTO> {
+    public func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response> {
         return networkService.oauthLogin(accessToken: accessToken, oauth: oauth)
     }
     
-    public func oauthRecovery(accessToken: String, oauth: OauthType) -> Observable<RecoveryResponseDTO> {
+    public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
         return networkService.oauthRecovery(accessToken: accessToken, oauth: oauth)
+    }
+    
+    public func nicknameCheck(nickname: String) -> Single<Response> {
+        return networkService.nicknameCheck(nickname: nickname)
     }
 
     public func getIntroData() -> Single<IntroModel>  {
