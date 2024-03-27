@@ -2,11 +2,22 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Moya
+
+import KakaoSDKAuth
+
+public enum OauthType {
+    case google
+    case kakao
+    case apple
+}
 
 public protocol AuthRepositoryInterface {
-    func kakaoToken() -> Single<Bool>
-    func getCSRFToken() -> Single<String>
+    func kakaoButtonTap() -> Single<OAuthToken?>
+    func appleButtonTap() -> Single<String>
+    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response>
+    func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
+    func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response>
+    func nicknameCheck(nickname: String) -> Single<Response>
     func getIntroData() -> Single<IntroModel>
-    func appleSignup() -> Single<String>
-    func appleSingup(nickname: String, accessToken: String) -> Single<String>
 }

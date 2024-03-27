@@ -1,3 +1,4 @@
+import UIKit
 import Foundation
 
 public enum agreeButtonTextType {
@@ -19,6 +20,21 @@ public enum agreeButtonTextType {
             return "마케팅 정보 수신 동의"
         case .allAgreeText:
             return "모두 동의해요"
+        }
+    }
+
+    var font: UIFont {
+        switch self {
+        case .privacyAgreeText:
+            return UIFont.Pretendard.bodyMedium
+        case .termsAgreeText:
+            return UIFont.Pretendard.bodyMedium
+        case .ageAgreeText:
+            return UIFont.Pretendard.bodyMedium
+        case .marketingAgreeText:
+            return UIFont.Pretendard.bodyMedium
+        case .allAgreeText:
+            return UIFont.Pretendard.labelLarge
         }
     }
 }
