@@ -114,21 +114,41 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     }
     
     public override func bindViewModel() {
-//        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
-//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-//        
-//        viewModel = NicknameViewModel(useCase: useCase)
-//        
-//        let input = NicknameViewModel.Input(navButtonTapped: navButtonTapped, nextButtonTap: checkButton.rx.tap.asSignal())
-//        
-//        let output = viewModel.transform(input, action: {
-//            ouput in
-//            ouput.nextButtonClicked
-//                .drive(onNext: { message in
-//                    AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
-//                    MGLogger.verbose(message)
-//                }).disposed(by: disposeBag)
-//        })
+        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+        viewModel = NicknameViewModel(useCase: useCase)
+
+        let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
+        let nextButtonTapped = checkButton.rx.tap.asDriver(onErrorDriveWith: .never())
+
+        let input = NicknameViewModel.Input(navButtonTap: navButtonTapped, nextButtonTap: nextButtonTapped)
+        
+        let output = viewModel.transform(input, action: { output in
+            output.nextButtonTap.drive(onNext: { _ in
+                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
+                useCase.nextButtonTap()
+            }).disposed(by: disposeBag)
+
+            output.navButtonTap.drive(onNext: { _ in
+                AuthStepper.shared.steps.accept(MGStep.authBack)
+            }).disposed(by: disposeBag)
+        })
+    }
+    
+    public override func bindActions() {
+        nicknameTF.rx.text
+            .map { ($0?.count ?? 0) >= 2 && ($0?.count ?? 0) <= 10 ? true : false }
+            .subscribe(
+                onNext: { [weak self] state in
+                    MGLogger.debug(state)
+                    switch state {
+                    case true:
+                        self?.checkButton.isEnabled = state
+                        self?.checkButton.backgroundColor = AuthResourcesService.Colors.blue500
+                    case false:
+                        self?.checkButton.isEnabled = state
+                        self?.checkButton.backgroundColor = AuthResourcesService.Colors.gray400
+                    }
+                }).disposed(by: disposeBag)
     }
     
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {

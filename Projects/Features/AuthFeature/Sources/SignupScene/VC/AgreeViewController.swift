@@ -15,11 +15,13 @@ import Domain
 import MGLogger
 import MGNetworks
 
-public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureRecognizerDelegate, Stepper {
+public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, UIGestureRecognizerDelegate {
 
     public var steps = PublishRelay<Step>()
 
     private var naviBar = AuthNavigationBarBar()
+
+    private let containerView = BaseView()
 
     private let agreeLabel = MGLabel(
         text: "약관동의",
@@ -32,12 +34,22 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
         textColor: DSKitAsset.Colors.gray600.color
     )
 
-    private let agreeTermsView = MGAgreeView(
-        firstAgreeText: .privacyAgreeText,
-        secondAgreeText: .termsAgreeText,
-        thirdAgreeText: .ageAgreeText,
-        fourthAgreeText: .marketingAgreeText
-    )
+    private let decorateLine1 = MGLine()
+    private let allAgreeButton = MGAgreeButton(type: .allAgreeText)
+    private let decorateLine2 = MGLine()
+
+    private let firstAgreeButton = MGAgreeButton(type: .privacyAgreeText)
+    private let secondAgreeButton = MGAgreeButton(type: .termsAgreeText)
+    private let thirdAgreeButton = MGAgreeButton(type: .ageAgreeText)
+    private let fourthAgreeButton = MGAgreeButton(type: .marketingAgreeText, chooseType: true)
+    
+    //    private let readMore = MGButton(
+    //        titleText: "자세히 보기",
+    //        font: UIFont.Pretendard.labelSmall,
+    //        textColor: DSKitAsset.Colors.gray300.color
+    //    ).then {
+    //        $0.isHidden = false
+    //    }
 
     private var checkButton = MGCheckButton(text: "확인")
 
@@ -53,7 +65,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
     }
 
     public override func layout() {
-        view.addSubviews([naviBar, agreeLabel, textInformation, agreeTermsView, checkButton])
+        view.addSubviews([naviBar, agreeLabel, textInformation, containerView, checkButton])
 
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -71,9 +83,10 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
             $0.width.equalTo(287.0)
         }
 
-        agreeTermsView.snp.makeConstraints {
+        containerView.snp.makeConstraints {
             $0.top.equalTo(textInformation.snp.bottom).offset(40.0)
-            $0.leading.equalToSuperview().offset(20.0)
+            $0.height.equalTo(284.0)
+            $0.leading.trailing.equalToSuperview().inset(20.0)
         }
 
         checkButton.snp.makeConstraints {
@@ -81,6 +94,54 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
             $0.leading.equalToSuperview().offset(20.0)
             $0.trailing.equalToSuperview().offset(-20.0)
             $0.height.equalTo(58.0)
+        }
+
+        containerView.addSubviews([decorateLine1,
+                     allAgreeButton,
+                     decorateLine2,
+                     firstAgreeButton,
+                     secondAgreeButton,
+                     thirdAgreeButton,
+                     fourthAgreeButton])
+
+        decorateLine1.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+
+        allAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(decorateLine1.snp.bottom).offset(12.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44.0)
+        }
+
+        decorateLine2.snp.makeConstraints {
+            $0.top.equalTo(allAgreeButton.snp.bottom).offset(12.0)
+            $0.centerX.equalToSuperview()
+        }
+
+        firstAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(decorateLine2.snp.bottom).offset(8.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44.0)
+        }
+
+        secondAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(firstAgreeButton.snp.bottom).offset(8.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44.0)
+        }
+
+        thirdAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(secondAgreeButton.snp.bottom).offset(8.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44.0)
+        }
+
+        fourthAgreeButton.snp.makeConstraints {
+            $0.top.equalTo(thirdAgreeButton.snp.bottom).offset(8.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(44.0)
         }
     }
 
@@ -94,11 +155,11 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
 
         let input = AgreeViewModel.Input(
             navButtonTapped: navButtonTapped,
-            allAgreeButtonTap: agreeTermsView.allAgreeButton.rx.tap.asSignal(),
-            firstAgreeButtonTap: agreeTermsView.firstAgreeButton.rx.tap.asSignal(),
-            secondAgreeButtonTap: agreeTermsView.secondAgreeButton.rx.tap.asSignal(),
-            thirdAgreeButtonTap: agreeTermsView.thirdAgreeButton.rx.tap.asSignal(),
-            fourthAgreeButtonTap: agreeTermsView.fourthAgreeButton.rx.tap.asSignal(),
+            allAgreeButtonTap: allAgreeButton.rx.tap.asSignal(),
+            firstAgreeButtonTap: firstAgreeButton.rx.tap.asSignal(),
+            secondAgreeButtonTap: secondAgreeButton.rx.tap.asSignal(),
+            thirdAgreeButtonTap: thirdAgreeButton.rx.tap.asSignal(),
+            fourthAgreeButtonTap: fourthAgreeButton.rx.tap.asSignal(),
             nextButtonTap: checkButton.rx.tap.asSignal()
         )
 
@@ -106,7 +167,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
             output.allAgreeButtonClickedMessage
                 .drive(onNext: { [weak self] message in
                     print(message)
-                    self?.agreeTermsView.setAllAgreeButtonState(!(self?.agreeTermsView.allAgreeButtonState ?? false))
+                    self?.setAllAgreeButtonState(!(self?.allAgreeButtonState ?? false))
                 })
                 .disposed(by: disposeBag)
 
@@ -120,7 +181,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
             agreeButtons.forEach { buttonOutput in
                 buttonOutput
                     .drive(onNext: { [weak self] message in
-                        self?.agreeTermsView.updateAllAgreeButtonState()
+                        self?.updateAllAgreeButtonState()
                         MGLogger.verbose(message)
                     })
                     .disposed(by: disposeBag)
@@ -128,24 +189,24 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
 
             output.firstAgreeButtonClickedMessage
                 .drive(onNext: { message in
-                    self.agreeTermsView.updateAllAgreeButtonState()
-                    _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                    self.updateAllAgreeButtonState()
+                    _ = self.buttonActivationChecked(button: self.checkButton)
                     MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)
 
             output.secondAgreeButtonClickedMessage
                 .drive(onNext: { message in
-                    self.agreeTermsView.updateAllAgreeButtonState()
-                    _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                    self.updateAllAgreeButtonState()
+                    _ = self.buttonActivationChecked(button: self.checkButton)
                     MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)
 
             output.thirdAgreeButtonClickedMessage
                 .drive(onNext: { message in
-                    self.agreeTermsView.updateAllAgreeButtonState()
-                    _ = self.agreeTermsView.buttonActivationChecked(button: self.checkButton)
+                    self.updateAllAgreeButtonState()
+                    _ = self.buttonActivationChecked(button: self.checkButton)
                     MGLogger.verbose(message)
                 })
                 .disposed(by: disposeBag)
@@ -163,5 +224,49 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, UIGestureR
                 })
                 .disposed(by: disposeBag)
         })
+    }
+
+    public var allAgreeButtonState: Bool {
+        return firstAgreeButton.checked &&
+                   secondAgreeButton.checked &&
+                   thirdAgreeButton.checked &&
+                   fourthAgreeButton.checked
+    }
+
+    public func setAllAgreeButtonState(_ isEnabled: Bool) {
+        allAgreeButton.checked = isEnabled
+        if isEnabled {
+            firstAgreeButton.buttonYesChecked()
+            secondAgreeButton.buttonYesChecked()
+            thirdAgreeButton.buttonYesChecked()
+            fourthAgreeButton.buttonYesChecked()
+            updateAllAgreeButtonState()
+        } else {
+            firstAgreeButton.buttonNoChecked()
+            secondAgreeButton.buttonNoChecked()
+            thirdAgreeButton.buttonNoChecked()
+            fourthAgreeButton.buttonNoChecked()
+            updateAllAgreeButtonState()
+        }
+    }
+
+    public func updateAllAgreeButtonState() {
+        if allAgreeButtonState == true {
+            allAgreeButton.buttonYesChecked()
+        } else {
+            allAgreeButton.buttonNoChecked()
+        }
+    }
+
+    public func buttonActivationChecked(button: MGCheckButton) -> Bool {
+        let shouldActivateButton = firstAgreeButton.checked &&
+                                    secondAgreeButton.checked &&
+                                    thirdAgreeButton.checked &&
+                                    !fourthAgreeButton.checked
+        button.isEnabled = shouldActivateButton
+        button.backgroundColor = shouldActivateButton ? AuthResourcesService.Colors.blue500 : AuthResourcesService.Colors.gray400
+        button.textLabel.textColor = shouldActivateButton ? .white : AuthResourcesService.Colors.gray200
+
+        return shouldActivateButton
     }
 }

@@ -14,7 +14,7 @@ public protocol BaseAPI: TargetType {
 
 extension BaseAPI {
     public var baseURL: URL {
-        var appURL = Config.setConfigTypeAndGetBaseURL(.application)
+        var appURL = Config.setConfigTypeAndGetBaseURL(.devTest)
 //        var devURL = Config.setConfigTypeAndGetBaseURL(.devTest)
         
         switch Self.apiType {
@@ -26,6 +26,8 @@ extension BaseAPI {
             appURL += "/google"
         case .apple:
             appURL += "/apple"
+        case .auth:
+            appURL += "/auth"
         }
 
         guard let url = URL(string: appURL) else {

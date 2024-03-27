@@ -61,7 +61,7 @@ public struct MGProfileImage {
         switch type {
         case .custom:
             guard let customImage = customImage else {
-                return DSKitAsset.Assets.blueHomeTapBar.image
+                return DSKitAsset.Assets.introIcon.image
             }
             
             return customImage

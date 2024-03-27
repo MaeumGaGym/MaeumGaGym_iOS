@@ -12,6 +12,7 @@ public enum AuthResourcesService {
         public static let cancel = DSKitAsset.Assets.circleCancel.image
         public static let mainLogo = DSKitAsset.Assets.mainLogo.image
         public static let leftArrow = DSKitAsset.Assets.blackLeftBarArrow.image
+        public static let introIcon = DSKitAsset.Assets.introIcon.image
     }
 
     public enum Colors {
