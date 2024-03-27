@@ -12,6 +12,8 @@ import Domain
 
 import MGLogger
 import KakaoSDKUser
+import KakaoSDKAuth
+
 import AuthenticationServices
 
 public class AuthService: NSObject {
@@ -73,26 +75,18 @@ public class AuthService: NSObject {
         }
     }
 
-    public func kakaoTokenState() -> Single<Bool> {
-        return Single.create { [weak self] single in
+    public func kakaoButtonTap() -> Single<OAuthToken?> {
+        return Single.create { single in
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                    if let error = error {
-                        single(.success(false))
+                    if let oauthToken = oauthToken {
+                        single(.success(oauthToken))
                     } else {
-                        guard let self = self, let accessToken = oauthToken?.accessToken else {
-                            single(.success(false))
-                            return
-                        }
-                        if TokenManagerImpl().save(token: accessToken, with: self.keychainAuthorization) {
-                            single(.success(true))
-                        } else {
-                            single(.success(false))
-                        }
+                        single(.success(nil))
                     }
                 }
             } else {
-                single(.success(false))
+                single(.success(nil))
             }
             return Disposables.create()
         }
