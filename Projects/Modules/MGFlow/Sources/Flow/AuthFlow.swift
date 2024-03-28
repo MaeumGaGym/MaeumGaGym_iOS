@@ -90,9 +90,9 @@ public class AuthFlow: Flow {
     
     private func navigateToMain() -> FlowContributors {
         let profileFlow = InitFlow()
-               Flows.use(profileFlow, when: .created) { [weak self] root in
-                   self?.rootViewController.pushViewController(root, animated: true)
-               }
+        Flows.use(profileFlow, when: .created) { [weak self] root in
+            self?.rootViewController.setViewControllers([root], animated: true)
+        }
 
         return .one(flowContributor: .contribute(
             withNextPresentable: profileFlow,
