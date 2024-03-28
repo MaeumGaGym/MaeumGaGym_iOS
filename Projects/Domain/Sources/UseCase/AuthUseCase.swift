@@ -202,7 +202,7 @@ extension DefaultAuthUseCase: AuthUseCase {
 
                 authRepository.oauthSignup(nickname: nicknameText,
                                            accessToken: accessToken,
-                                           oauth: .kakao)
+                                           oauth: .apple)
                 .flatMap { response -> Single<Response> in
                     MGLogger.debug(response)
                     if response.statusCode >= 400 {
@@ -213,7 +213,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                 }
                 .subscribe(onSuccess: { [self] element in
                     MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
-                    authRepository.oauthLogin(accessToken: accessToken, oauth: .kakao)
+                    authRepository.oauthLogin(accessToken: accessToken, oauth: .apple)
                         .flatMap { response -> Single<Response> in
                             if response.statusCode >= 400 {
                                 return Single.error(AuthErrorType.notFound400)
