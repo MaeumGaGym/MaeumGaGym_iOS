@@ -1,0 +1,9 @@
+//
+//  RoutineAPI.swift
+//  MGNetworks
+//
+//  Created by 이은호 on 3/29/24.
+//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
+//
+
+import Foundation
