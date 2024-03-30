@@ -64,18 +64,12 @@ extension RoutineAPI: BaseAPI {
         switch self {
         case .routineAdd:
             return .post
-        case .routineMyAll:
-            return .get
-        case .routineTodayMyAll:
+        case .routineMyAll, .routineTodayMyAll, .routineMonthCheck:
             return .get
         case .routineDelete:
             return .delete
-        case .routineEdit:
+        case .routineEdit, .routineTodayComplete:
             return .put
-        case .routineTodayComplete:
-            return .put
-        case .routineMonthCheck:
-            return .get
         }
     }
 
@@ -129,11 +123,7 @@ extension RoutineAPI: BaseAPI {
             let .routineEdit(accessToken, _, _, _, _, _, _),
             let .routineTodayComplete(accessToken),
             let .routineMonthCheck(accessToken, _):
-            return authorizationHeader(using: accessToken)
+            return ["Authorization": "\(accessToken)"]
         }
-    }
-
-    private func authorizationHeader(using accessToken: String) -> [String: String] {
-        return ["Authorization": accessToken]
     }
 }
