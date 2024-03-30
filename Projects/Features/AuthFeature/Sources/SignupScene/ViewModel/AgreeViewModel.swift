@@ -1,8 +1,8 @@
 import Foundation
 
-import RxFlow
-import RxCocoa
 import RxSwift
+import RxCocoa
+import RxFlow
 
 import Core
 import Domain
@@ -39,8 +39,6 @@ public class AgreeViewModel: BaseViewModel {
     public init(useCase: AuthUseCase) {
         self.useCase = useCase
     }
-
-    public var onNextButtonTap: (() -> Void)?
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 

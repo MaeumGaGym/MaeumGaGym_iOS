@@ -2,7 +2,7 @@ import ProjectDescription
 
 public extension Project {
     static let appInfoPlist: [String: InfoPlist.Value] = [
-        "CFBundleShortVersionString": "1.0.0",
+        "CFBundleShortVersionString": "0.2.0",
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
         "CFBundleIdentifier": "com.maeumGaGym-health-iOS.release",

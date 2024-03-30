@@ -1,15 +1,13 @@
 import Foundation
 
-import Alamofire
 import Moya
 import Core
-
-import TokenManager
+import Alamofire
 
 public enum GoogleAPI {
-    case googleLogin
     case googleSignup(nickname: String, accessToken: String)
-    case googleRecovery
+    case googleLogin(accessToken: String)
+    case googleRecovery(accessToken: String)
 }
 
 extension GoogleAPI: BaseAPI {
@@ -18,10 +16,10 @@ extension GoogleAPI: BaseAPI {
 
     public var path: String {
         switch self {
-        case .googleLogin:
-            return "/login"
         case .googleSignup:
             return "/signup"
+        case .googleLogin:
+            return "/login"
         case .googleRecovery:
             return "/recovery"
         }
@@ -29,10 +27,10 @@ extension GoogleAPI: BaseAPI {
 
     public var method: Moya.Method {
         switch self {
-        case .googleLogin:
-            return .get
         case .googleSignup:
             return .post
+        case .googleLogin:
+            return .get
         case .googleRecovery:
             return .put
         }
@@ -41,13 +39,23 @@ extension GoogleAPI: BaseAPI {
     public var task: Moya.Task {
         switch self {
         case let .googleSignup(nickname, accessToken):
-            let parameters: [String: Any] = [
-                "nickname": nickname,
+            let bodyParameters: [String: Any] = [
+                "nickname": nickname
+            ]
+            let urlParameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
-        case .googleLogin, .googleRecovery:
-            return .requestPlain
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
+        case let .googleLogin(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case let .googleRecovery(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 

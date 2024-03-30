@@ -12,12 +12,13 @@ let project = Project.makeModule(
         .SPM.SnapKit,
         .SPM.Then,
         .SPM.Swinject,
-        .SPM.GoogleLogin,
+//        .SPM.GoogleLogin,
         .SPM.Moya,
         .SPM.RxMoya,
         .SPM.Lottie,
         .SPM.kingfisher,
         .SPM.KakaoSDK,
-        .SPM.MindGymKit
+        .SPM.MindGymKit,
+//        .SPM.Alamofire
     ]
 )

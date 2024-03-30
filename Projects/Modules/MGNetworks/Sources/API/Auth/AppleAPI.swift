@@ -1,27 +1,25 @@
 import Foundation
 
-import Alamofire
 import Moya
 import Core
-
-import TokenManager
+import Alamofire
 
 public enum AppleAPI {
-    case appleLogin
     case appleSignup(nickname: String, accessToken: String)
-    case appleRecovery
+    case appleLogin(accessToken: String)
+    case appleRecovery(accessToken: String)
 }
 
 extension AppleAPI: BaseAPI {
-
+ 
     public static var apiType: APIType = .apple
 
     public var path: String {
         switch self {
-        case .appleLogin:
-            return "/login"
         case .appleSignup:
             return "/signup"
+        case .appleLogin:
+            return "/login"
         case .appleRecovery:
             return "/recovery"
         }
@@ -29,10 +27,10 @@ extension AppleAPI: BaseAPI {
 
     public var method: Moya.Method {
         switch self {
-        case .appleLogin:
-            return .get
         case .appleSignup:
             return .post
+        case .appleLogin:
+            return .get
         case .appleRecovery:
             return .put
         }
@@ -41,13 +39,23 @@ extension AppleAPI: BaseAPI {
     public var task: Moya.Task {
         switch self {
         case let .appleSignup(nickname, accessToken):
-            let parameters: [String: Any] = [
-                "nickname": nickname,
+            let bodyParameters: [String: Any] = [
+                "nickname": nickname
+            ]
+            let urlParameters: [String: Any] = [
                 "access_token": accessToken
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
-        case .appleLogin, .appleRecovery:
-            return .requestPlain
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
+        case let .appleLogin(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case let .appleRecovery(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 

@@ -18,7 +18,7 @@ public extension Project {
         
         let configurationName: ConfigurationName = "Development"
         let hasDynamicFramework = targets.contains(.dynamicFramework)
-        let deploymentTarget = Environment.deploymentTarget
+        let deploymentTarget = DeploymentTarget.iOS(targetVersion: "15.0", devices: .iphone)
         let platform = Environment.platform
         
         let baseSettings: SettingsDictionary = .baseSettings.setCodeSignManual()
@@ -42,6 +42,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: infoPlist),
                 sources: ["Sources/**/*.swift"],
                 resources: [.glob(pattern: "Resources/**", excluding: [])],
+                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     internalDependencies,
@@ -85,7 +86,7 @@ public extension Project {
                 infoPlist: .default,
                 sources: ["Sources/**/*.swift"],
                 resources: hasResources ? [.glob(pattern: "Resources/**", excluding: [])] : [],
-                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
+//                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
                 dependencies: deps + internalDependencies + externalDependencies,
                 settings: .settings(base: settings, configurations: XCConfig.framework)
             )
@@ -112,7 +113,7 @@ public extension Project {
                 infoPlist: .extendingDefault(with: demoInfoPlist),
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
-                entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
+                entitlements: .relativeToRoot("Supporting/마음가짐-Demo.entitlements"),
                 scripts: [.swiftLintScript],
                 dependencies: [
                     deps
