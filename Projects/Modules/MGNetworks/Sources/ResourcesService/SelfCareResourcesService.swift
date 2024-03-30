@@ -28,5 +28,8 @@ public enum SelfCareResourcesService {
         public static let selfCareMenuCollectionCell = "SelfCareMenuCollectionCell"
         public static let selfCareMenuTableViewCell = "SelfCareMenuTableViewCell"
         public static let selfCareProfileTableViewCell = "SelfCareProfileTableViewCell"
+        public static let myRoutineTableViewCell = "MyRoutineTableViewCell"
+        public static let myRoutineDetailTableViewCell = "MyRoutineDetailTableViewCell"
+        public static let myRoutineEditTableViewCell = "MyRoutineEditTableViewCell"
     }
 }
