@@ -1,7 +1,9 @@
 import UIKit
-import SelfCareFeatureInterface
-import DSKit
+
 import Core
+import DSKit
+
+import SelfCareFeatureInterface
 
 public class SelfCareViewController: UIViewController {
 

@@ -8,11 +8,11 @@ import SnapKit
 import Then
 
 import Core
+import Data
 import DSKit
-import MGLogger
 
 import Domain
-import Data
+import MGLogger
 import MGNetworks
 
 import SelfCareFeatureInterface
