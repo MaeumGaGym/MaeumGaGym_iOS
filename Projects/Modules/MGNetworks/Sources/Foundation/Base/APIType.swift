@@ -11,4 +11,9 @@ public enum APIType {
     case google
     case kakao
     case apple
+
+    //Self Care
+    case routine
+    case target
+    case ounwan
 }

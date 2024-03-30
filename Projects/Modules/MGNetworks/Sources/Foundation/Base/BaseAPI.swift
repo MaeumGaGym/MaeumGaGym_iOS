@@ -27,6 +27,12 @@ extension BaseAPI {
             appURL += "/apple"
         case .auth:
             appURL += "/auth"
+        case .routine:
+            appURL += "/routines"
+        case .target:
+            appURL += "/purposes"
+        case .ounwan:
+            appURL += ""
         }
 
         guard let url = URL(string: appURL) else {
