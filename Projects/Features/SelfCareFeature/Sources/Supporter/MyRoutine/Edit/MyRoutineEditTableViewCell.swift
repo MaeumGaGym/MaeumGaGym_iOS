@@ -7,8 +7,10 @@ import Core
 import DSKit
 import Domain
 
+import MGNetworks
+
 public class MyRoutineEditTableViewCell: BaseTableViewCell {
-    static let identifier: String = "MyRoutineEditTableViewCell"
+    static let identifier: String = SelfCareResourcesService.identifier.myRoutineEditTableViewCell
 
     private var containerView = UIView()
 
