@@ -144,6 +144,11 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
                     self.titleView.setup(with: myRoutineDetailData.routineTitleData)
                 }).disposed(by: disposeBag)
         })
+        
+        dotsButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.showIconTextPopUp(title: "루틴 설정", buttonTexts: ["공유 취소", "보관"])
+            }).disposed(by: disposeBag)
     }
 }
 
