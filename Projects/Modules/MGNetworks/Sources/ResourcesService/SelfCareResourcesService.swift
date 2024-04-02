@@ -9,13 +9,12 @@ public enum SelfCareResourcesService {
         public static let camera = DSKitAsset.Assets.cameraActIcon.image
         public static let photo = DSKitAsset.Assets.imageActIcon.image
         public static let ture = DSKitAsset.Assets.turnArrow.image
-        
         public static let selfCareMain = DSKitAsset.Assets.mainLogo.image
-        
         public static let bage = DSKitAsset.Assets.whiteAdd.image
-        
         public static let baseProfile = DSKitAsset.Assets.basicProfileIcon.image
+        public static let navLeftArrow = DSKitAsset.Assets.blackLeftBarArrow.image
     }
+
     public enum Title {
         public static let selectPicture = "사진 선택"
         public static let selfCare = "자기관리"
