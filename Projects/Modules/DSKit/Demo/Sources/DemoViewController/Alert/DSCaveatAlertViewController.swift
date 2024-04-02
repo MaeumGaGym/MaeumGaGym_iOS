@@ -29,12 +29,13 @@ public class DSCaveatAlertViewController: UIViewController {
         
         caveatAlertButton.rx.tap
             .subscribe(onNext: { [weak self] _ in
-                self?.showCaveatPopUp(title: "회원탈퇴",
-                                      message: "정말 탈퇴하실건가요?\n30일 뒤에 활동이 모두 삭제돼요.",
-                                      leftActionTitle: "취소",
-                                      rightActionTitle: "탈퇴",
-                                      leftActionCompletion: { print("취소")},
-                                      rightActionCompletion: { print("탈퇴") })
+                self?.showIconTextPopUp(title: "루틴 설정", buttonImages: [DSKitAsset.Assets.blackEarth.image, DSKitAsset.Assets.blackImageActIcon.image], buttonTexts: ["공유 취소", "보관"])
+//                showCaveatPopUp(title: "회원탈퇴",
+//                                      message: "정말 탈퇴하실건가요?\n30일 뒤에 활동이 모두 삭제돼요.",
+//                                      leftActionTitle: "취소",
+//                                      rightActionTitle: "탈퇴",
+//                                      leftActionCompletion: { print("취소")},
+//                                      rightActionCompletion: { print("탈퇴") })
             })
     }
 }
