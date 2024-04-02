@@ -13,6 +13,8 @@ public enum SelfCareResourcesService {
         public static let bage = DSKitAsset.Assets.whiteAdd.image
         public static let baseProfile = DSKitAsset.Assets.basicProfileIcon.image
         public static let navLeftArrow = DSKitAsset.Assets.blackLeftBarArrow.image
+        public static let blackDots = DSKitAsset.Assets.blackDotsActIcon.image
+        public static let whitePencilActIcon = DSKitAsset.Assets.whitePencilActIcon.image
     }
 
     public enum Title {

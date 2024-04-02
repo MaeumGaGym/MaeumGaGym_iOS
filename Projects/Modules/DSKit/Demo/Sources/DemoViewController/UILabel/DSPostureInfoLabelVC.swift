@@ -6,11 +6,8 @@ import Then
 
 open class DSPostureInfoLabelVC: UIViewController {
 
-    private let postureInfoTitle1 = MGPostureInfoLabel(titleNumber: "01",
-                                                       text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.")
-    private let postureInfoTitle2 = MGPostureInfoLabel(titleNumber: "02",
-                                                       text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.",
-                                                       numberOfLines: 2)
+    private let postureInfoTitle1 = MGPostureInfoLabel()
+    private let postureInfoTitle2 = MGPostureInfoLabel()
     
     open override func viewDidLoad() {
         super.viewDidLoad()

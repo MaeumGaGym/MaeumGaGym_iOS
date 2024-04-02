@@ -1,6 +1,22 @@
 import UIKit
 
 public extension UIViewController {
+    
+    func showIconTextPopUp(title: String? = nil,
+                           buttonImages: [UIImage]? = nil,
+                           buttonTexts: [String]? = nil,
+                           attributedMessage: NSAttributedString? = nil,
+                           leftActionCompletion: (() -> Void)? = nil,
+                           rightActionCompletion: (() -> Void)? = nil) {
+        
+        let popUpViewController = MGIconTextAlertViewController(titleText: title,
+                                                                buttonImage: buttonImages,
+                                                                buttonText: buttonTexts,
+                                                                attributedMessageText: attributedMessage)
+
+        present(popUpViewController, animated: false, completion: nil)
+    }
+    
     func showCaveatPopUp(
         title: String? = nil,
         message: String? = nil,
@@ -34,7 +50,7 @@ public extension UIViewController {
                             leftActionCompletion: leftActionCompletion,
                             rightActionCompletion: rightActionCompletion)
         }
-    
+
     private func showCaveatPopUp(
         popUpViewController: MGCaveatAlertViewController,
         leftActionTitle: String?,

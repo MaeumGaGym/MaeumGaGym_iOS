@@ -17,13 +17,17 @@ import MGNetworks
 
 import SelfCareFeatureInterface
 
-public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel> {
+public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel>, Stepper, UIGestureRecognizerDelegate {
 
     private var myRoutineDetailModel: SelfCareMyRoutineDetailModel = SelfCareMyRoutineDetailModel(
         routineTitleData: SelfCareRoutineModel(routineNameText: "",
                                                usingState: false,
                                                sharingState: false),
         routinesData: [])
+    
+    public var steps = PublishRelay<Step>()
+    
+    private var naviBar = RoutineNavigationBarBar()
 
     private var headerView = UIView()
 
@@ -44,7 +48,13 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
     private var deleteRoutineButton = SelfCareButton(type: .deleteRotine)
     private var editRoutineButton = SelfCareButton(type: .editRoutine)
-    private var dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
+    private var dotsButton = MGImageButton(image: SelfCareResourcesService.Assets.blackDots)
+
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
 
     public override func attribute() {
         super.attribute()
@@ -53,13 +63,19 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
         myRoutineDetailTableView.delegate = self
         myRoutineDetailTableView.dataSource = self
+
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     public override func layout() {
         super.layout()
 
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 136.0))
-        view.addSubviews([headerView, myRoutineDetailTableView, bottomContainerView])
+        view.addSubviews([naviBar, headerView, myRoutineDetailTableView, bottomContainerView])
+
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         headerView.addSubview(titleView)
 
@@ -71,7 +87,7 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
         myRoutineDetailTableView.tableHeaderView = headerView
         myRoutineDetailTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomContainerView.snp.top)
         }
@@ -128,6 +144,11 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
                     self.titleView.setup(with: myRoutineDetailData.routineTitleData)
                 }).disposed(by: disposeBag)
         })
+        
+        dotsButton.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.showIconTextPopUp(title: "루틴 설정", buttonTexts: ["공유 취소", "보관"])
+            }).disposed(by: disposeBag)
     }
 }
 

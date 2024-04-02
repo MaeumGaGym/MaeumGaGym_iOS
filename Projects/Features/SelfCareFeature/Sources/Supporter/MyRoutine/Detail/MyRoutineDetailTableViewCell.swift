@@ -80,7 +80,7 @@ public class MyRoutineDetailTableViewCell: BaseTableViewCell {
 public extension MyRoutineDetailTableViewCell {
     func setup(with model: SelfCareMyRoutineDetailExerciseModel) {
         exerciseImage.image = model.exericseImage
-        exerciseNameLabel.text = model.exerciseTitle
-        exerciseRoutineLabel.text = "\(model.exerciseCount)개 | \(model.exerciseSet)세트"
+        exerciseNameLabel.changeText(text: model.exerciseTitle)
+        exerciseRoutineLabel.changeText(text: "\(model.exerciseCount)개 | \(model.exerciseSet)세트")
     }
 }
