@@ -14,7 +14,7 @@ final class RoutineNavigationBarBar: UIView {
          return leftButton.rx.tap
      }
 
-    private let leftButton = MGImageButton(image: AuthResourcesService.Assets.leftArrow)
+    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.navLeftArrow)
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton]).then {
         $0.axis = .horizontal
@@ -33,7 +33,7 @@ final class RoutineNavigationBarBar: UIView {
     }
 }
 
-extension AuthNavigationBarBar {
+extension RoutineNavigationBarBar {
     @discardableResult
     public func setLeftButtonImage(image: UIImage) -> Self {
         self.leftButton.setImage(image, for: .normal)
@@ -42,7 +42,7 @@ extension AuthNavigationBarBar {
 }
 
 // MARK: - UI & Layout
-extension AuthNavigationBarBar {
+extension RoutineNavigationBarBar {
     private func setUI() {
         self.backgroundColor = .clear
     }
