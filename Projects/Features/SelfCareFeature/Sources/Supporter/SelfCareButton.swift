@@ -81,7 +81,7 @@ private extension SelfCareButton {
 
             buttonLabel.sizeToFit()
             containerView.snp.remakeConstraints {
-                $0.width.equalTo(buttonLabel.frame.width + 32.0)
+                $0.width.equalTo(type.width)
                 $0.centerX.equalToSuperview()
                 $0.top.bottom.equalToSuperview().inset(17.0)
             }
@@ -96,9 +96,8 @@ private extension SelfCareButton {
             buttonImage.image = type.buttonImage
         }
 
-        buttonLabel.text = type.text
-        buttonLabel.textColor = type.textColor
+        buttonLabel.changeText(text: type.text)
+        buttonLabel.changeTextColor(color: type.textColor)
         backgroundColor = type.backgroundColor
-
     }
 }

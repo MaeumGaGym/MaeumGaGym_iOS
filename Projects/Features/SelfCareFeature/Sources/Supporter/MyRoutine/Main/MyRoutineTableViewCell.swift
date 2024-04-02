@@ -7,9 +7,11 @@ import Core
 import DSKit
 import Domain
 
+import MGNetworks
+
 public class MyRoutineTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = "MyRoutineTableViewCell"
+    static let identifier: String = SelfCareResourcesService.identifier.myRoutineTableViewCell
 
     private var containerView = UIView().then {
         $0.backgroundColor = DSKitAsset.Colors.blue50.color
@@ -32,7 +34,7 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
         $0.isHidden = true
     }
 
-    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
+    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.grayDotsActIcon.image)
 
     public func setup(with model: SelfCareRoutineModel) {
         routineNameLabel.text = model.routineNameText

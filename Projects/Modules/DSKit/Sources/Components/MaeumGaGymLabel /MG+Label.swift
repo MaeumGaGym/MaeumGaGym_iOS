@@ -56,6 +56,10 @@ open class MGLabel: BaseLabel {
         textLabel.font = font
     }
 
+    public func changeTextColor(color: UIColor?) {
+        textLabel.textColor = color
+    }
+
     public override func layout() {
         super.layout()
 

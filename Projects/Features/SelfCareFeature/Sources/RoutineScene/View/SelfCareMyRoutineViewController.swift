@@ -8,16 +8,20 @@ import SnapKit
 import Then
 
 import Core
+import Data
 import DSKit
-import MGLogger
 
 import Domain
-import Data
+import MGLogger
 import MGNetworks
 
 import SelfCareFeatureInterface
 
-public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel> {
+public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel>, Stepper, UIGestureRecognizerDelegate {
+
+    public var steps = PublishRelay<Step>()
+    
+    private var naviBar = RoutineNavigationBarBar()
 
     private var myRoutineModel: SelfCareMyRoutineModel = SelfCareMyRoutineModel(
         titleTextData:
@@ -35,12 +39,11 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
                                               isCenter: false
     )
 
-
-    private let myRoutineSubTitleLabel = UILabel().then {
-        $0.numberOfLines = 2
-        $0.textColor = DSKitAsset.Colors.gray600.color
-        $0.font = UIFont.Pretendard.bodyMedium
-    }
+    private let myRoutineSubTitleLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+                                                 textColor: DSKitAsset.Colors.gray600.color, 
+                                                 isCenter: false,
+                                                 numberOfLineCount: 2
+    )
 
     private var myRoutineTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -53,23 +56,36 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 
     private var plusRoutineButton = SelfCareButton(type: .plusRoutine)
 
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
+
     public override func attribute() {
         super.attribute()
 
         view.backgroundColor = .white
 
-        myRoutineTitleLabel.text = myRoutineModel.titleTextData.titleText
-        myRoutineSubTitleLabel.text = myRoutineModel.titleTextData.infoText
+        myRoutineTitleLabel.changeText(text: myRoutineModel.titleTextData.titleText)
+        myRoutineSubTitleLabel.changeText(text: myRoutineModel.titleTextData.infoText)
 
         myRoutineTableView.delegate = self
         myRoutineTableView.dataSource = self
+
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     public override func layout() {
         super.layout()
+        
+        view.addSubviews([naviBar, myRoutineTableView, plusRoutineButton, headerView])
+        
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 144.0))
-        view.addSubview(headerView)
 
         headerView.addSubview(containerView)
 
@@ -79,8 +95,7 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
             $0.bottom.equalToSuperview().inset(20.0)
         }
 
-        containerView.addSubview(myRoutineTitleLabel)
-        containerView.addSubview(myRoutineSubTitleLabel)
+        containerView.addSubviews([myRoutineTitleLabel, myRoutineSubTitleLabel])
 
         myRoutineTitleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
@@ -94,15 +109,13 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
             $0.height.equalTo(40.0)
         }
 
-        view.addSubview(myRoutineTableView)
         myRoutineTableView.tableHeaderView = headerView
         myRoutineTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
 
-        view.addSubview(plusRoutineButton)
         plusRoutineButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-54.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
