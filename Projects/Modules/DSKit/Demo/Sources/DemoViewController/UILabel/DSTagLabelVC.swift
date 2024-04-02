@@ -7,8 +7,8 @@ import Core
 import DSKit
 
 open class DSTagLabelVC: UIViewController {
-    private let tagLabel1 = MGTagLabel(text: "맨몸")
-    private let tagLabel2 = MGTagLabel(text: "가슴")
+    private let tagLabel1 = MGTagLabel()
+    private let tagLabel2 = MGTagLabel()
 
     open override func viewDidLoad() {
         super.viewDidLoad()

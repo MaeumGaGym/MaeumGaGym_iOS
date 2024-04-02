@@ -5,8 +5,8 @@ import Then
 
 public class DSAgreeButtonVC: UIViewController {
     
-    var allAgreeButton = MGAgreeButton(text: .allAgreeText)
-    var agreeButton = MGAgreeButton(text: .privacyAgreeText)
+    var allAgreeButton = MGAgreeButton(type: .allAgreeText)
+    var agreeButton = MGAgreeButton(type: .privacyAgreeText)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
