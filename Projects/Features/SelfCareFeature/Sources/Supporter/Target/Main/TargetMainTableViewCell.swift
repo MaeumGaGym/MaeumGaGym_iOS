@@ -71,10 +71,10 @@ public class TargetMainTableViewCell: BaseTableViewCell {
 public extension TargetMainTableViewCell {
 
     func changeTargetName(text: String) {
-        targetNameLabel.text = text
+        targetNameLabel.changeText(text: text)
     }
 
     func changeTargetDate(startDate: String, endDate: String) {
-        targetPeriodLabel.text = "\(startDate) ~ \(endDate)"
+        targetPeriodLabel.changeText(text: "\(startDate) ~ \(endDate)")
     }
 }
