@@ -14,7 +14,7 @@ public enum SelfCareButtonType {
     var buttonImage: UIImage? {
         switch self {
         case .plusRoutine:
-            return DSKitAsset.Assets.blackPlus.image
+            return DSKitAsset.Assets.whiteAdd.image
         case .deleteRotine:
             return DSKitAsset.Assets.trashActIcon.image
         case .editRoutine:
@@ -82,6 +82,15 @@ public enum SelfCareButtonType {
             return DSKitAsset.Colors.blue500.color
         case .plusTarget:
             return DSKitAsset.Colors.blue500.color
+        }
+    }
+    
+    var width: Int {
+        switch self {
+        case .plusRoutine:
+            return 141
+        default:
+            return 141
         }
     }
 }
