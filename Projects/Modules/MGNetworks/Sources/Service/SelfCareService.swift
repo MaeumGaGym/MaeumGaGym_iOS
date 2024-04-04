@@ -104,7 +104,7 @@ public class SelfCareService {
                 textFieldData: MyRoutineEditTextFieldModel(
                     textFieldTitle: "제목", 
                     textFieldText: "주말 루틴",
-                    textFieldPlaceholder: "제목을 입력해주세요."),
+                    textFieldPlaceholder: "제목을 입력해주세요."), date: [],
                 exerciseData: [
                     MyRoutineEditExerciseModel(
                         exerciseImage: DSKitAsset.Assets.pushUp.image,
