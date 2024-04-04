@@ -73,13 +73,23 @@ public class MyRoutineCountView: BaseView {
             $0.width.height.equalTo(36.0)
         }
     }
+
+    public override func bind() {
+        minusButton.rx.tap.subscribe(onNext: { [self] _ in
+            self.numberTextField.text = "\((Int(numberTextField.text!) ?? 0) - 1)"
+        }).disposed(by: disposeBag)
+
+        plusButtonn.rx.tap.subscribe(onNext: { [self] _ in
+            self.numberTextField.text = "\((Int(numberTextField.text!) ?? 0) + 1)"
+        }).disposed(by: disposeBag)
+    }
 }
 
 public extension MyRoutineCountView {
     func setup(text: String) {
         countTextLabel.text = text
     }
-    
+
     func textFieldData(number: Int) {
         numberTextField.text = "\(number)"
     }

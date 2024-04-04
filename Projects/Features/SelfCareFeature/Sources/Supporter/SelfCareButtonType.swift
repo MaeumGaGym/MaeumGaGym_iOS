@@ -94,6 +94,10 @@ public enum SelfCareButtonType {
             return 107
         case .editRoutine:
             return 107
+        case .posturePlus:
+            return 107
+        case .edit:
+            return 70
         default:
             return 107
         }
