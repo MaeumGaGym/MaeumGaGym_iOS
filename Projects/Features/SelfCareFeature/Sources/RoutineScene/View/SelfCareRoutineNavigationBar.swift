@@ -21,6 +21,8 @@ final class RoutineNavigationBarBar: UIView {
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
+    
+    private lazy var leftTextLabel = MGLabel(font: UIFont.Pretendard.labelLarge, textColor: .black, isCenter: false, numberOfLineCount: 1)
 
     init() {
         super.init(frame: .zero)
@@ -39,6 +41,10 @@ extension RoutineNavigationBarBar {
         self.leftButton.setImage(image, for: .normal)
         return self
     }
+
+    public func setLeftText(text: String)  {
+        self.leftTextLabel.changeText(text: text)
+    }
 }
 
 // MARK: - UI & Layout
@@ -48,7 +54,7 @@ extension RoutineNavigationBarBar {
     }
 
     private func setLayout() {
-        self.addSubviews([leftItemsStackView])
+        self.addSubviews([leftItemsStackView, leftTextLabel])
 
         leftButton.snp.makeConstraints {
             $0.width.height.equalTo(24.0)
@@ -61,6 +67,12 @@ extension RoutineNavigationBarBar {
         leftItemsStackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(12.0)
             $0.leading.equalToSuperview().offset(20)
+        }
+
+        leftTextLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(14.0)
+            $0.leading.equalTo(leftItemsStackView.snp.trailing).offset(24.0)
+            $0.trailing.equalToSuperview().inset(20.0)
         }
     }
 }
