@@ -11,7 +11,7 @@ public class SelfCareButton: BaseButton {
     private var containerView = UIView()
 
     private var buttonImage = UIImageView()
-    
+
     private var buttonLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
                                       isCenter: false,
                                       numberOfLineCount: 1
@@ -56,9 +56,8 @@ private extension SelfCareButton {
                 $0.trailing.equalToSuperview()
             }
 
-            buttonLabel.sizeToFit()
             containerView.snp.remakeConstraints {
-                $0.width.equalTo(buttonLabel.frame.width)
+                $0.width.equalTo(type.width)
                 $0.centerX.equalToSuperview()
                 $0.top.bottom.equalToSuperview().inset(17.0)
             }
