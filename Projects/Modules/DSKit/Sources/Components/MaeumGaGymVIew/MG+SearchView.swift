@@ -30,7 +30,6 @@ open class MGSearchView: BaseView {
 
     public init () {
         super.init(frame: .zero)
-        bind()
     }
 
     required public init?(coder: NSCoder) {
@@ -67,7 +66,7 @@ open class MGSearchView: BaseView {
         }
     }
 
-    private func bind() {
+    open override func bind() {
         searchTextField.rx.text.orEmpty
             .map { $0.isEmpty }
             .bind(to: cancelButton.rx.isHidden)
