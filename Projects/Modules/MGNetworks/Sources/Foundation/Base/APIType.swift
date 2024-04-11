@@ -18,5 +18,5 @@ public enum APIType {
     case ounwan
 
     // Pose
-    case pose
+    case posture
 }

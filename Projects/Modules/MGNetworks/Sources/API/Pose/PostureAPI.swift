@@ -4,23 +4,23 @@ import Moya
 import Core
 import Alamofire
 
-public enum PoseAPI {
-    case poseCheck(accessToken: String, id: Int)
-    case poseSearch(accessToken: String, tag: String)
-    case poseRecommand(accessToken: String, tag: String)
+public enum PostureAPI {
+    case postureCheck(accessToken: String, id: Int)
+    case postureSearch(accessToken: String, tag: String)
+    case postureRecommand(accessToken: String, tag: String)
 }
 
-extension PoseAPI: BaseAPI {
+extension PostureAPI: BaseAPI {
 
-    public static var apiType: APIType = .pose
+    public static var apiType: APIType = .posture
 
     public var path: String {
         switch self {
-        case let .poseCheck(_, id):
+        case let .postureCheck(_, id):
             return "/\(id)"
-        case .poseSearch:
+        case .postureSearch:
             return "/tag"
-        case .poseRecommand:
+        case .postureRecommand:
             return ""
         }
     }
@@ -31,14 +31,14 @@ extension PoseAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case .poseCheck:
+        case .postureCheck:
             return .requestPlain
-        case let .poseSearch(_, tag):
+        case let .postureSearch(_, tag):
             let parameters: [String: Any] = [
                 "tag": tag
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
-        case let .poseRecommand(_,tag):
+        case let .postureRecommand(_,tag):
             let parameters: [String: Any] = [
                 "tag": tag
             ]
@@ -48,11 +48,11 @@ extension PoseAPI: BaseAPI {
 
     public var headers: [String : String]? {
         switch self {
-        case let .poseCheck(accessToken, _):
+        case let .postureCheck(accessToken, _):
             return ["Authorization": "\(accessToken)"]
-        case let .poseSearch(accessToken, _):
+        case let .postureSearch(accessToken, _):
             return ["Authorization": "\(accessToken)"]
-        case let .poseRecommand(accessToken, _):
+        case let .postureRecommand(accessToken, _):
             return ["Authorization": "\(accessToken)"]
         }
     }
