@@ -31,6 +31,8 @@ extension BaseAPI {
             appURL += "/routines"
         case .target:
             appURL += "/purposes"
+        case .posture:
+            appURL += "/poses"
         case .ounwan:
             appURL += ""
         }
