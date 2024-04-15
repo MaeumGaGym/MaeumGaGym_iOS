@@ -4,6 +4,7 @@ import UIKit
 public enum MGStep: Step {
 
     // Auth
+    case authSplashRequired
     case authIntroIsRequired
     case authAgreeIsRequired
     case authNickNameIsRequired
