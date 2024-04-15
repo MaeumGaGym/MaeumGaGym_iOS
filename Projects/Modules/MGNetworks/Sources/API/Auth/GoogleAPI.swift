@@ -4,10 +4,12 @@ import Moya
 import Core
 import Alamofire
 
+import Domain
+
 public enum GoogleAPI {
-    case googleSignup(nickname: String, accessToken: String)
-    case googleLogin(accessToken: String)
-    case googleRecovery(accessToken: String)
+    case googleSignup(param: SignupRequestDTO)
+    case googleLogin(param: LoginRequestDTO)
+    case googleRecovery(param: RecoveryRequestDTO)
 }
 
 extension GoogleAPI: BaseAPI {
@@ -38,28 +40,24 @@ extension GoogleAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case let .googleSignup(nickname, accessToken):
+        case .googleSignup(let param):
             let bodyParameters: [String: Any] = [
-                "nickname": nickname
+                "nickname": param.nickname
             ]
-            let urlParameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
-        case let .googleLogin(accessToken):
-            let parameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
-        case let .googleRecovery(accessToken):
-            let parameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: bodyParameters, encoding: JSONEncoding.default)
+        case .googleLogin, .googleRecovery:
+            return .requestPlain
         }
     }
 
     public var headers: [String : String]? {
-        return nil
+        switch self {
+        case .googleSignup(let param):
+            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
+        case .googleLogin(let param):
+            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
+        case .googleRecovery(let param):
+            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
+        }
     }
 }
