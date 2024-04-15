@@ -35,11 +35,11 @@ public struct DeleteResponseDTO: Codable {
     public let status: Int
 }
 
-public struct tokenRefreshRequestDTO: Codable {
+public struct TokenRefreshRequestDTO: Codable {
     public let refreshToken: String
 }
 
-public struct tokenRefreshResponseDTO: Codable {
+public struct TokenRefreshResponseDTO: Codable {
     public let status: Int
     public let accessToken: String
     public let refreshToken: String
