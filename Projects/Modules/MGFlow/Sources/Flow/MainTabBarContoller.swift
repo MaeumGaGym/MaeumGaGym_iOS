@@ -1,15 +1,22 @@
-//
-//  MainTabBarContoller.swift
-//  MGFlow
-//
-//  Created by 박준하 on 2/29/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
+import Data
 import UIKit
 
+import RxFlow
+import RxCocoa
+import RxSwift
+
+import Core
 import DSKit
+
+import Domain
+import MGNetworks
+
+import HomeFeatureInterface
+import PickleFeatureInterface
+import ShopFeatureInterface
+import SelfCareFeatureInterface
+import PostureFeatureInterface
 
 public class MainTabBarContoller: UITabBarController {
     public static let shared = MainTabBarContoller()

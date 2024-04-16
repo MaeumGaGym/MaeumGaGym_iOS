@@ -9,10 +9,15 @@ import Core
 
 public class PickleFlow: Flow {
 
-    private let rootViewController = UINavigationController(rootViewController: PickleViewController())
+    private var rootViewController: UINavigationController!
+    var viewController: PickleViewController!
 
     public var root: Presentable {
         return self.rootViewController
+    }
+    
+    public init() {
+        setupViewController()
     }
 
     public func navigate(to step: Step) -> FlowContributors {
@@ -26,15 +31,15 @@ public class PickleFlow: Flow {
         }
     }
     
-    private func setupPickleScreen() -> FlowContributors {
-        rootViewController.view.backgroundColor = .white
-        rootViewController.tabBarItem = UITabBarItem(title: "피클", image: DSKitAsset.Assets.bluePickleTapBar.image, selectedImage: DSKitAsset.Assets.bluePickleTapBar.image)
-        
-        return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: HomeStepper.shared))
+    private func setupViewController() {
+        viewController = PickleViewController()
+        rootViewController = UINavigationController(rootViewController: viewController)
     }
     
-    
-    public init() {
-
+    private func setupPickleScreen() -> FlowContributors {
+        rootViewController.tabBarItem.title = "피클"
+        rootViewController.tabBarItem.image = DSKitAsset.Assets.baPickleTapBar.image
+        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPeopleTapBar.image
+        return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: PickleStepper.shared))
     }
 }
