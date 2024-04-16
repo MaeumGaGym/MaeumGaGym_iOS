@@ -4,6 +4,7 @@ import RxSwift
 import RxCocoa
 
 import Domain
+import DSKit
 
 import MGLogger
 
@@ -56,8 +57,8 @@ public class HomeService {
 
     public func requestExtras() -> Single<[ExtrasModel]> {
         let extras: [ExtrasModel] = [
-            ExtrasModel(image: UIImage(), titleName: "칼로리 계산기", description: "먹은 음식의 칼로리를 계산해 보세요."),
-            ExtrasModel(image: UIImage(), titleName: "와카타임", description: "지금까지 한 운동 시간을 확인해 보세요.")
+            ExtrasModel(image: DSKitAsset.Assets.calculatorIcon.image, titleName: "칼로리 계산기", description: "먹은 음식의 칼로리를 계산해 보세요."),
+            ExtrasModel(image: DSKitAsset.Assets.timerIcon.image, titleName: "와카타임", description: "지금까지 한 운동 시간을 확인해 보세요.")
         ]
         return Single.just(extras)
     }

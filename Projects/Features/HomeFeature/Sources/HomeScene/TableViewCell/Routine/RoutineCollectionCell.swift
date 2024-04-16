@@ -17,7 +17,7 @@ public class RoutineCollectionCell: UICollectionViewCell {
     static let identifier: String = HomeResourcesService.identifier.routineCollectionCell
 
     private var routineImageView = UIImageView().then {
-        $0.backgroundColor = .red
+        $0.backgroundColor = DSKitAsset.Colors.gray100.color
         $0.layer.cornerRadius = 24.0
     }
 

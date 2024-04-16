@@ -17,7 +17,7 @@ public class ExtraCollectionViewCell: UICollectionViewCell {
     static let identifier: String = HomeResourcesService.identifier.extraCollectionViewCell
 
     private var iconImageView = UIImageView().then {
-        $0.backgroundColor = .brown
+        $0.backgroundColor = .clear
     }
 
     private var titleLabel = BaseLabel().then {
