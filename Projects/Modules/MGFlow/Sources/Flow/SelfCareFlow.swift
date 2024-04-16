@@ -41,8 +41,8 @@ public class SelfCareFlow: Flow {
         rootViewController.view.backgroundColor = .white
         rootViewController.tabBarItem = UITabBarItem(
             title: "자기관리",
-            image: DSKitAsset.Assets.blackMuscleTapBar.image,
-            selectedImage: DSKitAsset.Assets.blackMuscleTapBar.image)
+            image: DSKitAsset.Assets.baMuscleTapBar.image,
+            selectedImage: DSKitAsset.Assets.blMuscleTapBar.image)
         rootViewController.setViewControllers([viewController], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: HomeStepper.shared))
     }

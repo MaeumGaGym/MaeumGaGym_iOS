@@ -39,13 +39,21 @@ public class InitFlow: Flow {
     }
 
     private func setupTabBar() -> FlowContributors {
-
-        let flows: [Flow] = [homeFlow, postureFlow, shopFlow, pickleFlow, selfCareFlow]
-
-        Flows.use(flows, when: .ready, block: { [weak self] root in
-            guard let `self` = self else { return }
-            self.rootViewController.viewControllers = root
-        })
+        Flows.use(homeFlow,
+                  postureFlow,
+                  shopFlow,
+                  pickleFlow,
+                  selfCareFlow,
+                  when: .created
+        ) { home, posture, shop, pickle, selfCare in
+            home.tabBarItem = MGTabBarTypeItem(.home)
+            posture.tabBarItem = MGTabBarTypeItem(.posture)
+            shop.tabBarItem = MGTabBarTypeItem(.shop)
+            pickle.tabBarItem = MGTabBarTypeItem(.pickle)
+            selfCare.tabBarItem = MGTabBarTypeItem(.selfCare)
+            
+            self.rootViewController.setViewControllers([home, posture, shop, pickle, selfCare], animated: true)
+        }
         return .multiple(flowContributors: [
             FlowContributor.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: MGStep.home)),
             FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: MGStep.postureIsRequired)),
