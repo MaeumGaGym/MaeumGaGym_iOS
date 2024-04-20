@@ -40,7 +40,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
     var routines: [RoutineModel]?
     var extras: [ExtrasModel]?
 
-    private lazy var tableView: UITableView = UITableView().then {
+    private lazy var tableView = UITableView().then {
         $0.delegate = self
         $0.dataSource = self
         $0.backgroundColor = DSKitAsset.Colors.gray25.color
@@ -111,7 +111,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
                getExtras: Observable.just(()).asDriver(onErrorDriveWith: .never())
            )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.stepNumber
                 .subscribe(onNext: { stepNumber in
                     MGLogger.debug("Step Number: \(stepNumber)")
