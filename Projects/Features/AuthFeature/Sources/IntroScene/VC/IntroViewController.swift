@@ -20,8 +20,6 @@ import AuthenticationServices
 
 public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
 
-    public var steps = PublishRelay<Step>()
-
     private var introModel: IntroModel?
 
     private var introImageView = MGProfileView(

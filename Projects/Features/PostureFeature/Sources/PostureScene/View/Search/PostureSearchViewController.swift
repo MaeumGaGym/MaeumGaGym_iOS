@@ -19,8 +19,6 @@ import PostureFeatureInterface
 
 public class PostureSearchViewController: BaseViewController<PostureSearchViewModel>, Stepper {
 
-    public var steps = PublishRelay<Step>()
-
     private var searchModel = PostureSearchModel(searchResultData: [])
 
     private var containerView = BaseView()

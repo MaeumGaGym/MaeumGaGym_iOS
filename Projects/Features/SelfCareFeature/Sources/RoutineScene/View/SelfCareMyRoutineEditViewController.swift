@@ -30,8 +30,6 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
         exerciseData: []
     )
 
-    public var steps = PublishRelay<Step>()
-
     private var naviBar = RoutineNavigationBarBar()
 
     private var headerView = UIView()

@@ -29,7 +29,6 @@ enum HomeCell {
 
 public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
-    public var steps = PublishRelay<Step>()
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
 

@@ -16,9 +16,7 @@ import MGNetworks
 import PostureFeatureInterface
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
-    
-    public var steps = PublishRelay<Step>()
-    
+        
     private lazy var naviBar = PostureMainNavigationBar()
 
     private let categoryTitleList = [
