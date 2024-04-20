@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import AVFoundation
 import AudioToolbox
+import HomeFeatureInterface
 
 public class Metronome: MetronomeType {
     public static let sharedInstance = Metronome(
