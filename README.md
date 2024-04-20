@@ -36,4 +36,5 @@
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Module Graph
-![graph](https://github.com/MaeumgaGym/MaeumGaGym_iOS/assets/102890390/7c0d3e6e-4517-4044-8fef-62db69630e58)
+![graph](https://github.com/MaeumGaGym/MaeumGaGym_iOS/assets/102890390/5217d869-cb3c-4f34-9430-9e43e181adbb)
+
