@@ -8,7 +8,7 @@ import DSKit
 
 import MGNetworks
 
-final class HomeNavigationBar: UIView {
+final class HomeNavigationBar: BaseView {
 
     public var rightButtonTap: ControlEvent<Void> {
          return rightButton.rx.tap
@@ -26,15 +26,34 @@ final class HomeNavigationBar: UIView {
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
-
-    init() {
-        super.init(frame: .zero)
-        setUI()
-        setLayout()
-    }
+    
+    override init(frame: CGRect) { super.init(frame: frame) }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func attribute() {
+        self.backgroundColor = DSKitAsset.Colors.gray25.color
+    }
+    
+    override func layout() {
+        self.addSubviews([logoImageView, rightItemsStackView])
+
+        self.snp.makeConstraints {
+            $0.height.equalTo(42)
+        }
+
+        logoImageView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+            $0.width.height.equalTo(42)
+        }
+
+        rightItemsStackView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
+        }
     }
 }
 
@@ -43,31 +62,5 @@ extension HomeNavigationBar {
     public func setRightButtonImage(image: UIImage) -> Self {
         self.rightButton.setImage(image, for: .normal)
         return self
-    }
-}
-
-// MARK: - UI & Layout
-extension HomeNavigationBar {
-    private func setUI() {
-        self.backgroundColor = DSKitAsset.Colors.gray25.color
-    }
-
-    private func setLayout() {
-        self.addSubviews([logoImageView, rightItemsStackView])
-
-        self.snp.makeConstraints { make in
-            make.height.equalTo(42)
-        }
-
-        logoImageView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.leading.equalToSuperview().inset(20)
-            make.width.height.equalTo(42)
-        }
-
-        rightItemsStackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview().inset(20)
-        }
     }
 }
