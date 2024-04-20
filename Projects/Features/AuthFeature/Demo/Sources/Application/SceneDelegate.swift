@@ -10,6 +10,8 @@ import MGFlow
 import MGNetworks
 import AuthFeature
 
+import TokenManager
+
 import KakaoSDKAuth
 import KakaoSDKCommon
 import AuthFeatureInterface
@@ -39,8 +41,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = scene
 
         mainFlow = AuthFlow()
+        
+        TokenManagerImpl().save(token: "eyJyb2xlIjoicmVmcmVzaCIsImFsZyI6IkhTMjU2In0.eyJpYXQiOjE3MTMzMTQwOTIsImV4cCI6MTcxMzkxODg5Mn0.lgb0dj6yUFf9EQ4kwTFBOt790YB5qYLtScuSm5BWWLE", with: .refreshToken)
 
-        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.authIntroIsRequired))
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.authSplashRequired))
         Flows.use(mainFlow, when: .created) { root in
             self.window?.rootViewController = root
             self.window?.makeKey()

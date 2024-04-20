@@ -8,7 +8,7 @@ import Domain
 
 public enum AuthAPI {
     case delete(param: DeleteRequestDTO)
-    case reissuanceToken(param: TokenRefreshRequestDTO)
+    case reissuanceToken(refreshToken: String)
     case checkNickname(param: CheckNicknameRequestDTO)
 }
 
@@ -40,13 +40,8 @@ extension AuthAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case .delete, .checkNickname:
+        case .delete, .checkNickname, .reissuanceToken:
             return .requestPlain
-        case .reissuanceToken(let param):
-            let parameters: [String: Any] = [
-                "refresh_token": param.refreshToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
 
@@ -54,6 +49,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case .delete(let param):
             return ["Authorization": "\(param.accessToken)"]
+        case .reissuanceToken(let refreshToken):
+            return ["RF-TOKEN": "\(refreshToken)"]
         default:
             return nil
         }
