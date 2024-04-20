@@ -8,6 +8,6 @@ let project = Project.makeModule(
     targets: [.app, .unitTest],
     internalDependencies: [
         .data,
-        .Features.RootFeature
+        .Modules.mgFlow
     ]
 )
