@@ -7,14 +7,7 @@ import RxCocoa
 import BaseFeatureDependency
 import Core
 
-// public protocol HomeViewControllable: ViewControllable {}
 public protocol HomeCoordintable {
-    var onSettingButtonTap: (() -> Void)? { get set }
-    var onStepNumberButtonTap: (() -> Void)? { get set}
-    var routineButtonTap: (() -> Void)? { get set}
-    var calorieCalculatorButtonTap: (() -> Void)? { get set }
-    var maeumGaGymTimerButtonTap: (() -> Void)? { get set }
-
     var disposeBag: DisposeBag { get set }
 }
 

@@ -12,7 +12,9 @@ import DSKit
 import Domain
 import MGNetworks
 
-public class MotivationMessageTableViewCell: BaseTableViewCell {
+import HomeFeatureInterface
+
+public class MotivationMessageTableViewCell: BaseTableViewCell, CollectoionCellID {
 
     static public var identifier: String = HomeResourcesService.identifier.motivationMessageTableViewCell
 

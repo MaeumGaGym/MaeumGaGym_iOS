@@ -65,8 +65,13 @@ public final class MGLogger {
         self.saveLevel = saveLevel
     }
     
-    
-    /// 📢 [VERBOSE]
+    /**
+     상세한 정보를 로깅하는 레벨입니다.
+     > 📢 [공지]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func verbose(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -75,7 +80,13 @@ public final class MGLogger {
         }
     }
     
-    /// 🛠 [DEBUG]
+    /**
+     디버그용 정보를 로깅하는 레벨입니다. 앱의 내부 동작을 추적할 때 사용합니다.
+     > 🛠 [디버그]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func debug(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -84,7 +95,13 @@ public final class MGLogger {
         }
     }
     
-    /// ⚠️ [WARNING]
+    /**
+     경고를 로깅하는 레벨입니다. 앱의 동작에 영향을 줄 수 있는 주의 사항을 기록하는데 사용합니다.
+     > ⚠️ [주의]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func warning(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -93,8 +110,13 @@ public final class MGLogger {
         }
     }
     
-    
-    /// 🔥 [ERROR]
+    /**
+     에러를 로깅하는 레벨입니다. 앱에서 발생한 오류를 기록하는 데 사용합니다.
+     > 🔥 [에러]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func error(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -103,7 +125,13 @@ public final class MGLogger {
         }
     }
     
-    /// 🎮 [TEST]
+    /**
+     테스트를 로깅해보는 레벨입니다. 앱의 테스트를 하기 위해서 사용합니다.
+     > 🎮 [TEST]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func test(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -112,7 +140,6 @@ public final class MGLogger {
         }
     }
 }
-
 
 extension MGLogger {
     

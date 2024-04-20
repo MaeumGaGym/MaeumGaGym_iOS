@@ -32,40 +32,45 @@ extension DefaultPostureUseCase: PostureUseCase {
 
     public func getRecommandData() {
         repository.getRecommandData()
-            .subscribe(onSuccess: { [weak self] recommandData in
-                self?.recommandData.onNext(recommandData)
-            },
-            onFailure: { error in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, recommandData in
+                owner.recommandData.onNext(recommandData)
+            }, onError: { error in
                 print("PostureUseCase getRecommandData error occurred: \(error)")
-            }).disposed(by: disposeBag)
+            }
+            ).disposed(by: disposeBag)
     }
 
     public func getPartData(type: PosturePartType) {
         repository.getPartData(type: type)
-            .subscribe(onSuccess: { [weak self] partData in
-                self?.partData.onNext(partData)
-            },
-            onFailure: { error in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, partData in
+                owner.partData.onNext(partData)
+            }, onError: { error in
                 print("PostureUseCase getPartData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
 
     public func getDetailData(type: PostureDetailType) {
         repository.getDetailData(type: type)
-            .subscribe(onSuccess: { [weak self] detailData in
-                self?.detailData.onNext(detailData)
-            },
-            onFailure: { error in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, detailData in
+                owner.detailData.onNext(detailData)
+            }, onError: { error in
                 print("PostureUseCase getDetailData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
 
     public func getSearchData() {
         repository.getSearchData()
-            .subscribe(onSuccess: { [weak self] searchData in
-                self?.searchData.onNext(searchData)
-            },
-            onFailure: { error in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, searchData in
+                owner.searchData.onNext(searchData)
+            }, onError: { error in
                 print("PostureUseCase getSearchData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }

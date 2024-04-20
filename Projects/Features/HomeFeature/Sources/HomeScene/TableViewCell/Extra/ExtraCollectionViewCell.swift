@@ -12,10 +12,12 @@ import DSKit
 import Domain
 import MGNetworks
 
-public class ExtraCollectionViewCell: UICollectionViewCell {
+import HomeFeatureInterface
 
-    static let identifier: String = HomeResourcesService.identifier.extraCollectionViewCell
-
+public class ExtraCollectionViewCell: UICollectionViewCell, CollectoionCellID {
+    
+    public static var identifier: String  = HomeResourcesService.identifier.extraCollectionViewCell
+    
     private var iconImageView = UIImageView().then {
         $0.backgroundColor = .clear
     }

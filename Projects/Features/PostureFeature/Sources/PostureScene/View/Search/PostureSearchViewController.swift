@@ -19,8 +19,6 @@ import PostureFeatureInterface
 
 public class PostureSearchViewController: BaseViewController<PostureSearchViewModel>, Stepper {
 
-    public var steps = PublishRelay<Step>()
-
     private var searchModel = PostureSearchModel(searchResultData: [])
 
     private var containerView = BaseView()
@@ -91,7 +89,7 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
             PostureStepper.shared.steps.accept(MGStep.postureBack)
         }).disposed(by: disposeBag)
 
-        let output = viewModel.transform(input, action: { optput in
+        _ = viewModel.transform(input, action: { optput in
             optput.searchData
                 .subscribe(onNext: { searchData in
                     MGLogger.debug("searchData: \(searchData)")

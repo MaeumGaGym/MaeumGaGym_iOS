@@ -18,8 +18,6 @@ import MGNetworks
 import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel>, Stepper, UIGestureRecognizerDelegate {
-
-    public var steps = PublishRelay<Step>()
     
     private var naviBar = RoutineNavigationBarBar()
 

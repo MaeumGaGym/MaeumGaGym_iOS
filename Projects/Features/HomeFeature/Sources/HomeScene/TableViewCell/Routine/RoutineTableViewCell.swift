@@ -12,9 +12,11 @@ import DSKit
 import Domain
 import MGNetworks
 
-public class RoutineTableViewCell: BaseTableViewCell {
+import HomeFeatureInterface
 
-    static let identifier: String = HomeResourcesService.identifier.routineTableViewCell
+public class RoutineTableViewCell: BaseTableViewCell, CollectoionCellID {
+
+    public static var identifier: String = HomeResourcesService.identifier.routineTableViewCell
 
     private var nameTitle = MGLabel(text: HomeResourcesService.Title.todayRoutine,
                                     font: UIFont.Pretendard.titleMedium,

@@ -6,8 +6,8 @@ let project = Project.makeModule(
     name: "MGNetworks",
     targets: [.unitTest, .staticFramework],
     internalDependencies: [
-        .core,
+//        .core,
         .Modules.tokenManager,
-        .domain
+        .Modules.dsKit
     ]
 )

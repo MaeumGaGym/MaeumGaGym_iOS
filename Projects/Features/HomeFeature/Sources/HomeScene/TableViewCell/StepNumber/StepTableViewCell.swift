@@ -15,7 +15,9 @@ import Domain
 import MindGymKit
 import MGNetworks
 
-public class StepTableViewCell: BaseTableViewCell {
+import HomeFeatureInterface
+
+public class StepTableViewCell: BaseTableViewCell, CollectoionCellID {
 
     static public var identifier: String = HomeResourcesService.identifier.stepTableViewCell
 

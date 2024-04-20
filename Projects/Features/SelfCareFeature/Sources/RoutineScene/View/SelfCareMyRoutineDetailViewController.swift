@@ -24,9 +24,7 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
                                                usingState: false,
                                                sharingState: false),
         routinesData: [])
-    
-    public var steps = PublishRelay<Step>()
-    
+        
     private var naviBar = RoutineNavigationBarBar()
 
     private var headerView = UIView()

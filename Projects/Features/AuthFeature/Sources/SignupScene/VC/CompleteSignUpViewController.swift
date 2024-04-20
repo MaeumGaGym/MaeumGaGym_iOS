@@ -13,8 +13,6 @@ import MGLogger
 
 public class CompleteSignUpViewController: BaseViewController<CompleteViewModel> {
 
-    public var steps = PublishRelay<Step>()
-
     private let mainLogo = UIImageView().then {
         $0.image = DSKitAsset.Assets.mainLogo.image
     }

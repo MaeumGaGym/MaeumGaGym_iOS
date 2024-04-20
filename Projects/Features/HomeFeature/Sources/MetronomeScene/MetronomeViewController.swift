@@ -175,36 +175,40 @@ public class MetronomeViewController: UIViewController {
 
     private func setupActions() {
         tempoIncrementButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.tempo += 1
-                self?.updateTempoViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.tempo += 1
+                owner.updateTempoViews()
             })
             .disposed(by: disposeBag)
 
         tempoDecrementButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.tempo -= 1
-                self?.updateTempoViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.tempo -= 1
+                owner.updateTempoViews()
             })
             .disposed(by: disposeBag)
 
         startButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.start()
-                self?.startColorChangeTimer()
-                self?.updateTempoViews()
-                self?.stopButton.isHidden = false
-                self?.startButton.isHidden = true
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.start()
+                owner.startColorChangeTimer()
+                owner.updateTempoViews()
+                owner.stopButton.isHidden = false
+                owner.startButton.isHidden = true
             })
             .disposed(by: disposeBag)
 
         stopButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.stop()
-                self?.colorChangeTimer?.invalidate()
-                self?.resetBitViews()
-                self?.stopButton.isHidden = true
-                self?.startButton.isHidden = false
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.stop()
+                owner.colorChangeTimer?.invalidate()
+                owner.resetBitViews()
+                owner.stopButton.isHidden = true
+                owner.startButton.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -216,12 +220,13 @@ public class MetronomeViewController: UIViewController {
 
         tempoSlider.rx.value
             .map { Int($0.rounded()) }
-            .subscribe(onNext: { [weak self] roundedValue in
-                self?.viewModel.tempo = roundedValue
-                self?.updateTempoViews()
-                self?.viewModel.stop()
-                self?.colorChangeTimer?.invalidate()
-                self?.resetBitViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, roundedValue in
+                owner.viewModel.tempo = roundedValue
+                owner.updateTempoViews()
+                owner.viewModel.stop()
+                owner.colorChangeTimer?.invalidate()
+                owner.resetBitViews()
             })
             .disposed(by: disposeBag)
     }

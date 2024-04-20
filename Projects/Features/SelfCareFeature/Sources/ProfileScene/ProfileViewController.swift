@@ -13,8 +13,6 @@ import Core
 
 final public class SelfCareProfileViewController: BaseViewController<ProfileEditViewModel>, Stepper {
     
-    public var steps = PublishRelay<Step>()
-
     private lazy var navBar = SelfCareProfileNavigationBar()
 
     private lazy var userProfileImageView = MGProfileView(

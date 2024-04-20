@@ -56,58 +56,49 @@ public class IntroViewModel: AuthViewModelType {
 
         input.goolgeButtonTapped
             .drive(onNext: { _ in
-                print("goolgeButtonTapped")
                 AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
             })
             .disposed(by: disposeBag)
 
         input.kakaoButtonTapped
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.kakaoButtonTap()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.kakaoButtonTap()
             })
             .disposed(by: disposeBag)
 
         input.appleButtonTapped
-              .drive(onNext: { [weak self] _ in
-                  self?.useCase.appleButtonTap()
-              })
-              .disposed(by: disposeBag)
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.appleButtonTap()
+            })
+            .disposed(by: disposeBag)
 
         input.getIntroData
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getIntroData()
-            }).disposed(by: disposeBag)
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getIntroData()
+            })
+            .disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
         useCase.introData
-            .subscribe(onNext: { introData in
-                self.introModelSubject.onNext(introData)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, introData in
+                owner.introModelSubject.onNext(introData)
                 MGLogger.debug(introData)
             }).disposed(by: disposeBag)
-        
+
         useCase.appleSignupResult
             .subscribe(onNext: { token in
                 MGLogger.debug("\(token)")
             })
             .disposed(by: disposeBag)
     }
-}
-
-private extension IntroViewModel {
-    //    func kakaoGetUserInfo() {
-    //        UserApi.shared.me() { (user, error) in
-    //            if let error = error {
-    //                print(error)
-    //            }
-    //
-    //            let userName = user?.kakaoAccount?.name
-    //
-    //            _ = "user name : \(String(describing: userName))"
-    //
-    //            print("user - \(String(describing: user))")
-    //        }
-    //    }
 }

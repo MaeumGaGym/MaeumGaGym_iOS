@@ -26,5 +26,3 @@ public class CompleteViewModel: BaseViewModel {
 
     }
 }
-
-

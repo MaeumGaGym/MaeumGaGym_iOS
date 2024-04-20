@@ -75,7 +75,7 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
             getDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { optput in
+        _ = viewModel.transform(input, action: { optput in
             optput.detailData
                 .subscribe(onNext: { detailData in
                     MGLogger.debug("detailData: \(detailData)")
@@ -99,7 +99,6 @@ extension PostureDetailViewController: UITableViewDelegate {
         case 2:
             return 60
         case 3:
-            //352
             let model = postureDetailModel.exerciseWayData.infoText
             var lineCount = 0
             for data in model {
@@ -118,8 +117,6 @@ extension PostureDetailViewController: UITableViewDelegate {
             return CGFloat(92 + (model.count * 48) + (lineCount * 20))
         case 5:
             return 360
-//        case 6:
-//            return 40
         default:
             return UITableView.automaticDimension
         }
@@ -187,9 +184,6 @@ extension PostureDetailViewController: UITableViewDataSource {
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
-//        case 6:
-//            let cell = UITableViewCell()
-//            return cell
         default:
             return UITableViewCell()
         }

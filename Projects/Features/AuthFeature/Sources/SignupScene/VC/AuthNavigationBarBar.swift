@@ -8,7 +8,7 @@ import DSKit
 
 import MGNetworks
 
-final class AuthNavigationBarBar: UIView {
+final class AuthNavigationBarBar: BaseView {
 
     public var leftButtonTap: ControlEvent<Void> {
          return leftButton.rx.tap
@@ -22,32 +22,17 @@ final class AuthNavigationBarBar: UIView {
         $0.distribution = .fillEqually
     }
 
-    init() {
-        super.init(frame: .zero)
-        setUI()
-        setLayout()
-    }
+    override init(frame: CGRect) { super.init(frame: frame) }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-extension AuthNavigationBarBar {
-    @discardableResult
-    public func setLeftButtonImage(image: UIImage) -> Self {
-        self.leftButton.setImage(image, for: .normal)
-        return self
-    }
-}
-
-// MARK: - UI & Layout
-extension AuthNavigationBarBar {
-    private func setUI() {
+    public override func attribute() {
         self.backgroundColor = .clear
     }
 
-    private func setLayout() {
+    public override func layout() {
         self.addSubviews([leftItemsStackView])
 
         leftButton.snp.makeConstraints {
@@ -62,5 +47,13 @@ extension AuthNavigationBarBar {
             $0.top.bottom.equalToSuperview().inset(12.0)
             $0.leading.equalToSuperview().offset(20)
         }
+    }
+}
+
+extension AuthNavigationBarBar {
+    @discardableResult
+    public func setLeftButtonImage(image: UIImage) -> Self {
+        self.leftButton.setImage(image, for: .normal)
+        return self
     }
 }

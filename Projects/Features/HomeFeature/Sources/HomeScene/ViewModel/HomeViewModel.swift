@@ -13,6 +13,12 @@ public class HomeViewModel: HomeViewModelType {
     public var disposeBag: DisposeBag = DisposeBag()
 
     private let useCase: HomeUseCase
+    
+    private let isServiceAvailableSubject = PublishSubject<Bool>()
+    private let motivationMessageSubject = PublishSubject<MotivationMessageModel>()
+    private let stepNumberSubject = PublishSubject<StepModel>()
+    private let routinesSubject = PublishSubject<[RoutineModel]>()
+    private let extrasSubject = PublishSubject<[ExtrasModel]>()
 
     public struct Input {
         let settingButtonTapped: Driver<Void>
@@ -34,18 +40,6 @@ public class HomeViewModel: HomeViewModelType {
         self.useCase = useCase
     }
 
-    public var onSettingButtonTap: (() -> Void)?
-    public var onStepNumberButtonTap: (() -> Void)?
-    public var routineButtonTap: (() -> Void)?
-    public var calorieCalculatorButtonTap: (() -> Void)?
-    public var maeumGaGymTimerButtonTap: (() -> Void)?
-
-    private let isServiceAvailableSubject = PublishSubject<Bool>()
-    private let motivationMessageSubject = PublishSubject<MotivationMessageModel>()
-    private let stepNumberSubject = PublishSubject<StepModel>()
-    private let routinesSubject = PublishSubject<[RoutineModel]>()
-    private let extrasSubject = PublishSubject<[ExtrasModel]>()
-
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
         let output = Output(
@@ -61,30 +55,39 @@ public class HomeViewModel: HomeViewModelType {
         self.bindOutput(output: output)
 
         input.settingButtonTapped
-            .drive(onNext: { [weak self] _ in
-                self?.onSettingButtonTap?()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
                 HomeStepper.shared.steps.accept(MGStep.homeStepRequired)
                 MGLogger.debug("SeetingButtonTapped")
             }).disposed(by: disposeBag)
 
         input.getStepNumber
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getStepNumber()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getStepNumber()
             }).disposed(by: disposeBag)
-
+ 
         input.getMotivationMessage
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getMotivationMessage()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getMotivationMessage()
             }).disposed(by: disposeBag)
 
         input.getRoutines
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getRoutines()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getRoutines()
             }).disposed(by: disposeBag)
 
         input.getExtras
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getExtras()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getExtras()
             }).disposed(by: disposeBag)
 
         return output

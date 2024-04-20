@@ -6,11 +6,11 @@ public enum AlbumError {
     var errorDescription: String {
         switch self {
         case .saveError:
-            return "Unable to save the photo."
+            return "사진을 저장할 수 없습니다."
         case .noWorking:
-            return "Unable to save photos."
+            return "사진을 저장할 수 없습니다."
         case .noPermission:
-            return "No permission to save photos."
+            return "사진 저장 권한이 없습니다."
         }
     }
 }
