@@ -21,18 +21,18 @@ class TokenManagerTests: XCTestCase {
         let testKey = KeychainType.test
         
         // 토큰 저장 테스트
-        let saveResult = tokenManager.save(token: testToken, with: testKey)
+        _ = tokenManager.save(token: testToken, with: testKey)
         
         // 토큰 가져오기 테스트
-        let retrievedToken = tokenManager.get(key: testKey)
+        _ = tokenManager.get(key: testKey)
         
         // 토큰 업데이트 테스트
         let newToken = "newTestToken"
-        let updateResult = tokenManager.update(token: newToken, with: testKey)
-        let updatedToken = tokenManager.get(key: testKey)
+        _ = tokenManager.update(token: newToken, with: testKey)
+        _ = tokenManager.get(key: testKey)
         
         // 토큰 삭제 테스트
-        let deleteResult = tokenManager.delete(key: testKey)
+        _ = tokenManager.delete(key: testKey)
         let deletedToken = tokenManager.get(key: testKey)
         XCTAssertNil(deletedToken, "Token should be nil after deletion.")
     }
