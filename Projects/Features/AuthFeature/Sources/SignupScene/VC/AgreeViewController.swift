@@ -155,7 +155,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
             nextButtonTap: checkButton.rx.tap.asSignal()
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.allAgreeButtonClickedMessage
                 .drive(onNext: { [weak self] message in
                     print(message)
