@@ -8,6 +8,14 @@ import SnapKit
 open class BaseViewController<T>: UIViewController {
     public var viewModel: T
     public var disposeBag = DisposeBag()
+    
+    public var width: CGFloat {
+        return view.frame.width / 430.0
+    }
+    public var height: CGFloat {
+        return view.frame.height / 932.0
+    }
+    
     let bounds = UIScreen.main.bounds
 
     public init(_ viewModel: T) {
