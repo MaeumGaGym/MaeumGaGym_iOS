@@ -1,4 +1,5 @@
 import UIKit
+import RxFlow
 
 import RxSwift
 import RxCocoa
@@ -8,6 +9,7 @@ import SnapKit
 open class BaseViewController<T>: UIViewController {
     public var viewModel: T
     public var disposeBag = DisposeBag()
+    public var steps = PublishRelay<Step>()
     
     public var width: CGFloat {
         return view.frame.width / 430.0
