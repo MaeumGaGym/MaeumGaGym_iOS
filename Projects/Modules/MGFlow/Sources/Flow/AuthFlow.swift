@@ -33,8 +33,10 @@ public class AuthFlow: Flow {
     public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? MGStep else { return .none }
         switch step {
-        case .authIntroIsRequired:
+        case .authSplashRequired:
             return setupAuthMainScreen()
+        case .authIntroIsRequired:
+            return navigateToIntroViewScreen()
         case .authAgreeIsRequired:
             return navigateToAgreeViewScreen()
         case .authNickNameIsRequired:
@@ -66,6 +68,12 @@ public class AuthFlow: Flow {
         rootViewController.view.backgroundColor = .white
         rootViewController.setViewControllers([viewController], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: AuthStepper.shared))
+    }
+
+    private func navigateToIntroViewScreen() -> FlowContributors {
+        let vc = IntroViewController(IntroViewModel(authUseCase: self.useCase))
+        rootViewController.pushViewController(vc, animated: false)
+        return .none
     }
 
     private func navigateToAgreeViewScreen() -> FlowContributors {
