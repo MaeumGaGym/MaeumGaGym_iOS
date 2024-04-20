@@ -33,25 +33,41 @@ public class DefaultHomeUseCase {
 extension DefaultHomeUseCase: HomeUseCase {
     
     public func getMotivationMessage() {
+//        repository.getMotivationMessage()
+//            .subscribe(
+//                onSuccess: { [weak self] messageModel in
+//                    self?.motivationMessage.onNext(messageModel)
+//                },
+//                onFailure: { error in
+//                    print("HomeUseCase getMotivationMessage error occurred: \(error)")
+//                }
+//            )
+//            .disposed(by: disposeBag)
+        
         repository.getMotivationMessage()
-            .subscribe(
-                onSuccess: { [weak self] messageModel in
-                    self?.motivationMessage.onNext(messageModel)
-                },
-                onFailure: { error in
-                    print("HomeUseCase getMotivationMessage error occurred: \(error)")
-                }
-            )
-            .disposed(by: disposeBag)
+                .asObservable()
+                .withUnretained(self)
+                .subscribe(
+                    onNext: { owner, messageModel in
+                        owner.motivationMessage.onNext(messageModel)
+                    },
+                    onError: { [weak self] error in
+                        print("HomeUseCase getMotivationMessage error occurred: \(error)")
+                        self?.motivationMessage.onError(error)
+                    }
+                )
+                .disposed(by: disposeBag)
     }
     
     public func getStepNumber() {
         repository.getStepNumber()
+            .asObservable()
+            .withUnretained(self)
             .subscribe(
-                onSuccess: { [weak self] stepModel in
-                    self?.stepNumber.onNext(stepModel)
+                onNext: { owner, stepModel in
+                    owner.stepNumber.onNext(stepModel)
                 },
-                onFailure: { error in
+                onError: { error in
                     print("HomeUseCase getStepNumber error occurred: \(error)")
                 }
             )
@@ -60,26 +76,28 @@ extension DefaultHomeUseCase: HomeUseCase {
     
     public func getRoutines() {
         repository.getRoutines()
-            .subscribe(
-                onSuccess: { [weak self] routines in
-                    self?.routines.onNext(routines)
-                },
-                onFailure: { error in
-                    print("HomeUseCase getRoutines error occurred: \(error)")
-                }
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, routines in
+                owner.routines.onNext(routines)
+            },
+                       onError: { error in
+                print("HomeUseCase getRoutines error occurred: \(error)")
+            }
             )
             .disposed(by: disposeBag)
     }
     
     public func getExtras() {
         repository.getExtras()
-            .subscribe(
-                onSuccess: { [weak self] extras in
-                    self?.extras.onNext(extras)
-                },
-                onFailure: { error in
-                    print("HomeUseCase getExtras error occurred: \(error)")
-                }
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, extras in
+                owner.extras.onNext(extras)
+            },
+                       onError: { error in
+                print("HomeUseCase getExtras error occurred: \(error)")
+            }
             )
             .disposed(by: disposeBag)
     }
