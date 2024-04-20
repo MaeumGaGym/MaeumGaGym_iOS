@@ -20,13 +20,6 @@ import HomeFeatureInterface
 
 import HealthKit
 
-enum HomeCell {
-    case motivationMessage
-    case stepNumber
-    case routine
-    case extra
-}
-
 public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
     private var cellList: [UITableViewCell] = []
