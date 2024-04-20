@@ -119,10 +119,11 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
 
         _ = viewModel.transform(input, action: { output in
             output.introDatas
-                .subscribe(onNext: { [weak self] introData in
-                    self?.introModel = introData
-                    self?.mainTitle.changeText(text: self?.introModel?.mainTitle)
-                    self?.subTitle.changeText(text: self?.introModel?.subTitle)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, introData in
+                    owner.introModel = introData
+                    owner.mainTitle.changeText(text: owner.introModel?.mainTitle)
+                    owner.subTitle.changeText(text: owner.introModel?.subTitle)
                 })
                 .disposed(by: disposeBag)
         })
