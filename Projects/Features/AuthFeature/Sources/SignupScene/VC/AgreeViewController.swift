@@ -42,14 +42,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
     private let secondAgreeButton = MGAgreeButton(type: .termsAgreeText)
     private let thirdAgreeButton = MGAgreeButton(type: .ageAgreeText)
     private let fourthAgreeButton = MGAgreeButton(type: .marketingAgreeText, chooseType: true)
-    
-    //    private let readMore = MGButton(
-    //        titleText: "자세히 보기",
-    //        font: UIFont.Pretendard.labelSmall,
-    //        textColor: DSKitAsset.Colors.gray300.color
-    //    ).then {
-    //        $0.isHidden = false
-    //    }
 
     private var checkButton = MGCheckButton(text: "확인")
 
