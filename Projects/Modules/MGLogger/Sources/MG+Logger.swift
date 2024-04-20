@@ -66,7 +66,13 @@ public final class MGLogger {
     }
     
     
-    /// 📢 [VERBOSE]
+    /**
+     공지를 할 때 사용합니다.
+     > 📢 [공지]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func verbose(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -75,7 +81,13 @@ public final class MGLogger {
         }
     }
     
-    /// 🛠 [DEBUG]
+    /**
+     디버그를 할 때 사용합니다.
+     > 🛠 [디버그]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func debug(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -84,7 +96,13 @@ public final class MGLogger {
         }
     }
     
-    /// ⚠️ [WARNING]
+    /**
+     주의를 할 때 사용합니다.
+     > ⚠️ [주의]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func warning(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -93,8 +111,13 @@ public final class MGLogger {
         }
     }
     
-    
-    /// 🔥 [ERROR]
+    /**
+     에러를 할 때 사용합니다.
+     > 🔥 [에러]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func error(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
@@ -103,7 +126,13 @@ public final class MGLogger {
         }
     }
     
-    /// 🎮 [TEST]
+    /**
+     를 할 때 사용합니다.
+     > 🎮 [TEST]
+     - Parameters:
+     - items: Any 타입으로 사용자가 원하는 데이터를 넣어줍니다.
+     - Returns: 파일 주소, 날짜, 시간, 호출 함수, 코드 라인, 사용자가 원하는 출력을 합니다.
+     */
     public static func test(_ items: Any = "", file: String = #file, function: String = #function, line: Int = #line) {
         let tempThreadName = threadName
         loggingQueue.sync {
