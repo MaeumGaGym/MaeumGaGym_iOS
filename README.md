@@ -17,6 +17,7 @@
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jjunhaa0211"><img src="https://avatars.githubusercontent.com/u/102890390?s=400&u=25e436fd018ac723d433a43a154295bf05433fc4&v=4?v=4?s=100" width="100px;" alt="jjunhaa0211"/><br/><sub><b>jjunhaa0211</b></sub></a><br /><a href="https://github.com/jjunhaa0211" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Eunho0922"><img src="https://avatars.githubusercontent.com/u/127753071?v=4?v=4?s=100" width="100px;" alt=""/><br/><sub><b>Eunho0922</b></sub></a><br /><a href="https://github.com/Eunho0922" title="Code">💻</a></td>
+            <td align="center" valign="top" width="14.28%"><a href="https://github.com/cyj513"><img src="https://avatars.githubusercontent.com/u/127661282?v=4?v=4?s=100" width="100px;" alt=""/><br/><sub><b>cyj513</b></sub></a><br /><a href="https://github.com/cyj513" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
