@@ -11,7 +11,7 @@ let project = Project.makeModule(
     ],
     internalDependencies: [
         .data,
-        .Features.RootFeature,
+        .Modules.mgFlow,
 //        .SPM.GoogleSignIn
     ]
 )
