@@ -7,7 +7,6 @@ import RxCocoa
 import BaseFeatureDependency
 import Core
 
-// public protocol HomeViewControllable: ViewControllable {}
 public protocol HomeCoordintable {
     var onSettingButtonTap: (() -> Void)? { get set }
     var onStepNumberButtonTap: (() -> Void)? { get set}

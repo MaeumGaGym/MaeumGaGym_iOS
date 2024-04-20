@@ -12,9 +12,11 @@ import DSKit
 import Domain
 import MGNetworks
 
-public class ExtraTableViewCell: BaseTableViewCell {
+import HomeFeatureInterface
 
-    static let identifier: String = HomeResourcesService.identifier.extraTableViewCell
+public class ExtraTableViewCell: BaseTableViewCell, CollectoionCellID {
+    
+    public static var identifier: String = HomeResourcesService.identifier.extraTableViewCell
 
     private var extraCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
