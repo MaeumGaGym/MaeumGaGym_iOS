@@ -117,7 +117,7 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
             getIntroData: Observable.just(()).asDriver(onErrorDriveWith: .never())
         )
 
-        let ouput = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.introDatas
                 .subscribe(onNext: { [weak self] introData in
                     self?.introModel = introData
