@@ -65,44 +65,50 @@ public class PostureBackViewModel: BaseViewModel {
         self.bindOutput(output: output)
 
         input.firstButtonTapped
-            .drive(onNext: { [weak self] _ in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
                 MGLogger.debug("PostureBack firstButtonTapped")
-                let currentState = try? self?.firstButtonStateSubject.value()
+                let currentState = try? owner.firstButtonStateSubject.value()
 
                 switch currentState {
                 case .unChecked:
-                    self?.firstButtonStateSubject.onNext(.checked)
-                    self?.secondButtonStateSubject.onNext(.unChecked)
-                    self?.backModelStateSubject.onNext(.body)
+                    owner.firstButtonStateSubject.onNext(.checked)
+                    owner.secondButtonStateSubject.onNext(.unChecked)
+                    owner.backModelStateSubject.onNext(.body)
                 case .checked:
-                    self?.firstButtonStateSubject.onNext(.unChecked)
-                    self?.backModelStateSubject.onNext(.all)
+                    owner.firstButtonStateSubject.onNext(.unChecked)
+                    owner.backModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
             }).disposed(by: disposeBag)
 
         input.secondButtonTapped
-            .drive(onNext: { [weak self] _ in
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
                 MGLogger.debug("PostureBack secondButtonTapped")
-                let currentState = try? self?.secondButtonStateSubject.value()
+                let currentState = try? owner.secondButtonStateSubject.value()
 
                 switch currentState {
                 case .unChecked:
-                    self?.secondButtonStateSubject.onNext(.checked)
-                    self?.firstButtonStateSubject.onNext(.unChecked)
-                    self?.backModelStateSubject.onNext(.machine)
+                    owner.secondButtonStateSubject.onNext(.checked)
+                    owner.firstButtonStateSubject.onNext(.unChecked)
+                    owner.backModelStateSubject.onNext(.machine)
                 case .checked:
-                    self?.secondButtonStateSubject.onNext(.unChecked)
-                    self?.backModelStateSubject.onNext(.all)
+                    owner.secondButtonStateSubject.onNext(.unChecked)
+                    owner.backModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
             }).disposed(by: disposeBag)
 
         input.getBackData
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getPartData(type: .back)
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getPartData(type: .back)
             }).disposed(by: disposeBag)
 
         return output

@@ -101,7 +101,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                 .asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.backData
                 .subscribe(onNext: { backData in
                     MGLogger.debug("backData: \(backData)")

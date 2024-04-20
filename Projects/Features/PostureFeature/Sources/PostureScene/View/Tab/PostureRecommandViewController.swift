@@ -56,7 +56,7 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
                 .asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.recommandData
                 .subscribe(onNext: { recommandData in
                     MGLogger.debug("Recommand Data: \(recommandData)")

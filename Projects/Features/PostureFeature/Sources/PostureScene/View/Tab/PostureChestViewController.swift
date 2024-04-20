@@ -103,7 +103,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                 .asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.chestData
                 .subscribe(onNext: { chestData in
                     MGLogger.debug("Chest Data: \(chestData)")

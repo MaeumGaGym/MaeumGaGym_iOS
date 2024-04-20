@@ -41,10 +41,11 @@ public class PostureMainViewModel: PostureViewModelType {
         action(output)
 
         input.searchButtonTapped
-            .drive(onNext: { [weak self] _ in
-                self?.onSettingButtonTap?()
-                print("Sdfsdfsf")
-   PostureStepper.shared.steps.accept(MGStep.postureSearchIsRequired)
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.onSettingButtonTap?()
+                PostureStepper.shared.steps.accept(MGStep.postureSearchIsRequired)
             }).disposed(by: disposeBag)
 
         return output
