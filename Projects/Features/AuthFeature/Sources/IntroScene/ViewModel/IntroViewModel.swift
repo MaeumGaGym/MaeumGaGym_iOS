@@ -95,19 +95,3 @@ public class IntroViewModel: AuthViewModelType {
             .disposed(by: disposeBag)
     }
 }
-
-private extension IntroViewModel {
-    //    func kakaoGetUserInfo() {
-    //        UserApi.shared.me() { (user, error) in
-    //            if let error = error {
-    //                print(error)
-    //            }
-    //
-    //            let userName = user?.kakaoAccount?.name
-    //
-    //            _ = "user name : \(String(describing: userName))"
-    //
-    //            print("user - \(String(describing: user))")
-    //        }
-    //    }
-}
