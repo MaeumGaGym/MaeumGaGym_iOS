@@ -7,8 +7,6 @@ import Core
 import RxSwift
 import Pickle
 
-import MGNetworks
-
 struct BottomSheetItem {
     let icon: UIImage
     let title: String

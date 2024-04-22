@@ -37,7 +37,7 @@ public class AuthRepository: AuthRepositoryInterface {
     public func appleButtonTap() -> Single<String> {
         return networkService.appleButtonTap()
     }
-    
+    // repository -> service entity
     public func kakaoButtonTap() -> Single<OAuthToken?> {
         return networkService.kakaoButtonTap()
     }
@@ -49,8 +49,6 @@ public class AuthRepository: AuthRepositoryInterface {
     public init(networkService: AuthService) {
         self.networkService = networkService
     }
-
-
 
 //    public func appleSingup(nickname: String, accessToken: String) -> Single<String> {
 //        return networkService.appleSignup(nickname: nickname, accessToken: accessToken)

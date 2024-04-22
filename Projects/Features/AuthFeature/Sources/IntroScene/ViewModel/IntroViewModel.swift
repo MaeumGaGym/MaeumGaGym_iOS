@@ -9,7 +9,6 @@ import Moya
 
 import Core
 import Domain
-import MGNetworks
 
 import KakaoSDKAuth
 import KakaoSDKUser
@@ -25,7 +24,6 @@ public class IntroViewModel: AuthViewModelType {
     public var disposeBag: RxSwift.DisposeBag
 
     private let useCase: AuthUseCase
-
     let keychainCSRF = KeychainType.CSRFToken
 
     public struct Input {

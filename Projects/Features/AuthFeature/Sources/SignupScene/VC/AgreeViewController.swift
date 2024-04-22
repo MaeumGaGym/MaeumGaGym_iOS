@@ -9,11 +9,9 @@ import Then
 
 import Core
 import DSKit
-import Data
-
-import Domain
 import MGLogger
-import MGNetworks
+
+import AuthFeatureInterface
 
 public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, UIGestureRecognizerDelegate {
 
@@ -139,9 +137,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
         super.bindViewModel()
 
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-
-        viewModel = AgreeViewModel(useCase: useCase)
 
         let input = AgreeViewModel.Input(
             navButtonTapped: navButtonTapped,
