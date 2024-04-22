@@ -8,12 +8,11 @@ import SnapKit
 import Then
 
 import Core
-import Data
 import DSKit
 
-import Domain
 import MGLogger
-import MGNetworks
+
+import Domain
 
 import BaseFeatureDependency
 import AuthenticationServices
@@ -104,9 +103,6 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
 
     public override func bindViewModel() {
         super.bindViewModel()
-
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        viewModel = IntroViewModel(authUseCase: useCase)
 
         let input = IntroViewModel.Input(
             goolgeButtonTapped: googleButton.rx.tap.asDriver(),

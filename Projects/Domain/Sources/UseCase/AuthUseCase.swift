@@ -184,14 +184,6 @@ extension DefaultAuthUseCase: AuthUseCase {
                 MGLogger.debug("nicknameButtonTap nickname ✅ \(nicknameText)")
 
                 authRepository.oauthSignup(param: SignupRequestDTO(oauthToken: accessToken, nickname: nicknameText), oauth: .apple)
-                .flatMap { response -> Single<SignupResponseDTO> in
-                    MGLogger.debug(response)
-                    if response.status >= 400 {
-                        return Single.error(AuthErrorType.notFound400)
-                    } else {
-                        return Single.just(response)
-                    }
-                }
                 .subscribe(onSuccess: { [self] element in
                     MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
                     authRepository.oauthLogin(param: LoginRequestDTO(oauthToken: accessToken), oauth: .apple)

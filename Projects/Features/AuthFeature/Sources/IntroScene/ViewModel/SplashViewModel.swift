@@ -9,7 +9,6 @@ import Moya
 
 import Core
 import Domain
-import MGNetworks
 
 import TokenManager
 import AuthFeatureInterface
@@ -36,9 +35,9 @@ public class SplashViewModel: AuthViewModelType {
         
         let ouput = Output()
         action(ouput)
-            
-        AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
-        
+
+        useCase.splashLogin()
+
         return Output()
     }
 }

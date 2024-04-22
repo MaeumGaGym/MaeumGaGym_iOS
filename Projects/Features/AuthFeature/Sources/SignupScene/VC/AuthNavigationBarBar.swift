@@ -6,7 +6,7 @@ import RxCocoa
 import Core
 import DSKit
 
-import MGNetworks
+import AuthFeatureInterface
 
 final class AuthNavigationBarBar: BaseView {
 

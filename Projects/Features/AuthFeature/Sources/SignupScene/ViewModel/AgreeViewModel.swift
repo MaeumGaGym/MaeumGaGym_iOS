@@ -6,7 +6,6 @@ import RxFlow
 
 import Core
 import Domain
-import MGNetworks
 
 public class AgreeViewModel: BaseViewModel {
 

@@ -16,7 +16,19 @@ import KakaoSDKAuth
 
 import AuthenticationServices
 
-public class AuthService: NSObject {
+public protocol AuthService {
+    func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO>
+    func tokenRefresh(param: TokenRefreshRequestDTO) -> Single<TokenRefreshResponseDTO>
+    func oauthSingup(param: SignupRequestDTO, oauth: OauthType) -> Single<SignupResponseDTO>
+    func oauthLogin(param: LoginRequestDTO, oauth: OauthType) -> Single<LoginResponseDTO>
+    func oauthRecovery(param: RecoveryRequestDTO, oauth: OauthType) -> Single<RecoveryResponseDTO>
+    func kakaoButtonTap() -> Single<OAuthToken?>
+    func requestToken() -> Single<Bool>
+    func requestIntroData() -> Single<IntroModel>
+    func appleButtonTap() -> Single<String>
+}
+
+public class DefaultAuthService: NSObject {
 
     let kakaoProvider = MoyaProvider<KakaoAPI>()
     let googleProvider = MoyaProvider<GoogleAPI>()
@@ -25,7 +37,9 @@ public class AuthService: NSObject {
 
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()
-    
+}
+
+extension DefaultAuthService: AuthService {
     public func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO> {
         return authProvider.rx.request(.checkNickname(param: param)).map(CheckNicknameResponseDTO.self)
     }
@@ -105,13 +119,9 @@ public class AuthService: NSObject {
 
         return appleSignupSubject.take(1).asSingle()
     }
-
-    public override init() {
-
-    }
 }
 
-extension AuthService: ASAuthorizationControllerDelegate {
+extension DefaultAuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
@@ -132,7 +142,7 @@ extension AuthService: ASAuthorizationControllerDelegate {
     }
 }
 
-private extension AuthService {
+private extension DefaultAuthService {
     func googleSignup(param: SignupRequestDTO) -> Single<SignupResponseDTO> {
         return googleProvider.rx.request(.googleSignup(param: param))
             .map(SignupResponseDTO.self)

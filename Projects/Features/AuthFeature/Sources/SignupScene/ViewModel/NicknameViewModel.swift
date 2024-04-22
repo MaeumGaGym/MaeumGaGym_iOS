@@ -8,8 +8,6 @@ import Core
 import Domain
 import MGLogger
 
-import MGNetworks
-
 public class NicknameViewModel: BaseViewModel {
 
     public typealias ViewModel = NicknameViewModel

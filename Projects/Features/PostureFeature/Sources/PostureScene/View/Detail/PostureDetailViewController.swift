@@ -12,8 +12,6 @@ import DSKit
 import Domain
 
 import MGLogger
-import MGNetworks
-import Data
 
 import PostureFeatureInterface
 
