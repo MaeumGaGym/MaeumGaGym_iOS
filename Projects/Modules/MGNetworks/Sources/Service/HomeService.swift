@@ -36,6 +36,7 @@ public class HomeService {
                     single(.success(StepModel(stepCount: count)))
                 } else {
                     MGLogger.error("치명적으로 실패했습니다, 걷기 데이터를 가져오는데 실패했습니다.")
+//                    single(.failure(StepModel(stepCount: 0) as! Error))
                 }
                 
                 MGLogger.debug("\(String(describing: stepCount))자리입니다")

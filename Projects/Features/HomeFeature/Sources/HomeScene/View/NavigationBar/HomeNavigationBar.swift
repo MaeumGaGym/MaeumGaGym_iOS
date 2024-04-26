@@ -6,8 +6,6 @@ import RxCocoa
 import Core
 import DSKit
 
-import MGNetworks
-
 final class HomeNavigationBar: BaseView {
 
     public var rightButtonTap: ControlEvent<Void> {
@@ -15,11 +13,11 @@ final class HomeNavigationBar: BaseView {
      }
 
     private let logoImageView = UIImageView().then {
-        $0.image = HomeResourcesService.Assets.logoImageView
+        $0.image = DSKitAsset.Assets.mainLogo.image.withRenderingMode(.alwaysOriginal)
         $0.contentMode = .scaleToFill
     }
 
-    private let rightButton = MGImageButton(image: HomeResourcesService.Assets.settingIcon)
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.settingActIcon.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal

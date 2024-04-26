@@ -12,8 +12,6 @@ import DSKit
 import Domain
 
 import MGLogger
-import MGNetworks
-import Data
 
 import PostureFeatureInterface
 
@@ -38,7 +36,7 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     public override func attribute() {
         super.attribute()
 
-        beforeButton.setImage(image: PostureResourcesService.Assets.postureLeftArrow)
+        beforeButton.setImage(image: DSKitAsset.Assets.leftOpenArrow.image)
         postureSearchTableView.dataSource = self
         postureSearchTableView.delegate = self
     }
@@ -78,8 +76,8 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     public override func bindViewModel() {
         super.bindViewModel()
 
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        viewModel = PostureSearchViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureSearchViewModel(useCase: useCase)
 
         let input = PostureSearchViewModel.Input(
             getSearchData: Observable.just(()).asDriver(onErrorDriveWith: .never())

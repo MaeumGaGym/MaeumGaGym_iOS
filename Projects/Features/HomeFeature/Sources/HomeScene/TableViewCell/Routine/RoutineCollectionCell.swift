@@ -10,13 +10,12 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
 import HomeFeatureInterface
 
 public class RoutineCollectionCell: UICollectionViewCell, CollectoionCellID {
 
-    public static var identifier: String = HomeResourcesService.identifier.routineCollectionCell
+    public static var identifier: String = "RoutineCollectionCell"
 
     private var routineImageView = UIImageView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray100.color

@@ -46,7 +46,7 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
     private var deleteRoutineButton = SelfCareButton(type: .deleteRotine)
     private var editRoutineButton = SelfCareButton(type: .editRoutine)
-    private var dotsButton = MGImageButton(image: SelfCareResourcesService.Assets.blackDots)
+    private var dotsButton = MGImageButton(image: DSKitAsset.Assets.blackDotsActIcon.image)
 
     public override func configureNavigationBar() {
         super.configureNavigationBar()

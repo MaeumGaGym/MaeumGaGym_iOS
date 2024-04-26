@@ -14,20 +14,20 @@ public class AuthRepository: AuthRepositoryInterface {
 
     private let networkService: AuthService
 
-    public func oauthSignup(param: SignupRequestDTO, oauth: OauthType) -> Single<SignupResponseDTO> {
-        return networkService.oauthSingup(param: param, oauth: oauth)
+    public func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
+        return networkService.oauthSingup(nickname: nickname, accessToken: accessToken, oauth: oauth)
     }
 
-    public func oauthLogin(param: LoginRequestDTO, oauth: OauthType) -> Single<LoginResponseDTO> {
-        return networkService.oauthLogin(param: param, oauth: oauth)
+    public func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response> {
+        return networkService.oauthLogin(accessToken: accessToken, oauth: oauth)
     }
     
-    public func oauthRecovery(param: RecoveryRequestDTO, oauth: OauthType) -> Single<RecoveryResponseDTO> {
-        return networkService.oauthRecovery(param: param, oauth: oauth)
+    public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
+        return networkService.oauthRecovery(accessToken: accessToken, oauth: oauth)
     }
     
-    public func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO> {
-        return networkService.nicknameCheck(param: param)
+    public func nicknameCheck(nickname: String) -> Single<Response> {
+        return networkService.nicknameCheck(nickname: nickname)
     }
 
     public func getIntroData() -> Single<IntroModel>  {
@@ -37,13 +37,9 @@ public class AuthRepository: AuthRepositoryInterface {
     public func appleButtonTap() -> Single<String> {
         return networkService.appleButtonTap()
     }
-    // repository -> service entity
+    
     public func kakaoButtonTap() -> Single<OAuthToken?> {
         return networkService.kakaoButtonTap()
-    }
-    
-    public func tokenRefresh(param: TokenRefreshRequestDTO) -> Single<TokenRefreshResponseDTO> {
-        return networkService.tokenRefresh(param: param)
     }
 
     public init(networkService: AuthService) {

@@ -1,59 +1,20 @@
 import Foundation
 
-public struct SignupRequestDTO: Codable {
-    public let oauthToken: String
-    public let nickname: String
-}
-
-public struct LoginRequestDTO: Codable {
-    public let oauthToken: String
-}
-
-public struct RecoveryRequestDTO: Codable {
-    public let oauthToken: String
-}
-
-public struct SignupResponseDTO: Codable {
-    public let status: Int
-}
-
-public struct LoginResponseDTO: Codable {
+public struct LoginResponseDTO: Decodable {
     public let status: Int
     public let accessToken: String
     public let refreshToken: String
 }
 
-public struct RecoveryResponseDTO: Codable {
+public struct SignupResponseDTO: Decodable {
     public let status: Int
 }
 
-public struct DeleteRequestDTO: Codable {
-    public let accessToken: String
-}
-
-public struct DeleteResponseDTO: Codable {
+public struct RecoveryResponseDTO: Decodable {
     public let status: Int
 }
 
-public struct TokenRefreshRequestDTO: Codable {
-    public let refreshToken: String
-}
-
-public struct TokenRefreshResponseDTO: Codable {
-    public let status: Int
-    public let accessToken: String
-    public let refreshToken: String
-}
-
-public struct CheckNicknameRequestDTO: Codable {
-    public let nickname: String
-}
-
-public struct CheckNicknameResponseDTO: Codable {
-    public let status: Int
-}
-
-public enum AuthErrorType: Error {
+enum AuthErrorType: Error {
     case notFound400
     case notInt
 }

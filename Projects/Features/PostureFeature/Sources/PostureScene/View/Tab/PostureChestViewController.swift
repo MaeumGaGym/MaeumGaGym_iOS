@@ -12,8 +12,6 @@ import DSKit
 import MGLogger
 
 import Domain
-import Data
-import MGNetworks
 
 import PostureFeatureInterface
 
@@ -92,8 +90,8 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
         let secondButtonTapped = secondButton.rx.tap
             .asDriver(onErrorDriveWith: .never())
 
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        viewModel = PostureChestViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureChestViewModel(useCase: useCase)
 
         let input = PostureChestViewModel.Input(
             firstButtonTapped: firstButtonTapped,

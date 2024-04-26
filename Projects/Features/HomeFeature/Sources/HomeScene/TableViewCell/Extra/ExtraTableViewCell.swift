@@ -10,13 +10,12 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
 import HomeFeatureInterface
 
 public class ExtraTableViewCell: BaseTableViewCell, CollectoionCellID {
     
-    public static var identifier: String = HomeResourcesService.identifier.extraTableViewCell
+    public static var identifier: String = "ExtraTableViewCell"
 
     private var extraCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -75,7 +74,7 @@ extension ExtraTableViewCell: UICollectionViewDataSource {
             withReuseIdentifier: ExtraCollectionViewCell.identifier,
             for: indexPath
         ) as? ExtraCollectionViewCell else {
-            fatalError("Unable to dequeue \(HomeResourcesService.identifier.extraCollectionViewCell)")
+            fatalError("Unable to dequeue extraCollectionViewCell")
         }
         cell.configure(with: extras[indexPath.item])
         cell.layer.cornerRadius = 16.0

@@ -110,8 +110,8 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     }
 
     public override func bindViewModel() {
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        viewModel = NicknameViewModel(useCase: useCase)
+//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+//        viewModel = NicknameViewModel(useCase: useCase)
 
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
         let nextButtonTapped = checkButton.rx.tap.asDriver(onErrorDriveWith: .never())
@@ -120,8 +120,8 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
 
         _ = viewModel.transform(input, action: { output in
             output.nextButtonTap.drive(onNext: { _ in
-                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
-                useCase.nextButtonTap()
+//                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
+//                useCase.nextButtonTap()
             }).disposed(by: disposeBag)
 
             output.navButtonTap.drive(onNext: { _ in
@@ -140,10 +140,10 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                     switch state {
                     case true:
                         owner.checkButton.isEnabled = state
-                        owner.checkButton.backgroundColor = AuthResourcesService.Colors.blue500
+                        owner.checkButton.backgroundColor = DSKitAsset.Colors.blue500.color
                     case false:
                         owner.checkButton.isEnabled = state
-                        owner.checkButton.backgroundColor = AuthResourcesService.Colors.gray400
+                        owner.checkButton.backgroundColor = DSKitAsset.Colors.gray400.color
                     }
                 }).disposed(by: disposeBag)
     }

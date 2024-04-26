@@ -4,12 +4,10 @@ import Moya
 import Core
 import Alamofire
 
-import Domain
-
 public enum GoogleAPI {
-    case googleSignup(param: SignupRequestDTO)
-    case googleLogin(param: LoginRequestDTO)
-    case googleRecovery(param: RecoveryRequestDTO)
+    case googleSignup(nickname: String, accessToken: String)
+    case googleLogin(accessToken: String)
+    case googleRecovery(accessToken: String)
 }
 
 extension GoogleAPI: BaseAPI {
@@ -40,24 +38,28 @@ extension GoogleAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case .googleSignup(let param):
+        case let .googleSignup(nickname, accessToken):
             let bodyParameters: [String: Any] = [
-                "nickname": param.nickname
+                "nickname": nickname
             ]
-            return .requestParameters(parameters: bodyParameters, encoding: JSONEncoding.default)
-        case .googleLogin, .googleRecovery:
-            return .requestPlain
+            let urlParameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
+        case let .googleLogin(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case let .googleRecovery(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 
     public var headers: [String : String]? {
-        switch self {
-        case .googleSignup(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        case .googleLogin(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        case .googleRecovery(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        }
+        return nil
     }
 }

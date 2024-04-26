@@ -10,15 +10,14 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
 import HomeFeatureInterface
 
 public class RoutineTableViewCell: BaseTableViewCell, CollectoionCellID {
 
-    public static var identifier: String = HomeResourcesService.identifier.routineTableViewCell
+    public static var identifier: String = "RoutineTableViewCell"
 
-    private var nameTitle = MGLabel(text: HomeResourcesService.Title.todayRoutine,
+    private var nameTitle = MGLabel(text: "오늘의 루틴",
                                     font: UIFont.Pretendard.titleMedium,
                                     textColor: .black
     )

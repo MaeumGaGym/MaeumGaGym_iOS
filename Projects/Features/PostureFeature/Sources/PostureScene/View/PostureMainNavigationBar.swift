@@ -6,7 +6,6 @@ import RxCocoa
 import Core
 import DSKit
 
-import MGNetworks
 
 final class PostureMainNavigationBar: BaseView {
 
@@ -14,7 +13,7 @@ final class PostureMainNavigationBar: BaseView {
          return rightButton.rx.tap
      }
 
-    private let rightButton = MGImageButton(image: PostureResourcesService.Assets.blackSearchActIcon)
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.blackSearchActIcon.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal

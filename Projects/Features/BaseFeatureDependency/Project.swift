@@ -8,8 +8,8 @@ let project = Project.makeModule(
     internalDependencies: [
         .domain,
         .Modules.dsKit,
-//        .Modules.tokenManager,
-//        .Modules.mgNetworks,
-//        .data
+        .Modules.tokenManager,
+        .Modules.mgNetworks,
+        .data
     ]
 )

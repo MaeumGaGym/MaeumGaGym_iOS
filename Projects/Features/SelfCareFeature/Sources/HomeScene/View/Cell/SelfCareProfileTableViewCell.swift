@@ -14,7 +14,7 @@ import MGNetworks
 
 public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
-    static public var identifier: String = SelfCareResourcesService.identifier.selfCareProfileTableViewCell
+    static public var identifier: String = "SelfCareProfileTableViewCell"
 
     private let profileImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,

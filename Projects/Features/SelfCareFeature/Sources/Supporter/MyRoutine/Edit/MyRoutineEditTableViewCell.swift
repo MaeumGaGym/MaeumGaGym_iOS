@@ -10,7 +10,7 @@ import Domain
 import MGNetworks
 
 public class MyRoutineEditTableViewCell: BaseTableViewCell {
-    static let identifier: String = SelfCareResourcesService.identifier.myRoutineEditTableViewCell
+    static let identifier: String = "MyRoutineEditTableViewCell"
 
     private var containerView = UIView()
 

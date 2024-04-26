@@ -15,10 +15,9 @@ public enum OauthType {
 public protocol AuthRepositoryInterface {
     func kakaoButtonTap() -> Single<OAuthToken?>
     func appleButtonTap() -> Single<String>
-    func oauthSignup(param: SignupRequestDTO, oauth: OauthType) -> Single<SignupResponseDTO>
-    func oauthLogin(param: LoginRequestDTO, oauth: OauthType) -> Single<LoginResponseDTO>
-    func oauthRecovery(param: RecoveryRequestDTO, oauth: OauthType) -> Single<RecoveryResponseDTO>
-    func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO>
+    func oauthSignup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response>
+    func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
+    func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response>
+    func nicknameCheck(nickname: String) -> Single<Response>
     func getIntroData() -> Single<IntroModel>
-    func tokenRefresh(param: TokenRefreshRequestDTO) -> Single<TokenRefreshResponseDTO>
 }

@@ -13,20 +13,19 @@ import DSKit
 import Domain
 
 import MindGymKit
-import MGNetworks
 
 import HomeFeatureInterface
 
 public class StepTableViewCell: BaseTableViewCell, CollectoionCellID {
 
-    static public var identifier: String = HomeResourcesService.identifier.stepTableViewCell
+    static public var identifier: String = "StepTableViewCell"
 
     private lazy var stepNumberTitle = MGLabel(font: UIFont.Pretendard.titleLarge,
                                                textColor: DSKitAsset.Colors.blue800.color,
                                                numberOfLineCount: 1
     )
 
-    private let workTitle = MGLabel(text: HomeResourcesService.Title.step,
+    private let workTitle = MGLabel(text: "걸음",
                                     font: UIFont.Pretendard.titleSmall,
                                     textColor: DSKitAsset.Colors.gray600.color,
                                     numberOfLineCount: 1

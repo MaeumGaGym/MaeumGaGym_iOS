@@ -36,7 +36,7 @@ public class SplashViewModel: AuthViewModelType {
         let ouput = Output()
         action(ouput)
 
-        useCase.splashLogin()
+//        useCase.appleSignupResult()
 
         return Output()
     }

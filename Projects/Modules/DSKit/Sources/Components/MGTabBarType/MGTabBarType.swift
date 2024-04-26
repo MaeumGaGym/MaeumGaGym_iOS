@@ -1,43 +1,35 @@
 import UIKit
 import Core
 
-public struct TabItemInfo {
-    let title: String
-    let image: UIImage
-    let selectedImage: UIImage
-    let tag: Int
+public enum MGTabBarType: Int {
+    case home = 0
+    case posture
+    case shop
+    case pickle
+    case selfCare
 }
 
-public enum MGTabBarType: Int {
-    case home = 0, posture, shop, pickle, selfCare
-    
-    public func tabItemInfo() -> TabItemInfo {
+public extension MGTabBarType {
+    func tabItemTuple() -> (String, UIImage, UIImage, Int) {
         switch self {
         case .home:
-            return TabItemInfo(title: "홈",
-                               image: DSKitAsset.Assets.baHomeTapBar.image,
-                               selectedImage: DSKitAsset.Assets.blHomeTapBar.image,
-                               tag: 0)
+            return ("홈", DSKitAsset.Assets.baHomeTapBar.image,
+                    DSKitAsset.Assets.blHomeTapBar.image, 0)
+
         case .posture:
-            return TabItemInfo(title: "자세",
-                               image: DSKitAsset.Assets.bPeopleTapBar.image,
-                               selectedImage: DSKitAsset.Assets.blPeopleTapBar.image,
-                               tag: 1)
+            return ("자세", DSKitAsset.Assets.bPeopleTapBar.image,
+                    DSKitAsset.Assets.blPeopleTapBar.image, 1)
+
         case .shop:
-            return TabItemInfo(title: "샵",
-                               image: DSKitAsset.Assets.baShopTapBar.image,
-                               selectedImage: DSKitAsset.Assets.blShopTapBar.image,
-                               tag: 2)
+            return ("샵", DSKitAsset.Assets.baShopTapBar.image,
+                    DSKitAsset.Assets.blShopTapBar.image, 2)
+
         case .pickle:
-            return TabItemInfo(title: "피클",
-                               image: DSKitAsset.Assets.baPickleTapBar.image,
-                               selectedImage: DSKitAsset.Assets.blPickleTapBar.image,
-                               tag: 3)
+            return ("피클", DSKitAsset.Assets.baPickleTapBar.image,
+                    DSKitAsset.Assets.blPickleTapBar.image, 3)
         case .selfCare:
-            return TabItemInfo(title: "자기 관리",
-                               image: DSKitAsset.Assets.baMuscleTapBar.image,
-                               selectedImage: DSKitAsset.Assets.blMuscleTapBar.image,
-                               tag: 4)
+            return ("자기 관리", DSKitAsset.Assets.baMuscleTapBar.image,
+                    DSKitAsset.Assets.blMuscleTapBar.image, 4)
         }
     }
 }
@@ -45,12 +37,12 @@ public enum MGTabBarType: Int {
 public class MGTabBarTypeItem: UITabBarItem {
     public init(_ type: MGTabBarType) {
         super.init()
-        let info = type.tabItemInfo()
+        let (title, image1, image2, tag) = type.tabItemTuple()
 
-        self.title = info.title
-        self.image = info.image
-        self.selectedImage = info.selectedImage
-        self.tag = info.tag
+        self.title = title
+        self.image = image1
+        self.selectedImage = image2
+        self.tag = tag
     }
 
     required init?(coder: NSCoder) {

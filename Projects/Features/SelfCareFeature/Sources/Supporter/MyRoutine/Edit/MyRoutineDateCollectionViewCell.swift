@@ -13,7 +13,7 @@ import Domain
 import MGNetworks
 
 public class MyRoutineDateCollectionViewCell: UICollectionViewCell {
-    static let identifier: String = SelfCareResourcesService.identifier.myRoutineDateCollectionViewCell
+    static let identifier: String = "MyRoutineDateCollectionViewCell"
     
     private var disposeBag = DisposeBag()
 
