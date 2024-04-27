@@ -15,9 +15,9 @@ import MGNetworks
 
 public class SelfCareMenuTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuTableViewCell
+    static let identifier: String = "SelfCareMenuTableViewCell"
 
-    private var nameTitle = MGLabel(text: SelfCareResourcesService.Title.selfCare,
+    private var nameTitle = MGLabel(text: "자기관리",
                                     font: UIFont.Pretendard.titleMedium,
                                     textColor: .black
     )

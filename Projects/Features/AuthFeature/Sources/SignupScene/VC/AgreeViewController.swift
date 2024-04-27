@@ -249,8 +249,8 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
                                     thirdAgreeButton.checked &&
                                     !fourthAgreeButton.checked
         button.isEnabled = shouldActivateButton
-        button.backgroundColor = shouldActivateButton ? AuthResourcesService.Colors.blue500 : AuthResourcesService.Colors.gray400
-        button.textLabel.textColor = shouldActivateButton ? .white : AuthResourcesService.Colors.gray200
+        button.backgroundColor = shouldActivateButton ? DSKitAsset.Colors.blue500.color : DSKitAsset.Colors.gray400.color
+        button.textLabel.textColor = shouldActivateButton ? .white : DSKitAsset.Colors.gray200.color
 
         return shouldActivateButton
     }

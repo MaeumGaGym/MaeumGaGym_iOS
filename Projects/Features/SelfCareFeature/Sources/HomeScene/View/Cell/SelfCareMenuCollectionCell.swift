@@ -15,7 +15,7 @@ import MGNetworks
 
 public class SelfCareMenuCollectionCell: UICollectionViewCell {
 
-    static let identifier: String = SelfCareResourcesService.identifier.selfCareMenuCollectionCell
+    static let identifier: String = "SelfCareMenuCollectionCell"
 
     private var menuImageView = UIImageView().then {
         $0.layer.cornerRadius = 8.0

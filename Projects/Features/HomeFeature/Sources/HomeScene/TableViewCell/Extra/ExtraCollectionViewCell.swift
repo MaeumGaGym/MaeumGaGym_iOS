@@ -10,13 +10,12 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
 import HomeFeatureInterface
 
 public class ExtraCollectionViewCell: UICollectionViewCell, CollectoionCellID {
     
-    public static var identifier: String  = HomeResourcesService.identifier.extraCollectionViewCell
+    public static var identifier: String  = "ExtraCollectionViewCell"
     
     private var iconImageView = UIImageView().then {
         $0.backgroundColor = .clear
@@ -54,8 +53,7 @@ public class ExtraCollectionViewCell: UICollectionViewCell, CollectoionCellID {
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8.0)
             $0.leading.equalTo(titleLabel.snp.leading)
-            $0.trailing.equalToSuperview().offset(5.0
-            )
+            $0.trailing.equalToSuperview().offset(5.0)
         }
 
         backgroundColor = .white

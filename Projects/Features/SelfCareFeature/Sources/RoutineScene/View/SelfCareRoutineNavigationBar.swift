@@ -14,7 +14,7 @@ final class RoutineNavigationBarBar: UIView {
          return leftButton.rx.tap
      }
 
-    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.navLeftArrow)
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.blackLeftBarArrow.image)
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton]).then {
         $0.axis = .horizontal

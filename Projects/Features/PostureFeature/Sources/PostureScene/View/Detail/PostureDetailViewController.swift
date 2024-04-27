@@ -66,8 +66,8 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
     public override func bindViewModel() {
         super.bindViewModel()
 
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        viewModel = PostureDetailViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureDetailViewModel(useCase: useCase)
 
         let input = PostureDetailViewModel.Input(
             getDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never())

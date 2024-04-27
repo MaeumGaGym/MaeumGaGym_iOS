@@ -7,15 +7,13 @@ import RxCocoa
 import Core
 import DSKit
 
-import MGNetworks
-
 final class MetronomeNavigationBar: BaseView {
 
     public var rightButtonTap: ControlEvent<Void> {
         return rightButton.rx.tap
     }
 
-    private let rightButton = MGImageButton(image: HomeResourcesService.Assets.rightNVButton)
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.settingActIcon.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal

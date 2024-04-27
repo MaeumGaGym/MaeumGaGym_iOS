@@ -14,7 +14,7 @@ final public class CameraNavigationBar: UIView {
         return leftButton.rx.tap
     }
 
-    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.cameraCancle)
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image)
 
     private let leftLabel = MGLabel(text: "사진 촬영",
                                     font: UIFont.Pretendard.titleMedium,

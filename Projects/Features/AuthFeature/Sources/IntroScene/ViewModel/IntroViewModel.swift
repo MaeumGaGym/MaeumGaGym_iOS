@@ -9,6 +9,7 @@ import Moya
 
 import Core
 import Domain
+import MGNetworks
 
 import KakaoSDKAuth
 import KakaoSDKUser
@@ -24,6 +25,7 @@ public class IntroViewModel: AuthViewModelType {
     public var disposeBag: RxSwift.DisposeBag
 
     private let useCase: AuthUseCase
+
     let keychainCSRF = KeychainType.CSRFToken
 
     public struct Input {
@@ -99,4 +101,20 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
     }
+}
+
+private extension IntroViewModel {
+    //    func kakaoGetUserInfo() {
+    //        UserApi.shared.me() { (user, error) in
+    //            if let error = error {
+    //                print(error)
+    //            }
+    //
+    //            let userName = user?.kakaoAccount?.name
+    //
+    //            _ = "user name : \(String(describing: userName))"
+    //
+    //            print("user - \(String(describing: user))")
+    //        }
+    //    }
 }

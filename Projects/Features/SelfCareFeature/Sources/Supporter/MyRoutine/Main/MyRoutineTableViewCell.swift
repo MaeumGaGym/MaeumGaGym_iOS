@@ -11,7 +11,7 @@ import MGNetworks
 
 public class MyRoutineTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = SelfCareResourcesService.identifier.myRoutineTableViewCell
+    static let identifier: String = "MyRoutineTableViewCell"
 
     private var containerView = UIView().then {
         $0.backgroundColor = DSKitAsset.Colors.blue50.color

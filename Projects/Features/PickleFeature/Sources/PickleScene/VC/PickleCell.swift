@@ -16,15 +16,15 @@ public class PickleCell: PickleCollectionViewCell {
     
     private let disposeBag = DisposeBag()
     
-    public static let identifier = PickleResourcesService.identifier.pickleCell
+    public static let identifier = "PickleCell"
         
-    let alertView1 = MGAlertOnlyTitleView(title: PickleResourcesService.Title.notSupportingComments).then {
+    let alertView1 = MGAlertOnlyTitleView(title: "댓글을 지원하지 않는 영상입니다.").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color
     }
     
-    let alertView2 = MGAlertOnlyTitleView(title: PickleResourcesService.Title.underDevelopment).then {
+    let alertView2 = MGAlertOnlyTitleView(title: "아직 개발중입니다!").then {
         $0.titleLabel?.font = UIFont.Pretendard.labelMedium
         $0.titleLabel?.textColor = .white
         $0.backgroundColor = DSKitAsset.Colors.gray800.color

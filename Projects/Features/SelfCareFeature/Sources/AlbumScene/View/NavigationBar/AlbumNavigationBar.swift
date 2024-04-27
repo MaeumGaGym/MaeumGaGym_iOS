@@ -14,9 +14,9 @@ final public class AlbumNavigationBar: UIView {
         return leftButton.rx.tap
     }
 
-    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.leftArrow)
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.leftBarArrow.image)
 
-    private let leftLabel = MGLabel(text: SelfCareResourcesService.Title.selectPicture,
+    private let leftLabel = MGLabel(text: "사진 선택",
         font: UIFont.Pretendard.titleMedium,
                                             textColor: .white
     )

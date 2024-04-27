@@ -11,25 +11,25 @@ import DSKit
 import Core
 import Domain
 
-import Data
-import MGNetworks
 import PostureFeatureInterface
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
         
     private lazy var naviBar = PostureMainNavigationBar()
+    
+    
 
     private let categoryTitleList = [
-        PostureResourcesService.Title.postureMainTitle1,
-        PostureResourcesService.Title.postureMainTitle2,
-        PostureResourcesService.Title.postureMainTitle3,
-        PostureResourcesService.Title.postureMainTitle4,
-        PostureResourcesService.Title.postureMainTitle5,
-        PostureResourcesService.Title.postureMainTitle6,
-        PostureResourcesService.Title.postureMainTitle7
+        "추천",
+        "가슴",
+        "등",
+        "어깨",
+        "팔",
+        "복근",
+        "앞 허벅지"
     ]
 
-    private let titleText = MGLabel(text: PostureResourcesService.Title.postureTitle,
+    private let titleText = MGLabel(text: "자세",
                                     font: UIFont.Pretendard.titleLarge,
                                     textColor: .black,
                                     isCenter: false
@@ -43,26 +43,27 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
-    lazy var recommandUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var recommandViewModel = PostureRecommandViewModel(useCase: recommandUseCase)
-    lazy var recommandViewController = PostureRecommandViewController(recommandViewModel)
+//    lazy var recommandUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var recommandViewModel = PostureRecommandViewModel(useCase: recommandUseCase)
+//    lazy var recommandViewController = PostureRecommandViewController(recommandViewModel)
 
-    lazy var chestUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var chestViewModel = PostureChestViewModel(useCase: chestUseCase)
-    lazy var chestViewController = PostureChestViewController(chestViewModel)
-
-    lazy var backUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var backViewModel = PostureBackViewModel(useCase: backUseCase)
-    lazy var backViewController = PostureBackViewController(backViewModel)
+//    lazy var chestUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var chestUseCase = PostureUseCase()
+//    lazy var chestViewModel = PostureChestViewModel(useCase: chestUseCase)
+//    lazy var chestViewController = PostureChestViewController(chestViewModel)
+//
+//    lazy var backUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var backViewModel = PostureBackViewModel(useCase: backUseCase)
+//    lazy var backViewController = PostureBackViewController(backViewModel)
 
     private lazy var viewControllers: [UIViewController] = [
-        recommandViewController,
-        chestViewController,
-        backViewController,
-        backViewController,
-        backViewController,
-        backViewController,
-        backViewController,
+//        recommandViewController,
+//        chestViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
      ]
 
     private lazy var containerView: UIView = {
@@ -138,9 +139,9 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         super.bindViewModel()
         
         let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        
-        viewModel = PostureMainViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        
+//        viewModel = PostureMainViewModel(useCase: useCase)
         
         let input = PostureMainViewModel.Input(
             searchButtonTapped: searchButtonTapped

@@ -12,8 +12,6 @@ import AVFoundation
 
 import AudioToolbox
 
-import MGNetworks
-
 public class MetronomeViewController: UIViewController {
 
     public var disposeBag = DisposeBag()
@@ -30,7 +28,7 @@ public class MetronomeViewController: UIViewController {
         $0.backgroundColor = .clear
     }
 
-    private let bpmTitle = MGLabel(text: HomeResourcesService.Title.bpm,
+    private let bpmTitle = MGLabel(text: "BPM",
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )
@@ -39,14 +37,14 @@ public class MetronomeViewController: UIViewController {
                                      isCenter: true)
 
     private let tempoIncrementButton = MGImageButton(
-        image: HomeResourcesService.Assets.blackPlus,
+        image: DSKitAsset.Assets.blackPlus.image,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
     }
 
     private let tempoDecrementButton = MGImageButton(
-        image: HomeResourcesService.Assets.blackMinus,
+        image: DSKitAsset.Assets.blackMinus.image,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
@@ -54,7 +52,7 @@ public class MetronomeViewController: UIViewController {
 
     private let tempoSlider = MGSlider()
 
-    private let bitTitle = MGLabel(text: HomeResourcesService.Title.bitCount,
+    private let bitTitle = MGLabel(text: "비트 수",
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )

@@ -4,12 +4,10 @@ import Moya
 import Core
 import Alamofire
 
-import Domain
-
 public enum AuthAPI {
-    case delete(param: DeleteRequestDTO)
+    case delete(accessToken: String)
     case reissuanceToken(refreshToken: String)
-    case checkNickname(param: CheckNicknameRequestDTO)
+    case nickname(nickname: String)
 }
 
 extension AuthAPI: BaseAPI {
@@ -22,8 +20,8 @@ extension AuthAPI: BaseAPI {
             return ""
         case .reissuanceToken:
             return "/re-issue"
-        case .checkNickname(let param):
-            return "/nickname/\(param.nickname)"
+        case let .nickname(nickname):
+            return "/nickname/\(nickname)"
         }
     }
 
@@ -33,24 +31,27 @@ extension AuthAPI: BaseAPI {
             return .delete
         case .reissuanceToken:
             return .get
-        case .checkNickname:
+        case .nickname:
             return .get
         }
     }
 
     public var task: Moya.Task {
         switch self {
-        case .delete, .checkNickname, .reissuanceToken:
+        case .delete, .nickname:
             return .requestPlain
+        case let .reissuanceToken(refreshToken):
+            let parameters: [String: Any] = [
+                "refresh_token": refreshToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
 
     public var headers: [String : String]? {
         switch self {
-        case .delete(let param):
-            return ["Authorization": "\(param.accessToken)"]
-        case .reissuanceToken(let refreshToken):
-            return ["RF-TOKEN": "\(refreshToken)"]
+        case let .delete(accessToken):
+            return ["Authorization": "\(accessToken)"]
         default:
             return nil
         }

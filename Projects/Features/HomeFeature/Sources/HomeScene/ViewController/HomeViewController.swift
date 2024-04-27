@@ -1,8 +1,6 @@
 import UIKit
-import Data
 
 import MGLogger
-import MGNetworks
 
 import RxSwift
 import RxCocoa
@@ -93,8 +91,8 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         let myPageButtonTapped = naviBar.rightButtonTap
             .asDriver(onErrorDriveWith: .never())
 
-        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
-        viewModel = HomeViewModel(useCase: useCase)
+//        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
+//        viewModel = HomeViewModel(useCase: useCase)
 
            let input = HomeViewModel.Input(
                settingButtonTapped: myPageButtonTapped,

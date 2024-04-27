@@ -4,16 +4,14 @@ import Moya
 import Core
 import Alamofire
 
-import Domain
-
 public enum AppleAPI {
-    case appleSignup(param: SignupRequestDTO)
-    case appleLogin(param: LoginRequestDTO)
-    case appleRecovery(param: RecoveryRequestDTO)
+    case appleSignup(nickname: String, accessToken: String)
+    case appleLogin(accessToken: String)
+    case appleRecovery(accessToken: String)
 }
 
 extension AppleAPI: BaseAPI {
-
+ 
     public static var apiType: APIType = .apple
 
     public var path: String {
@@ -40,24 +38,28 @@ extension AppleAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case .appleSignup(let param):
+        case let .appleSignup(nickname, accessToken):
             let bodyParameters: [String: Any] = [
-                "nickname": param.nickname
+                "nickname": nickname
             ]
-            return .requestParameters(parameters: bodyParameters, encoding: JSONEncoding.default)
-        case .appleLogin, .appleRecovery:
-            return .requestPlain
+            let urlParameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
+        case let .appleLogin(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case let .appleRecovery(accessToken):
+            let parameters: [String: Any] = [
+                "access_token": accessToken
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
 
     public var headers: [String : String]? {
-        switch self {
-        case .appleSignup(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        case .appleLogin(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        case .appleRecovery(let param):
-            return ["OAUTH-TOKEN": "\(param.oauthToken)"]
-        }
+        return nil
     }
 }

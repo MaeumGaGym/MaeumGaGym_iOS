@@ -6,11 +6,11 @@ public enum FilterError {
     var errorDescription: String {
         switch self {
         case .filterFailed:
-            return "필터를 적용하지 못했습니다."
+            return "Failed to apply filters."
         case .noWorking:
-            return "필터가 적용되었지만 변경되지 않았습니다."
+            return "Filters applied, but no changes were made."
         case .noPermission:
-            return "필터 적용 권한이 없습니다."
+            return "No permission to apply filters."
         }
     }
 }

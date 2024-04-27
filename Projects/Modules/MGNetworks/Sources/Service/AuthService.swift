@@ -16,19 +16,7 @@ import KakaoSDKAuth
 
 import AuthenticationServices
 
-public protocol AuthService {
-    func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO>
-    func tokenRefresh(param: TokenRefreshRequestDTO) -> Single<TokenRefreshResponseDTO>
-    func oauthSingup(param: SignupRequestDTO, oauth: OauthType) -> Single<SignupResponseDTO>
-    func oauthLogin(param: LoginRequestDTO, oauth: OauthType) -> Single<LoginResponseDTO>
-    func oauthRecovery(param: RecoveryRequestDTO, oauth: OauthType) -> Single<RecoveryResponseDTO>
-    func kakaoButtonTap() -> Single<OAuthToken?>
-    func requestToken() -> Single<Bool>
-    func requestIntroData() -> Single<IntroModel>
-    func appleButtonTap() -> Single<String>
-}
-
-public class DefaultAuthService: NSObject {
+public class AuthService: NSObject {
 
     let kakaoProvider = MoyaProvider<KakaoAPI>()
     let googleProvider = MoyaProvider<GoogleAPI>()
@@ -37,48 +25,53 @@ public class DefaultAuthService: NSObject {
 
     private let keychainAuthorization = KeychainType.authorizationToken
     private let appleSignupSubject = PublishSubject<String>()
-}
-
-extension DefaultAuthService: AuthService {
-    public func nicknameCheck(param: CheckNicknameRequestDTO) -> Single<CheckNicknameResponseDTO> {
-        return authProvider.rx.request(.checkNickname(param: param)).map(CheckNicknameResponseDTO.self)
-    }
-        public func tokenRefresh(param: TokenRefreshRequestDTO) -> Single<TokenRefreshResponseDTO> {
-        return authProvider.rx.request(.reissuanceToken(refreshToken: param.refreshToken))
-                .filterSuccessfulStatusCodes()
-                .map(TokenRefreshResponseDTO.self)
+    
+    public func nicknameCheck(nickname: String) -> Single<Response> {
+        return authProvider.rx.request(.nickname(nickname: nickname))
+            .filterSuccessfulStatusCodes()
     }
 
-    public func oauthSingup(param: SignupRequestDTO, oauth: OauthType) -> Single<SignupResponseDTO> {
+    public func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleSignup(param: param)
+            return googleSignup(nickname: nickname, accessToken: accessToken)
         case .kakao:
-            return kakaoSignup(param: param)
+            return kakaoSignup(nickname: nickname, accessToken: accessToken)
         case .apple:
-            return appleSignup(param: param)
+            return appleSignup(nickname: nickname, accessToken: accessToken)
         }
     }
 
-    public func oauthLogin(param: LoginRequestDTO, oauth: OauthType) -> Single<LoginResponseDTO> {
+//    public func oauthLogin(accessToken: String, oauth: OauthType) -> Observable<String> {
+//        switch oauth {
+//        case .google:
+//            return googleLogin(accessToken: accessToken)
+//        case .kakao:
+//            return kakaoLogin(accessToken: accessToken)
+//        case .apple:
+//            return appleLogin(accessToken: accessToken)
+//        }
+//    }
+    
+    public func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleLogin(param: param)
+            return googleLogin(accessToken: accessToken)
         case .kakao:
-            return kakaoLogin(param: param)
+            return kakaoLogin(accessToken: accessToken)
         case .apple:
-            return appleLogin(param: param)
+            return appleLogin(accessToken: accessToken)
         }
     }
 
-    public func oauthRecovery(param: RecoveryRequestDTO, oauth: OauthType) -> Single<RecoveryResponseDTO> {
+    public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleRecovery(param: param)
+            return googleRecovery(accessToken: accessToken)
         case .kakao:
-            return kakaoRecovery(param: param)
+            return kakaoRecovery(accessToken: accessToken)
         case .apple:
-            return appleRecovery(param: param)
+            return appleRecovery(accessToken: accessToken)
         }
     }
 
@@ -119,9 +112,13 @@ extension DefaultAuthService: AuthService {
 
         return appleSignupSubject.take(1).asSingle()
     }
+
+    public override init() {
+
+    }
 }
 
-extension DefaultAuthService: ASAuthorizationControllerDelegate {
+extension AuthService: ASAuthorizationControllerDelegate {
     public func authorizationController(controller: ASAuthorizationController,
                                         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
@@ -142,47 +139,46 @@ extension DefaultAuthService: ASAuthorizationControllerDelegate {
     }
 }
 
-private extension DefaultAuthService {
-    func googleSignup(param: SignupRequestDTO) -> Single<SignupResponseDTO> {
-        return googleProvider.rx.request(.googleSignup(param: param))
-            .map(SignupResponseDTO.self)
+private extension AuthService {
+    func googleSignup(nickname: String, accessToken: String) -> Single<Response> {
+        return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
     }
 
-    func googleLogin(param: LoginRequestDTO) -> Single<LoginResponseDTO> {
-        return googleProvider.rx.request(.googleLogin(param: param)).map(LoginResponseDTO.self)
+    func googleLogin(accessToken: String) -> Single<Response> {
+        return googleProvider.rx.request(.googleLogin(accessToken: accessToken))
     }
 
-    func googleRecovery(param: RecoveryRequestDTO) -> Single<RecoveryResponseDTO> {
-        return googleProvider.rx.request(.googleRecovery(param: param)).map(RecoveryResponseDTO.self)
+    func googleRecovery(accessToken: String) -> Single<Response> {
+        return googleProvider.rx.request(.googleRecovery(accessToken: accessToken))
     }
 
-    func kakaoSignup(param: SignupRequestDTO) -> Single<SignupResponseDTO> {
-        return kakaoProvider.rx.request(.kakaoSignup(param: param)).map(SignupResponseDTO.self)
+    func kakaoSignup(nickname: String, accessToken: String) -> Single<Response> {
+        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
     }
 
-    func kakaoLogin(param: LoginRequestDTO) -> Single<LoginResponseDTO> {
-        return kakaoProvider.rx.request(.kakaoLogin(param: param)).map(LoginResponseDTO.self)
+    func kakaoLogin(accessToken: String) -> Single<Response> {
+        return kakaoProvider.rx.request(.kakaoLogin(accessToken: accessToken))
     }
 
-    func kakaoRecovery(param: RecoveryRequestDTO) -> Single<RecoveryResponseDTO> {
-        return kakaoProvider.rx.request(.kakaoRecovery(param: param)).map(RecoveryResponseDTO.self)
+    func kakaoRecovery(accessToken: String) -> Single<Response> {
+        return kakaoProvider.rx.request(.kakaoRecovery(accessToken: accessToken))
     }
 
-    func appleSignup(param: SignupRequestDTO) -> Single<SignupResponseDTO> {
-        return appleProvider.rx.request(.appleSignup(param: param))
-            .filterSuccessfulStatusCodes()
-            .map(SignupResponseDTO.self)
+    func appleSignup(nickname: String, accessToken: String) -> Single<Response> {
+        return appleProvider.rx.request(.appleSignup(nickname: nickname, accessToken: accessToken))
     }
 
-    func appleLogin(param: LoginRequestDTO) -> Single<LoginResponseDTO> {
-        return appleProvider.rx.request(.appleLogin(param: param))
-            .filterSuccessfulStatusCodes()
-            .map(LoginResponseDTO.self)
+    func appleLogin(accessToken: String) -> Single<Response> {
+        return appleProvider.rx.request(.appleLogin(accessToken: accessToken))
     }
 
-    func appleRecovery(param: RecoveryRequestDTO) -> Single<RecoveryResponseDTO> {
-        return appleProvider.rx.request(.appleRecovery(param: param))
-        .filterSuccessfulStatusCodes()
-        .map(RecoveryResponseDTO.self)
+    func appleRecovery(accessToken: String) -> Single<Response> {
+        return appleProvider.rx.request(.appleRecovery(accessToken: accessToken))
     }
+
+    //    public func appleTokenState() -> Single<Bool> {
+    //        return Single.create { [weak self] single in
+                
+    //        }
+    //    }
 }

@@ -17,7 +17,7 @@ final public class SelfCareProfileViewController: BaseViewController<ProfileEdit
 
     private lazy var userProfileImageView = MGProfileView(
         profileImage: MGProfileImage(type: .custom,
-                                     customImage: SelfCareResourcesService.Assets.baseProfile),
+                                     customImage: DSKitAsset.Assets.basicProfileIcon.image),
         profileType: .maxProfile)
 
     private lazy var userNameLabel = MGLabel(text: "박준하",

@@ -7,14 +7,12 @@ import DSKit
 import Core
 import Domain
 
-import MGNetworks
-
 public class PosturePartTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = PostureResourcesService.Identifier.posturePartTableViewCell
+    static let identifier: String = "PosturePartTableViewCell"
 
     private let postureImageView = UIImageView().then {
-        $0.backgroundColor = PostureResourcesService.Colors.gray25
+        $0.backgroundColor = DSKitAsset.Colors.gray25.color
         $0.layer.cornerRadius = 8.0
     }
 

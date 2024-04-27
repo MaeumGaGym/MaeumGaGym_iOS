@@ -14,7 +14,7 @@ final class AuthNavigationBarBar: BaseView {
          return leftButton.rx.tap
      }
 
-    private let leftButton = MGImageButton(image: AuthResourcesService.Assets.leftArrow)
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.blackLeftBarArrow.image)
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton]).then {
         $0.axis = .horizontal

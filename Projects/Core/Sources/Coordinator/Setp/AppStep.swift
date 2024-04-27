@@ -7,7 +7,6 @@ public enum MGStep: Step {
     case TabBarIsRequired
 
     // Auth
-    case authSplashRequired
     case authIntroIsRequired
     case authAgreeIsRequired
     case authNickNameIsRequired

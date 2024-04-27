@@ -38,11 +38,10 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
 
     public func getMyRoutineData() {
         repository.getMyRoutineData()
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, myRoutineData in
-                owner.myRoutineData.onNext(myRoutineData)
-            }, onError: { error in
+            .subscribe(onSuccess: { [weak self] myRoutineData in
+                self?.myRoutineData.onNext(myRoutineData)
+            },
+                       onFailure: { error in
                 print("SelfCareUseCase getMyRoutineData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
@@ -59,33 +58,29 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
 
     public func getMyRoutineEditData() {
         repository.getMyRoutineEditData()
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, myRoutineData in
-                owner.myRoutineEditData.onNext(myRoutineData)
-            }, onError: { error in
+            .subscribe(onSuccess: { [weak self] myRoutineEditData in
+                self?.myRoutineEditData.onNext(myRoutineEditData)
+            },
+                       onFailure: { error in
                 print("SelfCareUseCase getMyRoutineEditData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
 
     public func getTargetMainData() {
         repository.getTargetMainData()
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, targetMainData in
-                owner.targetMainData.onNext(targetMainData)
-            }, onError: { error in
+            .subscribe(onSuccess: { [weak self] targetMainData in
+                self?.targetMainData.onNext(targetMainData)
+            }, 
+                       onFailure: { error in
                 print("SelfCareUseCase getTargetMainData error occured: \(error)")
             }).disposed(by: disposeBag)
     }
 
     public func getTargetDetailData() {
         repository.getTargetDetailData()
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, targetDetailData in
-                owner.targetDetailData.onNext(targetDetailData)
-            }, onError: { error in
+            .subscribe(onSuccess: { [weak self] targetDetailData in
+                self?.targetDetailData.onNext(targetDetailData)
+            }, onFailure: { error in
                 print("SelfCareUseCase getTargetDetailData error occured: \(error)")
             }).disposed(by: disposeBag)
     }

@@ -11,7 +11,7 @@ import MGNetworks
 
 public class MyRoutineDetailTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = SelfCareResourcesService.identifier.myRoutineDetailTableViewCell
+    static let identifier: String = "MyRoutineDetailTableViewCell"
 
     private var containerView = UIView()
 

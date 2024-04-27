@@ -13,7 +13,7 @@ import Domain
 import MGNetworks
 
 public class MyRoutineDateTableViewCell: BaseTableViewCell {
-    static let identifier: String = SelfCareResourcesService.identifier.myRoutineDateTableViewCell
+    static let identifier: String = "MyRoutineDateTableViewCell"
     
     private let date: [String] = ["일", "월", "화", "수", "목", "금", "토"]
     private var dummyDate: [String] = ["TUESDAY", "THURSDAY"]
