@@ -41,8 +41,10 @@ public class PostureDetailViewModel: BaseViewModel {
         self.bindOutput(output: output)
 
         input.getDetailData
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getDetailData(type: .pushUp)
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getDetailData(type: .pushUp)
             }).disposed(by: disposeBag)
 
         return output

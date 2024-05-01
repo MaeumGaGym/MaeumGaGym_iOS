@@ -10,21 +10,21 @@ public class PostureService {
     Single<[PostureRecommandModel]> {
         let postureRecommandData: [PostureRecommandModel] = [
             PostureRecommandModel(
-                titleImage: PostureResourcesService.Assets.blueArmIcon,
-                titleText: PostureResourcesService.Title.postureBodyTitle,
+                titleImage: DSKitAsset.Assets.appleLogo.image,
+                titleText: "가슴 운동",
                 exerciseData: [
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.pushUp, name: "푸시업", part: "가슴"),
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.bodySplitSqt, name: "맨몸 스플릿 스쿼트", part: "하체"),
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.backExtension, name: "백 익스텐션", part: "등")
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.pushUp.image, name: "푸시업", part: "가슴"),
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.bodySplitSqt.image, name: "맨몸 스플릿 스쿼트", part: "하체"),
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.backExtension.image, name: "백 익스텐션", part: "등")
                 ]
             ),
             PostureRecommandModel(
-                titleImage: PostureResourcesService.Assets.blueDumbelIcon,
-                titleText: PostureResourcesService.Title.postureMachineTitle,
+                titleImage: DSKitAsset.Assets.appleLogo.image,
+                titleText: "어깨 운동",
                 exerciseData: [
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.deeps, name: "딥스", part: "가슴"),
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.benchPress, name: "벤치프레스", part: "가슴"),
-                    PostureRecommandExerciseModel(image: PostureResourcesService.Assets.runge, name: "런지", part: "하체")
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.deeps.image, name: "딥스", part: "가슴"),
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스", part: "가슴"),
+                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.runge.image, name: "런지", part: "하체")
                 ]
             )
         ]
@@ -52,25 +52,25 @@ public class PostureService {
         return.just(
             PostureSearchModel(
                 searchResultData: [
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.airSqt,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.airSqt.image,
                                               exerciseName: "에어 스쿼트", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.archPushUp,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.archPushUp.image,
                                               exerciseName: "아치 푸시업", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelLow,
+                    PostureSearchContentModel(exerciseImage:  DSKitAsset.Assets.babelLow.image,
                                               exerciseName: "바벨 로우", exercisePart: "팔"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelBackSqt,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.babelBackSqt.image,
                                               exerciseName: "바벨 백 스쿼트", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.babelBgrSplitSqt,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.babelBgrSplitSqt.image,
                                               exerciseName: "바벨 불가리안 스플릿 스쿼트", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.bodySplitSqt,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.bodySplitSqt.image,
                                               exerciseName: "바디 스플릿 스쿼트", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.clapPushUp,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.clapPushUp.image,
                                               exerciseName: "클랩 푸시업", exercisePart: "가슴"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.invertedLow,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.invertedLow.image,
                                               exerciseName: "인버티드 로우", exercisePart: "하체"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.pullUp,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.pullUp.image,
                                               exerciseName: "풀업", exercisePart: "등"),
-                    PostureSearchContentModel(exerciseImage: PostureResourcesService.Assets.weightDeeps,
+                    PostureSearchContentModel(exerciseImage: DSKitAsset.Assets.weightDeeps.image,
                                               exerciseName: "중량 딥스", exercisePart: "가슴"),
                 ]
             )
@@ -89,39 +89,39 @@ private extension PostureService {
             PosturePartModel(
                 exerciseType: [
                     PosturePartExerciseTypeModel(
-                        exerciseName: PostureResourcesService.Title.bodyTitle),
+                        exerciseName: "맨몸"),
                     PosturePartExerciseTypeModel(
-                        exerciseName: PostureResourcesService.Title.machineTitle)
+                        exerciseName: "기구")
                 ],
                 allExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.benchPress, name: "벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.deeps, name: "딥스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineBenchPress, name: "인클라인 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.pushUp, name: "푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelBenchPress, name: "덤벨 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.hinduPushUp, name: "힌두 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.weightDeeps, name: "중량 딥스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.archPushUp, name: "아치 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineDumbelBenchPress, name: "인클라인 덤벨 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.closeGripPushUp, name: "클로즈그립 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelSqzPress, name: "덤벨 스퀴즈 프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.clapPushUp, name: "클랩 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.deeps.image, name: "딥스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineBenchPress.image, name: "인클라인 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.pushUp.image, name: "푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelBenchPress.image, name: "덤벨 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.hinduPushUp.image, name: "힌두 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.weightDeeps.image, name: "중량 딥스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.archPushUp.image, name: "아치 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineDumbelBenchPress.image, name: "인클라인 덤벨 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.closeGripPushUp.image, name: "클로즈그립 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelSqzPress.image, name: "덤벨 스퀴즈 프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.clapPushUp.image, name: "클랩 푸시업"),
                 ],
                 bodyExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.deeps, name: "딥스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.pushUp, name: "푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.hinduPushUp, name: "힌두 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.archPushUp, name: "아치 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.closeGripPushUp, name: "클로즈그립 푸시업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.clapPushUp, name: "클랩 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.deeps.image, name: "딥스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.pushUp.image, name: "푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.hinduPushUp.image, name: "힌두 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.archPushUp.image, name: "아치 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.closeGripPushUp.image, name: "클로즈그립 푸시업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.clapPushUp.image, name: "클랩 푸시업"),
                 ],
                 machineExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.benchPress, name: "벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineBenchPress, name: "인클라인 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelBenchPress, name: "덤벨 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.weightDeeps, name: "중량 딥스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineDumbelBenchPress, name: "인클라인 덤벨 벤치프레스"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelSqzPress, name: "덤벨 스퀴즈 프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineBenchPress.image, name: "인클라인 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelBenchPress.image, name: "덤벨 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.weightDeeps.image, name: "중량 딥스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineDumbelBenchPress.image, name: "인클라인 덤벨 벤치프레스"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelSqzPress.image, name: "덤벨 스퀴즈 프레스"),
                 ]
             )
         )
@@ -133,33 +133,33 @@ private extension PostureService {
             PosturePartModel(
                 exerciseType: [
                     PosturePartExerciseTypeModel(
-                        exerciseName: PostureResourcesService.Title.bodyTitle),
+                        exerciseName: "맨몸"),
                     PosturePartExerciseTypeModel(
-                        exerciseName: PostureResourcesService.Title.machineTitle)
+                        exerciseName: "기구")
                 ],
                 allExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.goodMorningExercise, name: "굿모닝 엑서사이즈"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.pullUp, name: "풀업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.babelLow, name: "바벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.invertedLow, name: "인버티드 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineDumbelLow, name: "인클라인 덤벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.hyperExtension, name: "하이퍼 익스텐션"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelLow, name: "덤벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.backExtension, name: "백 익스텐션"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.ratPullDown, name: "랫풀다운")
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.goodMorningExercise.image, name: "굿모닝 엑서사이즈"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.pullUp.image, name: "풀업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.babelLow.image, name: "바벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.invertedLow.image, name: "인버티드 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineDumbelLow.image, name: "인클라인 덤벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.hyperExtension.image, name: "하이퍼 익스텐션"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelLow.image, name: "덤벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.backExtension.image, name: "백 익스텐션"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.ratPullDown.image, name: "랫풀다운")
                 ],
                 bodyExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.pullUp, name: "풀업"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.invertedLow, name: "인버티드 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.backExtension, name: "하이퍼 익스텐션"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.pullUp.image, name: "풀업"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.invertedLow.image, name: "인버티드 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.hyperExtension.image, name: "하이퍼 익스텐션"),
                     PosturePartExerciseModel(image: DSKitAsset.Assets.backExtension.image, name: "백 익스텐션")
                 ],
                 machineExerciseData: [
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.goodMorningExercise, name: "굿모닝 엑서사이즈"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.babelLow, name: "바벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.inclineDumbelLow, name: "인클라인 덤벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.dumbelLow, name: "덤벨 로우"),
-                    PosturePartExerciseModel(image: PostureResourcesService.Assets.ratPullDown, name: "랫풀다운"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.goodMorningExercise.image, name: "굿모닝 엑서사이즈"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.babelLow.image, name: "바벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.inclineDumbelLow.image, name: "인클라인 덤벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.dumbelLow.image, name: "덤벨 로우"),
+                    PosturePartExerciseModel(image: DSKitAsset.Assets.ratPullDown.image, name: "랫풀다운"),
                 ]
             )
         )
@@ -170,13 +170,13 @@ private extension PostureService {
     func requestPushUpData() -> Single<PostureDetailModel>{
         return Single.just(
             PostureDetailModel(
-                detailImage: PostureResourcesService.Assets.pushUp,
+                detailImage: DSKitAsset.Assets.pushUp.image,
                 titleTextData: PostureDetailTitleTextModel(englishName: "푸쉬업", koreanName: "팔굽혀펴기"),
                 exerciseKindData: [PostureDetailExerciseKindModel(exerciseTag: "맨몸"),
                                    PostureDetailExerciseKindModel(exerciseTag: "가슴")],
                 exerciseWayData:
                     PostureDetailInfoModel(
-                        titleText: PostureResourcesService.Title.execiseWayTitle,
+                        titleText: "운동 방법",
                         infoText:
                     [
                         PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
@@ -187,7 +187,7 @@ private extension PostureService {
                     ]),
                 exerciseCautionData:
                     PostureDetailInfoModel(
-                        titleText: PostureResourcesService.Title.cautionTitle,
+                        titleText: "주의 사항",
                         infoText:
                     [
                         PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
@@ -195,12 +195,12 @@ private extension PostureService {
                     ]),
                 relatedPickleData:
                     PostureDetailPickleModel(
-                        titleText: PostureResourcesService.Title.relatedPickleTitle,
+                        titleText: "관련 피클",
                         pickleImage: [
-                        PostureDetailPickleImageModel(image: PostureResourcesService.Assets.posturePickleTest1),
-                        PostureDetailPickleImageModel(image: PostureResourcesService.Assets.posturePickleTest2),
-                        PostureDetailPickleImageModel(image: PostureResourcesService.Assets.posturePickleTest3),
-                        PostureDetailPickleImageModel(image: PostureResourcesService.Assets.posturePickleTest4),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest1.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest2.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest3.image),
+                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest4.image),
                     ])
             )
         )

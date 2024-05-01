@@ -54,14 +54,16 @@ public class HomeFlow: Flow {
     }
 
     private func setupViewController() {
+
         viewController = HomeViewController(viewModel)
         rootViewController = UINavigationController(rootViewController: viewController)
     }
 
     private func setupHomeScreen() -> FlowContributors {
-        rootViewController.tabBarItem.title = "홈"
-        rootViewController.tabBarItem.image = DSKitAsset.Assets.blackHomeTapBar.image
-        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blueHomeTapBar.image
+        self.rootViewController.setViewControllers(
+            [viewController],
+            animated: true
+        )
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: HomeStepper.shared))
     }
 

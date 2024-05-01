@@ -11,27 +11,25 @@ import DSKit
 import Core
 import Domain
 
-import Data
-import MGNetworks
 import PostureFeatureInterface
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
-    
-    public var steps = PublishRelay<Step>()
-    
+        
     private lazy var naviBar = PostureMainNavigationBar()
+    
+    
 
     private let categoryTitleList = [
-        PostureResourcesService.Title.postureMainTitle1,
-        PostureResourcesService.Title.postureMainTitle2,
-        PostureResourcesService.Title.postureMainTitle3,
-        PostureResourcesService.Title.postureMainTitle4,
-        PostureResourcesService.Title.postureMainTitle5,
-        PostureResourcesService.Title.postureMainTitle6,
-        PostureResourcesService.Title.postureMainTitle7
+        "추천",
+        "가슴",
+        "등",
+        "어깨",
+        "팔",
+        "복근",
+        "앞 허벅지"
     ]
 
-    private let titleText = MGLabel(text: PostureResourcesService.Title.postureTitle,
+    private let titleText = MGLabel(text: "자세",
                                     font: UIFont.Pretendard.titleLarge,
                                     textColor: .black,
                                     isCenter: false
@@ -45,26 +43,27 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
-    lazy var recommandUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var recommandViewModel = PostureRecommandViewModel(useCase: recommandUseCase)
-    lazy var recommandViewController = PostureRecommandViewController(recommandViewModel)
+//    lazy var recommandUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var recommandViewModel = PostureRecommandViewModel(useCase: recommandUseCase)
+//    lazy var recommandViewController = PostureRecommandViewController(recommandViewModel)
 
-    lazy var chestUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var chestViewModel = PostureChestViewModel(useCase: chestUseCase)
-    lazy var chestViewController = PostureChestViewController(chestViewModel)
-
-    lazy var backUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-    lazy var backViewModel = PostureBackViewModel(useCase: backUseCase)
-    lazy var backViewController = PostureBackViewController(backViewModel)
+//    lazy var chestUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var chestUseCase = PostureUseCase()
+//    lazy var chestViewModel = PostureChestViewModel(useCase: chestUseCase)
+//    lazy var chestViewController = PostureChestViewController(chestViewModel)
+//
+//    lazy var backUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//    lazy var backViewModel = PostureBackViewModel(useCase: backUseCase)
+//    lazy var backViewController = PostureBackViewController(backViewModel)
 
     private lazy var viewControllers: [UIViewController] = [
-        recommandViewController,
-        chestViewController,
-        backViewController,
-        backViewController,
-        backViewController,
-        backViewController,
-        backViewController,
+//        recommandViewController,
+//        chestViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
+//        backViewController,
      ]
 
     private lazy var containerView: UIView = {
@@ -113,42 +112,42 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         }
     }
 
-   func bindEvents() {
-       pagingTabBar.selectedIndex.subscribe(onNext: { [weak self] index in
-          guard let self = self else { return }
-
-          if let currentVC = self.currentVC {
-              currentVC.willMove(toParent: nil)
-              currentVC.view.removeFromSuperview()
-              currentVC.removeFromParent()
-          }
-
-          let vcToAdd = self.viewControllers[index]
-
-          self.addChild(vcToAdd)
-
-          vcToAdd.view.frame = self.containerView.bounds
-
-          self.containerView.addSubview(vcToAdd.view)
-
-          vcToAdd.didMove(toParent: self)
-
-      }).disposed(by: self.disposeBag)
-   }
+    func bindEvents() {
+        pagingTabBar.selectedIndex
+            .withUnretained(self)
+            .subscribe(onNext: { owner, index in
+                if let currentVC = owner.currentVC {
+                    currentVC.willMove(toParent: nil)
+                    currentVC.view.removeFromSuperview()
+                    currentVC.removeFromParent()
+                }
+                
+                let vcToAdd = owner.viewControllers[index]
+                
+                owner.addChild(vcToAdd)
+                
+                vcToAdd.view.frame = owner.containerView.bounds
+                
+                owner.containerView.addSubview(vcToAdd.view)
+                
+                vcToAdd.didMove(toParent: owner)
+                
+            }).disposed(by: disposeBag)
+    }
     
     public override func bindViewModel() {
         super.bindViewModel()
         
         let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        
-        viewModel = PostureMainViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        
+//        viewModel = PostureMainViewModel(useCase: useCase)
         
         let input = PostureMainViewModel.Input(
             searchButtonTapped: searchButtonTapped
         )
         
-        let ouput = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             
         })
     }

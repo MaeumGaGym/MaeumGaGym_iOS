@@ -13,14 +13,12 @@ import DSKit
 
 import Domain
 import MGLogger
-import MGNetworks
+
 
 import BaseFeatureDependency
 import AuthenticationServices
 
 public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
-
-    public var steps = PublishRelay<Step>()
 
     private var introModel: IntroModel?
 
@@ -110,8 +108,8 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     public override func bindViewModel() {
         super.bindViewModel()
         
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        viewModel = IntroViewModel(authUseCase: useCase)
+//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+//        viewModel = IntroViewModel(authUseCase: useCase)
         
         let input = IntroViewModel.Input(
             goolgeButtonTapped: googleButton.rx.tap.asDriver(),
@@ -120,12 +118,13 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
             getIntroData: Observable.just(()).asDriver(onErrorDriveWith: .never())
         )
         
-        let ouput = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.introDatas
-                .subscribe(onNext: { [weak self] introData in
-                    self?.introModel = introData
-                    self?.mainTitle.changeText(text: self?.introModel?.mainTitle)
-                    self?.subTitle.changeText(text: self?.introModel?.subTitle)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, introData in
+                    owner.introModel = introData
+                    owner.mainTitle.changeText(text: owner.introModel?.mainTitle)
+                    owner.subTitle.changeText(text: owner.introModel?.subTitle)
                 })
                 .disposed(by: disposeBag)
         })

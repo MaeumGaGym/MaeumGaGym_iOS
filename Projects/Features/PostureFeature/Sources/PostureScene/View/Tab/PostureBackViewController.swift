@@ -12,8 +12,6 @@ import DSKit
 import MGLogger
 
 import Domain
-import Data
-import MGNetworks
 
 public class PostureBackViewController: BaseViewController<PostureBackViewModel> {
 
@@ -90,8 +88,8 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         let secondButtonTapped = secondButton.rx.tap
             .asDriver(onErrorDriveWith: .never())
 
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        viewModel = PostureBackViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureBackViewModel(useCase: useCase)
 
         let input = PostureBackViewModel.Input(
             firstButtonTapped: firstButtonTapped,
@@ -101,7 +99,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                 .asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.backData
                 .subscribe(onNext: { backData in
                     MGLogger.debug("backData: \(backData)")

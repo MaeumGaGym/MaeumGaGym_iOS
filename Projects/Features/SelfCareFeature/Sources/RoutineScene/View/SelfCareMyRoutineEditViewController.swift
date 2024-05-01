@@ -8,16 +8,16 @@ import SnapKit
 import Then
 
 import Core
+import Data
 import DSKit
-import MGLogger
 
 import Domain
-import Data
+import MGLogger
 import MGNetworks
 
 import SelfCareFeatureInterface
 
-public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyRoutineEditViewModel> {
+public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyRoutineEditViewModel>, Stepper, UIGestureRecognizerDelegate {
 
     private var myRoutineEditData: SelfCareMyRoutineEditModel =
     SelfCareMyRoutineEditModel(
@@ -26,13 +26,15 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
             textFieldTitle: "",
             textFieldText: "", 
             textFieldPlaceholder: ""
-            ),
+            ), date: [],
         exerciseData: []
     )
 
+    private var naviBar = RoutineNavigationBarBar()
+
     private var headerView = UIView()
 
-    private var titleTextView = MGTitleTextFieldView(titleText: "textFieldData.textFieldTitle", textLimit: 3, placeholder: "textFieldData.textFieldPlaceholder")
+    private var titleTextView = MGTitleTextFieldView(titleText: "제목", textLimit: 3, placeholder: "제목을 입력해주세요")
     
     private var textFieldData: MyRoutineEditTextFieldModel = MyRoutineEditTextFieldModel(
         textFieldTitle: "",
@@ -46,6 +48,7 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
         $0.separatorStyle = .none
         $0.register(MyRoutineEditTableViewCell.self,
                     forCellReuseIdentifier: MyRoutineEditTableViewCell.identifier)
+        $0.register(MyRoutineDateTableViewCell.self, forCellReuseIdentifier: MyRoutineDateTableViewCell.identifier)
     }
 
     private let underLine = MGLine(lineHeight: 1.0)
@@ -61,20 +64,33 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
         view.backgroundColor = .white
     }
 
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
+
     public override func attribute() {
         super.attribute()
 
+        naviBar.setLeftText(text: "주말 루틴 수정")
+
         myRoutineDetailTableView.delegate = self
         myRoutineDetailTableView.dataSource = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     public override func layout() {
         super.layout()
 
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 132.0))
-        view.addSubviews([myRoutineDetailTableView, underBackView])
+        view.addSubviews([naviBar, myRoutineDetailTableView, underBackView])
 
         headerView.addSubview(titleTextView)
+
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
 
         titleTextView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
@@ -142,22 +158,34 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
 
 extension SelfCareMyRoutineEditViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 216
+        switch indexPath.row {
+        case 0:
+            return 104
+        default:
+            return 216
+        }
     }
 }
 
 extension SelfCareMyRoutineEditViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myRoutineEditData.exerciseData.count
+        myRoutineEditData.exerciseData.count + 1
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: MyRoutineEditTableViewCell.identifier,
-            for: indexPath) as? MyRoutineEditTableViewCell
-        let editData = myRoutineEditData.exerciseData[indexPath.row]
-        cell?.setup(with: editData)
-        cell?.selectionStyle = .none
-        return cell ?? UITableViewCell()
+        switch indexPath.row {
+        case 0:
+            let cell =  tableView.dequeueReusableCell(withIdentifier: MyRoutineDateTableViewCell.identifier, for: indexPath) as? MyRoutineDateTableViewCell
+            cell?.selectionStyle = .none
+            return cell ?? UITableViewCell()
+        default:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: MyRoutineEditTableViewCell.identifier,
+                for: indexPath) as? MyRoutineEditTableViewCell
+            let editData = myRoutineEditData.exerciseData[indexPath.row - 1]
+            cell?.setup(with: editData)
+            cell?.selectionStyle = .none
+            return cell ?? UITableViewCell()
+        }
     }
 }

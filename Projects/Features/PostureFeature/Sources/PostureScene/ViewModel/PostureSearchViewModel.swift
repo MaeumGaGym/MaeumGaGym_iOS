@@ -41,8 +41,10 @@ public class PostureSearchViewModel: BaseViewModel {
         self.bindOutput(output: output)
 
         input.getSearchData
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getSearchData()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getSearchData()
             }).disposed(by: disposeBag)
 
         return output

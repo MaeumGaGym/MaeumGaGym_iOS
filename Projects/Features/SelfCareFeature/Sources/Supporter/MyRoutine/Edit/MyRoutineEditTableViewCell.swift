@@ -7,6 +7,8 @@ import Core
 import DSKit
 import Domain
 
+import MGNetworks
+
 public class MyRoutineEditTableViewCell: BaseTableViewCell {
     static let identifier: String = "MyRoutineEditTableViewCell"
 
@@ -22,7 +24,7 @@ public class MyRoutineEditTableViewCell: BaseTableViewCell {
         $0.font = UIFont.Pretendard.bodyMedium
     }
 
-    private var deleteButton = MGImageButton(image: DSKitAsset.Assets.appleLogo.image)
+    private var deleteButton = MGImageButton(image: DSKitAsset.Assets.blackCancel.image)
 
     private let numberCountView = MyRoutineCountView()
     private let setCountView = MyRoutineCountView()

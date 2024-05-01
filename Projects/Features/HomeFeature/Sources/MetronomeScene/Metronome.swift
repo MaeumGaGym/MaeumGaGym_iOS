@@ -2,6 +2,7 @@ import UIKit
 import SnapKit
 import AVFoundation
 import AudioToolbox
+import HomeFeatureInterface
 
 public class Metronome: MetronomeType {
     public static let sharedInstance = Metronome(
@@ -90,32 +91,32 @@ public class Metronome: MetronomeType {
         guard let bufferMainClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
                                                      frameCapacity: beatLength
         ) else {
-            fatalError("Failed to create AVAudioPCMBuffer for main click")
+            fatalError("기본 클릭에 대한 AVAudioPCMBuffer를 생성하지 못했습니다")
         }
 
         do {
             try audioFileMainClick.read(into: bufferMainClick)
             bufferMainClick.frameLength = beatLength
         } catch {
-            fatalError("Failed to read main click audio file: \(error)")
+            fatalError("클릭 오디오 파일을 읽지 못했습니다: \(error)")
         }
 
         guard let bufferAccentedClick = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
                                                          frameCapacity: beatLength
         ) else {
-            fatalError("Failed to create AVAudioPCMBuffer for accented click")
+            fatalError("인증된 클릭에 대한 AVAudioPCMBuffer를 생성하지 못했습니다")
         }
 
         do {
             try audioFileAccentedClick.read(into: bufferAccentedClick)
             bufferAccentedClick.frameLength = beatLength
         } catch {
-            fatalError("Failed to read accented click audio file: \(error)")
+            fatalError("클릭 오디오 파일을 읽지 못했습니다: \(error)")
         }
 
         guard let bufferBar = AVAudioPCMBuffer(pcmFormat: audioFileMainClick.processingFormat,
                                                frameCapacity: barLength) else {
-            fatalError("Failed to create AVAudioPCMBuffer for bar")
+            fatalError("바에 대한 AVAudioPCMBuffer를 생성하지 못했습니다")
         }
 
         let channelCount = Int(audioFileMainClick.processingFormat.channelCount)

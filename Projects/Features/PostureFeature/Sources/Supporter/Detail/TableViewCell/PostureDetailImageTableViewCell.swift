@@ -5,11 +5,10 @@ import Then
 
 import DSKit
 import Core
-import MGNetworks
 
 public class PostureDetailImageTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = PostureResourcesService.Identifier.postureDetailImageTableViewCell
+    static let identifier: String = "PostureDetailImageTableViewCell"
 
     private var postureImageView = UIImageView().then {
         $0.backgroundColor = .gray

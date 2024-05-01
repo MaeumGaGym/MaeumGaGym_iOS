@@ -16,4 +16,7 @@ public enum APIType {
     case routine
     case target
     case ounwan
+
+    // Pose
+    case posture
 }

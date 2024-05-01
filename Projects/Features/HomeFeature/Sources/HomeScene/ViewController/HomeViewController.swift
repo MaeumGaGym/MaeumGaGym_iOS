@@ -1,8 +1,6 @@
 import UIKit
-import Data
 
 import MGLogger
-import MGNetworks
 
 import RxSwift
 import RxCocoa
@@ -20,16 +18,8 @@ import HomeFeatureInterface
 
 import HealthKit
 
-enum HomeCell {
-    case motivationMessage
-    case stepNumber
-    case routine
-    case extra
-}
-
 public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
-    public var steps = PublishRelay<Step>()
     private var cellList: [UITableViewCell] = []
     private var cells: [HomeCell] = []
 
@@ -41,7 +31,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
     var routines: [RoutineModel]?
     var extras: [ExtrasModel]?
 
-    private lazy var tableView: UITableView = UITableView().then {
+    private lazy var tableView = UITableView().then {
         $0.delegate = self
         $0.dataSource = self
         $0.backgroundColor = DSKitAsset.Colors.gray25.color
@@ -101,8 +91,8 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
         let myPageButtonTapped = naviBar.rightButtonTap
             .asDriver(onErrorDriveWith: .never())
 
-        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
-        viewModel = HomeViewModel(useCase: useCase)
+//        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
+//        viewModel = HomeViewModel(useCase: useCase)
 
            let input = HomeViewModel.Input(
                settingButtonTapped: myPageButtonTapped,
@@ -112,7 +102,7 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
                getExtras: Observable.just(()).asDriver(onErrorDriveWith: .never())
            )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.stepNumber
                 .subscribe(onNext: { stepNumber in
                     MGLogger.debug("Step Number: \(stepNumber)")

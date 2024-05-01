@@ -12,6 +12,7 @@ open class BaseView: UIView {
         
         attribute()
         layout()
+        bind()
     }
     
     required public init?(coder: NSCoder) {
@@ -23,6 +24,10 @@ open class BaseView: UIView {
     }
     
     open func layout() {
+        // 서브뷰를 구성하고 SnapKit을 사용해서 layout을 하는 함수입니다.
+    }
+
+    open func bind() {
         // 서브뷰를 구성하고 SnapKit을 사용해서 layout을 하는 함수입니다.
     }
 }

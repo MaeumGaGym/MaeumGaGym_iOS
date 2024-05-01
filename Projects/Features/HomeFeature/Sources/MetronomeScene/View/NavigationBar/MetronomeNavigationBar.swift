@@ -7,39 +7,31 @@ import RxCocoa
 import Core
 import DSKit
 
-import MGNetworks
-
-final class MetronomeNavigationBar: UIView {
+final class MetronomeNavigationBar: BaseView {
 
     public var rightButtonTap: ControlEvent<Void> {
         return rightButton.rx.tap
     }
 
-    private let rightButton = MGImageButton(image: HomeResourcesService.Assets.rightNVButton)
+    private let rightButton = MGImageButton(image: DSKitAsset.Assets.settingActIcon.image)
 
     private lazy var rightItemsStackView = UIStackView(arrangedSubviews: [rightButton]).then {
         $0.axis = .horizontal
         $0.spacing = 4
         $0.distribution = .fillEqually
     }
-
-    init() {
-        super.init(frame: .zero)
-        setUI()
-        setLayout()
-    }
+    
+    override init(frame: CGRect) { super.init(frame: frame) }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension MetronomeNavigationBar {
-    private func setUI() {
+    
+    override func attribute() {
         self.backgroundColor = .white
     }
-
-    private func setLayout() {
+    
+    override func layout() {
         self.addSubview(rightItemsStackView)
 
         self.snp.makeConstraints {

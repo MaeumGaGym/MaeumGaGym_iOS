@@ -4,11 +4,10 @@ import SnapKit
 import Then
 
 import DSKit
-import MGNetworks
 
 public class PostureDetailPickleCollectionViewCell: UICollectionViewCell {
 
-    static let identifier: String = PostureResourcesService.Identifier.postureDetailPickeTableViewCell
+    static let identifier: String = "PostureDetailPickeTableViewCell"
 
     private var imageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit

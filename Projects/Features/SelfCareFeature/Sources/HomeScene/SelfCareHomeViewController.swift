@@ -28,13 +28,13 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
     private var cells: [SelfCareCell] = []
 
     var introducts = SelfCareIntroductModel(image: DSKitAsset.Assets.airSqt.image,
-                                            mainText: SelfCareResourcesService.Title.selfCare,
-                                            subText: SelfCareResourcesService.Title.introductsSelfCare)
+                                            mainText: "자기관리",
+                                            subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요.")
 
     var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfileIcon.image,
                                         userName: "박준하",
                                         userTimer: 123,
-                                        userBage: SelfCareResourcesService.Assets.bage)
+                                        userBage: DSKitAsset.Assets.whiteAdd.image)
 
     var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "내루틴"),
                          SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "목표"),

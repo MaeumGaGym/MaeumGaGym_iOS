@@ -7,11 +7,9 @@ import DSKit
 import Core
 import Domain
 
-import MGNetworks
-
 public class PostureDetailInfoTableViewCell: BaseTableViewCell {
 
-    static let identifier: String = PostureResourcesService.Identifier.postureDetailExerciseInfoTableViewCell
+    static let identifier: String = "PostureDetailInfoTableViewCell"
 
     private var containerView = BaseView()
 

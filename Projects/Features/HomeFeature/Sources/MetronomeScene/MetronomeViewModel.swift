@@ -8,6 +8,8 @@ import SnapKit
 import AVFoundation
 import AudioToolbox
 
+import HomeFeatureInterface
+
 public protocol MetronomeViewModelDelegate: AnyObject {
     func didUpdateTempo(tempo: Int)
 }

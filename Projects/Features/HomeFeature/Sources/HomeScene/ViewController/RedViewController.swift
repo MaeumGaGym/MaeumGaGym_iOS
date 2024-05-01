@@ -1,11 +1,3 @@
-//
-//  RedViewController.swift
-//  HomeFeature
-//
-//  Created by 박준하 on 2/29/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import UIKit
 
 import RxSwift

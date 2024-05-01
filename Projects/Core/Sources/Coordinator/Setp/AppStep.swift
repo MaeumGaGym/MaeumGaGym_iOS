@@ -2,6 +2,9 @@ import RxFlow
 import UIKit
 
 public enum MGStep: Step {
+    
+    // TabBar
+    case TabBarIsRequired
 
     // Auth
     case authIntroIsRequired

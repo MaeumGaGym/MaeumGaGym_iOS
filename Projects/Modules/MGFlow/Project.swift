@@ -11,8 +11,6 @@ let project = Project.makeModule(
         .Features.Posture.Feature,
         .Features.SelfCare.Feature,
         .Features.Shop.Feature,
-        .Features.Pickle.Feature,
-        .data,
-        .core
+        .Features.Pickle.Feature
     ]
 )

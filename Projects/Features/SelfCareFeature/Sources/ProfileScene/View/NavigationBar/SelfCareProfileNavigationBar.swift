@@ -14,9 +14,9 @@ final public class SelfCareProfileNavigationBar: UIView {
         return leftButton.rx.tap
     }
 
-    private let leftButton = MGImageButton(image: SelfCareResourcesService.Assets.leftArrow.withTintColor(.black))
+    private let leftButton = MGImageButton(image: DSKitAsset.Assets.leftBarArrow.image.withTintColor(.black))
 
-    private let leftLabel = MGLabel(text: SelfCareResourcesService.Title.myProfileEdit,
+    private let leftLabel = MGLabel(text: "내 정보 변경",
         font: UIFont.Pretendard.labelLarge,
                                             textColor: .black
     )

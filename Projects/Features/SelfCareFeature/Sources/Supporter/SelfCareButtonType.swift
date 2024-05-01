@@ -1,6 +1,7 @@
 import UIKit
 
 import DSKit
+import MGNetworks
 
 public enum SelfCareButtonType {
     case plusRoutine
@@ -14,11 +15,11 @@ public enum SelfCareButtonType {
     var buttonImage: UIImage? {
         switch self {
         case .plusRoutine:
-            return DSKitAsset.Assets.blackPlus.image
+            return DSKitAsset.Assets.whiteAdd.image
         case .deleteRotine:
             return DSKitAsset.Assets.trashActIcon.image
         case .editRoutine:
-            return DSKitAsset.Assets.pencilActIcon.image
+            return DSKitAsset.Assets.whitePencilActIcon.image
         case .posturePlus:
             return DSKitAsset.Assets.blackPlus.image
         case .plusTarget:
@@ -82,6 +83,23 @@ public enum SelfCareButtonType {
             return DSKitAsset.Colors.blue500.color
         case .plusTarget:
             return DSKitAsset.Colors.blue500.color
+        }
+    }
+
+    var width: Int {
+        switch self {
+        case .plusRoutine:
+            return 141
+        case .deleteRotine:
+            return 107
+        case .editRoutine:
+            return 107
+        case .posturePlus:
+            return 107
+        case .edit:
+            return 70
+        default:
+            return 107
         }
     }
 }

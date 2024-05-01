@@ -39,8 +39,10 @@ public class PostureRecommandViewModel: BaseViewModel {
         self.bindOutput(output: output)
         
         input.getRecommandData
-            .drive(onNext: { [weak self] _ in
-                self?.useCase.getRecommandData()
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.useCase.getRecommandData()
             }).disposed(by: disposeBag)
         
         return output

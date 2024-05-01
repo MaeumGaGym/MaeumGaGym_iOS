@@ -9,17 +9,13 @@ import Then
 
 import Core
 import DSKit
-import Data
 
 import Domain
 import MGLogger
-import MGNetworks
 
 import AuthFeatureInterface
 
 public class NicknameViewController: BaseViewController<NicknameViewModel>, Stepper {
-
-    public var steps = PublishRelay<Step>()
 
     private lazy var naviBar = AuthNavigationBarBar()
 
@@ -104,7 +100,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             $0.width.equalTo(24)
             $0.height.equalTo(24)
         }
-        
+
         checkButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
             $0.leading.equalToSuperview().offset(20.0)
@@ -112,20 +108,20 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             $0.height.equalTo(58.0)
         }
     }
-    
+
     public override func bindViewModel() {
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-        viewModel = NicknameViewModel(useCase: useCase)
+//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
+//        viewModel = NicknameViewModel(useCase: useCase)
 
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
         let nextButtonTapped = checkButton.rx.tap.asDriver(onErrorDriveWith: .never())
 
         let input = NicknameViewModel.Input(navButtonTap: navButtonTapped, nextButtonTap: nextButtonTapped)
-        
-        let output = viewModel.transform(input, action: { output in
+
+        _ = viewModel.transform(input, action: { output in
             output.nextButtonTap.drive(onNext: { _ in
-                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
-                useCase.nextButtonTap()
+//                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
+//                useCase.nextButtonTap()
             }).disposed(by: disposeBag)
 
             output.navButtonTap.drive(onNext: { _ in
@@ -133,24 +129,25 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             }).disposed(by: disposeBag)
         })
     }
-    
+
     public override func bindActions() {
         nicknameTF.rx.text
             .map { ($0?.count ?? 0) >= 2 && ($0?.count ?? 0) <= 10 ? true : false }
+            .withUnretained(self)
             .subscribe(
-                onNext: { [weak self] state in
+                onNext: { owner, state in
                     MGLogger.debug(state)
                     switch state {
                     case true:
-                        self?.checkButton.isEnabled = state
-                        self?.checkButton.backgroundColor = AuthResourcesService.Colors.blue500
+                        owner.checkButton.isEnabled = state
+                        owner.checkButton.backgroundColor = DSKitAsset.Colors.blue500.color
                     case false:
-                        self?.checkButton.isEnabled = state
-                        self?.checkButton.backgroundColor = AuthResourcesService.Colors.gray400
+                        owner.checkButton.isEnabled = state
+                        owner.checkButton.backgroundColor = DSKitAsset.Colors.gray400.color
                     }
                 }).disposed(by: disposeBag)
     }
-    
+
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
         guard let keyboardSize = (notification.userInfo?[
             UIResponder.keyboardFrameEndUserInfoKey
@@ -182,9 +179,11 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     }
 
     func cancelButtonTap() {
-        cancelButton.rx.tap.subscribe(onNext: { [weak self] in
-            self?.nicknameTF.text = ""
-        }).disposed(by: disposeBag)
+        cancelButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.nicknameTF.text = ""
+            }).disposed(by: disposeBag)
     }
 
     private func keyboardBind() {
@@ -197,33 +196,35 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             .map { _ in CGFloat(48) }
 
         Observable.merge(keyboardWillShowObservable)
-            .subscribe(onNext: { [weak self] height in
+            .withUnretained(self)
+            .subscribe(onNext: { owner, height in
 
-                self?.checkButton.snp.remakeConstraints {
-                    self!.bottomConstraint = $0.bottom.equalToSuperview().offset(-height).constraint
+                owner.checkButton.snp.remakeConstraints {
+                    owner.bottomConstraint = $0.bottom.equalToSuperview().offset(-height).constraint
                     $0.width.equalToSuperview()
                     $0.height.equalTo(58.0)
                 }
-                self?.checkButton.layer.cornerRadius = 0
+                owner.checkButton.layer.cornerRadius = 0
                 UIView.animate(withDuration: 0.3) {
-                    self?.view.layoutIfNeeded()
+                    owner.view.layoutIfNeeded()
                 }
             })
             .disposed(by: disposeBag)
 
         Observable.merge(keyboardWillHideObservable)
-            .subscribe(onNext: { [weak self] height in
-                self?.checkButton.snp.remakeConstraints {
-                    self!.bottomConstraint?.update(offset: -height + 112.0)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, height in
+                owner.checkButton.snp.remakeConstraints {
+                    owner.bottomConstraint?.update(offset: -height + 112.0)
                     $0.leading.equalToSuperview().offset(20.0)
                     $0.trailing.equalToSuperview().offset(-20.0)
                     $0.width.equalTo(390.0)
                     $0.height.equalTo(58.0)
-                    $0.bottom.equalTo((self?.view.safeAreaLayoutGuide)!)
+                    $0.bottom.equalTo((owner.view.safeAreaLayoutGuide))
                 }
-                self?.checkButton.layer.cornerRadius = 8.0
+                owner.checkButton.layer.cornerRadius = 8.0
                 UIView.animate(withDuration: 0.3) {
-                    self?.view.layoutIfNeeded()
+                    owner.view.layoutIfNeeded()
                 }
             })
             .disposed(by: disposeBag)

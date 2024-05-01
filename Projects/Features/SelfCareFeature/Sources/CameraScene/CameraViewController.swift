@@ -1,5 +1,5 @@
 import UIKit
-import MGNetworks
+import SelfCareFeatureInterface
 import Photos
 
 import RxSwift
@@ -26,13 +26,13 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
 
     private var captureButton = MGButton(
         titleText: "",
-        image: SelfCareResourcesService.Assets.camera,
+        image: DSKitAsset.Assets.cameraActIcon.image,
         textColor: .black
     )
 
     private var photoButton = MGButton(
         titleText: "",
-        image: SelfCareResourcesService.Assets.photo,
+        image: DSKitAsset.Assets.imageActIcon.image,
         textColor: .black,
         backColor: DSKitAsset.Colors.gray800.color
     ).then {
@@ -41,7 +41,7 @@ public class CameraViewController: BaseViewController<CameraViewModel> {
 
     private var chageButton = MGButton(
         titleText: "",
-        image: SelfCareResourcesService.Assets.ture,
+        image: DSKitAsset.Assets.turnArrow.image,
         textColor: .black,
         backColor: DSKitAsset.Colors.gray800.color
     ).then {

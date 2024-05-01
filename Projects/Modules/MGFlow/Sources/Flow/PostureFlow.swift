@@ -74,8 +74,8 @@ public class PostureFlow: Flow {
     private func setupPostureMainScreen() -> FlowContributors {
         rootViewController.view.backgroundColor = .white
         rootViewController.tabBarItem.title = "자세"
-        rootViewController.tabBarItem.image = DSKitAsset.Assets.maeumGaGymBlackPeopleTapBar.image
-        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.maeumGaGymBluePeopleTapBar.image
+        rootViewController.tabBarItem.image = DSKitAsset.Assets.bPeopleTapBar.image
+        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPeopleTapBar.image
         rootViewController.setViewControllers([viewController], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: PostureStepper.shared))
     }

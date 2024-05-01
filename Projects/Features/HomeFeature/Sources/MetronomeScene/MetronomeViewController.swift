@@ -12,8 +12,6 @@ import AVFoundation
 
 import AudioToolbox
 
-import MGNetworks
-
 public class MetronomeViewController: UIViewController {
 
     public var disposeBag = DisposeBag()
@@ -30,7 +28,7 @@ public class MetronomeViewController: UIViewController {
         $0.backgroundColor = .clear
     }
 
-    private let bpmTitle = MGLabel(text: HomeResourcesService.Title.bpm,
+    private let bpmTitle = MGLabel(text: "BPM",
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )
@@ -39,14 +37,14 @@ public class MetronomeViewController: UIViewController {
                                      isCenter: true)
 
     private let tempoIncrementButton = MGImageButton(
-        image: HomeResourcesService.Assets.blackPlus,
+        image: DSKitAsset.Assets.blackPlus.image,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
     }
 
     private let tempoDecrementButton = MGImageButton(
-        image: HomeResourcesService.Assets.blackMinus,
+        image: DSKitAsset.Assets.blackMinus.image,
         backColor: DSKitAsset.Colors.gray50.color
     ).then {
         $0.setCornerRadius(radius: 22.0)
@@ -54,7 +52,7 @@ public class MetronomeViewController: UIViewController {
 
     private let tempoSlider = MGSlider()
 
-    private let bitTitle = MGLabel(text: HomeResourcesService.Title.bitCount,
+    private let bitTitle = MGLabel(text: "비트 수",
                                    font: UIFont.Pretendard.bodyLarge,
                                    textColor: DSKitAsset.Colors.blue400.color
     )
@@ -175,36 +173,40 @@ public class MetronomeViewController: UIViewController {
 
     private func setupActions() {
         tempoIncrementButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.tempo += 1
-                self?.updateTempoViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.tempo += 1
+                owner.updateTempoViews()
             })
             .disposed(by: disposeBag)
 
         tempoDecrementButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.tempo -= 1
-                self?.updateTempoViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.tempo -= 1
+                owner.updateTempoViews()
             })
             .disposed(by: disposeBag)
 
         startButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.start()
-                self?.startColorChangeTimer()
-                self?.updateTempoViews()
-                self?.stopButton.isHidden = false
-                self?.startButton.isHidden = true
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.start()
+                owner.startColorChangeTimer()
+                owner.updateTempoViews()
+                owner.stopButton.isHidden = false
+                owner.startButton.isHidden = true
             })
             .disposed(by: disposeBag)
 
         stopButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.stop()
-                self?.colorChangeTimer?.invalidate()
-                self?.resetBitViews()
-                self?.stopButton.isHidden = true
-                self?.startButton.isHidden = false
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.viewModel.stop()
+                owner.colorChangeTimer?.invalidate()
+                owner.resetBitViews()
+                owner.stopButton.isHidden = true
+                owner.startButton.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -216,12 +218,13 @@ public class MetronomeViewController: UIViewController {
 
         tempoSlider.rx.value
             .map { Int($0.rounded()) }
-            .subscribe(onNext: { [weak self] roundedValue in
-                self?.viewModel.tempo = roundedValue
-                self?.updateTempoViews()
-                self?.viewModel.stop()
-                self?.colorChangeTimer?.invalidate()
-                self?.resetBitViews()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, roundedValue in
+                owner.viewModel.tempo = roundedValue
+                owner.updateTempoViews()
+                owner.viewModel.stop()
+                owner.colorChangeTimer?.invalidate()
+                owner.resetBitViews()
             })
             .disposed(by: disposeBag)
     }

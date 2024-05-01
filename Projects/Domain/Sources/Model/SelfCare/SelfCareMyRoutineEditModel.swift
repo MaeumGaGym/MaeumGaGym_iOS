@@ -2,13 +2,16 @@ import UIKit
 
 public struct SelfCareMyRoutineEditModel {
     public var textFieldData: MyRoutineEditTextFieldModel
+    public var date: [String]
     public var exerciseData: [MyRoutineEditExerciseModel]
 
     public init(
         textFieldData: MyRoutineEditTextFieldModel,
+        date: [String],
         exerciseData: [MyRoutineEditExerciseModel]
     ) {
         self.textFieldData = textFieldData
+        self.date = date
         self.exerciseData = exerciseData
     }
 }

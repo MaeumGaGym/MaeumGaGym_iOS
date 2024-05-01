@@ -12,8 +12,6 @@ import DSKit
 import MGLogger
 
 import Domain
-import Data
-import MGNetworks
 
 import PostureFeatureInterface
 
@@ -47,8 +45,8 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
     public override func bindViewModel() {
         super.bindViewModel()
 
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        viewModel = PostureRecommandViewModel(useCase: useCase)
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureRecommandViewModel(useCase: useCase)
 
         let input = PostureRecommandViewModel.Input(
             getRecommandData:
@@ -56,7 +54,7 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
                 .asDriver(onErrorDriveWith: .never())
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.recommandData
                 .subscribe(onNext: { recommandData in
                     MGLogger.debug("Recommand Data: \(recommandData)")

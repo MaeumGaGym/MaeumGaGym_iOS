@@ -56,9 +56,8 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
         view.backgroundColor = .white
 
-        targetTitleLabel.text = targetMainModel.titleTextData.titleText
-        targetSubTitleLabel.text = targetMainModel.titleTextData.infoText
-
+        targetTitleLabel.changeText(text: targetMainModel.titleTextData.titleText)
+        targetSubTitleLabel.changeText(text: targetMainModel.titleTextData.infoText)
         targetMainTableView.delegate = self
         targetMainTableView.dataSource = self
     }

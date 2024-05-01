@@ -9,15 +9,11 @@ import Then
 
 import Core
 import DSKit
-import Data
-
-import Domain
 import MGLogger
-import MGNetworks
+
+import AuthFeatureInterface
 
 public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, UIGestureRecognizerDelegate {
-
-    public var steps = PublishRelay<Step>()
 
     private var naviBar = AuthNavigationBarBar()
 
@@ -42,14 +38,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
     private let secondAgreeButton = MGAgreeButton(type: .termsAgreeText)
     private let thirdAgreeButton = MGAgreeButton(type: .ageAgreeText)
     private let fourthAgreeButton = MGAgreeButton(type: .marketingAgreeText, chooseType: true)
-    
-    //    private let readMore = MGButton(
-    //        titleText: "자세히 보기",
-    //        font: UIFont.Pretendard.labelSmall,
-    //        textColor: DSKitAsset.Colors.gray300.color
-    //    ).then {
-    //        $0.isHidden = false
-    //    }
 
     private var checkButton = MGCheckButton(text: "확인")
 
@@ -149,9 +137,6 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
         super.bindViewModel()
 
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
-        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-
-        viewModel = AgreeViewModel(useCase: useCase)
 
         let input = AgreeViewModel.Input(
             navButtonTapped: navButtonTapped,
@@ -163,7 +148,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
             nextButtonTap: checkButton.rx.tap.asSignal()
         )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.allAgreeButtonClickedMessage
                 .drive(onNext: { [weak self] message in
                     print(message)
@@ -264,8 +249,8 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
                                     thirdAgreeButton.checked &&
                                     !fourthAgreeButton.checked
         button.isEnabled = shouldActivateButton
-        button.backgroundColor = shouldActivateButton ? AuthResourcesService.Colors.blue500 : AuthResourcesService.Colors.gray400
-        button.textLabel.textColor = shouldActivateButton ? .white : AuthResourcesService.Colors.gray200
+        button.backgroundColor = shouldActivateButton ? DSKitAsset.Colors.blue500.color : DSKitAsset.Colors.gray400.color
+        button.textLabel.textColor = shouldActivateButton ? .white : DSKitAsset.Colors.gray200.color
 
         return shouldActivateButton
     }

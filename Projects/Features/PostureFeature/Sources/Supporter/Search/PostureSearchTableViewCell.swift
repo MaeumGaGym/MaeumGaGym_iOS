@@ -7,17 +7,15 @@ import DSKit
 import Core
 import Domain
 
-import MGNetworks
-
 public class PostureSearchTableViewCell: BaseTableViewCell {
 
-    public static let identifier: String = PostureResourcesService.Identifier.postureSearchTableViewCell
+    public static let identifier: String = "PostureSearchTableViewCell"
 
     private var containerView = BaseView()
 
     private var searchImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = PostureResourcesService.Colors.gray50
+        $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.cornerRadius = 8.0
     }
 
@@ -27,7 +25,7 @@ public class PostureSearchTableViewCell: BaseTableViewCell {
     )
 
     private var exercisePartLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                      textColor: PostureResourcesService.Colors.gray400,
+                                      textColor: DSKitAsset.Colors.gray400.color,
                                       isCenter: false
     )
 

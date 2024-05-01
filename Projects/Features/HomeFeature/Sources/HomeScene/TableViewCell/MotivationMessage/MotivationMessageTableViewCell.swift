@@ -10,11 +10,12 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
-public class MotivationMessageTableViewCell: BaseTableViewCell {
+import HomeFeatureInterface
 
-    static public var identifier: String = HomeResourcesService.identifier.motivationMessageTableViewCell
+public class MotivationMessageTableViewCell: BaseTableViewCell, CollectoionCellID {
+
+    static public var identifier: String = "MotivationMessageTableViewCell"
 
     private let messageLabel = MGLabel(font: UIFont.Pretendard.titleMedium, textColor: DSKitAsset.Colors.blue500.color, numberOfLineCount: 0
     )
