@@ -15,6 +15,9 @@ public struct RecoveryResponseDTO: Decodable {
 }
 
 enum AuthErrorType: Error {
-    case notFound400
-    case notInt
+    case error400
+    case error401
+    case error404
+    case error409
+    case error500
 }
