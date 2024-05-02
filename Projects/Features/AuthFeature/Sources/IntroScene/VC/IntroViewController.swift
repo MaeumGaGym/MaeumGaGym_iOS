@@ -14,21 +14,20 @@ import DSKit
 import Domain
 import MGLogger
 
-
 import BaseFeatureDependency
 import AuthenticationServices
 
 public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
-
+    
     private var introModel: IntroModel?
-
+    
     private var introImageView = MGProfileView(
         profileImage: MGProfileImage(
             type: .custom,
             customImage: nil),
         profileType: .intro
     )
-
+    
     private var mainTitle = MGLabel(
         font: UIFont.Pretendard.titleMedium,
         isCenter: true
@@ -107,9 +106,6 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     
     public override func bindViewModel() {
         super.bindViewModel()
-        
-//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-//        viewModel = IntroViewModel(authUseCase: useCase)
         
         let input = IntroViewModel.Input(
             goolgeButtonTapped: googleButton.rx.tap.asDriver(),
