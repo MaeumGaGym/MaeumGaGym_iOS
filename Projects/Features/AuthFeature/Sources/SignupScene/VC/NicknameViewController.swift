@@ -36,7 +36,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
         $0.isEnabled = true
     }
 
-    private var checkButton = MGCheckButton(text: "회원가입")
+    private var nextButton = MGCheckButton(text: "회원가입")
 
     public override func configureNavigationBar() {
         super.configureNavigationBar()
@@ -69,7 +69,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                           textInformation,
                           nicknameTF,
                           cancelButton,
-                          checkButton])
+                          nextButton])
 
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -101,7 +101,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             $0.height.equalTo(24)
         }
 
-        checkButton.snp.makeConstraints {
+        nextButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
             $0.leading.equalToSuperview().offset(20.0)
             $0.trailing.equalToSuperview().offset(-20.0)
@@ -110,20 +110,15 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     }
 
     public override func bindViewModel() {
-//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-//        viewModel = NicknameViewModel(useCase: useCase)
 
         let navButtonTapped = naviBar.leftButtonTap.asDriver(onErrorDriveWith: .never())
-        let nextButtonTapped = checkButton.rx.tap.asDriver(onErrorDriveWith: .never())
+        let nextButtonTapped = nextButton.rx.tap
+            .withLatestFrom(nicknameTF.rx.text)
+            .asDriver(onErrorDriveWith: .never())
 
         let input = NicknameViewModel.Input(navButtonTap: navButtonTapped, nextButtonTap: nextButtonTapped)
 
         _ = viewModel.transform(input, action: { output in
-            output.nextButtonTap.drive(onNext: { _ in
-//                useCase.changeNickname(nickname: self.nicknameTF.text ?? "")
-//                useCase.nextButtonTap()
-            }).disposed(by: disposeBag)
-
             output.navButtonTap.drive(onNext: { _ in
                 AuthStepper.shared.steps.accept(MGStep.authBack)
             }).disposed(by: disposeBag)
@@ -139,11 +134,11 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                     MGLogger.debug(state)
                     switch state {
                     case true:
-                        owner.checkButton.isEnabled = state
-                        owner.checkButton.backgroundColor = DSKitAsset.Colors.blue500.color
+                        owner.nextButton.isEnabled = state
+                        owner.nextButton.backgroundColor = DSKitAsset.Colors.blue500.color
                     case false:
-                        owner.checkButton.isEnabled = state
-                        owner.checkButton.backgroundColor = DSKitAsset.Colors.gray400.color
+                        owner.nextButton.isEnabled = state
+                        owner.nextButton.backgroundColor = DSKitAsset.Colors.gray400.color
                     }
                 }).disposed(by: disposeBag)
     }
@@ -199,12 +194,12 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             .withUnretained(self)
             .subscribe(onNext: { owner, height in
 
-                owner.checkButton.snp.remakeConstraints {
+                owner.nextButton.snp.remakeConstraints {
                     owner.bottomConstraint = $0.bottom.equalToSuperview().offset(-height).constraint
                     $0.width.equalToSuperview()
                     $0.height.equalTo(58.0)
                 }
-                owner.checkButton.layer.cornerRadius = 0
+                owner.nextButton.layer.cornerRadius = 0
                 UIView.animate(withDuration: 0.3) {
                     owner.view.layoutIfNeeded()
                 }
@@ -214,7 +209,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
         Observable.merge(keyboardWillHideObservable)
             .withUnretained(self)
             .subscribe(onNext: { owner, height in
-                owner.checkButton.snp.remakeConstraints {
+                owner.nextButton.snp.remakeConstraints {
                     owner.bottomConstraint?.update(offset: -height + 112.0)
                     $0.leading.equalToSuperview().offset(20.0)
                     $0.trailing.equalToSuperview().offset(-20.0)
@@ -222,7 +217,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                     $0.height.equalTo(58.0)
                     $0.bottom.equalTo((owner.view.safeAreaLayoutGuide))
                 }
-                owner.checkButton.layer.cornerRadius = 8.0
+                owner.nextButton.layer.cornerRadius = 8.0
                 UIView.animate(withDuration: 0.3) {
                     owner.view.layoutIfNeeded()
                 }

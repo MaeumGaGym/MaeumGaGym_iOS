@@ -47,11 +47,11 @@ extension DefaultAuthUseCase: AuthUseCase {
         authRepository.kakaoButtonTap().subscribe(onSuccess: { [self] token in
             let oauthToken = token!.accessToken
             MGLogger.debug("kakaoButtonTap token ✅ \(oauthToken)")
-            TokenManagerImpl().save(token: oauthToken, with: .authorizationToken)
+            TokenManagerImpl().save(token: oauthToken, with: .oauthToken)
             authRepository.oauthLogin(accessToken: oauthToken, oauth: .kakao)
                 .flatMap { response -> Single<Response> in
                     if response.statusCode >= 400 {
-                        return Single.error(AuthErrorType.notFound400)
+                        return Single.error(AuthErrorType.error400)
                     } else {
                         return Single.just(response)
                     }
@@ -62,7 +62,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                         let accessToken = headers.value(for: "Authorization")?.replacingOccurrences(of: "Bearer ", with: "")
                         let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
                         if let accessToken = accessToken {
-                            TokenManagerImpl().save(token: accessToken, with: .authorizationToken)
+                            TokenManagerImpl().save(token: accessToken, with: .accessToken)
                         }
                         if let refreshToken = refreshToken {
                             TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
@@ -74,7 +74,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                     authRepository.oauthRecovery(accessToken: oauthToken, oauth: .kakao)
                         .flatMap { response -> Single<Response> in
                             if response.statusCode >= 400 {
-                                return Single.error(AuthErrorType.notFound400)
+                                return Single.error(AuthErrorType.error400)
                             } else {
                                 return Single.just(response)
                             }
@@ -84,7 +84,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                             authRepository.oauthLogin(accessToken: oauthToken, oauth: .kakao)
                                 .flatMap { response -> Single<Response> in
                                     if response.statusCode >= 400 {
-                                        return Single.error(AuthErrorType.notFound400)
+                                        return Single.error(AuthErrorType.error400)
                                     } else {
                                         return Single.just(response)
                                     }
@@ -95,7 +95,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                                         let accessToken = headers.value(for: "Authorization")?.replacingOccurrences(of: "Bearer ", with: "")
                                         let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
                                         if let accessToken = accessToken {
-                                            TokenManagerImpl().save(token: accessToken, with: .authorizationToken)
+                                            TokenManagerImpl().save(token: accessToken, with: .accessToken)
                                         }
                                         if let refreshToken = refreshToken {
                                             TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
@@ -118,13 +118,23 @@ extension DefaultAuthUseCase: AuthUseCase {
         oauthType = .apple
         authRepository.appleButtonTap()
             .subscribe(onSuccess: { [self] token in
-                MGLogger.debug("appleButtonTap token ✅ \(token)")
-                TokenManagerImpl().save(token: token, with: KeychainType.authorizationToken)
-                authRepository.oauthLogin(accessToken: token, oauth: .apple)
+                let oauthToken = token
+                MGLogger.debug("appleButtonTap token ✅ \(oauthToken)")
+                TokenManagerImpl().save(token: oauthToken, with: KeychainType.oauthToken)
+                authRepository.oauthLogin(accessToken: oauthToken, oauth: .apple)
                     .flatMap { response -> Single<Response> in
-                        if response.statusCode >= 400 {
-                            return Single.error(AuthErrorType.notFound400)
-                        } else {
+                        switch response.statusCode {
+                        case 200:
+                            return Single.just(response)
+                        case 400:
+                            return Single.error(AuthErrorType.error400)
+                        case 401:
+                            return Single.error(AuthErrorType.error401)
+                        case 404:
+                            return Single.error(AuthErrorType.error404)
+                        case 500:
+                            return Single.error(AuthErrorType.error500)
+                        default:
                             return Single.just(response)
                         }
                     }
@@ -134,7 +144,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                             let accessToken = headers.value(for: "Authorization")?.replacingOccurrences(of: "Bearer ", with: "")
                             let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
                             if let accessToken = accessToken {
-                                TokenManagerImpl().save(token: accessToken, with: .authorizationToken)
+                                TokenManagerImpl().save(token: accessToken, with: .accessToken)
                             }
                             if let refreshToken = refreshToken {
                                 TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
@@ -143,21 +153,39 @@ extension DefaultAuthUseCase: AuthUseCase {
                         AuthStepper.shared.steps.accept(MGStep.initialization)
                     }, onFailure: { [self] error in
                         MGLogger.debug("appleButtonTap login ❌ \(error)")
-                        authRepository.oauthRecovery(accessToken: token, oauth: .apple)
+                        authRepository.oauthRecovery(accessToken: oauthToken, oauth: .apple)
                             .flatMap { response -> Single<Response> in
-                                if response.statusCode >= 400 {
-                                    return Single.error(AuthErrorType.notFound400)
-                                } else {
+                                switch response.statusCode {
+                                case 200:
+                                    return Single.just(response)
+                                case 400:
+                                    return Single.error(AuthErrorType.error400)
+                                case 401:
+                                    return Single.error(AuthErrorType.error401)
+                                case 404:
+                                    return Single.error(AuthErrorType.error404)
+                                case 500:
+                                    return Single.error(AuthErrorType.error500)
+                                default:
                                     return Single.just(response)
                                 }
                             }
                             .subscribe(onSuccess: { [self] element in
                                 MGLogger.debug("appleButtonTap recovery ✅ \(element)")
-                                authRepository.oauthLogin(accessToken: token, oauth: .apple)
+                                authRepository.oauthLogin(accessToken: oauthToken, oauth: .apple)
                                     .flatMap { response -> Single<Response> in
-                                        if response.statusCode >= 400 {
-                                            return Single.error(AuthErrorType.notFound400)
-                                        } else {
+                                        switch response.statusCode {
+                                        case 200:
+                                            return Single.just(response)
+                                        case 400:
+                                            return Single.error(AuthErrorType.error400)
+                                        case 401:
+                                            return Single.error(AuthErrorType.error401)
+                                        case 404:
+                                            return Single.error(AuthErrorType.error404)
+                                        case 500:
+                                            return Single.error(AuthErrorType.error500)
+                                        default:
                                             return Single.just(response)
                                         }
                                     }
@@ -167,7 +195,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                                             let accessToken = headers.value(for: "Authorization")?.replacingOccurrences(of: "Bearer ", with: "")
                                             let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
                                             if let accessToken = accessToken {
-                                                TokenManagerImpl().save(token: accessToken, with: .authorizationToken)
+                                                TokenManagerImpl().save(token: accessToken, with: .accessToken)
                                             }
                                             if let refreshToken = refreshToken {
                                                 TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
@@ -187,12 +215,18 @@ extension DefaultAuthUseCase: AuthUseCase {
     }
 
     public func nextButtonTap() {
-        let accessToken = TokenManagerImpl().get(key: KeychainType.authorizationToken)!
+        let oauthToken = TokenManagerImpl().get(key: KeychainType.oauthToken)
+        guard let oauthToken = oauthToken else { return }
         authRepository.nicknameCheck(nickname: nicknameText)
             .flatMap { response -> Single<Response> in
-                if response.statusCode >= 400 {
-                    return Single.error(AuthErrorType.notFound400)
-                } else {
+                switch response.statusCode {
+                case 200:
+                    return Single.just(response)
+                case 400:
+                    return Single.error(AuthErrorType.error400)
+                case 500:
+                    return Single.error(AuthErrorType.error500)
+                default:
                     return Single.just(response)
                 }
             }
@@ -201,23 +235,40 @@ extension DefaultAuthUseCase: AuthUseCase {
                 MGLogger.debug("nicknameButtonTap nickname ✅ \(nicknameText)")
 
                 authRepository.oauthSignup(nickname: nicknameText,
-                                           accessToken: accessToken,
-                                           oauth: .apple)
+                                           accessToken: oauthToken,
+                                           oauth: oauthType)
                 .flatMap { response -> Single<Response> in
-                    MGLogger.debug(response)
-                    if response.statusCode >= 400 {
-                        return Single.error(AuthErrorType.notFound400)
-                    } else {
+                    switch response.statusCode {
+                    case 201:
+                        return Single.just(response)
+                    case 400:
+                        return Single.error(AuthErrorType.error400)
+                    case 401:
+                        return Single.error(AuthErrorType.error401)
+                    case 409:
+                        return Single.error(AuthErrorType.error409)
+                    case 500:
+                        return Single.error(AuthErrorType.error500)
+                    default:
                         return Single.just(response)
                     }
                 }
                 .subscribe(onSuccess: { [self] element in
                     MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
-                    authRepository.oauthLogin(accessToken: accessToken, oauth: .apple)
+                    authRepository.oauthLogin(accessToken: oauthToken, oauth: oauthType)
                         .flatMap { response -> Single<Response> in
-                            if response.statusCode >= 400 {
-                                return Single.error(AuthErrorType.notFound400)
-                            } else {
+                            switch response.statusCode {
+                            case 200:
+                                return Single.just(response)
+                            case 400:
+                                return Single.error(AuthErrorType.error400)
+                            case 401:
+                                return Single.error(AuthErrorType.error401)
+                            case 404:
+                                return Single.error(AuthErrorType.error404)
+                            case 500:
+                                return Single.error(AuthErrorType.error500)
+                            default:
                                 return Single.just(response)
                             }
                         }
@@ -227,7 +278,7 @@ extension DefaultAuthUseCase: AuthUseCase {
                                 let accessToken = headers.value(for: "Authorization")
                                 let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
                                 if let accessToken = accessToken {
-                                    TokenManagerImpl().save(token: accessToken, with: .authorizationToken)
+                                    TokenManagerImpl().save(token: accessToken, with: .accessToken)
                                 }
                                 if let refreshToken = refreshToken {
                                     TokenManagerImpl().save(token: refreshToken, with: .refreshToken)

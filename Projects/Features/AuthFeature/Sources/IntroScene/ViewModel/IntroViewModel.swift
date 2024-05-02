@@ -22,11 +22,9 @@ public class IntroViewModel: AuthViewModelType {
 
     public typealias ViewModel = IntroViewModel
 
-    public var disposeBag: RxSwift.DisposeBag
+    public var disposeBag: DisposeBag
 
     private let useCase: AuthUseCase
-
-    let keychainCSRF = KeychainType.CSRFToken
 
     public struct Input {
         let goolgeButtonTapped: Driver<Void>
@@ -56,7 +54,7 @@ public class IntroViewModel: AuthViewModelType {
 
         input.goolgeButtonTapped
             .drive(onNext: { _ in
-                AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
+                print("googleButtonTapp")
             })
             .disposed(by: disposeBag)
 
