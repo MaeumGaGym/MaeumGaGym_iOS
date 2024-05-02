@@ -219,9 +219,14 @@ extension DefaultAuthUseCase: AuthUseCase {
         guard let oauthToken = oauthToken else { return }
         authRepository.nicknameCheck(nickname: nicknameText)
             .flatMap { response -> Single<Response> in
-                if response.statusCode >= 400 {
+                switch response.statusCode {
+                case 200:
+                    return Single.just(response)
+                case 400:
                     return Single.error(AuthErrorType.error400)
-                } else {
+                case 500:
+                    return Single.error(AuthErrorType.error500)
+                default:
                     return Single.just(response)
                 }
             }
@@ -231,22 +236,39 @@ extension DefaultAuthUseCase: AuthUseCase {
 
                 authRepository.oauthSignup(nickname: nicknameText,
                                            accessToken: oauthToken,
-                                           oauth: .apple)
+                                           oauth: oauthType)
                 .flatMap { response -> Single<Response> in
-                    MGLogger.debug(response)
-                    if response.statusCode >= 400 {
+                    switch response.statusCode {
+                    case 201:
+                        return Single.just(response)
+                    case 400:
                         return Single.error(AuthErrorType.error400)
-                    } else {
+                    case 401:
+                        return Single.error(AuthErrorType.error401)
+                    case 409:
+                        return Single.error(AuthErrorType.error409)
+                    case 500:
+                        return Single.error(AuthErrorType.error500)
+                    default:
                         return Single.just(response)
                     }
                 }
                 .subscribe(onSuccess: { [self] element in
                     MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
-                    authRepository.oauthLogin(accessToken: oauthToken, oauth: .apple)
+                    authRepository.oauthLogin(accessToken: oauthToken, oauth: oauthType)
                         .flatMap { response -> Single<Response> in
-                            if response.statusCode >= 400 {
+                            switch response.statusCode {
+                            case 200:
+                                return Single.just(response)
+                            case 400:
                                 return Single.error(AuthErrorType.error400)
-                            } else {
+                            case 401:
+                                return Single.error(AuthErrorType.error401)
+                            case 404:
+                                return Single.error(AuthErrorType.error404)
+                            case 500:
+                                return Single.error(AuthErrorType.error500)
+                            default:
                                 return Single.just(response)
                             }
                         }
