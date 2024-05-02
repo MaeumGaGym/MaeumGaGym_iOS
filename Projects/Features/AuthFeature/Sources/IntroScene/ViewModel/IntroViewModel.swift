@@ -54,7 +54,7 @@ public class IntroViewModel: AuthViewModelType {
 
         input.goolgeButtonTapped
             .drive(onNext: { _ in
-                AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
+                print("googleButtonTapp")
             })
             .disposed(by: disposeBag)
 
