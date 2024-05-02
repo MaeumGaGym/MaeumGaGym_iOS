@@ -15,7 +15,7 @@ import Core
 public class AuthFlow: Flow {
 
     private var rootViewController: UINavigationController!
-    var authService: AuthService!
+    var authService: DefaultAuthService!
     var authRepository: AuthRepository!
     var useCase: DefaultAuthUseCase!
     var viewModel: IntroViewModel!
@@ -51,7 +51,7 @@ public class AuthFlow: Flow {
     }
 
     private func setupService() {
-        authService = AuthService()
+        authService = DefaultAuthService()
         authRepository = AuthRepository(networkService: authService)
         useCase = DefaultAuthUseCase(authRepository: authRepository)
         viewModel = IntroViewModel(authUseCase: useCase)
