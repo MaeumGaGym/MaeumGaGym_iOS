@@ -32,17 +32,17 @@ public class DefaultAuthService: NSObject {
     let googleProvider = MoyaProvider<GoogleAPI>()
     let appleProvider = MoyaProvider<AppleAPI>()
     let authProvider = MoyaProvider<AuthAPI>()
-
+    
     private let appleSignupSubject = PublishSubject<String>()
 }
 
 extension DefaultAuthService: AuthService {
-
+    
     public func nicknameCheck(nickname: String) -> Single<Response> {
         return authProvider.rx.request(.nickname(nickname: nickname))
             .filterSuccessfulStatusCodes()
     }
-
+    
     public func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
@@ -53,7 +53,7 @@ extension DefaultAuthService: AuthService {
             return appleSignup(nickname: nickname, oauthToken: accessToken)
         }
     }
-
+    
     public func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
@@ -64,7 +64,7 @@ extension DefaultAuthService: AuthService {
             return appleLogin(oauthToken: accessToken)
         }
     }
-
+    
     public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
@@ -96,21 +96,21 @@ extension DefaultAuthService: AuthService {
     public func requestToken() -> Single<Bool> {
         return Single.just(true)
     }
-
+    
     public func requestIntroData() -> Single<IntroModel> {
         return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
-
+    
     public func appleButtonTap() -> Single<String> {
         let appleProvider = ASAuthorizationAppleIDProvider()
         let request = appleProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
-
+        
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.performRequests()
-
+        
         controller.delegate = self
-
+        
         return appleSignupSubject.take(1).asSingle()
     }
 }
@@ -130,7 +130,7 @@ extension DefaultAuthService: ASAuthorizationControllerDelegate {
             break
         }
     }
-
+    
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         appleSignupSubject.onError(error)
     }
@@ -140,35 +140,35 @@ private extension DefaultAuthService {
     func googleSignup(nickname: String, accessToken: String) -> Single<Response> {
         return googleProvider.rx.request(.googleSignup(nickname: nickname, accessToken: accessToken))
     }
-
+    
     func googleLogin(accessToken: String) -> Single<Response> {
         return googleProvider.rx.request(.googleLogin(accessToken: accessToken))
     }
-
+    
     func googleRecovery(accessToken: String) -> Single<Response> {
         return googleProvider.rx.request(.googleRecovery(accessToken: accessToken))
     }
-
+    
     func kakaoSignup(nickname: String, accessToken: String) -> Single<Response> {
-        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, accessToken: accessToken))
+        return kakaoProvider.rx.request(.kakaoSignup(nickname: nickname, oauthToken: accessToken))
     }
-
+    
     func kakaoLogin(accessToken: String) -> Single<Response> {
-        return kakaoProvider.rx.request(.kakaoLogin(accessToken: accessToken))
+        return kakaoProvider.rx.request(.kakaoLogin(oauthToken: accessToken))
     }
-
+    
     func kakaoRecovery(accessToken: String) -> Single<Response> {
-        return kakaoProvider.rx.request(.kakaoRecovery(accessToken: accessToken))
+        return kakaoProvider.rx.request(.kakaoRecovery(oauthToken: accessToken))
     }
-
+    
     func appleSignup(nickname: String, oauthToken: String) -> Single<Response> {
         return appleProvider.rx.request(.appleSignup(nickname: nickname, oauthToken: oauthToken))
     }
-
+    
     func appleLogin(oauthToken: String) -> Single<Response> {
         return appleProvider.rx.request(.appleLogin(oauthToken: oauthToken))
     }
-
+    
     func appleRecovery(oauthToken: String) -> Single<Response> {
         return appleProvider.rx.request(.appleRecovery(oauthToken: oauthToken))
     }

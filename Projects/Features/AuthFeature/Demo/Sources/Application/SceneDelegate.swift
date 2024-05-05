@@ -11,7 +11,6 @@ import MGNetworks
 import AuthFeature
 
 import KakaoSDKAuth
-import KakaoSDKCommon
 import AuthFeatureInterface
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -33,7 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        KakaoSDK.initSDK(appKey: "44df4ecfe4e1218c17550a6ab201d87d")
 
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
