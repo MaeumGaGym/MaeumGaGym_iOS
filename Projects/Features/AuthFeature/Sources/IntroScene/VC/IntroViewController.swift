@@ -21,6 +21,12 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     
     private var introModel: IntroModel?
     
+    private let alertView1 = MGAlertOnlyTitleView(title: "구글 로그인은 준비중입니다!").then {
+        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+        $0.titleLabel?.textColor = .black
+        $0.backgroundColor = DSKitAsset.Colors.gray100.color
+    }
+    
     private var introImageView = MGProfileView(
         profileImage: MGProfileImage(
             type: .custom,
@@ -106,7 +112,7 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     
     public override func bindViewModel() {
         super.bindViewModel()
-        
+
         let input = IntroViewModel.Input(
             goolgeButtonTapped: googleButton.rx.tap.asDriver(),
             appleButtonTapped: appleButton.rx.tap.asDriver(),
@@ -123,6 +129,13 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
                     owner.subTitle.changeText(text: owner.introModel?.subTitle)
                 })
                 .disposed(by: disposeBag)
+            
+            output.showGoogleAlert
+                    .withUnretained(self)
+                    .subscribe(onNext: { owner, _ in
+                        owner.alertView1.present(on: owner.view)
+                    })
+                    .disposed(by: disposeBag)
         })
     }
 }
