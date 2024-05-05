@@ -35,9 +35,11 @@ public class IntroViewModel: AuthViewModelType {
 
     public struct Output {
         var introDatas: Observable<IntroModel>
+        var showGoogleAlert: Observable<Void>
     }
 
     private let introModelSubject = PublishSubject<IntroModel>()
+    private let showGoogleAlertSubject = PublishSubject<Void>()
 
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
@@ -46,15 +48,17 @@ public class IntroViewModel: AuthViewModelType {
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
-        let output = Output(introDatas: introModelSubject.asObservable())
+        let output = Output(introDatas: introModelSubject.asObservable(), showGoogleAlert: showGoogleAlertSubject.asObservable())
 
         action(output)
 
         bindOutput(output: output)
 
         input.goolgeButtonTapped
-            .drive(onNext: { _ in
-                print("googleButtonTapp")
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.showGoogleAlertSubject.onNext(())
             })
             .disposed(by: disposeBag)
 
