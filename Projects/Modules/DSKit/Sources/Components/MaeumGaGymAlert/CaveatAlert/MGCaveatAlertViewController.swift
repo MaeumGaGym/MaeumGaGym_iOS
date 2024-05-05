@@ -107,12 +107,12 @@ open class MGCaveatAlertViewController: UIViewController {
         let button = MGButton(
             titleText: title,
             font: .systemFont(ofSize: 16.0, weight: .bold),
-            textColor: .gray
+            textColor: titleColor
         ).then {
             $0.setBackgroundImage(backgroundColor.image(), for: .normal)
             $0.setBackgroundImage(UIColor.gray.image(), for: .disabled)
 
-            $0.layer.cornerRadius = 4.0
+            $0.layer.cornerRadius = 8.0
             $0.layer.masksToBounds = true
 
             $0.addAction(for: .touchUpInside) { _ in
