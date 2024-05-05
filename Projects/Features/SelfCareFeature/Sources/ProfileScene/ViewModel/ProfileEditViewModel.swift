@@ -6,9 +6,9 @@ import RxSwift
 
 import Core
 
-public class ProfileEditViewModel: BaseViewModel {
-    
-    public typealias ViewModel = ProfileEditViewModel
+public class SelfCareProfileEditViewModel: BaseViewModel {
+
+    public typealias ViewModel = SelfCareProfileEditViewModel
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         return Output()
