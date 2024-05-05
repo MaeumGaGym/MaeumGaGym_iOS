@@ -8,7 +8,6 @@ public enum KakaoAPI {
     case kakaoSignup(nickname: String, oauthToken: String)
     case kakaoLogin(oauthToken: String)
     case kakaoRecovery(oauthToken: String)
-    case kakaoToken(oauthCode: String)
 }
 
 extension KakaoAPI: BaseAPI {
@@ -23,8 +22,6 @@ extension KakaoAPI: BaseAPI {
             return "/login"
         case .kakaoRecovery:
             return "/recovery"
-        case let .kakaoToken(oauthCode):
-            return "/token/\(oauthCode)"
         }
     }
 
@@ -36,8 +33,6 @@ extension KakaoAPI: BaseAPI {
             return .get
         case .kakaoRecovery:
             return .put
-        case .kakaoToken:
-            return .get
         }
     }
 
@@ -48,7 +43,7 @@ extension KakaoAPI: BaseAPI {
                 "nickname": nickname
             ]
             return .requestParameters(parameters: bodyParameters, encoding: JSONEncoding.default)
-        case .kakaoLogin, .kakaoRecovery, .kakaoToken:
+        case .kakaoLogin, .kakaoRecovery:
             return .requestPlain
         }
     }
@@ -61,8 +56,6 @@ extension KakaoAPI: BaseAPI {
             return ["OAUTH-TOKEN": "\(oauthToken)"]
         case let .kakaoRecovery(oauthToken):
             return ["OAUTH-TOKEN": "\(oauthToken)"]
-        default:
-            return nil
         }
     }
 }
