@@ -152,7 +152,7 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
             output.allAgreeButtonClickedMessage
                 .withUnretained(self)
                 .subscribe(onNext: { owner, message in
-                    owner.setAllAgreeButtonState(!(owner.allAgreeButtonState ?? false))
+                    owner.setAllAgreeButtonState(!(owner.allAgreeButtonState))
                     _ = owner.buttonActivationChecked(button: owner.checkButton)
                 })
                 .disposed(by: disposeBag)
