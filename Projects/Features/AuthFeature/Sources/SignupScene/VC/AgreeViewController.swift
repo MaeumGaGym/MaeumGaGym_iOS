@@ -150,9 +150,10 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
 
         _ = viewModel.transform(input, action: { output in
             output.allAgreeButtonClickedMessage
-                .drive(onNext: { [weak self] message in
-                    print(message)
-                    self?.setAllAgreeButtonState(!(self?.allAgreeButtonState ?? false))
+                .withUnretained(self)
+                .subscribe(onNext: { owner, message in
+                    owner.setAllAgreeButtonState(!(owner.allAgreeButtonState ?? false))
+                    _ = owner.buttonActivationChecked(button: owner.checkButton)
                 })
                 .disposed(by: disposeBag)
 
@@ -165,40 +166,50 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
 
             agreeButtons.forEach { buttonOutput in
                 buttonOutput
-                    .drive(onNext: { [weak self] message in
-                        self?.updateAllAgreeButtonState()
+                    .withUnretained(self)
+                    .subscribe(onNext: { owner, message in
+                        owner.updateAllAgreeButtonState()
                         MGLogger.verbose(message)
+
                     })
                     .disposed(by: disposeBag)
             }
 
             output.firstAgreeButtonClickedMessage
-                .drive(onNext: { message in
-                    self.updateAllAgreeButtonState()
-                    _ = self.buttonActivationChecked(button: self.checkButton)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, message in
+                    owner.updateAllAgreeButtonState()
+                    _ = owner.buttonActivationChecked(button: owner.checkButton)
                     MGLogger.verbose(message)
+
                 })
                 .disposed(by: disposeBag)
 
             output.secondAgreeButtonClickedMessage
-                .drive(onNext: { message in
-                    self.updateAllAgreeButtonState()
-                    _ = self.buttonActivationChecked(button: self.checkButton)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, message in
+                    owner.updateAllAgreeButtonState()
+                    _ = owner.buttonActivationChecked(button: owner.checkButton)
                     MGLogger.verbose(message)
+
                 })
                 .disposed(by: disposeBag)
 
             output.thirdAgreeButtonClickedMessage
-                .drive(onNext: { message in
-                    self.updateAllAgreeButtonState()
-                    _ = self.buttonActivationChecked(button: self.checkButton)
+                .withUnretained(self)
+                .subscribe(onNext: { owner, message in
+                    owner.updateAllAgreeButtonState()
+                    _ = owner.buttonActivationChecked(button: owner.checkButton)
                     MGLogger.verbose(message)
+
                 })
                 .disposed(by: disposeBag)
 
             output.fourthAgreeButtonClickedMessage
-                .drive(onNext: { message in
+                .withUnretained(self)
+                .subscribe(onNext: { owner, message in
                     MGLogger.verbose(message)
+
                 })
                 .disposed(by: disposeBag)
 
@@ -247,7 +258,10 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
         let shouldActivateButton = firstAgreeButton.checked &&
                                     secondAgreeButton.checked &&
                                     thirdAgreeButton.checked &&
-                                    !fourthAgreeButton.checked
+                                    !fourthAgreeButton.checked || firstAgreeButton.checked &&
+        secondAgreeButton.checked &&
+        thirdAgreeButton.checked &&
+        fourthAgreeButton.checked
         button.isEnabled = shouldActivateButton
         button.backgroundColor = shouldActivateButton ? DSKitAsset.Colors.blue500.color : DSKitAsset.Colors.gray400.color
         button.textLabel.textColor = shouldActivateButton ? .white : DSKitAsset.Colors.gray200.color
