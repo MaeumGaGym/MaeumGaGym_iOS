@@ -27,11 +27,11 @@ public class AgreeViewModel: BaseViewModel {
 
     public struct Output {
         let navButtonTapped: Driver<Void>
-        let allAgreeButtonClickedMessage: Driver<String>
-        let firstAgreeButtonClickedMessage: Driver<String>
-        let secondAgreeButtonClickedMessage: Driver<String>
-        let thirdAgreeButtonClickedMessage: Driver<String>
-        let fourthAgreeButtonClickedMessage: Driver<String>
+        let allAgreeButtonClickedMessage: Observable<String>
+        let firstAgreeButtonClickedMessage: Observable<String>
+        let secondAgreeButtonClickedMessage: Observable<String>
+        let thirdAgreeButtonClickedMessage: Observable<String>
+        let fourthAgreeButtonClickedMessage: Observable<String>
         let nextButtonClicked: Driver<Bool>
     }
 
@@ -41,11 +41,11 @@ public class AgreeViewModel: BaseViewModel {
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
-        let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asDriver(onErrorJustReturn: "")
-        let firstAgreeClickedMessage = input.firstAgreeButtonTap.map { "첫 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
-        let secondAgreeClickedMessage = input.secondAgreeButtonTap.map { "두 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
-        let thirdAgreeClickedMessage = input.thirdAgreeButtonTap.map { "세 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
-        let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map { "네 번째 동의 클릭" }.asDriver(onErrorJustReturn: "")
+        let allAgreeClickedMessage = input.allAgreeButtonTap.map { "전체 클릭" }.asObservable()
+        let firstAgreeClickedMessage = input.firstAgreeButtonTap.map { "첫 번째 동의 클릭" }.asObservable()
+        let secondAgreeClickedMessage = input.secondAgreeButtonTap.map { "두 번째 동의 클릭" }.asObservable()
+        let thirdAgreeClickedMessage = input.thirdAgreeButtonTap.map { "세 번째 동의 클릭" }.asObservable()
+        let fourthAgreeClickedMessage = input.fourthAgreeButtonTap.map { "네 번째 동의 클릭" }.asObservable()
         let nextButtonClicked = input.nextButtonTap.map { true }.asDriver(onErrorJustReturn: false)
 
         let output = Output(navButtonTapped: input.navButtonTapped.asDriver(),
