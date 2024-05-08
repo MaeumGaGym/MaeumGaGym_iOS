@@ -11,9 +11,11 @@ import RxFlow
 import DSKit
 import Core
 
+import MGLogger
+
 final public class SelfCareProfileViewController: BaseViewController<SelfCareProfileViewModel>, Stepper {
 
-    private lazy var navBar = SelfCareProfileNavigationBar()
+    private lazy var navBar = SelfCareProfileNavigationBar(leftText: "내 프로필")
 
     private lazy var userProfileImageView = MGProfileView(
         profileImage: MGProfileImage(
@@ -53,17 +55,21 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
             }).disposed(by: disposeBag)
 
         logOutButton.rx.tap
-            .bind(onNext: { [weak self] in
-                self?.showCaveatPopUp(
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.showCaveatPopUp(
                     title: "로그아웃",
                     message: "로그아웃 하실건가요?",
                     leftActionTitle: "취소",
                     rightActionTitle: "확인",
-                    leftActionCompletion: { },
+                    leftActionCompletion: {
+                        MGLogger.debug("leftButtonClick")
+                    },
                     rightActionCompletion: { }
                 )
+                MGLogger.debug("logOutButton")
             }).disposed(by: disposeBag)
-
         withdrawalButton.rx.tap
             .bind(onNext: { [weak self] in
                 self?.showCaveatPopUp(
