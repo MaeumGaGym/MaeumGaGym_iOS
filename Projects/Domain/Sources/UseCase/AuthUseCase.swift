@@ -14,7 +14,7 @@ public protocol AuthUseCase {
     func changeNickname(nickname: String)
     func kakaoButtonTap()
     func appleButtonTap()
-    func nextButtonTap()
+    func nextButtonTap() -> Bool
     func getIntroData()
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
@@ -70,10 +70,10 @@ extension DefaultAuthUseCase: AuthUseCase {
             }).disposed(by: disposeBag)
     }
 
-    public func nextButtonTap() {
+    public func nextButtonTap() -> Bool {
         let oauthToken = TokenManagerImpl().get(key: KeychainType.oauthToken)
-        guard let oauthToken = oauthToken else { return }
-        nicknameButtonTap(oauthToken: oauthToken)
+        guard let oauthToken = oauthToken else { return false}
+        return nicknameButtonTap(oauthToken: oauthToken)
     }
 
     public func getIntroData() {
@@ -180,7 +180,8 @@ extension DefaultAuthUseCase {
             }).disposed(by: disposeBag)
     }
 
-    private func nicknameButtonTap(oauthToken: String) {
+    private func nicknameButtonTap(oauthToken: String) -> Bool {
+        var nicknameState: Bool = false
         authRepository.nicknameCheck(nickname: nicknameText)
             .flatMap { response -> Single<Response> in
                 switch response.statusCode {
@@ -195,7 +196,15 @@ extension DefaultAuthUseCase {
                 }
             }
             .subscribe(onSuccess: { [self] element in
-                MGLogger.debug("nicknameButtonTap nickname ✅ \(element)")
+                do {
+                    if try element.map(Bool.self) == true {
+                        nicknameState = false
+                    } else {
+                        nicknameState = true
+                    }
+                } catch {
+                    MGLogger.debug("nicknameButtonTap nickname ✅ errorrrorrrorro")
+                }
                 MGLogger.debug("nicknameButtonTap nickname ✅ \(nicknameText)")
 
                 authRepository.oauthSignup(nickname: nicknameText,
@@ -249,14 +258,20 @@ extension DefaultAuthUseCase {
                                 }
                             }
                             AuthStepper.shared.steps.accept(MGStep.authCompleteIsRequired)
+                            nicknameState = true
                         }, onFailure: { error in
                             MGLogger.debug("nicknameButtonTap Login(여기선 절대 에러가 나면 안됩니다...) ❌ \(error)")
+                            nicknameState = false
                         }).disposed(by: disposeBag)
                 }, onFailure: { error in
                     MGLogger.debug("nicknameButtonTap Signup(여기선 절대 에러가 나면 안됩니다...) ❌ \(error)")
+                    nicknameState = false
                 }).disposed(by: disposeBag)
             }, onFailure: { error in
                 MGLogger.debug("nicknameButtonTap nickname 중복 ❌ \(error)")
+                nicknameState = false
             }).disposed(by: disposeBag)
+        print(nicknameState)
+        return nicknameState
     }
 }
