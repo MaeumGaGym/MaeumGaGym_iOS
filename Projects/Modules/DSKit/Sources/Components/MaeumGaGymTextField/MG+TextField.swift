@@ -29,8 +29,8 @@ open class MGTextField: UITextField {
     public var showError: Bool = false {
         didSet {
             errorLabel.isHidden = !showError
-            underlineView.backgroundColor = showError ? UIColor.red : UIColor.black
-            errorLabel.textColor = showError ? UIColor.red : UIColor.black
+            underlineView.backgroundColor = showError ? DSKitAsset.Colors.red500.color : DSKitAsset.Colors.blue500.color
+            errorLabel.textColor = showError ? DSKitAsset.Colors.red500.color : DSKitAsset.Colors.blue500.color
         }
     }
 
