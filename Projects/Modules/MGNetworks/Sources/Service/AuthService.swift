@@ -39,8 +39,7 @@ public class DefaultAuthService: NSObject {
 extension DefaultAuthService: AuthService {
     
     public func nicknameCheck(nickname: String) -> Single<Response> {
-        return authProvider.rx.request(.nickname(nickname: nickname))
-            .filterSuccessfulStatusCodes()
+        return authProvider.rx.request(.nickname(nickname: nickname)).filterSuccessfulStatusCodes()
     }
     
     public func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
@@ -98,7 +97,7 @@ extension DefaultAuthService: AuthService {
     }
     
     public func requestIntroData() -> Single<IntroModel> {
-        return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 헬창이 되어보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
+        return Single.just(IntroModel(image: DSKitAsset.Assets.airSqt.image, mainTitle: "이제 운동을 시작해 보세요!", subTitle: "저희의 좋은 서비스를 통해 즐거운 생활을\n즐겨보세요!"))
     }
     
     public func appleButtonTap() -> Single<String> {
