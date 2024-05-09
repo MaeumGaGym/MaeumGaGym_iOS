@@ -30,13 +30,17 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                                           textColor: DSKitAsset.Colors.gray600.color,
                                           isCenter: false)
 
-    private let nicknameTF = MGTextField(placeholder: "닉네임")
-
-    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.whiteCancel.image).then {
-        $0.isEnabled = true
+    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.circleCancel.image).then {
+        $0.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+    }
+    
+    private let nicknameTF = MGTextField(placeholder: "닉네임").then {
+        $0.clearButtonMode = .whileEditing
     }
 
-    private var nextButton = MGCheckButton(text: "회원가입")
+    private var nextButton = MGCheckButton(text: "회원가입").then {
+        $0.isEnabled = true
+    }
 
     public override func configureNavigationBar() {
         super.configureNavigationBar()
@@ -68,8 +72,8 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                           nicknameTitle,
                           textInformation,
                           nicknameTF,
-                          cancelButton,
                           nextButton])
+        nicknameTF.addSubviews([cancelButton])
 
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -96,7 +100,7 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
 
         cancelButton.snp.makeConstraints {
             $0.centerY.equalTo(nicknameTF)
-            $0.trailing.equalTo(nicknameTF).offset(-10)
+            $0.trailing.equalToSuperview()
             $0.width.equalTo(24)
             $0.height.equalTo(24)
         }
@@ -122,10 +126,28 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             output.navButtonTap.drive(onNext: { _ in
                 AuthStepper.shared.steps.accept(MGStep.authBack)
             }).disposed(by: disposeBag)
+    
+            output.nicknameState
+                .withUnretained(self)
+                .subscribe(onNext: { owner, state in
+                    owner.nicknameTF.errorMessage = state ? "" : "이미 사용중인 닉네임이에요."
+                    owner.nicknameTF.showError = !state
+                }).disposed(by: disposeBag)
         })
     }
-
+    
     public override func bindActions() {
+        nicknameTF.rx.controlEvent([.editingDidBegin])
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                owner.nicknameTFTapped()
+                owner.cancelButtonTap()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    private func nicknameTFTapped() {
         nicknameTF.rx.text
             .map { ($0?.count ?? 0) >= 2 && ($0?.count ?? 0) <= 10 ? true : false }
             .withUnretained(self)
@@ -136,11 +158,19 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                     case true:
                         owner.nextButton.isEnabled = state
                         owner.nextButton.backgroundColor = DSKitAsset.Colors.blue500.color
+                        owner.nicknameTF.showError = false
                     case false:
+                        owner.nicknameTF.errorMessage = "닉네임은 2~10자로 공백을 포함할 수 없어요."
+                        owner.nicknameTF.showError = true
                         owner.nextButton.isEnabled = state
                         owner.nextButton.backgroundColor = DSKitAsset.Colors.gray400.color
                     }
                 }).disposed(by: disposeBag)
+        
+        nicknameTF.rx.text.orEmpty
+                    .map { $0.replacingOccurrences(of: " ", with: "") }
+                    .bind(to: nicknameTF.rx.text)
+                    .disposed(by: disposeBag)
     }
 
     func animateButtonWithKeyboard(notification: NSNotification, show: Bool) {
