@@ -39,7 +39,9 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
     private let thirdAgreeButton = MGAgreeButton(type: .ageAgreeText)
     private let fourthAgreeButton = MGAgreeButton(type: .marketingAgreeText, chooseType: true)
 
-    private var checkButton = MGCheckButton(text: "확인")
+    private var checkButton = MGCheckButton(text: "확인").then {
+        $0.isEnabled = false
+    }
 
     public override func configureNavigationBar() {
         super.configureNavigationBar()
