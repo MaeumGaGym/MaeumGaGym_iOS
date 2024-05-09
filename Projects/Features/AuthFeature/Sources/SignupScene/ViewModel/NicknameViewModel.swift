@@ -23,15 +23,18 @@ public class NicknameViewModel: BaseViewModel {
 
     public struct Output {
         let navButtonTap: Driver<Void>
+        let nicknameState: Observable<Bool>
     }
 
     public init(useCase: AuthUseCase) {
         self.useCase = useCase
     }
+    
+    private let nicknameStateSubject = PublishSubject<Bool>()
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
-        let output = Output(navButtonTap: input.navButtonTap.asDriver())
+        let output = Output(navButtonTap: input.navButtonTap.asDriver(), nicknameState: nicknameStateSubject.asObservable())
 
         action(output)
 
@@ -41,7 +44,7 @@ public class NicknameViewModel: BaseViewModel {
                 .withUnretained(self)
                 .subscribe(onNext: { owner, nickname in
                     owner.useCase.changeNickname(nickname: nickname)
-                    owner.useCase.nextButtonTap()
+                    owner.nicknameStateSubject.onNext(owner.useCase.nextButtonTap())
                 }).disposed(by: disposeBag)
 
         return output
