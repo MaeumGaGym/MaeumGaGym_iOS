@@ -17,29 +17,33 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
     static public var identifier: String = "SelfCareProfileTableViewCell"
 
     private let profileImageView = MGProfileView(
-        profileImage: MGProfileImage(type: .custom,
-                                     customImage: DSKitAsset.Assets.basicProfileIcon.image),
-        profileType: .bigProfile
-    )
-    
-    private let userNameLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
-                                    textColor: .black
+        profileImage: MGProfileImage(
+            type: .custom,
+            customImage: DSKitAsset.Assets.basicProfileIcon.image
+        ), profileType: .bigProfile
     )
 
-    private var userTimerLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                    textColor: DSKitAsset.Colors.gray400.color
+    private let userNameLabel = MGLabel(
+        font: UIFont.Pretendard.labelLarge,
+        textColor: .black
+    )
+
+    private var userTimerLabel = MGLabel(
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray400.color
     )
 
     private var userBageView = MGProfileView(
-        profileImage: MGProfileImage(type: .custom,
-                                     customImage: DSKitAsset.Assets.appleLogo.image),
-        profileType: .bage
+        profileImage: MGProfileImage(
+            type: .custom,
+            customImage: DSKitAsset.Assets.appleLogo.image
+        ), profileType: .bage
     )
 
     public func configure(with message: SelfCareProfileModel) {
         profileImageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userImage))
-        userNameLabel.text = message.userName
-        userTimerLabel.text = message.userTimer
+        userNameLabel.changeText(text: message.userName)
+        userTimerLabel.changeText(text: message.userTimer)
         userBageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userBage))
     }
 

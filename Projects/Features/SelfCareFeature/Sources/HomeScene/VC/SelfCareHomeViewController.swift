@@ -27,31 +27,44 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
     private var cellList: [UITableViewCell] = []
     private var cells: [SelfCareCell] = []
 
-    var introducts = SelfCareIntroductModel(image: DSKitAsset.Assets.airSqt.image,
-                                            mainText: "자기관리",
-                                            subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요.")
+    var introducts = SelfCareIntroductModel(
+        image: DSKitAsset.Assets.blueDumbelIcon.image,
+        mainText: "자기관리",
+        subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요."
+    )
 
-    var profiles = SelfCareProfileModel(userImage: DSKitAsset.Assets.basicProfileIcon.image,
-                                        userName: "박준하",
-                                        userTimer: 123,
-                                        userBage: DSKitAsset.Assets.whiteAdd.image)
+    var profiles = SelfCareProfileModel(
+        userImage: DSKitAsset.Assets.basicProfileIcon.image,
+        userName: "박준하",
+        userTimer: 123,
+        userBage: DSKitAsset.Assets.profileDotIcon.image
+    )
 
-    var menus = [SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "내루틴"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "목표"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "식단"),
-                         SelfCareMenuModel(menuImage: DSKitAsset.Assets.appleLogo.image, menuName: "오운완")]
+    var menus = [
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "내 루틴"),
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "목표"),
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "식단"),
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "오운완")
+    ]
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self
         $0.dataSource = self
-        $0.backgroundColor = DSKitAsset.Colors.gray25.color
+//        $0.backgroundColor = DSKitAsset.Colors.gray25.color
+        $0.backgroundColor = .white
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
-        $0.register(SelfCareIntroductTableViewCell.self,
-                    forCellReuseIdentifier: SelfCareIntroductTableViewCell.identifier)
-        $0.register(SelfCareProfileTableViewCell.self, forCellReuseIdentifier: SelfCareProfileTableViewCell.identifier
+        $0.register(
+            SelfCareIntroductTableViewCell.self,
+            forCellReuseIdentifier: SelfCareIntroductTableViewCell.identifier
         )
-        $0.register(SelfCareMenuTableViewCell.self, forCellReuseIdentifier: SelfCareMenuTableViewCell.identifier
+        $0.register(
+            SelfCareProfileTableViewCell.self,
+            forCellReuseIdentifier: SelfCareProfileTableViewCell.identifier
+        )
+        $0.register(
+            SelfCareMenuTableViewCell.self,
+            forCellReuseIdentifier: SelfCareMenuTableViewCell.identifier
         )
     }
 
@@ -129,6 +142,7 @@ extension SelfCareHomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: introducts)
+            cell.isUserInteractionEnabled = false
 
             return cell
         case .profile:
@@ -138,6 +152,7 @@ extension SelfCareHomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: profiles)
+            cell.selectionStyle = .none
 
             return cell
         case .selfCare:
@@ -147,12 +162,21 @@ extension SelfCareHomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.menus = menus
+            cell.selectionStyle = .none
 
             return cell
         }
     }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch cells[indexPath.row] {
+        case .profile:
+            let viewModel = SelfCareProfileViewModel()
+            let vc = SelfCareProfileViewController(viewModel)
+            self.navigationController?.pushViewController(vc, animated: true)
+            return
+        default:
+            return
+        }
     }
 }

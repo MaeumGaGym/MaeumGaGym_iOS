@@ -18,22 +18,27 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
     static let identifier: String = "SelfCareMenuCollectionCell"
 
     private var menuImageView = UIImageView().then {
+        $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.cornerRadius = 8.0
     }
 
-    private var menuLabel = MGLabel(textColor: .black,
-                                    isCenter: true
+    private var menuLabel = MGLabel(
+        font: UIFont.Pretendard.bodyLarge,
+        textColor: .black,
+        isCenter: true
     )
 // 보류
-//    private var arrowImageView = UIImageView().then {
-//        $0.image = UIImage(systemName: "chevron.right")
-//        $0.tintColor = .gray
-//    }
+    private var arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image).then {
+        $0.tintColor = .gray
+    }
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        contentView.addSubviews([menuImageView,
-                     menuLabel])
+        contentView.addSubviews([
+            menuImageView,
+            menuLabel,
+            arrowImageView
+        ])
 
         menuImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -45,6 +50,11 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
             $0.leading.equalTo(menuImageView.snp.trailing).offset(16.0)
             $0.centerY.equalTo(menuImageView.snp.centerY)
         }
+
+        arrowImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(10)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -53,6 +63,7 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
 
     public func configure(with menus: SelfCareMenuModel) {
         menuImageView.image = menus.menuImage
-        menuLabel.text = menus.menuName
+        menuLabel.changeText(text: menus.menuName)
     }
+
 }

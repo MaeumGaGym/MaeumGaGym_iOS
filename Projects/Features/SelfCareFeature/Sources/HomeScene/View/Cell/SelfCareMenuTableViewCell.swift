@@ -17,15 +17,17 @@ public class SelfCareMenuTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "SelfCareMenuTableViewCell"
 
-    private var nameTitle = MGLabel(text: "자기관리",
-                                    font: UIFont.Pretendard.titleMedium,
-                                    textColor: .black
+    private var nameTitle = MGLabel(
+        text: "자기관리",
+        font: UIFont.Pretendard.titleMedium,
+        textColor: .black
     )
 
-    private var selfCareMenuCollectionView: UICollectionView = {
+    private lazy var selfCareMenuCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 8.0
+        layout.itemSize.width = self.frame.width
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
@@ -95,7 +97,6 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
 
 extension SelfCareMenuTableViewCell: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 현재 이미지를 눌렀을 때만 이동하는 문제 해결해야함
         print(menus[indexPath.row])
     }
 }
