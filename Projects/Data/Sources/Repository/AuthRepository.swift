@@ -25,7 +25,11 @@ public class AuthRepository: AuthRepositoryInterface {
     public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
         return networkService.oauthRecovery(accessToken: accessToken, oauth: oauth)
     }
-    
+
+    public func tokenReIssue(refreshToken: String) -> Single<Response> {
+        return networkService.tokenReIssue(refreshToken: refreshToken)
+    }
+
     public func nicknameCheck(nickname: String) -> Single<Response> {
         return networkService.nicknameCheck(nickname: nickname)
     }
