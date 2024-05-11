@@ -9,7 +9,7 @@ public class AuthStepper: Stepper {
     public var steps = PublishRelay<Step>()
 
     public var initialStep: Step {
-        return MGStep.authIntroIsRequired
+        return MGStep.authSplashIsRequired
     }
 
     public init() {
