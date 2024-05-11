@@ -16,6 +16,7 @@ public protocol AuthUseCase {
     func appleButtonTap()
     func nextButtonTap() -> Bool
     func getIntroData()
+    func tokenReIssue()
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
@@ -85,6 +86,44 @@ extension DefaultAuthUseCase: AuthUseCase {
                 print("AuthUseCase getIntroData error occurred: \(error)")
             })
             .disposed(by: disposeBag)
+    }
+    
+    public func tokenReIssue() {
+        let refreshToken = TokenManagerImpl().get(key: .refreshToken)
+        guard let refreshToken = refreshToken else {
+            AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
+            return
+        }
+        authRepository.tokenReIssue(refreshToken: refreshToken)
+            .flatMap { response -> Single<Response> in
+                switch response.statusCode {
+                case 200:
+                    return Single.just(response)
+                case 401:
+                    return Single.error(AuthErrorType.error401)
+                case 500:
+                    return Single.error(AuthErrorType.error500)
+                default:
+                    return Single.just(response)
+                }
+            }
+            .subscribe(onSuccess: { element in
+                MGLogger.debug("token ReIssue ✅ \(String(describing: element.response))")
+                if let headers = element.response?.headers {
+                    let accessToken = headers.value(for: "Authorization")?.replacingOccurrences(of: "Bearer ", with: "")
+                    let refreshToken = headers["Set-Cookie"]?.components(separatedBy: ";").first(where: { $0.contains("RF-TOKEN") })?.replacingOccurrences(of: "RF-TOKEN=", with: "")
+                    if let accessToken = accessToken {
+                        TokenManagerImpl().save(token: accessToken, with: .accessToken)
+                    }
+                    if let refreshToken = refreshToken {
+                        TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
+                    }
+                }
+                AuthStepper.shared.steps.accept(MGStep.initialization)
+            }, onFailure: { error in
+                MGLogger.debug("token ReIssue ❌ \(error)")
+                AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
+            }).disposed(by: disposeBag)
     }
 }
 
