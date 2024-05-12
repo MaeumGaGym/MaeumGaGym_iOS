@@ -17,24 +17,28 @@ public class SelfCareMenuTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "SelfCareMenuTableViewCell"
 
-    private var nameTitle = MGLabel(text: "자기관리",
-                                    font: UIFont.Pretendard.titleMedium,
-                                    textColor: .black
+    private var nameTitle = MGLabel(
+        text: "자기관리",
+        font: UIFont.Pretendard.titleMedium,
+        textColor: .black
     )
 
-    private var selfCareMenuCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8.0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.register(
+    private lazy var collectoinViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumInteritemSpacing = 8.0
+        $0.itemSize.width = self.frame.width
+    }
+    private lazy var selfCareMenuCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: collectoinViewFlowLayout
+    ).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
+        $0.register(
             SelfCareMenuCollectionCell.self,
             forCellWithReuseIdentifier: SelfCareMenuCollectionCell.identifier
         )
-        return collectionView
-    }()
+    }
 
     var menus: [SelfCareMenuModel] = [] {
         didSet {
@@ -89,13 +93,14 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
         }
 
         cell.configure(with: menus[indexPath.item])
+        cell.frame.size.width = self.frame.width
+
         return cell
     }
 }
 
 extension SelfCareMenuTableViewCell: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 현재 이미지를 눌렀을 때만 이동하는 문제 해결해야함
         print(menus[indexPath.row])
     }
 }

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "routienIcon.png",
+      "filename" : "goalIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "routienIcon@2x.png",
+      "filename" : "goalIcon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "routienIcon@3x.png",
+      "filename" : "goalIcon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
