@@ -23,20 +23,22 @@ public class SelfCareMenuTableViewCell: BaseTableViewCell {
         textColor: .black
     )
 
-    private lazy var selfCareMenuCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8.0
-        layout.itemSize.width = self.frame.width
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.register(
+    private lazy var collectoinViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumInteritemSpacing = 8.0
+        $0.itemSize.width = self.frame.width
+    }
+    private lazy var selfCareMenuCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: collectoinViewFlowLayout
+    ).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
+        $0.register(
             SelfCareMenuCollectionCell.self,
             forCellWithReuseIdentifier: SelfCareMenuCollectionCell.identifier
         )
-        return collectionView
-    }()
+    }
 
     var menus: [SelfCareMenuModel] = [] {
         didSet {
@@ -91,6 +93,8 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
         }
 
         cell.configure(with: menus[indexPath.item])
+        cell.frame.size.width = self.frame.width
+
         return cell
     }
 }

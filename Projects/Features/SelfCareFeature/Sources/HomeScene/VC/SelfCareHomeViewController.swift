@@ -42,15 +42,14 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
 
     var menus = [
         SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "내 루틴"),
-        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "목표"),
-        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "식단"),
-        SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "오운완")
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.goalIcon.image, menuName: "목표"),
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.dietIcon.image, menuName: "식단"),
+        SelfCareMenuModel(menuImage: DSKitAsset.Assets.albumIcon.image, menuName: "오운완")
     ]
 
     private lazy var tableView: UITableView = UITableView().then {
         $0.delegate = self
         $0.dataSource = self
-//        $0.backgroundColor = DSKitAsset.Colors.gray25.color
         $0.backgroundColor = .white
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
@@ -83,7 +82,7 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
 
     public override func layout() {
         view.addSubviews([tableView])
-    
+
         tableView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -172,8 +171,8 @@ extension SelfCareHomeViewController: UITableViewDataSource {
         switch cells[indexPath.row] {
         case .profile:
             let viewModel = SelfCareProfileViewModel()
-            let vc = SelfCareProfileViewController(viewModel)
-            self.navigationController?.pushViewController(vc, animated: true)
+            let viewController = SelfCareProfileViewController(viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
             return
         default:
             return

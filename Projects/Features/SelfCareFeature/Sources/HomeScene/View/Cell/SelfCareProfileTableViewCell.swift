@@ -10,7 +10,6 @@ import Core
 import DSKit
 
 import Domain
-import MGNetworks
 
 public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
@@ -40,6 +39,8 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
         ), profileType: .bage
     )
 
+    private let arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image)
+
     public func configure(with message: SelfCareProfileModel) {
         profileImageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userImage))
         userNameLabel.changeText(text: message.userName)
@@ -50,7 +51,13 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
     public override func layout() {
         super.layout()
 
-        addSubviews([profileImageView, userNameLabel, userTimerLabel, userBageView])
+        addSubviews([
+            profileImageView,
+            userNameLabel,
+            userTimerLabel,
+            userBageView,
+            arrowImageView
+        ])
 
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -70,6 +77,11 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
         userTimerLabel.snp.makeConstraints {
             $0.top.equalTo(userNameLabel.snp.bottom).offset(2.0)
             $0.leading.equalTo(userNameLabel.snp.leading)
+        }
+
+        arrowImageView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
 }

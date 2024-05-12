@@ -33,7 +33,11 @@ public class SelfCareIntroductTableViewCell: BaseTableViewCell {
         numberOfLineCount: 0
     )
 
-    private let lineView = MGLine(lineColor: DSKitAsset.Colors.gray25.color, lineHeight: 8)
+    private lazy var lineView = MGLine(
+        lineColor: DSKitAsset.Colors.gray25.color,
+        lineWidth: self.frame.width,
+        lineHeight: 8
+    )
 
     public func configure(with message: SelfCareIntroductModel) {
         titleImageView.configureImage(
@@ -80,7 +84,6 @@ public class SelfCareIntroductTableViewCell: BaseTableViewCell {
 
         lineView.snp.makeConstraints {
             $0.bottom.equalTo(self.snp.bottom)
-            $0.leading.trailing.equalToSuperview()
         }
     }
 

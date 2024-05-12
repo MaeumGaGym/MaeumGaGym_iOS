@@ -27,10 +27,9 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
         textColor: .black,
         isCenter: true
     )
-// 보류
-    private var arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image).then {
-        $0.tintColor = .gray
-    }
+
+    private var arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image)
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -53,7 +52,7 @@ public class SelfCareMenuCollectionCell: UICollectionViewCell {
 
         arrowImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(20.0)
         }
     }
 
