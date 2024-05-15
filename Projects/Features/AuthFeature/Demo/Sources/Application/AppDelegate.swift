@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //        return false
 //    }
-//
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         KakaoSDK.initSDK(appKey: "dcfcd3ab4a997c5a53e2ab26a8ec2a63")
         return true

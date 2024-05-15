@@ -25,18 +25,17 @@ public class SplashViewModel: AuthViewModelType {
 
     public struct Output {}
 
-
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
         self.disposeBag = DisposeBag()
+        
+        useCase.tokenReIssue()
     }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         
         let ouput = Output()
         action(ouput)
-
-//        useCase.appleSignupResult()
 
         return Output()
     }

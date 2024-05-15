@@ -21,6 +21,7 @@ public protocol AuthService {
     func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response>
     func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response>
     func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response>
+    func tokenReIssue(refreshToken: String) -> Single<Response>
     func kakaoButtonTap() -> Single<OAuthToken?>
     func requestToken() -> Single<Bool>
     func requestIntroData() -> Single<IntroModel>
@@ -73,6 +74,10 @@ extension DefaultAuthService: AuthService {
         case .apple:
             return appleRecovery(oauthToken: accessToken)
         }
+    }
+
+    public func tokenReIssue(refreshToken: String) -> Single<Response> {
+        return authProvider.rx.request(.reissuanceToken(refreshToken: refreshToken))
     }
 
     public func kakaoButtonTap() -> Single<OAuthToken?> {
