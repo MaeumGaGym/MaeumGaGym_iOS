@@ -18,29 +18,30 @@ import MGNetworks
 import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRoutineViewModel>, Stepper, UIGestureRecognizerDelegate {
-    
+
     private var naviBar = RoutineNavigationBarBar()
 
     private var myRoutineModel: SelfCareMyRoutineModel = SelfCareMyRoutineModel(
-        titleTextData:
-            SelfCareMyRoutineTextModel(
+        titleTextData: SelfCareMyRoutineTextModel(
                 titleText: "",
-                infoText: ""),
-        myRoutineData: []
+                infoText: ""
+            ), myRoutineData: []
     )
 
     private var containerView = UIView()
     private var headerView = UIView()
 
-    private let myRoutineTitleLabel = MGLabel(font: UIFont.Pretendard.titleLarge,
-                                              textColor: .black,
-                                              isCenter: false
+    private let myRoutineTitleLabel = MGLabel(
+        font: UIFont.Pretendard.titleLarge,
+        textColor: .black,
+        isCenter: false
     )
 
-    private let myRoutineSubTitleLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                                 textColor: DSKitAsset.Colors.gray600.color, 
-                                                 isCenter: false,
-                                                 numberOfLineCount: 2
+    private let myRoutineSubTitleLabel = MGLabel(
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray600.color,
+        isCenter: false,
+        numberOfLineCount: 2
     )
 
     private var myRoutineTableView = UITableView().then {
@@ -48,8 +49,10 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
-        $0.register(MyRoutineTableViewCell.self,
-                    forCellReuseIdentifier: MyRoutineTableViewCell.identifier)
+        $0.register(
+            MyRoutineTableViewCell.self,
+            forCellReuseIdentifier: MyRoutineTableViewCell.identifier
+        )
     }
 
     private var plusRoutineButton = SelfCareButton(type: .plusRoutine)
@@ -76,11 +79,11 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 
     public override func layout() {
         super.layout()
-        
+
         view.addSubviews([naviBar, myRoutineTableView, plusRoutineButton, headerView])
-        
+
         naviBar.snp.makeConstraints {
-            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
 
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 144.0))
@@ -97,14 +100,11 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
 
         myRoutineTitleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(48.0)
         }
 
         myRoutineSubTitleLabel.snp.makeConstraints {
-            $0.leading.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
-            $0.height.equalTo(40.0)
+            $0.top.equalTo(myRoutineTitleLabel.snp.bottom).offset(12.0)
+            $0.leading.equalToSuperview()
         }
 
         myRoutineTableView.tableHeaderView = headerView
@@ -115,12 +115,22 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
         }
 
         plusRoutineButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-54.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
+            $0.bottom.equalToSuperview().inset(54.0)
             $0.height.equalTo(58.0)
         }
     }
 
+    public override func bindActions() {
+        plusRoutineButton.rx.tap
+            .bind(onNext: { [weak self] in
+                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+
+                let viewModel = SelfCareMyRoutineEditViewModel(useCase: useCase)
+                let vc = SelfCareMyRoutineEditViewController(viewModel)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: disposeBag)
+    }
     public override func bindViewModel() {
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
 
@@ -148,6 +158,7 @@ extension SelfCareMyRoutineViewController: UITableViewDelegate {
         }
     }
 }
+
 extension SelfCareMyRoutineViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         myRoutineModel.myRoutineData.count + 1
@@ -165,6 +176,27 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
             let routine = myRoutineModel.myRoutineData[indexPath.row]
             cell?.setup(with: routine)
             cell?.selectionStyle = .none
+            cell?.dotsButtonTap
+                .bind(onNext: { [weak self] in
+                    let modal = TestViewController()
+                    
+                    if #available(iOS 16.0, *) {
+                        let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom")) { _ in
+                            return 257
+                        }
+                        if let sheet = modal.sheetPresentationController {
+                            sheet.detents = [customDetent]
+                            sheet.prefersGrabberVisible = true
+                        }
+                    } else {
+                        if let sheet = modal.sheetPresentationController {
+                            sheet.detents = [.medium()]
+                            sheet.prefersGrabberVisible = true
+                        }
+                    }
+                    self?.present(modal, animated: true)
+                }).disposed(by: disposeBag)
+            
             return cell ?? UITableViewCell()
         }
     }

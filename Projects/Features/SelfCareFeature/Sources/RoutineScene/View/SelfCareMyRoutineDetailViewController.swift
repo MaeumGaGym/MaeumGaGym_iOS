@@ -36,8 +36,10 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
-        $0.register(MyRoutineDetailTableViewCell.self,
-                    forCellReuseIdentifier: MyRoutineDetailTableViewCell.identifier)
+        $0.register(
+            MyRoutineDetailTableViewCell.self,
+            forCellReuseIdentifier: MyRoutineDetailTableViewCell.identifier
+        )
     }
 
     private var bottomLine = MGLine(lineHeight: 1)
