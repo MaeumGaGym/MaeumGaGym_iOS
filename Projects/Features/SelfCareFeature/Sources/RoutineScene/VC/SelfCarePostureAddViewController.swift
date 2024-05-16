@@ -1,18 +1,18 @@
 //
-//  TestViewController.swift
+//  SelfCarePostureAddViewController.swift
 //  SelfCareFeatureInterface
 //
-//  Created by 조영준 on 5/13/24.
+//  Created by 조영준 on 5/16/24.
 //  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
 //
 
 import UIKit
 
-public class TestViewController: UIViewController {
+class SelfCarePostureAddViewController: UIViewController {
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .blue
+
         // Do any additional setup after loading the view.
     }
     

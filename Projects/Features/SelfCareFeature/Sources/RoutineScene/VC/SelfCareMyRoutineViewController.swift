@@ -126,8 +126,8 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
             .bind(onNext: { [weak self] in
                 let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
 
-                let viewModel = SelfCareMyRoutineEditViewModel(useCase: useCase)
-                let vc = SelfCareMyRoutineEditViewController(viewModel)
+                let viewModel = SelfCareMyRoutineAddViewModel(useCase: useCase)
+                let vc = SelfCareMyRoutineAddViewController(viewModel)
                 self?.navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
     }
@@ -178,22 +178,7 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
             cell?.selectionStyle = .none
             cell?.dotsButtonTap
                 .bind(onNext: { [weak self] in
-                    let modal = TestViewController()
-                    
-                    if #available(iOS 16.0, *) {
-                        let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("custom")) { _ in
-                            return 257
-                        }
-                        if let sheet = modal.sheetPresentationController {
-                            sheet.detents = [customDetent]
-                            sheet.prefersGrabberVisible = true
-                        }
-                    } else {
-                        if let sheet = modal.sheetPresentationController {
-                            sheet.detents = [.medium()]
-                            sheet.prefersGrabberVisible = true
-                        }
-                    }
+                    let modal = MGBottomSheetViewController(type: .plain)
                     self?.present(modal, animated: true)
                 }).disposed(by: disposeBag)
             
