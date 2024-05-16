@@ -13,7 +13,7 @@ public class SelfCareButton: BaseButton {
     private var buttonImage = UIImageView()
 
     private var buttonLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
-                                      isCenter: false,
+                                      isCenter: true,
                                       numberOfLineCount: 1
     )
 

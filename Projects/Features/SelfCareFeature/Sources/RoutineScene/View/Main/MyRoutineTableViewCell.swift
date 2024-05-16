@@ -3,6 +3,9 @@ import UIKit
 import SnapKit
 import Then
 
+import RxSwift
+import RxCocoa
+
 import Core
 import DSKit
 import Domain
@@ -10,6 +13,10 @@ import Domain
 import MGNetworks
 
 public class MyRoutineTableViewCell: BaseTableViewCell {
+
+    public var dotsButtonTap: ControlEvent<Void> {
+        return dotsButton.rx.tap
+    }
 
     static let identifier: String = "MyRoutineTableViewCell"
 
@@ -41,6 +48,11 @@ public class MyRoutineTableViewCell: BaseTableViewCell {
 
         changeUsingState(state: model.usingState)
         changeSharingState(state: model.sharingState)
+    }
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
     }
 
     override public func layout() {
