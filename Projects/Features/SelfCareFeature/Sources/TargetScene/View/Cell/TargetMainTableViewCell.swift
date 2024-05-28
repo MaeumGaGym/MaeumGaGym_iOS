@@ -3,30 +3,40 @@ import UIKit
 import SnapKit
 import Then
 
+import RxSwift
+import RxCocoa
+
 import Core
 import DSKit
 import Domain
 
 public class TargetMainTableViewCell: BaseTableViewCell {
 
+    public var dotButtonTap: ControlEvent<Void> {
+        return dotsButton.rx.tap
+    }
+
     public static let identifier: String = "TargetMainTableViewCell"
 
     private var containerView = UIView().then {
-        $0.backgroundColor = DSKitAsset.Colors.blue50.color
+        $0.backgroundColor = .blue50
         $0.layer.cornerRadius = 16.0
     }
 
-    private var targetNameLabel = MGLabel(font: UIFont.Pretendard.labelLarge,
-                                              textColor: .black,
-                                              numberOfLineCount: 1
+    private var targetNameLabel = MGLabel(
+        font: UIFont.Pretendard.labelLarge,
+        textColor: .black,
+        isCenter: false,
+        numberOfLineCount: 1
     )
 
-    private var targetPeriodLabel = MGLabel(font: UIFont.Pretendard.bodySmall,
-                                              textColor: DSKitAsset.Colors.gray400.color,
-                                              numberOfLineCount: 1
+    private var targetPeriodLabel = MGLabel(
+        font: UIFont.Pretendard.bodySmall,
+        textColor: .gray400,
+        numberOfLineCount: 1
     )
 
-    private let dotsButton = MGImageButton(image: DSKitAsset.Assets.dotsActIcon.image)
+    private let dotsButton = MGImageButton(image: .grayDotsActIcon)
 
     public func setup(with model: TargetContentModel) {
         changeTargetName(text: model.targetTitle)
@@ -62,7 +72,7 @@ public class TargetMainTableViewCell: BaseTableViewCell {
 
         dotsButton.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(29.0)
-            $0.trailing.equalToSuperview().offset(-20.0)
+            $0.trailing.equalToSuperview().inset(20.0)
             $0.width.height.equalTo(24.0)
         }
     }
