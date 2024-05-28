@@ -12,8 +12,6 @@ open class MGSelfCareTextField: UITextField {
 
     private let disposeBag = DisposeBag()
 
-    public var errorMessage = PublishRelay<String?>()
-
     private lazy var leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.height))
     private lazy var rightPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: self.frame.height))
 
@@ -29,7 +27,9 @@ open class MGSelfCareTextField: UITextField {
     public init(
         typeText: String,
         keyboardType: UIKeyboardType,
-        unitText: String? = nil
+        unitText: String? = nil,
+        placeholderText : String? = nil,
+        placeholderTextColor: UIColor? = nil
     ) {
         super.init(frame: .zero)
 
@@ -37,6 +37,8 @@ open class MGSelfCareTextField: UITextField {
         self.placeholder = typeText
         self.keyboardType = keyboardType
         self.unitLabel.text = unitText
+        self.placeholder = placeholderText
+        self.setPlaceholder(textColor: placeholderTextColor ?? .gray200)
 
         setup()
         bind()
@@ -48,7 +50,6 @@ open class MGSelfCareTextField: UITextField {
     public override func layoutSubviews() {
         super.layoutSubviews()
         layout()
-        setPlaceholder()
     }
 
     private func setup() {
@@ -99,14 +100,14 @@ extension MGSelfCareTextField {
             .disposed(by: disposeBag)
     }
 
-    private func setPlaceholder() {
+    private func setPlaceholder(textColor: UIColor) {
         guard let string = self.placeholder else {
             return
         }
         attributedPlaceholder = NSAttributedString(
             string: string,
             attributes: [
-                .foregroundColor: DSKitAsset.Colors.gray200.color,
+                .foregroundColor: textColor,
                 .font: UIFont.Pretendard.bodyLarge
             ]
         )
