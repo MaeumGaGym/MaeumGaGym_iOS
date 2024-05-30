@@ -23,21 +23,24 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         titleTextData:
             TargetTitleTextModel(
                 titleText: "",
-                infoText: ""),
-        targetData: []
+                infoText: ""
+            ), targetData: []
     )
 
     private var headerView = UIView()
     private var containerView = UIView()
-    
-    private let targetTitleLabel = MGLabel(font: UIFont.Pretendard.titleLarge,
-                                    textColor: .black,
-                                           isCenter: false
+
+    private let targetTitleLabel = MGLabel(
+        font: UIFont.Pretendard.titleLarge,
+        textColor: .black,
+        isCenter: false
     )
-    
-    private let targetSubTitleLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
-                                    textColor: DSKitAsset.Colors.gray600.color,
-                                              numberOfLineCount: 1
+
+    private let targetSubTitleLabel = MGLabel(
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: DSKitAsset.Colors.gray600.color,
+        isCenter: false,
+        numberOfLineCount: 1
     )
 
     private var targetMainTableView = UITableView().then {
@@ -45,8 +48,10 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         $0.showsHorizontalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
-        $0.register(TargetMainTableViewCell.self,
-                    forCellReuseIdentifier: TargetMainTableViewCell.identifier)
+        $0.register(
+            TargetMainTableViewCell.self,
+            forCellReuseIdentifier: TargetMainTableViewCell.identifier
+        )
     }
 
     private var plusTargetButton = SelfCareButton(type: .plusTarget)
@@ -61,7 +66,6 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         targetMainTableView.delegate = self
         targetMainTableView.dataSource = self
     }
-
     public override func layout() {
         super.layout()
 
@@ -103,7 +107,15 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
             $0.height.equalTo(58.0)
         }
     }
+    public override func bindActions() {
+        plusTargetButton.rx.tap
+            .bind(onNext: { [weak self] in
+                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+                let viewModel = SelfCareAddTargetViewModel(useCase: useCase)
+                self?.navigationController?.pushViewController(SelfCareAddTargetViewController(viewModel), animated: true)
+            }).disposed(by: disposeBag)
 
+    }
     public override func bindViewModel() {
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
 
@@ -131,6 +143,7 @@ extension SelfCareTargetMainViewController: UITableViewDelegate {
         }
     }
 }
+
 extension SelfCareTargetMainViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         targetMainModel.targetData.count + 1
@@ -148,8 +161,38 @@ extension SelfCareTargetMainViewController: UITableViewDataSource {
             let model = targetMainModel.targetData[indexPath.row]
             cell?.setup(with: model)
             cell?.selectionStyle = .none
+            cell?.dotButtonTap
+                .bind { [weak self] in
+                    let modal = MGSelfCareTargetBottomSheetAlertView(
+                        editButtonTap: {
+                            print("editButtonTapped")
+                        },
+                        deleteButtonTap: {
+                            print("deleteButtonTapped")
+                        }
+                    )
+                    let customDetents = UISheetPresentationController.Detent.custom(
+                        identifier: .init("sheetHeight")
+                    ) { _ in
+                        return 153
+                    }
+
+                    if let sheet = modal.sheetPresentationController {
+                        sheet.detents = [customDetents]
+                        sheet.prefersGrabberVisible = true
+                    }
+                    self?.present(modal, animated: true)
+                }.disposed(by: cell?.disposeBag ?? DisposeBag())
             return cell ?? UITableViewCell()
         }
     }
 }
 
+extension SelfCareTargetMainViewController {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let viewModel = SelfCareDetailTargetViewModel(useCase: useCase)
+        let vc = SelfCareDetailTargetViewController(viewModel)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
