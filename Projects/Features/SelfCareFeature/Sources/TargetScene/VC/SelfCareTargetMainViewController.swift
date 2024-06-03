@@ -30,6 +30,8 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
     private var headerView = UIView()
     private var containerView = UIView()
 
+    private let navBar = SelfCareProfileNavigationBar()
+
     private let targetTitleLabel = MGLabel(
         font: UIFont.Pretendard.titleLarge,
         textColor: .black,
@@ -93,10 +95,19 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
             $0.height.equalTo(20.0)
         }
 
-        view.addSubviews([targetMainTableView, plusTargetButton])
+        view.addSubviews([
+            targetMainTableView,
+            plusTargetButton,
+            navBar
+        ])
+
+        navBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+        }
         targetMainTableView.tableHeaderView = headerView
         targetMainTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(navBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -108,6 +119,11 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         }
     }
     public override func bindActions() {
+        navBar.leftButtonTap
+            .bind(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
+
         plusTargetButton.rx.tap
             .bind(onNext: { [weak self] in
                 let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
