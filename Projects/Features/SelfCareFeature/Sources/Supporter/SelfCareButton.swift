@@ -73,14 +73,13 @@ private extension SelfCareButton {
 
             buttonLabel.snp.makeConstraints {
                 $0.top.bottom.equalToSuperview()
+                $0.centerX.equalToSuperview()
                 $0.leading.equalTo(buttonImage.snp.trailing).offset(8.0)
-                $0.trailing.equalToSuperview()
                 $0.height.equalTo(24.0)
             }
 
             buttonLabel.sizeToFit()
             containerView.snp.remakeConstraints {
-                $0.width.equalTo(type.width)
                 $0.centerX.equalToSuperview()
                 $0.top.bottom.equalToSuperview().inset(17.0)
             }

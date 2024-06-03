@@ -174,6 +174,22 @@ extension SelfCareHomeViewController: UITableViewDataSource {
             let viewController = SelfCareProfileViewController(viewModel)
             self.navigationController?.pushViewController(viewController, animated: true)
             return
+        case .selfCare:
+            let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+            let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
+            self.navigationController?.pushViewController(SelfCareTargetMainViewController(viewModel), animated: true)
+//            switch menus[indexPath.row].menuImage {
+//            case .goalIcon:
+//                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+//                let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
+//                self.navigationController?.pushViewController(
+//                    SelfCareTargetMainViewController(viewModel)
+//                    , animated: true
+//                )
+//                return
+//            default:
+//                return
+//            }
         default:
             return
         }

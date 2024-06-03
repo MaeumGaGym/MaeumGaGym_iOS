@@ -26,12 +26,11 @@ final public class SelfCareProfileNavigationBar: UIView {
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton, leftLabel]).then {
         $0.axis = .horizontal
-        $0.spacing = 0
-        $0.distribution = .fillEqually
+        $0.spacing = 24
     }
 
     public init(
-        leftText: String
+        leftText: String? = nil
     ) {
         super.init(frame: .zero)
         self.leftText = leftText
@@ -58,7 +57,7 @@ private extension SelfCareProfileNavigationBar {
 
         leftItemsStackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().offset(-10.0)
+            $0.leading.equalToSuperview().inset(10.0)
         }
     }
 }
