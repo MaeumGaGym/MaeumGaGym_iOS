@@ -78,7 +78,7 @@ final public class SelfCareAddTargetViewController: BaseViewController<SelfCareA
         startDateSelectView.dateButtonTap
             .bind(onNext: { [weak self] in
                 let vc = MGTargetAlertView(clickDate: { year, month, day in
-                    self?.startDateSelectView.setup(date: [year, month, day])
+                    self?.startDateSelectView.setup(date: [year!, month!, day!])
                 })
                 vc.modalTransitionStyle = .crossDissolve
                 vc.modalPresentationStyle = .overFullScreen
@@ -88,7 +88,7 @@ final public class SelfCareAddTargetViewController: BaseViewController<SelfCareA
         endDateSelectView.dateButtonTap
             .bind(onNext: { [weak self] in
                 let vc = MGTargetAlertView(clickDate: { year, month, day in
-                    self?.endDateSelectView.setup(date: [year, month, day])
+                    self?.endDateSelectView.setup(date: [year!, month!, day!])
                 })
                 vc.modalTransitionStyle = .crossDissolve
                 vc.modalPresentationStyle = .overFullScreen

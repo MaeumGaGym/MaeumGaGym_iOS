@@ -9,7 +9,7 @@ import Domain
 
 public class MGTargetAlertView: UIViewController {
 
-    public var clickDate: (Int, Int, Int) -> Void
+    public var clickDate: (Int?, Int?, Int?) -> Void
 
     private let calendar = UICalendarView().then {
         $0.backgroundColor = .white
@@ -21,7 +21,7 @@ public class MGTargetAlertView: UIViewController {
     }
 
     public init(
-        clickDate: @escaping (Int, Int, Int) -> Void
+        clickDate: @escaping (Int?, Int?, Int?) -> Void
     ) {
         self.clickDate = clickDate
         super.init(nibName: nil, bundle: nil)
@@ -57,10 +57,12 @@ public class MGTargetAlertView: UIViewController {
 }
 
 extension MGTargetAlertView: UICalendarSelectionSingleDateDelegate {
-    public func dateSelection(_ selection: UICalendarSelectionSingleDate, didSelectDate dateComponents: DateComponents?) {
+    public func dateSelection(
+        _ selection: UICalendarSelectionSingleDate,
+        didSelectDate dateComponents: DateComponents?
+    ) {
         if let date = dateComponents {
-            self.clickDate(date.year ?? 0, date.month ?? 0, date.day ?? 0)
-            self.dismiss(animated: true)
+            self.clickDate(date.year, date.month, date.day)
         } else {
             print("empty date")
         }
