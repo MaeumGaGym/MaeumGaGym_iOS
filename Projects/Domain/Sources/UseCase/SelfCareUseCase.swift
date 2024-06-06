@@ -1,21 +1,35 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
+
+import Core
+import Moya
+
+import MGLogger
+import TokenManager
 
 public protocol SelfCareUseCase {
+    //MARK: Routine
     var myRoutineData: PublishSubject<SelfCareMyRoutineModel> { get }
     var myRoutineDetailData: PublishSubject<SelfCareMyRoutineDetailModel> { get }
     var myRoutineEditData: PublishSubject<SelfCareMyRoutineEditModel> { get }
-
-    var targetMainData: PublishSubject<SelfCareTargetMainModel> { get }
-    var targetDetailData: PublishSubject<SelfCareTargetDetailModel> { get }
 
     func getMyRoutineData()
     func getMyRoutineDetailData()
     func getMyRoutineEditData()
 
+    //MARK: Target
+    var targetMainData: PublishSubject<SelfCareTargetMainModel> { get }
+    var targetDetailData: PublishSubject<SelfCareTargetDetailModel> { get }
+
     func getTargetMainData()
     func getTargetDetailData()
+    
+    //MARK: Profile
+    var profileData: PublishSubject<SelfCareDetailProfileModel> { get }
+    
+    func getProfileData()
 }
 
 public class DefaultSelfCareUseCase {
@@ -28,6 +42,10 @@ public class DefaultSelfCareUseCase {
 
     public let targetMainData = PublishSubject<SelfCareTargetMainModel>()
     public let targetDetailData = PublishSubject<SelfCareTargetDetailModel>()
+    
+    public let profileData = PublishSubject<SelfCareDetailProfileModel>()
+    
+    public var userNameText: String = ""
 
     public init(repository: SelfCareRepositoryInterface) {
         self.repository = repository
@@ -80,6 +98,16 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
         repository.getTargetDetailData()
             .subscribe(onSuccess: { [weak self] targetDetailData in
                 self?.targetDetailData.onNext(targetDetailData)
+            }, onFailure: { error in
+                print("SelfCareUseCase getTargetDetailData error occured: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
+    public func getProfileData() {
+        guard let token = TokenManagerImpl().get(key: KeychainType.accessToken) else { return  }
+        repository.getProfileData(accessToken: token, userName: userNameText)
+            .subscribe(onSuccess: { [weak self] profileData in
+                self?.profileData.onNext(profileData)
             }, onFailure: { error in
                 print("SelfCareUseCase getTargetDetailData error occured: \(error)")
             }).disposed(by: disposeBag)

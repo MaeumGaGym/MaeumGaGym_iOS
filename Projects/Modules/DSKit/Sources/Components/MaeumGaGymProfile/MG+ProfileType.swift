@@ -50,7 +50,7 @@ public enum MGProfileImageType: Int {
 
 public struct MGProfileImage {
     public let type: MGProfileImageType
-    public let customImage: UIImage?
+    public var customImage: UIImage?
     
     public init(type: MGProfileImageType, customImage: UIImage?) {
         self.type = type

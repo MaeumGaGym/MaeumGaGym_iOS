@@ -41,11 +41,11 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
     private let arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image)
 
-    public func configure(with message: SelfCareProfileModel) {
+    public func configure(with message: SelfCareDetailProfileModel) {
         profileImageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userImage))
         userNameLabel.changeText(text: message.userName)
-        userTimerLabel.changeText(text: message.userTimer)
-        userBageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userBage))
+        userTimerLabel.changeText(text: message.userWakaTime)
+        userBageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userImage))
     }
 
     public override func layout() {

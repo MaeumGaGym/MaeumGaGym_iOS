@@ -33,12 +33,12 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
         subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요."
     )
 
-    var profiles = SelfCareProfileModel(
-        userImage: DSKitAsset.Assets.basicProfileIcon.image,
-        userName: "박준하",
-        userTimer: 123,
-        userBage: DSKitAsset.Assets.profileDotIcon.image
-    )
+//    var profiles = SelfCareDetailProfileModel(
+//        userImage: DSKitAsset.Assets.basicProfileIcon.image,
+//        userName: "박준하",
+//        userTimer: "\(123)",
+//        userBage: DSKitAsset.Assets.profileDotIcon.image
+//    )
 
     var menus = [
         SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "내 루틴"),
@@ -150,7 +150,7 @@ extension SelfCareHomeViewController: UITableViewDataSource {
             ) as? SelfCareProfileTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(with: profiles)
+//            cell.configure(with: profiles)
             cell.selectionStyle = .none
 
             return cell
@@ -168,14 +168,15 @@ extension SelfCareHomeViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
+        
         switch cells[indexPath.row] {
         case .profile:
-            let viewModel = SelfCareProfileViewModel()
+            let viewModel = SelfCareProfileViewModel(useCase: useCase)
             let viewController = SelfCareProfileViewController(viewModel)
             self.navigationController?.pushViewController(viewController, animated: true)
             return
         case .selfCare:
-            let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
             let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
             self.navigationController?.pushViewController(SelfCareTargetMainViewController(viewModel), animated: true)
 //            switch menus[indexPath.row].menuImage {

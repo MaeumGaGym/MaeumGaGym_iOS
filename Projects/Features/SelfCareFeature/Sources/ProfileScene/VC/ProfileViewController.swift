@@ -20,7 +20,7 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
     private lazy var userProfileImageView = MGProfileView(
         profileImage: MGProfileImage(
             type: .custom,
-            customImage: DSKitAsset.Assets.basicProfileIcon.image
+            customImage: .basicProfileIcon
         ), profileType: .maxProfile
     )
 
@@ -40,6 +40,42 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
     private var logOutButton = MGProfileButton(buttonTitle: "로그아웃")
     private var withdrawalButton = MGProfileButton(buttonTitle: "회원탈퇴")
 
+    public override func bindViewModel() {
+        super.bindViewModel()
+
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        viewModel = PostureSearchViewModel(useCase: useCase)
+
+//        let input = PostureSearchViewModel.Input(
+//            getSearchData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+//        )
+        let input = SelfCareProfileViewModel.Input(
+            getProfileData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+        )
+        
+        let viewModel = viewModel.transform(input, action: { output in
+            output.profileData
+                .subscribe(onNext: { profileData in
+                    self.userNameLabel.text = profileData.userName
+//                    profileData.
+                    self.bageView.userTimeLabel.text = profileData.userWakaTime
+//                    self.userProfileImageView.profileImage?.customImage. = profileData.userImage
+                }).disposed(by: disposeBag)
+        })
+        
+//        beforeButton.rx.tap.subscribe(onNext: {
+//            PostureStepper.shared.steps.accept(MGStep.postureBack)
+//        }).disposed(by: disposeBag)
+
+//        _ = viewModel.transform(input, action: { optput in
+//            optput.searchData
+//                .subscribe(onNext: { searchData in
+//                    MGLogger.debug("searchData: \(searchData)")
+//                    self.searchModel = searchData
+//                }).disposed(by: disposeBag)
+//            }
+//        )
+    }
     public override func bindActions() {
         navBar.leftButtonTap
             .bind(onNext: { [weak self] in
@@ -126,9 +162,9 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
         }
 
         bageView.snp.makeConstraints {
-            $0.top.equalTo(userNameLabel.snp.bottom).offset(32.0)
-            $0.width.equalTo(390)
             $0.centerX.equalToSuperview()
+            $0.top.equalTo(userNameLabel.snp.bottom).offset(32.0)
+            $0.leading.trailing.equalTo(20)
         }
 
         buttonStackView.snp.makeConstraints {
