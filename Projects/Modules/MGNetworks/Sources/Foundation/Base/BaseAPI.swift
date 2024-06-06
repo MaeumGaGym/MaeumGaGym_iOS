@@ -27,6 +27,8 @@ extension BaseAPI {
             appURL += "/apple"
         case .auth:
             appURL += "/auth"
+        case .profile:
+            appURL += "/user"
         case .routine:
             appURL += "/routines"
         case .target:
