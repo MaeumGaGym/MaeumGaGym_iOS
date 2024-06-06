@@ -1,13 +1,39 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
-import Domain
+import RxMoya
+import Moya
+
 import DSKit
+import Domain
+import TokenManager
 
-public class SelfCareService {
+import MGLogger
 
-    public func requestMyRoutineData() ->
+public protocol SelfCareService {
+    func getMyRoutineData() -> Single<SelfCareMyRoutineModel>
+    func getMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel>
+    func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel>
+    func getTargetMainData() -> Single<SelfCareTargetMainModel>
+    func getTargetDetailData() -> Single<SelfCareTargetDetailModel>
+    func getProfileData(accessToken: String, userName: String) -> Single<SelfCareDetailProfileModel>
+    func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response>
+}
+
+public class DefaultSelfCareService: NSObject {
+//    let kakaoProvider = MoyaProvider<KakaoAPI>()
+//    let googleProvider = MoyaProvider<GoogleAPI>()
+//    let appleProvider = MoyaProvider<AppleAPI>()
+//    let authProvider = MoyaProvider<AuthAPI>()
+    let provider = MoyaProvider<ProfileAPI>()
+    
+}
+
+extension DefaultSelfCareService: SelfCareService {
+
+    public func getMyRoutineData() ->
     Single<SelfCareMyRoutineModel> {
         return Single.just(
             SelfCareMyRoutineModel(
@@ -67,7 +93,7 @@ public class SelfCareService {
         )
     }
 
-    public func requestMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
+    public func getMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
         return Single.just(
             SelfCareMyRoutineDetailModel(
                 routineTitleData: SelfCareRoutineModel(
@@ -98,7 +124,7 @@ public class SelfCareService {
         )
     }
 
-    public func requestMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
+    public func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
         return Single.just(
             SelfCareMyRoutineEditModel(
                 textFieldData: MyRoutineEditTextFieldModel(
@@ -147,7 +173,7 @@ public class SelfCareService {
         )
     }
 
-    public func requestTargetMainData() -> Single<SelfCareTargetMainModel> {
+    public func getTargetMainData() -> Single<SelfCareTargetMainModel> {
         return Single.just(SelfCareTargetMainModel(
             titleTextData:
                 TargetTitleTextModel(
@@ -168,16 +194,25 @@ public class SelfCareService {
         )
     }
 
-    public func requestTargetDtailData() -> Single<SelfCareTargetDetailModel> {
+    public func getTargetDetailData() -> Single<SelfCareTargetDetailModel> {
         return Single.just(SelfCareTargetDetailModel(titleTextData: "공부하기",
                                                      startDateData: "12월 26일 (화) 오전 8:00",
                                                      endDateData: "2024년 01월 01일 (월) 오후 9:00",
                                                      textData: "새해가 다가오기 전까지 열심히 공부하자.\n한 해의 끝도 공부와 함께.")
         )
     }
-
-    public init() {
-
+    
+    public func getProfileData(accessToken: String, userName: String) -> Single<SelfCareDetailProfileModel> {
+//        return provider.rx.request(.profileCheck(accessToken: accessToken, userName: userName))
+        return .create(subscribe: { [weak self] _ in
+            self?.provider.rx.request(.profileCheck(accessToken: accessToken, userName: userName))
+            return Disposables.create { }
+        })
     }
+    
+    public func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response> {
+        return provider.rx.request(.profileInfoModify(accessToken: accessToken, nickName: nickName, height: height, weight: weight, gender: gender))
+    }
+    
 }
 

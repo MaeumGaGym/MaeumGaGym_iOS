@@ -130,7 +130,7 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
     }
 
     public override func bindViewModel() {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
         viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
 
         let input = SelfCareMyRoutineDetailViewModel.Input(

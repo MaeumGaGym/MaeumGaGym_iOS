@@ -126,14 +126,14 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
         plusTargetButton.rx.tap
             .bind(onNext: { [weak self] in
-                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
                 let viewModel = SelfCareAddTargetViewModel(useCase: useCase)
                 self?.navigationController?.pushViewController(SelfCareAddTargetViewController(viewModel), animated: true)
             }).disposed(by: disposeBag)
 
     }
     public override func bindViewModel() {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
 
         viewModel = SelfCareTargetMainViewModel(useCase: useCase)
 
@@ -206,7 +206,7 @@ extension SelfCareTargetMainViewController: UITableViewDataSource {
 
 extension SelfCareTargetMainViewController {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
         let viewModel = SelfCareDetailTargetViewModel(useCase: useCase)
         let vc = SelfCareDetailTargetViewController(viewModel)
         self.navigationController?.pushViewController(vc, animated: true)

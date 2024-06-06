@@ -138,7 +138,7 @@ public class SelfCareMyRoutineEditViewController: BaseViewController<SelfCareMyR
     }
 
     public override func bindViewModel() {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
 
         viewModel = SelfCareMyRoutineEditViewModel(useCase: useCase)
 
