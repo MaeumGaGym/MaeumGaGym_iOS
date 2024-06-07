@@ -5,9 +5,7 @@ import Then
 import SnapKit
 
 public class MGPagingTabBar: UIView {
-    
-    public var cellHeight: CGFloat { 36.0 }
-    
+
     private var categoryTitleList: [String]
     
     public let selectedIndex = PublishSubject<Int>()
@@ -19,20 +17,16 @@ public class MGPagingTabBar: UIView {
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        
-        let inset: CGFloat = 0.0
-        let cellWidth: CGFloat = (UIScreen.main.bounds.width - inset * 2) / CGFloat(min(categoryTitleList.count, 7))
-        layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
-        layout.minimumLineSpacing = 0.0
-        layout.minimumInteritemSpacing = 0.0
-        layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        layout.minimumLineSpacing = 16
+        layout.minimumInteritemSpacing = 16.0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         collectionView.backgroundColor = .systemBackground
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
-        
+        collectionView.backgroundColor = .clear
         collectionView.register(MGPagingTabBarCell.self,
                                 forCellWithReuseIdentifier:
                                     MGPagingTabBarCell.identifier)
@@ -51,6 +45,19 @@ public class MGPagingTabBar: UIView {
         return collectionView
     }()
     
+    private lazy var grayUnderline = UIView().then {
+        $0.backgroundColor = DSKitAsset.Colors.gray50.color
+        $0.alpha = 1.0
+    }
+    
+    private func calculateCellWidth(text: String) -> Double {
+        let nonSpaceCount = text.filter { !$0.isWhitespace }.count
+        let spaceCount = text.filter { $0.isWhitespace }.count
+        
+        let textWidth = Double((Double(nonSpaceCount) * 18) + (Double(spaceCount) * 5) + 8)
+        return textWidth
+    }
+    
     public init(categoryTitleList: [String]) {
         self.categoryTitleList = categoryTitleList
         super.init(frame: .zero)
@@ -67,16 +74,30 @@ public class MGPagingTabBar: UIView {
             strongSelf.selectedIndex.onNext(indexPath.row)
         }).disposed(by: self.disposeBag)
         
+        collectionView.rx.setDelegate(self)
+                    .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
 }
 
 extension MGPagingTabBar: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let cellWidth = calculateCellWidth(text: categoryTitleList[indexPath.row])
+        print("\(indexPath.row) : height = \(cellWidth)")
+        return CGSize(width: cellWidth, height: 56.0)
     }
 }
 
@@ -98,9 +119,15 @@ extension MGPagingTabBar: UICollectionViewDataSource {
 
 private extension MGPagingTabBar {
     func setupLayout() {
+        addSubview(grayUnderline)
         addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        grayUnderline.snp.makeConstraints {
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(2.0)
         }
     }
 }
