@@ -10,6 +10,8 @@ import Domain
 public class PostureDetailTableViewCell: BaseTableViewCell {
     
     static let identifier: String = "PostureDetailTableViewCell"
+    
+    private var containerView = BaseView()
 
     private var titleLabel = MGLabel(
         font: UIFont.Pretendard.titleMedium, 
@@ -18,13 +20,13 @@ public class PostureDetailTableViewCell: BaseTableViewCell {
     
     private var contentsLabel = MGLabel(
         font: UIFont.Pretendard.bodyMedium,
-        isCenter: false
+        isCenter: false,
+        numberOfLineCount: 3
     )
     
     private var detailTextCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout().then {
             $0.scrollDirection = .vertical
-            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         }
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
@@ -46,12 +48,34 @@ public class PostureDetailTableViewCell: BaseTableViewCell {
     }
     
     public override func layout() {
-        addSubviews([titleLabel])
+        addSubviews([containerView])
+        containerView.addSubviews([titleLabel, contentsLabel, detailTextCollectionView])
         
+        containerView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24.0)
+            $0.centerX.bottom.equalToSuperview()
+            $0.width.equalToSuperview().inset(20.0)
+        }
+
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(12)
-            $0.leading.trailing.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.height.equalTo(32)
+        }
+        
+        detailTextCollectionView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.bottom.equalToSuperview().inset(12)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+
+        contentsLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.bottom.equalToSuperview().inset(12)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
         }
     }
     
@@ -61,38 +85,19 @@ public class PostureDetailTableViewCell: BaseTableViewCell {
         detailTextCollectionView.delegate = self
         detailTextCollectionView.dataSource = self
     }
-    
-    private func setLayout(dataCount: Int) {
-        switch dataCount {
-        case 1:
-            addSubviews([contentsLabel])
-
-            contentsLabel.snp.makeConstraints {
-                $0.top.equalTo(titleLabel.snp.bottom).offset(12)
-                $0.leading.trailing.equalToSuperview()
-                $0.bottom.equalToSuperview().inset(12)
-            }
-        default:
-            addSubviews([detailTextCollectionView])
-
-            detailTextCollectionView.snp.makeConstraints {
-                $0.top.equalTo(titleLabel.snp.bottom).offset(24)
-                $0.leading.trailing.equalToSuperview()
-                $0.bottom.equalToSuperview().inset(12)
-            }
-        }
-    }
 }
 
 public extension PostureDetailTableViewCell {
     func setup(with model: PostureDetailInfoModel) {
         switch model.infoText.count {
         case 1:
-            setLayout(dataCount: 1)
             contentsLabel.changeText(text: "\(model.infoText[0].text)")
+            detailTextCollectionView.isHidden = true
+            contentsLabel.isHidden = false
         default:
-            setLayout(dataCount: 0)
             detailTextModel = model.infoText
+            detailTextCollectionView.isHidden = false
+            contentsLabel.isHidden = true
         }
         titleLabel.changeText(text: model.titleText)
     }
@@ -106,7 +111,11 @@ extension PostureDetailTableViewCell: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let lineCount = detailTextModel[indexPath.row].text.components(separatedBy: "\n").count - 1
 
-        return CGSize(width: detailTextCollectionView.frame.width, height: 32.0 + (CGFloat(lineCount) * 20.0))
+        return CGSize(width: self.frame.width, height: 32.0 + (CGFloat(lineCount) * 20.0))
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
     }
 }
 
