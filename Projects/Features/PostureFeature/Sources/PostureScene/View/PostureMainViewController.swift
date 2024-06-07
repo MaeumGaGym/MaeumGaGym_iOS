@@ -1,4 +1,5 @@
 import UIKit
+import Data
 
 import RxCocoa
 import RxSwift
@@ -11,12 +12,15 @@ import DSKit
 import Core
 import Domain
 
+import MGNetworks
+
 import PostureFeatureInterface
 
 public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
         
     private lazy var naviBar = PostureMainNavigationBar()
     
+    let rootViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     
 
     private let categoryTitleList = [
@@ -26,7 +30,9 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         "어깨",
         "팔",
         "복근",
-        "앞 허벅지"
+        "앞 허벅지",
+        "뒷 허벅지",
+        "종아리"
     ]
 
     private let titleText = MGLabel(text: "자세",
@@ -43,27 +49,22 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
-//    lazy var recommandUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//    lazy var recommandViewModel = PostureRecommandViewModel(useCase: recommandUseCase)
-//    lazy var recommandViewController = PostureRecommandViewController(recommandViewModel)
-
-//    lazy var chestUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//    lazy var chestUseCase = PostureUseCase()
-//    lazy var chestViewModel = PostureChestViewModel(useCase: chestUseCase)
-//    lazy var chestViewController = PostureChestViewController(chestViewModel)
-//
-//    lazy var backUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//    lazy var backViewModel = PostureBackViewModel(useCase: backUseCase)
-//    lazy var backViewController = PostureBackViewController(backViewModel)
+    lazy var postureUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+    
+    lazy var recommandViewController = PostureRecommandViewController(PostureRecommandViewModel(useCase: postureUseCase))
+    lazy var chestViewController = PostureChestViewController(PostureChestViewModel(useCase: postureUseCase))
+    lazy var backViewController = PostureBackViewController(PostureBackViewModel(useCase: postureUseCase))
 
     private lazy var viewControllers: [UIViewController] = [
-//        recommandViewController,
-//        chestViewController,
-//        backViewController,
-//        backViewController,
-//        backViewController,
-//        backViewController,
-//        backViewController,
+        recommandViewController,
+        chestViewController,
+        backViewController,
+        backViewController,
+        backViewController,
+        backViewController,
+        backViewController,
+        backViewController,
+        backViewController,
      ]
 
     private lazy var containerView: UIView = {
@@ -101,9 +102,9 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         }
 
         pagingTabBar.snp.makeConstraints {
-           $0.top.equalTo(titleText.snp.bottom).offset(12.0)
-           $0.leading.trailing.equalToSuperview()
-           $0.height.equalTo(pagingTabBar.cellHeight)
+            $0.top.equalTo(titleText.snp.bottom).offset(12.0)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(56.0)
         }
 
         containerView.snp.makeConstraints {
@@ -139,9 +140,6 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
         super.bindViewModel()
         
         let searchButtonTapped = naviBar.rightButtonTap.asDriver(onErrorDriveWith: .never())
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        
-//        viewModel = PostureMainViewModel(useCase: useCase)
         
         let input = PostureMainViewModel.Input(
             searchButtonTapped: searchButtonTapped
