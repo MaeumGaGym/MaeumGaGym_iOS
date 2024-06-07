@@ -12,8 +12,10 @@ public protocol SelfCareRepositoryInterface {
     func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel>
 
     //MARK: Target
-    func getTargetMainData() -> Single<SelfCareTargetMainModel>
-    func getTargetDetailData() -> Single<SelfCareTargetDetailModel>
+    func getMyTarget(accessToken: String) -> Single<SelfCareTargetMainModel>
+    func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response>
+    func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response>
+    func deleteTarget(accessToken: String, id: Int) -> Single<Response>
 
     //MARK: Profile
     func getProfileData(accessToken: String, userName: String) -> Single<SelfCareDetailProfileModel>

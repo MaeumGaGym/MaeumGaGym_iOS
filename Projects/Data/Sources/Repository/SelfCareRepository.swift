@@ -21,16 +21,30 @@ public class SelfCareRepository: SelfCareRepositoryInterface {
         return networkService.getMyRoutineEditData()
     }
 
-    public func getTargetMainData() -> Single<SelfCareTargetMainModel> {
-        return networkService.getTargetMainData()
+    public func getMyTarget(accessToken: String) -> Single<SelfCareTargetMainModel> {
+        return networkService.getMyTarget(accessToken: accessToken)
+            .map(SelfCareTargetDTO.self)
+            .map { $0.toDomain() }
     }
 
     public func getTargetDetailData() -> Single<SelfCareTargetDetailModel> {
         return networkService.getTargetDetailData()
     }
+    
+    public func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response> {
+        return networkService.addTarget(accessToken: accessToken, title: accessToken, content: content, startDate: startDate, endDate: endDate)
+    }
+    public func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response> {
+        return networkService.modifyTarget(accessToken: accessToken, title: accessToken, content: content, startDate: startDate, endDate: endDate, id: id)
+    }
+    public func deleteTarget(accessToken: String, id: Int) -> Single<Response> {
+        return networkService.deleteTarget(accessToken: accessToken, id: id)
+    }
 
     public func getProfileData(accessToken: String, userName: String) -> Single<SelfCareDetailProfileModel> {
         return networkService.getProfileData(accessToken: accessToken, userName: userName)
+            .map(SelfCareProfileDTO.self)
+            .map { $0.toDomain() }
     }
     
     public func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response> {
