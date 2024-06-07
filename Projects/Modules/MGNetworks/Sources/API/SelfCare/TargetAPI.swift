@@ -15,10 +15,11 @@ public enum TargetAPI {
                     content: String,
                     startDate: String,
                     endDate: String,
-                    id: Int64)
-    case targetDelete(accessToken: String, id: Int64)
-    case targetCheck(accessToken: String, id: Int64)
-    case targetMonthCheck(accessToken: String, date: String)
+                    id: Int)
+    case targetDelete(accessToken: String, id: Int)
+    case getTarget(accessToken: String, id: Int)
+    case getMonthTarget(accessToken: String, date: String)
+    case getMyTarget(accessToken: String)
 }
 
 extension TargetAPI: BaseAPI {
@@ -33,10 +34,12 @@ extension TargetAPI: BaseAPI {
             return "/\(id)"
         case let .targetDelete(_, id):
             return "/\(id)"
-        case let .targetCheck(_, id):
+        case let .getTarget(_, id):
             return "/\(id)"
-        case .targetMonthCheck:
-            return ""
+        case .getMonthTarget(let date):
+            return "/month/\(date)"
+        case .getMyTarget:
+            return "/my"
         }
     }
 
@@ -46,7 +49,7 @@ extension TargetAPI: BaseAPI {
             return .post
         case .targetDelete:
             return .delete
-        case .targetCheck, .targetMonthCheck:
+        case .getMonthTarget, .getMyTarget, .getTarget:
             return .get
         }
     }
@@ -77,9 +80,6 @@ extension TargetAPI: BaseAPI {
                 "end_date": endDate
             ]
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
-        case let .targetMonthCheck(_, date):
-            let params: [String: Any] = ["date": date]
-            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }
@@ -87,11 +87,12 @@ extension TargetAPI: BaseAPI {
 
     public var headers: [String : String]? {
         switch self {
-        case let .targetMonthCheck(accessToken, _),
+        case let .getMonthTarget(accessToken, _),
             let .targetAdd(accessToken, _, _, _, _),
             let .targetEdit(accessToken, _, _, _, _, _),
             let .targetDelete(accessToken, _),
-            let .targetCheck(accessToken, _):
+            let .getTarget(accessToken, _),
+            let .getMyTarget(accessToken):
             return ["Authorization": "\(accessToken)"]
         }
     }

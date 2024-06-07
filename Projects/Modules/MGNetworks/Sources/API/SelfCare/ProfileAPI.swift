@@ -14,7 +14,7 @@ extension ProfileAPI: BaseAPI {
 
     public var path: String {
         switch self {
-        case .profileCheck(let userName, _):
+        case .profileCheck(_, let userName):
             return "/\(userName)"
         case .profileInfoModify:
             return ""
