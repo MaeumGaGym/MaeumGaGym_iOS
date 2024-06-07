@@ -25,7 +25,7 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
     )
 
     private lazy var userNameLabel = MGLabel(
-        text: "박준하",
+        text: "",
         font: UIFont.Pretendard.titleMedium,
         textColor: .black
     )
@@ -43,38 +43,20 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
     public override func bindViewModel() {
         super.bindViewModel()
 
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        viewModel = PostureSearchViewModel(useCase: useCase)
-
-//        let input = PostureSearchViewModel.Input(
-//            getSearchData: Observable.just(()).asDriver(onErrorDriveWith: .never())
-//        )
         let input = SelfCareProfileViewModel.Input(
-            getProfileData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+            getProfileData: Observable.just("조영준").asDriver(onErrorDriveWith: .never())
         )
         
-        let viewModel = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.profileData
                 .subscribe(onNext: { profileData in
-                    self.userNameLabel.text = profileData.userName
-//                    profileData.
-                    self.bageView.userTimeLabel.text = profileData.userWakaTime
+                    self.userNameLabel.changeText(text: profileData.userName)
+                    print("userName: \(profileData.userName)")
+                    self.bageView.userTimeLabel.changeText(text: "\(profileData.userWakaTime)")
 //                    self.userProfileImageView.profileImage?.customImage. = profileData.userImage
                 }).disposed(by: disposeBag)
         })
         
-//        beforeButton.rx.tap.subscribe(onNext: {
-//            PostureStepper.shared.steps.accept(MGStep.postureBack)
-//        }).disposed(by: disposeBag)
-
-//        _ = viewModel.transform(input, action: { optput in
-//            optput.searchData
-//                .subscribe(onNext: { searchData in
-//                    MGLogger.debug("searchData: \(searchData)")
-//                    self.searchModel = searchData
-//                }).disposed(by: disposeBag)
-//            }
-//        )
     }
     public override func bindActions() {
         navBar.leftButtonTap
@@ -82,13 +64,13 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
 
-        userInfoChangeButton.rx.tap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.pushViewController(
-                    SelfCareProfileEditViewController(SelfCareProfileEditViewModel()),
-                    animated: true
-                )
-            }).disposed(by: disposeBag)
+//        userInfoChangeButton.rx.tap
+//            .bind(onNext: { [weak self] in
+//                self?.navigationController?.pushViewController(
+//                    SelfCareProfileEditViewController(SelfCareProfileEditViewModel(useCase: )),
+//                    animated: true
+//                )
+//            }).disposed(by: disposeBag)
 
         logOutButton.rx.tap
             .asObservable()
