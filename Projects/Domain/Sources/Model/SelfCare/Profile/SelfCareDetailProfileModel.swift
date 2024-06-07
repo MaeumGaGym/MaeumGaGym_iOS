@@ -1,15 +1,15 @@
 import UIKit
 
 public struct SelfCareDetailProfileModel {
-    public var userImage: UIImage
+    public var userImage: String?
     public var userName: String
-    public var userWakaTime: String
+    public var userWakaTime: Int
     public var userBageLevel: Int
 
-    public init(userImage: UIImage, userName: String, userWakaTime: String, userBageLevel: Int) {
+    public init(userImage: String?, userName: String, userWakaTime: Int, userBageLevel: Int) {
         self.userImage = userImage
         self.userName = userName
-        self.userWakaTime = "\(userWakaTime)시간"
+        self.userWakaTime = userWakaTime
         self.userBageLevel = userBageLevel
     }
 }

@@ -23,12 +23,16 @@ public struct TargetTitleTextModel {
 }
 
 public struct TargetContentModel {
+    public var id: Int
     public var targetTitle: String
+    public var content: String
     public var targetStartData: String
     public var targetEndData: String
 
-    public init(targetTitle: String, targetStartData: String, targetEndData: String) {
+    public init(id: Int, targetTitle: String, content: String, targetStartData: String, targetEndData: String) {
+        self.id = id
         self.targetTitle = targetTitle
+        self.content = content
         self.targetStartData = targetStartData
         self.targetEndData = targetEndData
     }
