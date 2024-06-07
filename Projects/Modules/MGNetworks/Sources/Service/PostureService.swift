@@ -10,7 +10,7 @@ public class PostureService {
     Single<[PostureRecommandModel]> {
         let postureRecommandData: [PostureRecommandModel] = [
             PostureRecommandModel(
-                titleImage: DSKitAsset.Assets.appleLogo.image,
+                titleImage: DSKitAsset.Assets.recommandChestIcon.image,
                 titleText: "가슴 운동",
                 exerciseData: [
                     PostureRecommandExerciseModel(image: DSKitAsset.Assets.pushUp.image, name: "푸시업", part: "가슴"),
@@ -19,7 +19,7 @@ public class PostureService {
                 ]
             ),
             PostureRecommandModel(
-                titleImage: DSKitAsset.Assets.appleLogo.image,
+                titleImage: DSKitAsset.Assets.recommandShoulderIcon.image,
                 titleText: "어깨 운동",
                 exerciseData: [
                     PostureRecommandExerciseModel(image: DSKitAsset.Assets.deeps.image, name: "딥스", part: "가슴"),
