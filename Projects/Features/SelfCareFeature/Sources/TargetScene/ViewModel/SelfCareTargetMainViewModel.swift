@@ -41,14 +41,14 @@ public class SelfCareTargetMainViewModel: BaseViewModel {
 
         input.getTargetMainData
             .drive(onNext: { [weak self] _ in
-                self?.useCase.getTargetMainData()
+                self?.useCase.getMyTargetData()
             }).disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
-        useCase.targetMainData
+        useCase.myTargetData
             .subscribe(onNext: { targetMainData in
                 self.targetMainDataSubject.onNext(targetMainData)
             }).disposed(by: disposeBag)

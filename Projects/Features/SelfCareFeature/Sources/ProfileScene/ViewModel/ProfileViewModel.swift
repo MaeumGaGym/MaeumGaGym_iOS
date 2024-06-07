@@ -17,7 +17,7 @@ public class SelfCareProfileViewModel: BaseViewModel {
     private let useCase: SelfCareUseCase
     
     public struct Input {
-        let getProfileData: Driver<Void>
+        let getProfileData: Driver<String>
     }
     
     public struct Output {
@@ -43,8 +43,8 @@ public class SelfCareProfileViewModel: BaseViewModel {
         input.getProfileData
             .asObservable()
             .withUnretained(self)
-            .subscribe(onNext: { owner, dd in
-                owner.useCase.getProfileData()
+            .subscribe(onNext: { owner, nickName in
+                owner.useCase.getProfileData(nickName: nickName)
             }).disposed(by: disposeBag)
         
         return output
@@ -54,6 +54,7 @@ public class SelfCareProfileViewModel: BaseViewModel {
         useCase.profileData
             .subscribe(onNext: { profileData in
                 self.profileDataSubject.onNext(profileData)
+                print("profileData: \(profileData)")
             }).disposed(by: disposeBag)
     }
     
