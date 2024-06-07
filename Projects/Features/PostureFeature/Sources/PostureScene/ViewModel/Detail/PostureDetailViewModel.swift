@@ -8,7 +8,7 @@ import Core
 import Domain
 import MGLogger
 
-public class PostureDetailViewModel: BaseViewModel {
+public class PostureDetailViewModel: PostureViewModelType {
     
     public typealias ViewModel = PostureDetailViewModel
 

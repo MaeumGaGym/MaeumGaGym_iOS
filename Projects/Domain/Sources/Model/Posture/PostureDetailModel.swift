@@ -4,21 +4,30 @@ public struct PostureDetailModel {
     public var detailImage: UIImage
     public var titleTextData: PostureDetailTitleTextModel
     public var exerciseKindData: [PostureDetailExerciseKindModel]
+    public var exercisePartData: PostureDetailInfoModel
+    public var exerciseStartData: PostureDetailInfoModel
     public var exerciseWayData: PostureDetailInfoModel
+    public var exerciseBreathData: PostureDetailInfoModel
     public var exerciseCautionData: PostureDetailInfoModel
     public var relatedPickleData: PostureDetailPickleModel
 
     public init(detailImage: UIImage, 
                 titleTextData: PostureDetailTitleTextModel,
                 exerciseKindData: [PostureDetailExerciseKindModel],
+                exercisePartData: PostureDetailInfoModel,
+                exerciseStartData: PostureDetailInfoModel,
                 exerciseWayData: PostureDetailInfoModel,
+                exerciseBreathData: PostureDetailInfoModel,
                 exerciseCautionData: PostureDetailInfoModel,
                 relatedPickleData: PostureDetailPickleModel)
     {
         self.detailImage = detailImage
         self.titleTextData = titleTextData
         self.exerciseKindData = exerciseKindData
+        self.exercisePartData = exercisePartData
+        self.exerciseStartData = exerciseStartData
         self.exerciseWayData = exerciseWayData
+        self.exerciseBreathData = exerciseBreathData
         self.exerciseCautionData = exerciseCautionData
         self.relatedPickleData = relatedPickleData
     }
