@@ -174,6 +174,20 @@ private extension PostureService {
                 titleTextData: PostureDetailTitleTextModel(englishName: "푸쉬업", koreanName: "팔굽혀펴기"),
                 exerciseKindData: [PostureDetailExerciseKindModel(exerciseTag: "맨몸"),
                                    PostureDetailExerciseKindModel(exerciseTag: "가슴")],
+                exercisePartData:
+                    PostureDetailInfoModel(
+                        titleText: "자극 부위",
+                        infoText:
+                    [
+                        PostureDetailInfoTextModel(text: "대흉근, 삼두근, 이두근"),
+                    ]),
+                exerciseStartData:
+                    PostureDetailInfoModel(
+                        titleText: "시작 자세",
+                        infoText:
+                    [
+                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
+                    ]),
                 exerciseWayData:
                     PostureDetailInfoModel(
                         titleText: "운동 방법",
@@ -182,8 +196,13 @@ private extension PostureService {
                         PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
                         PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
                         PostureDetailInfoTextModel(text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다."),
-                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
-                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다.")
+                    ]),
+                exerciseBreathData:
+                    PostureDetailInfoModel(
+                        titleText: "호흡법",
+                        infoText:
+                    [
+                        PostureDetailInfoTextModel(text: "흡 하 흡 하 흡흡흡 하하하"),
                     ]),
                 exerciseCautionData:
                     PostureDetailInfoModel(
