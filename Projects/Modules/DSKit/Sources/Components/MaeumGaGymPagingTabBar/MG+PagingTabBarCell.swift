@@ -11,11 +11,6 @@ public class MGPagingTabBarCell: UICollectionViewCell {
         $0.textColor = DSKitAsset.Colors.gray400.color
         $0.textAlignment = .center
     }
-    
-    private lazy var grayUnderline = UIView().then {
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.alpha = 1.0
-    }
 
     private lazy var underline = UIView().then {
         $0.backgroundColor = DSKitAsset.Colors.blue500.color
@@ -39,23 +34,16 @@ private extension MGPagingTabBarCell {
     func setupLayout() {
         [
             titleLabel,
-            grayUnderline,
             underline
         ].forEach { addSubview($0) }
         titleLabel.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
         }
         
-        grayUnderline.snp.makeConstraints { make in
-            make.height.equalTo(2.0)
-            make.top.equalTo(titleLabel.snp.bottom).offset(4.0)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-        
         underline.snp.makeConstraints { make in
             make.height.equalTo(2.0)
             make.top.equalTo(titleLabel.snp.bottom).offset(4.0)
-            make.leading.trailing.equalToSuperview().inset(14.0)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
