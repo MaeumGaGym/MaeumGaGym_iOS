@@ -32,3 +32,31 @@ extension PostureAllDTO {
 //        )
 //    }
 }
+
+struct PoseDetailDTO: Decodable {
+    let needMachine: Bool
+    let category: [String]
+    let simpleName, exactName: String
+    let thumbnail: String
+    let video: String
+    let simplePart, exactPart, startPose, exerciseWay: [String]
+    let breatheWay, caution: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case needMachine = "need_machine"
+        case category
+        case simpleName = "simple_name"
+        case exactName = "exact_name"
+        case thumbnail, video
+        case simplePart = "simple_part"
+        case exactPart = "exact_part"
+        case startPose = "start_pose"
+        case exerciseWay = "exercise_way"
+        case breatheWay = "breathe_way"
+        case caution
+    }
+}
+
+extension PoseDetailDTO {
+
+}
