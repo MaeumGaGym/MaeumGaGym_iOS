@@ -1,5 +1,32 @@
 import UIKit
 
+public struct PostureDetailModel_temporary {
+    public var needMachine: Bool
+    public var category: [String]
+    public var simpleName, exactName: String
+    public var thumbnail: String
+    public var video: String
+    public var simplePart, exactPart, startPose, exerciseWay: [String]
+    public var breatheWay, caution: [String]
+    public var pickleImage: [UIImage]
+    
+    public init(needMachine: Bool, category: [String], simpleName: String, exactName: String, thumbnail: String, video: String, simplePart: [String], exactPart: [String], startPose: [String], exerciseWay: [String], breatheWay: [String], caution: [String], pickleImage: [UIImage]) {
+        self.needMachine = needMachine
+        self.category = category
+        self.simpleName = simpleName
+        self.exactName = exactName
+        self.thumbnail = thumbnail
+        self.video = video
+        self.simplePart = simplePart
+        self.exactPart = exactPart
+        self.startPose = startPose
+        self.exerciseWay = exerciseWay
+        self.breatheWay = breatheWay
+        self.caution = caution
+        self.pickleImage = pickleImage
+    }
+}
+
 public struct PostureDetailModel {
     public var detailImage: UIImage
     public var titleTextData: PostureDetailTitleTextModel
