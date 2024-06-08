@@ -1,5 +1,7 @@
 import Foundation
 
+import DSKit
+
 struct PostureAllDTO: Decodable {
     let responses: [PostureAllResponse]
 }
@@ -58,9 +60,15 @@ struct PoseDetailDTO: Decodable {
 }
 
 extension PoseDetailDTO {
-
+    func toDomain() -> PostureDetailModel_temporary {
+        return .init(needMachine: needMachine, category: category, simpleName: simpleName, exactName: exactName, thumbnail: thumbnail, video: video, simplePart: simplePart, exactPart: exactPart, startPose: startPose, exerciseWay: exerciseWay, breatheWay: breatheWay, caution: caution, pickleImage: [
+            DSKitAsset.Assets.posturePickleTest1.image,
+            DSKitAsset.Assets.posturePickleTest2.image,
+            DSKitAsset.Assets.posturePickleTest3.image,
+            DSKitAsset.Assets.posturePickleTest4.image
+        ])
+    }
 }
-
 
 struct PoseRecommandDTO: Decodable {
     let poses: PoseRecommandPart
