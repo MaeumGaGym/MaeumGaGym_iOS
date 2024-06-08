@@ -22,20 +22,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
-        
-        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-        let viewModel = PostureDetailViewModel(useCase: useCase)
-        let viewController = PostureDetailViewController(viewModel)
-        
-        window?.rootViewController = viewController
+//        
+//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+//        let viewModel = PostureDetailViewModel(useCase: useCase)
+//        let viewController = PostureDetailViewController(viewModel)
+//        
+//        window?.rootViewController = viewController
 
-//        mainFlow = PostureFlow()
-//
-//        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.postureDetailIsRequired(withDetailId: 0)))
-//        Flows.use(mainFlow, when: .created) { root in
-//            self.window?.rootViewController = root
-//            self.window?.makeKey()
-//        }
+        mainFlow = PostureFlow()
+
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.postureMainIsRequired))
+        Flows.use(mainFlow, when: .created) { root in
+            self.window?.rootViewController = root
+            self.window?.makeKey()
+        }
         window?.makeKeyAndVisible()
     }
 }
