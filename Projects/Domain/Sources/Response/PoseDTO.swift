@@ -67,7 +67,7 @@ struct PoseRecommandDTO: Decodable {
 }
 
 struct PoseRecommandPart: Decodable {
-    let 어깨, 삼두, 복근, 이두, 등, 가슴: PoseRecommandPartResponse
+    let 어깨, 복근, 등, 가슴, 팔: PoseRecommandPartResponse
 }
 
 struct PoseRecommandPartResponse: Decodable {
