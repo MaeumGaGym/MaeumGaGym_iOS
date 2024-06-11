@@ -3,24 +3,34 @@ import Foundation
 public struct SelfCareTargetDTOElement: Decodable {
     let id: Int
     let title: String
-    let contenet: String
+    let content: String
     let startDate: String
-    let endData: String
+    let endDate: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, title, content
+        case startDate = "start_date"
+        case endDate = "end_date"
+    }
 }
 
 public extension SelfCareTargetDTOElement {
     func toDomain() -> TargetContentModel {
-        return .init(id: id, targetTitle: title, content: contenet, targetStartData: startDate, targetEndData: endData)
+        return .init(id: id, targetTitle: title, content: content, targetStartDate: startDate, targetEndDate: endDate)
     }
 }
 
-public typealias SelfCareTargetDTO = [SelfCareTargetDTOElement]
+public struct SelfCareTargetDTO: Decodable {
+    let targetList: [SelfCareTargetDTOElement]
+    
+    enum CodingKeys: String, CodingKey {
+        case targetList = "purpose_list"
+    }
+    
+}
 
 public extension SelfCareTargetDTO {
     func toDomain() -> SelfCareTargetMainModel {
-        return .init(
-            titleTextData: .init(titleText: "목표", infoText: "나만의 목표를 세워보세요"),
-            targetData: self.map { $0.toDomain() }
-        )
+        return .init(targetList: targetList.map { $0.toDomain() })
     }
 }
