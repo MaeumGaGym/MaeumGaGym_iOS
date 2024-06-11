@@ -34,7 +34,6 @@ open class MGSelfCareTextField: UITextField {
         super.init(frame: .zero)
 
         self.typeLabel.text = typeText
-        self.placeholder = typeText
         self.keyboardType = keyboardType
         self.unitLabel.text = unitText
         self.placeholder = placeholderText
