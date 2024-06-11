@@ -26,3 +26,13 @@ public extension SelfCareProfileDTO {
         )
     }
 }
+
+public struct SelfCareNicknameDTO: Decodable {
+    public let nickname: String
+}
+
+public extension SelfCareNicknameDTO {
+    func toDomain() -> SelfCareModifyProfileModel {
+        return .init(name: nickname)
+    }
+}
