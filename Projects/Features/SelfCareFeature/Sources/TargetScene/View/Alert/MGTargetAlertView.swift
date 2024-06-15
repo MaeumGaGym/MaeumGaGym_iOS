@@ -6,10 +6,11 @@ import Then
 import Core
 import DSKit
 import Domain
+import MGLogger
 
 public class MGTargetAlertView: UIViewController {
 
-    public var clickDate: (Int?, Int?, Int?) -> Void
+    public var clickDate: (String?) -> Void
 
     private let calendar = UICalendarView().then {
         $0.backgroundColor = .white
@@ -21,7 +22,7 @@ public class MGTargetAlertView: UIViewController {
     }
 
     public init(
-        clickDate: @escaping (Int?, Int?, Int?) -> Void
+        clickDate: @escaping (String?) -> Void
     ) {
         self.clickDate = clickDate
         super.init(nibName: nil, bundle: nil)
@@ -62,7 +63,10 @@ extension MGTargetAlertView: UICalendarSelectionSingleDateDelegate {
         didSelectDate dateComponents: DateComponents?
     ) {
         if let date = dateComponents {
-            self.clickDate(date.year, date.month, date.day)
+            let fullDate = "\(date.year ?? 0)-\(date.month ?? 0)-\(date.day ?? 0)"
+            let date = fullDate.changeDateFormatWithInput(input: .fullDate, type: .fullDateKorForCalendar)
+            clickDate(date)
+            self.dismiss(animated: true)
         } else {
             print("empty date")
         }

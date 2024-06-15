@@ -47,9 +47,10 @@ public class MGDateSelectView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     public func setup(
-        date: [Int]
+        date: String
+
     ) {
-        self.dateSelectButton.setTitle("\(date[0])년 \(date[1])월 \(date[2])일", for: .normal)
+        self.dateSelectButton.setTitle(date, for: .normal)
     }
     public override func attribute() {
         dateSelectButton.backgroundColor = dateButtonBgColor
