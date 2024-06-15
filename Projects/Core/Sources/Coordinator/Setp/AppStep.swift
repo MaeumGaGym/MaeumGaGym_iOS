@@ -49,7 +49,7 @@ public enum MGStep: Step {
     case postureStomachIsRequired
     case postureFrontlegIsRequired
 
-    //pickle
+    // pickle
     case pickle
     case pickleRequired
     
@@ -58,9 +58,20 @@ public enum MGStep: Step {
     
     case initialization
     
-    // selfCore
+    //MARK: selfCare
     case selfCoreHome
+    case popRequired
+    
+    //target
+    case targetHomeRequired
+    case addTargetRequired
+    case modifyTargetRequired
+    case detailTargetRequired(id: Int)
+    case presentTargetAttribute
+    
+    //profile
     case myProfileRequired
+    case editMyProfileRequired
     
     case postureIsRequired
     case shopIsRequired
