@@ -41,8 +41,8 @@ public class TargetMainTableViewCell: BaseTableViewCell {
     public func setup(with model: TargetContentModel) {
         changeTargetName(text: model.targetTitle)
         changeTargetDate(
-            startDate: model.targetStartData,
-            endDate: model.targetEndData
+            startDate: model.targetStartDate,
+            endDate: model.targetEndDate
         )
     }
 
