@@ -26,7 +26,7 @@ public protocol SelfCareUseCase {
     func getTargetDetailData(id: Int)
     func getMyTargetData(page: Int)
     func getMonthTargetData(date: String)
-    func addTargetData(title: String, content: String, startDate: Date, endDate: Date)
+    func addTargetData(title: String, content: String, startDate: String, endDate: String)
     func modifyTargetData(title: String, content: String, startDate: String, endDate: String, id: Int)
     func deleteTargetData(id: Int)
     
@@ -125,7 +125,7 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
                 print("SelfCareUseCase getMonthTargetData error occured: \(error)")
             }).disposed(by: disposeBag)
     }
-    public func addTargetData(title: String, content: String, startDate: Date, endDate: Date) {
+    public func addTargetData(title: String, content: String, startDate: String, endDate: String) {
         guard let token = TokenManagerImpl().get(key: .accessToken) else {
             return
         }

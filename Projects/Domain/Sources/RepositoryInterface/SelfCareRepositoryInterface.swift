@@ -15,7 +15,7 @@ public protocol SelfCareRepositoryInterface {
     func getTargetDetailData(accessToken: String, id: Int) -> Single<TargetContentModel>
     func getMyTarget(accessToken: String, page: Int) -> Single<SelfCareTargetMainModel>
     func getMonthTarget(accessToken: String, date: String) -> Single<SelfCareTargetMainModel>
-    func addTarget(accessToken: String, title: String, content: String, startDate: Date, endDate: Date) -> Single<Response>
+    func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response>
     func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response>
     func deleteTarget(accessToken: String, id: Int) -> Single<Response>
 
