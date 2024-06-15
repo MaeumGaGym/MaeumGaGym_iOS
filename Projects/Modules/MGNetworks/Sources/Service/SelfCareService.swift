@@ -20,7 +20,7 @@ public protocol SelfCareService {
     func getMyTarget(accessToken: String, page: Int) -> Single<Response>
     func getMonthTarget(accessToken: String, date: String) -> Single<Response>
     func getDetailTarget(accessToken: String, id: Int) -> Single<Response>
-    func addTarget(accessToken: String, title: String, content: String, startDate: Date, endDate: Date) -> Single<Response>
+    func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response>
     func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response>
     func deleteTarget(accessToken: String, id: Int) -> Single<Response>
 //    func requestDeleteTarget() -> Single<Response>
@@ -188,7 +188,7 @@ extension DefaultSelfCareService: SelfCareService {
         return targetProvider.rx.request(.getTarget(accessToken: accessToken, id: id))
             .filterSuccessfulStatusCodes()
     }
-    public func addTarget(accessToken: String, title: String, content: String, startDate: Date, endDate: Date) -> Single<Response> {
+    public func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response> {
         return targetProvider.rx.request(.targetAdd(accessToken: accessToken, title: title, content: content, startDate: startDate, endDate: endDate))
             .filterSuccessfulStatusCodes()
     }
