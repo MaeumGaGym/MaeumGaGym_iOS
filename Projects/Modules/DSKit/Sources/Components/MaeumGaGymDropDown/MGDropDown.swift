@@ -2,6 +2,8 @@ import UIKit
 import SnapKit
 
 open class MGDropDown: UIView, UITableViewDataSource, UITableViewDelegate {
+    
+    private var genderData: (String) -> Void
 
     var data = ["남성", "여성"]
 
@@ -20,18 +22,17 @@ open class MGDropDown: UIView, UITableViewDataSource, UITableViewDelegate {
     let tableView = UITableView()
     let arrowImageView = UIImageView(image: DSKitAsset.Assets.bottomArrow.image)
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    public init(
+        genderData: @escaping (String) -> Void
+    ) {
+        self.genderData = genderData
+        super.init(frame: .zero)
         setupUI()
         addSubViews()
         layout()
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        setupUI()
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setupUI() {
@@ -131,7 +132,9 @@ extension MGDropDown {
     }
 
     public func tableView(_ tableView:UITableView, didSelectRowAt indexPath : IndexPath) {
-        print("You selected \(data[indexPath.row])")
+        let gender = ["MAN", "WOMAN"]
+        print("You selected \(gender[indexPath.row])")
+        genderData(gender[indexPath.row])
         dropDownButtonClick(title: data[indexPath.row])
         toggleDropdown()
     }
