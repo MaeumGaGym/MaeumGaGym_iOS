@@ -1,17 +1,18 @@
 import Foundation
+
 import RxFlow
 import RxCocoa
 
-public class PickleStepper: Stepper {
-    public static let shared = PickleStepper()
-    
+public class ShopStepper: Stepper {
+    public static let shared = ShopStepper()
+
     public var steps = PublishRelay<Step>()
-    
+
     public var initialStep: Step {
-        return MGStep.pickleRequired
+        return MGStep.shopIsRequired
     }
-    
+
     public init() {
-        
+
     }
 }

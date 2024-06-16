@@ -1,11 +1,28 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
-import Domain
+import RxMoya
+import Moya
+
 import DSKit
+import Domain
+import TokenManager
 
-public class PostureService {
+public protocol PostureService {
+    func requestRecommandData() -> Single<[PostureRecommandModel]>
+    func requestPartData(type: PosturePartType) -> Single<PosturePartModel>
+    func requestDetailData(accessToken: String, id: Int) -> Single<Response>
+    func requestSearchData() -> Single<PostureSearchModel>
+    func getAllPoseData(accessToken: String, lastUpdated: String) -> Single<Response>
+}
+
+public class DefaultPostureService: NSObject {
+    let postureProvider = MoyaProvider<PostureAPI>()
+}
+
+extension DefaultPostureService: PostureService {
     public func requestRecommandData() ->
     Single<[PostureRecommandModel]> {
         let postureRecommandData: [PostureRecommandModel] = [
@@ -41,11 +58,12 @@ public class PostureService {
         }
     }
 
-    public func requestDetailData(type: PostureDetailType) -> Single<PostureDetailModel> {
-        switch type {
-        case .pushUp:
-            return requestPushUpData()
-        }
+    public func requestDetailData(accessToken: String, id: Int) -> Single<Response> {
+        postureProvider.rx.request(.postureShow(accessToken: accessToken, id: id)).filterSuccessfulStatusCodes()
+    }
+    
+    public func getAllPoseData(accessToken: String, lastUpdated: String) -> Single<Response> {
+        return postureProvider.rx.request(.postureAllShow(accessToken: accessToken, last_updated: lastUpdated)).filterSuccessfulStatusCodes()
     }
 
     public func requestSearchData() -> Single<PostureSearchModel> {
@@ -76,13 +94,9 @@ public class PostureService {
             )
         )
     }
-
-    public init() {
-
-    }
 }
 
-private extension PostureService {
+private extension DefaultPostureService {
     func requestChestData() ->
     Single<PosturePartModel> {
         return Single.just(
@@ -166,62 +180,43 @@ private extension PostureService {
     }
 }
 
-private extension PostureService {
-    func requestPushUpData() -> Single<PostureDetailModel>{
-        return Single.just(
-            PostureDetailModel(
-                detailImage: DSKitAsset.Assets.pushUp.image,
-                titleTextData: PostureDetailTitleTextModel(englishName: "푸쉬업", koreanName: "팔굽혀펴기"),
-                exerciseKindData: [PostureDetailExerciseKindModel(exerciseTag: "맨몸"),
-                                   PostureDetailExerciseKindModel(exerciseTag: "가슴")],
-                exercisePartData:
-                    PostureDetailInfoModel(
-                        titleText: "자극 부위",
-                        infoText:
-                    [
-                        PostureDetailInfoTextModel(text: "대흉근, 삼두근, 이두근"),
-                    ]),
-                exerciseStartData:
-                    PostureDetailInfoModel(
-                        titleText: "시작 자세",
-                        infoText:
-                    [
-                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
-                    ]),
-                exerciseWayData:
-                    PostureDetailInfoModel(
-                        titleText: "운동 방법",
-                        infoText:
-                    [
-                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
-                        PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다."),
-                        PostureDetailInfoTextModel(text: "천천히 팔꿈치를 굽히며 시작 자세로 돌아갑니다."),
-                    ]),
-                exerciseBreathData:
-                    PostureDetailInfoModel(
-                        titleText: "호흡법",
-                        infoText:
-                    [
-                        PostureDetailInfoTextModel(text: "흡 하 흡 하 흡흡흡 하하하"),
-                    ]),
-                exerciseCautionData:
-                    PostureDetailInfoModel(
-                        titleText: "주의 사항",
-                        infoText:
-                    [
-                        PostureDetailInfoTextModel(text: "양팔을 가슴 옆에 두고 바닥에 엎드립니다."),
-                        PostureDetailInfoTextModel(text: "복근과 둔근에 힘을 준 상태로 팔꿈치를 피며\n올라옵니다.")
-                    ]),
-                relatedPickleData:
-                    PostureDetailPickleModel(
-                        titleText: "관련 피클",
-                        pickleImage: [
-                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest1.image),
-                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest2.image),
-                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest3.image),
-                        PostureDetailPickleImageModel(image: DSKitAsset.Assets.posturePickleTest4.image),
-                    ])
-            )
-        )
-    }
-}
+//private extension PostureService {
+//    func requestPushUpData() -> Single<PostureDetailModel>{
+//        return Single.just(
+//            PostureDetailModel_temporary(
+//            needMachine: false,
+//            category: ["복근", "등"],
+//            simpleName: "러시안 트위스트",
+//            exactName: "러시안 트위스트",
+//            thumbnail: "",
+//            video: "",
+//            simplePart: ["복근", "등"],
+//            exactPart: ["복근", "내복사근"],
+//            startPose: [
+//                "바닥에 앉아 무릎을 구부리고",
+//                " 발뒤꿈치를 바닥에 대거나 약간 들고",
+//                " 상체를 약간 뒤로 기울여 균형을 잡으세요."
+//            ],
+//            exerciseWay: [
+//                "양손을 가슴 앞에서 모으거나 손가락을 서로 걸어 잡습니다.",
+//                "상체를 좌우로 돌려가며 손을 바닥 가까이로 움직입니다.",
+//                "한쪽으로 돌린 후 반대쪽으로 같은 방법으로 돌립니다."
+//            ],
+//            breatheWay: [
+//                "상체를 한쪽으로 돌릴 때 숨을 내쉬고",
+//                "중앙으로 돌아올 때 숨을 들이마십니다."
+//            ],
+//            caution: [
+//                "허리에 무리가 가지 않도록 상체를 너무 많이 뒤로 기울이지 않고",
+//                "동작을 천천히 제어하여 안정적으로 수행하세요."
+//            ],
+//            pickleImage: [
+//                DSKitAsset.Assets.posturePickleTest1.image,
+//                DSKitAsset.Assets.posturePickleTest2.image,
+//                DSKitAsset.Assets.posturePickleTest3.image,
+//                DSKitAsset.Assets.posturePickleTest4.image,
+//            ]
+//            )
+//        )
+//    }
+//}

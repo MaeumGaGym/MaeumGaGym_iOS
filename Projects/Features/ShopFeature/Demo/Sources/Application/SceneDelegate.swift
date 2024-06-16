@@ -4,12 +4,14 @@ import RxFlow
 import RxSwift
 import RxCocoa
 import Core
+import MGFlow
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator = FlowCoordinator()
-    var disposeBag = DisposeBag()
+    var mainFlow: ShopFlow!
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -19,12 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
 
-        let stepper = TestAppStepper()
-        let initFlow = InitFlow()
+        let mainFlow = ShopFlow()
 
-        coordinator.coordinate(flow: initFlow, with: stepper)
-        Flows.use(initFlow, when: .created) { root in
-            self.window?.backgroundColor = UIColor.white
+        coordinator.coordinate(flow: mainFlow, with: OneStepper(withSingleStep: MGStep.shopIsRequired))
+        
+        Flows.use(mainFlow, when: .created) { root in
             self.window?.rootViewController = root
             self.window?.makeKey()
         }

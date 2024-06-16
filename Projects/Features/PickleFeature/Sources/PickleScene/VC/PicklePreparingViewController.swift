@@ -7,7 +7,7 @@ import MGLogger
 import DSKit
 import Core
 
-public class ShopViewController: BaseViewController<Any> {
+public class PicklePreparingViewController: BaseViewController<Any> {
     
     private let backgroundView = UIView()
     
@@ -15,7 +15,7 @@ public class ShopViewController: BaseViewController<Any> {
         $0.image = DSKitAsset.Assets.preparingImage.image
         $0.backgroundColor = .clear
     }
-    private let preparingTitle = MGLabel(text: "샵은 아직 개발중이에요", font: UIFont.Pretendard.titleMedium, isCenter: true)
+    private let preparingTitle = MGLabel(text: "피클은 아직 개발중이에요", font: UIFont.Pretendard.titleMedium, isCenter: true)
     private let preparingInfo = MGLabel(text: "현재 탭은 개발중입니다.\n빠른 시일 내에 더욱 나은 모습으로 찾아뵙겠습니다.", font: UIFont.Pretendard.bodyMedium, isCenter: true, numberOfLineCount: 2)
     
     public override func viewDidLoad() {

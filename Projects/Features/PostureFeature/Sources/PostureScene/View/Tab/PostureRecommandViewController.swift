@@ -37,8 +37,9 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
         view.addSubviews([recommandTableView])
 
         recommandTableView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 

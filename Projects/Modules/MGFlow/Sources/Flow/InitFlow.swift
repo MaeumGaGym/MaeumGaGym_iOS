@@ -52,11 +52,14 @@ public class InitFlow: Flow {
             pickle.tabBarItem = MGTabBarTypeItem(.pickle)
             selfCare.tabBarItem = MGTabBarTypeItem(.selfCare)
             
+            
             self.rootViewController.setViewControllers([home, posture, shop, pickle, selfCare], animated: true)
+            self.rootViewController.navigationController?.isNavigationBarHidden = true
+            self.rootViewController.tabBar.backgroundColor = .white
         }
         return .multiple(flowContributors: [
             FlowContributor.contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: MGStep.home)),
-            FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: MGStep.postureIsRequired)),
+            FlowContributor.contribute(withNextPresentable: postureFlow, withNextStepper: OneStepper(withSingleStep: MGStep.postureMainIsRequired)),
             FlowContributor.contribute(withNextPresentable: shopFlow, withNextStepper: OneStepper(withSingleStep: MGStep.shopIsRequired)),
             FlowContributor.contribute(withNextPresentable: pickleFlow, withNextStepper: OneStepper(withSingleStep: MGStep.pickleRequired)),
             FlowContributor.contribute(withNextPresentable: selfCareFlow, withNextStepper: OneStepper(withSingleStep: MGStep.selfCareIsRequired)),

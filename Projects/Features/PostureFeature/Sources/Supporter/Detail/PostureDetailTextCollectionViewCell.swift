@@ -22,8 +22,8 @@ public class PostureDetailTextCollectionViewCell: UICollectionViewCell {
 }
 
 public extension PostureDetailTextCollectionViewCell {
-    func setup(index: Int, with model: [PostureDetailInfoTextModel]) {
-        detailInfoLabel.setup(index: index, text: model[index - 1].text)
+    func setup(index: Int, with model: [String]) {
+        detailInfoLabel.setup(index: index, text: model[index - 1])
 
         layout()
     }

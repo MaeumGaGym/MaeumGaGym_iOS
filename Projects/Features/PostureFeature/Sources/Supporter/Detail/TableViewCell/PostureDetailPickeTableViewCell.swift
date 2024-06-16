@@ -35,7 +35,7 @@ public class PostureDetailPickeTableViewCell: BaseTableViewCell {
         return collectionView
     }()
 
-    var pickleData: [PostureDetailPickleImageModel] = [] {
+    var pickleData: [UIImage] = [] {
         didSet {
             pickleCollectionView.reloadData()
         }
@@ -77,9 +77,9 @@ public class PostureDetailPickeTableViewCell: BaseTableViewCell {
 }
 
 public extension PostureDetailPickeTableViewCell {
-    func setup(with model: PostureDetailPickleModel) {
-        titleLabel.changeText(text: model.titleText)
-        pickleData = model.pickleImage
+    func setup(with model: [UIImage]) {
+        titleLabel.changeText(text: "관련 피클")
+        pickleData = model
     }
 }
 
@@ -119,7 +119,7 @@ extension PostureDetailPickeTableViewCell: UICollectionViewDataSource {
             for: indexPath
         ) as? PostureDetailPickleCollectionViewCell
         let model = pickleData[indexPath.row]
-        cell?.setup(image: model.image)
+        cell?.setup(image: model)
         return cell ?? UICollectionViewCell()
     }
 }

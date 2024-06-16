@@ -15,12 +15,20 @@ public class PostureRepository: PostureRepositoryInterface {
         return networkService.requestPartData(type: type)
     }
 
-    public func getDetailData(type: PostureDetailType) -> Single<PostureDetailModel> {
-        return networkService.requestDetailData(type: type)
+    public func getDetailData(accessToken: String, id: Int) -> Single<PostureDetailModel> {
+        return networkService.requestDetailData(accessToken: accessToken, id: id)
+            .map(PoseDetailDTO.self)
+            .map { $0.toDomain() }
     }
 
     public func getSearchData() -> Single<PostureSearchModel> {
         return networkService.requestSearchData()
+    }
+
+    public func getAllPoseData(accessToken: String, lastUpdated: String) -> Single<PostureAllModel> {
+        return networkService.getAllPoseData(accessToken: accessToken, lastUpdated: lastUpdated)
+            .map(PostureAllDTO.self)
+            .map{ $0.toDomain() }
     }
 
     public init(networkService: PostureService) {

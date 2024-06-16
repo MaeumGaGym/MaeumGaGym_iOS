@@ -52,15 +52,15 @@ public class PostureFlow: Flow {
             return navigateToSearchViewScreen()
         case .postureBack:
             return popupViewController()
-        case .postureDetailIsRequired(withDetailId: 0):
-            return navigateToSearchViewScreen()
+        case .postureDetailIsRequired(let id):
+            return navigateToDetailViewScreen(id: id)
         default:
             return .none
         }
     }
     
     private func setupService() {
-        postureService = PostureService()
+        postureService = DefaultPostureService()
         postureRepository = PostureRepository(networkService: postureService)
         useCase = DefaultPostureUseCase(repository: postureRepository)
         viewModel = PostureMainViewModel(useCase: useCase)
@@ -83,7 +83,15 @@ public class PostureFlow: Flow {
     private func navigateToSearchViewScreen() -> FlowContributors {
         let vc = PostureSearchViewController(PostureSearchViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
-        MainTabBarContoller.shared.tabBar.isHidden = false
+        MainTabBarContoller.shared.tabBar.isHidden = true
+        return .none
+    }
+    
+    private func navigateToDetailViewScreen(id: Int) -> FlowContributors {
+        let vc = PostureDetailViewController(PostureDetailViewModel(useCase: self.useCase))
+        vc.id = id
+        rootViewController.pushViewController(vc, animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
 

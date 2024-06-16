@@ -21,6 +21,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     private var secondButton = MGToggleButton(type: .machine)
 
     private var headerView = UIView()
+    public let modelID = [112, 114, 115, 116, 117, 118, 119, 120, 121, 122]
 
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -173,8 +174,13 @@ extension PostureChestViewController: UITableViewDataSource {
             for: indexPath) as? PosturePartTableViewCell
         let exercise = chestExerciesData[indexPath.row]
         cell?.setup(with: exercise)
+//        cell?.id = modelID[indexPath.row]
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: modelID[indexPath.row]))
     }
 }
 

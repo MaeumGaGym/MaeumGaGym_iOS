@@ -15,11 +15,15 @@ import MGLogger
 
 import PostureFeatureInterface
 
-public class PostureDetailViewController: BaseViewController<PostureDetailViewModel> {
+public class PostureDetailViewController: BaseViewController<PostureDetailViewModel>, UIGestureRecognizerDelegate {
+
+    public var id: Int = 112
+    
+    private var naviBar = PostureDetailNavigationBar()
 
     private var postureDetailTableView = UITableView().then {
-        $0.register(PostureDetailImageTableViewCell.self,
-                    forCellReuseIdentifier: PostureDetailImageTableViewCell.identifier)
+        $0.register(PostureDetailVideoTableViewCell.self,
+                    forCellReuseIdentifier: PostureDetailVideoTableViewCell.identifier)
         $0.register(PostureDetailTitleTableViewCell.self,
                     forCellReuseIdentifier: PostureDetailTitleTableViewCell.identifier)
         $0.register(PostureDetailTagTableViewCell.self,
@@ -43,33 +47,35 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         $0.backgroundColor = .white
         $0.separatorStyle = .none
     }
+
+    private var postureDetailModel: PostureDetailModel = PostureDetailModel(needMachine: Bool(), category: [], simpleName: "", exactName: "", thumbnail: "", video: "", simplePart: [], exactPart: [], startPose: [], exerciseWay: [], breatheWay: [], caution: [], pickleImage: [])
     
-    private var postureDetailModel: PostureDetailModel = PostureDetailModel(
-        detailImage: UIImage(),
-        titleTextData: PostureDetailTitleTextModel(englishName: "", koreanName: ""),
-        exerciseKindData: [],
-        exercisePartData: PostureDetailInfoModel(titleText: "", infoText: []),
-        exerciseStartData: PostureDetailInfoModel(titleText: "", infoText: []),
-        exerciseWayData: PostureDetailInfoModel(titleText: "", infoText: []),
-        exerciseBreathData: PostureDetailInfoModel(titleText: "", infoText: []),
-        exerciseCautionData: PostureDetailInfoModel(titleText: "", infoText: []),
-        relatedPickleData: PostureDetailPickleModel(titleText: "", pickleImage: [])
-    )
+    public override func configureNavigationBar() {
+        super.configureNavigationBar()
+        navigationController?.isNavigationBarHidden = true
+        self.view.frame = self.view.frame.inset(by: UIEdgeInsets(top: .zero, left: 0, bottom: .zero, right: 0))
+    }
 
     public override func attribute() {
         super.attribute()
 
         postureDetailTableView.dataSource = self
         postureDetailTableView.delegate = self
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
 
     public override func layout() {
         super.layout()
 
-        view.addSubviews([postureDetailTableView])
+        view.addSubviews([naviBar, postureDetailTableView])
+        
+        naviBar.snp.makeConstraints {
+            $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
         
         postureDetailTableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(naviBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -79,7 +85,7 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         super.bindViewModel()
 
         let input = PostureDetailViewModel.Input(
-            getDetailData: Observable.just(()).asDriver(onErrorDriveWith: .never())
+            getDetailData: Observable.just((id)).asDriver(onErrorDriveWith: .never())
         )
 
         _ = viewModel.transform(input, action: { optput in
@@ -87,19 +93,51 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
                 .subscribe(onNext: { detailData in
                     MGLogger.debug("detailData: \(detailData)")
                     self.postureDetailModel = detailData
+                    self.postureDetailTableView.reloadData()
                 }).disposed(by: disposeBag)
             }
         )
+        
+        naviBar.leftButtonTap
+            .subscribe(onNext: {
+                PostureStepper.shared.steps.accept(MGStep.postureBack)
+            }).disposed(by: disposeBag)
     }
     
-    private func calculateCellHeight(model: [PostureDetailInfoTextModel]) -> CGFloat {
-        let model = model
+    func calculateCategoryCellHeight(muscleGroups: [String]) -> CGFloat {
+        let combinedString = muscleGroups.joined(separator: ", ")
+        
+        let result = [combinedString]
+        return calculateCellHeight(text: result)
+    }
+    
+    func formatTexts(_ texts: [String]) -> [String] {
+        return texts.map { text -> String in
+            guard text.count > 24 else { return text }
+            
+            return stride(from: 0, to: text.count, by: 24).map { startIndex in
+                let endIndex = text.index(text.startIndex, offsetBy: startIndex + 24, limitedBy: text.endIndex) ?? text.endIndex
+                let range = text.index(text.startIndex, offsetBy: startIndex)..<endIndex
+                var subString = String(text[range])
+                
+                if subString.hasPrefix(" ") {
+                    subString.removeFirst()
+                }
+                
+                return subString
+            }.joined(separator: "\n")
+        }
+    }
+
+    
+    private func calculateCellHeight(text: [String]) -> CGFloat {
+        let text = formatTexts(text)
         var lineCount = 0
-        var modelCount = model.count
+        var modelCount = text.count
         var middleDistance = 12
 
-        for data in model {
-            lineCount += data.text.components(separatedBy: "\n").count - 1
+        for data in text {
+            lineCount += data.components(separatedBy: "\n").count - 1
         }
 
         if modelCount == 1 {
@@ -126,15 +164,15 @@ extension PostureDetailViewController: UITableViewDelegate {
         case 2:
             return 60
         case 3:
-            return calculateCellHeight(model: postureDetailModel.exercisePartData.infoText)
+            return calculateCategoryCellHeight(muscleGroups: postureDetailModel.exactPart)
         case 4:
-            return calculateCellHeight(model: postureDetailModel.exerciseStartData.infoText)
+            return calculateCellHeight(text: postureDetailModel.startPose)
         case 5:
-            return calculateCellHeight(model: postureDetailModel.exerciseWayData.infoText)
+            return calculateCellHeight(text: postureDetailModel.exerciseWay)
         case 6:
-            return calculateCellHeight(model: postureDetailModel.exerciseBreathData.infoText)
+            return calculateCellHeight(text: postureDetailModel.breatheWay)
         case 7:
-            return calculateCellHeight(model: postureDetailModel.exerciseCautionData.infoText)
+            return calculateCellHeight(text: postureDetailModel.caution)
         case 8:
             return 360
         default:
@@ -158,9 +196,9 @@ extension PostureDetailViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let cell = postureDetailTableView.dequeueReusableCell(
-                withIdentifier: PostureDetailImageTableViewCell.identifier,
-                for: indexPath) as? PostureDetailImageTableViewCell
-            let model = postureDetailModel.detailImage
+                withIdentifier: PostureDetailVideoTableViewCell.identifier,
+                for: indexPath) as? PostureDetailVideoTableViewCell
+            let model = postureDetailModel.video
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
@@ -168,7 +206,7 @@ extension PostureDetailViewController: UITableViewDataSource {
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTitleTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTitleTableViewCell
-            let model = postureDetailModel.titleTextData
+            let model = [postureDetailModel.simpleName, postureDetailModel.exactName]
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
@@ -176,7 +214,7 @@ extension PostureDetailViewController: UITableViewDataSource {
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTagTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTagTableViewCell
-            let model = postureDetailModel.exerciseKindData
+            let model = postureDetailModel.category
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
@@ -184,47 +222,47 @@ extension PostureDetailViewController: UITableViewDataSource {
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTableViewCell
-            let model = postureDetailModel.exercisePartData
-            cell?.setup(with: model)
+            let model = formatTexts([postureDetailModel.exactPart.joined(separator: ", ")])
+            cell?.setup(with: model, titleText: "자극 부위")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 4:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTableViewCell
-            let model = postureDetailModel.exerciseStartData
-            cell?.setup(with: model)
+            let model = formatTexts(postureDetailModel.startPose)
+            cell?.setup(with: model, titleText: "시작 자세")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 5:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTableViewCell
-            let model = postureDetailModel.exerciseWayData
-            cell?.setup(with: model)
+            let model = formatTexts(postureDetailModel.exerciseWay)
+            cell?.setup(with: model, titleText: "운동 방법")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 6:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTableViewCell
-            let model = postureDetailModel.exerciseBreathData
-            cell?.setup(with: model)
+            let model = formatTexts(postureDetailModel.breatheWay)
+            cell?.setup(with: model, titleText: "호흡법")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 7:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailTableViewCell.identifier,
                 for: indexPath) as? PostureDetailTableViewCell
-            let model = postureDetailModel.exerciseCautionData
-            cell?.setup(with: model)
+            let model = formatTexts(postureDetailModel.caution)
+            cell?.setup(with: model, titleText: "주의 사항")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
         case 8:
             let cell = postureDetailTableView.dequeueReusableCell(
                 withIdentifier: PostureDetailPickeTableViewCell.identifier,
                 for: indexPath) as? PostureDetailPickeTableViewCell
-            let model = postureDetailModel.relatedPickleData
+            let model = postureDetailModel.pickleImage
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()

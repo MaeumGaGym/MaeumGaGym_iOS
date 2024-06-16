@@ -32,7 +32,7 @@ public class PostureDetailTagTableViewCell: BaseTableViewCell {
         return collectionView
     }()
 
-    private var postureDetailTagModel: [PostureDetailExerciseKindModel] = [] {
+    private var postureDetailTagModel: [String] = [] {
         didSet {
             detailTagCollectionView.reloadData()
         }
@@ -65,7 +65,7 @@ public class PostureDetailTagTableViewCell: BaseTableViewCell {
 }
 
 public extension PostureDetailTagTableViewCell {
-    func setup(with model: [PostureDetailExerciseKindModel]) {
+    func setup(with model: [String]) {
         postureDetailTagModel = model
     }
 }
