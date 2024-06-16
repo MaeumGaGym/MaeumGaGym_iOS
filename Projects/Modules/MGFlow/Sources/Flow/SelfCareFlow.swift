@@ -42,6 +42,10 @@ public class SelfCareFlow: Flow {
             return navigateToTargetHome()
         case .addTargetRequired:
             return navigateToAddTarget()
+        case .modifyTargetRequired(let id):
+            return navigateToModifyTarget(id: id)
+//        case .detailTargetRequired(let id):
+//            return navigateToDetailTarget(id: id)
 //        case .presentTargetAttribute:
 //        
         //profile
@@ -70,11 +74,26 @@ public class SelfCareFlow: Flow {
     private func navigateToTargetHome() -> FlowContributors {
         let vc = SelfCareTargetMainViewController(SelfCareTargetMainViewModel(useCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
     
     private func navigateToAddTarget() -> FlowContributors {
         let vc = SelfCareAddTargetViewController(SelfCareAddTargetViewModel(useCase: self.useCase))
+        rootViewController.pushViewController(vc, animated: true)
+        return .none
+    }
+    
+    private func navigateToModifyTarget(id: Int) -> FlowContributors {
+        let vc = SelfCareEditTargetViewController(SelfCareEditTargetViewModel(useCase: self.useCase))
+        vc.id = id
+        rootViewController.pushViewController(vc, animated: true)
+        return .none
+    }
+    
+    private func navigateToDetailTarget(id: Int) -> FlowContributors {
+        let vc = SelfCareDetailTargetViewController(SelfCareDetailTargetViewModel(useCase: self.useCase))
+        vc.targetID = id
         rootViewController.pushViewController(vc, animated: true)
         return .none
     }
