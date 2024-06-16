@@ -49,7 +49,7 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
     private lazy var pagingTabBar = MGPagingTabBar(categoryTitleList: categoryTitleList)
 
-    lazy var postureUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
+    lazy var postureUseCase = DefaultPostureUseCase(repository: PostureRepository(networkService: DefaultPostureService()))
     
     lazy var recommandViewController = PostureRecommandViewController(PostureRecommandViewModel(useCase: postureUseCase))
     lazy var chestViewController = PostureChestViewController(PostureChestViewModel(useCase: postureUseCase))
@@ -109,7 +109,8 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
 
         containerView.snp.makeConstraints {
            $0.top.equalTo(pagingTabBar.snp.bottom)
-           $0.leading.trailing.bottom.equalToSuperview()
+           $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
 

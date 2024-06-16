@@ -64,7 +64,7 @@ extension PostureAPI: BaseAPI {
             let parameters: [String: Any] = [
                 "last_updated": last_updated
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         case let .postureAdd(_,
                              simple_name,
                              exact_name,
@@ -77,7 +77,7 @@ extension PostureAPI: BaseAPI {
                              breathe_way,
                              caution,
                              need_machine):
-            var params: [String: Any] = [
+            let params: [String: Any] = [
                 "simple_name": simple_name,
                 "exact_name": exact_name,
                 "thumbnail": thumbnail,

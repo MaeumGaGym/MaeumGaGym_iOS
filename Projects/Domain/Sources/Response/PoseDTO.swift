@@ -2,17 +2,17 @@ import Foundation
 
 import DSKit
 
-struct PostureAllDTO: Decodable {
-    let responses: [PostureAllResponse]
+public struct PostureAllDTO: Decodable {
+    public let responses: [PostureAllResponse]
 }
 
-struct PostureAllResponse: Decodable {
-    let id: Int
-    let category: [String]
-    let needMachine: Bool
-    let name: String
-    let simplePart, exactPart: [String]
-    let thumbnail: String
+public struct PostureAllResponse: Decodable {
+    public let id: Int
+    public let category: [String]
+    public let needMachine: Bool
+    public let name: String
+    public let simplePart, exactPart: [String]
+    public let thumbnail: String
 
     enum CodingKeys: String, CodingKey {
         case id, category
@@ -24,18 +24,24 @@ struct PostureAllResponse: Decodable {
     }
 }
 
-extension PostureAllDTO {
-//    func toDomain() -> SelfCareDetailProfileModel {
-//        return .init(
-//            userImage: profileImage,
-//            userName: nickName,
-//            userWakaTime: userWakaTime,
-//            userBageLevel: userBageLevel
-//        )
-//    }
+public extension PostureAllDTO {
+    public func toDomain() -> PostureAllModel {
+        let dataModels = responses.map { response in
+            PostureAllDataModel(
+                id: response.id,
+                category: response.category,
+                needMachine: response.needMachine,
+                name: response.name,
+                simplePart: response.simplePart,
+                exactPart: response.exactPart,
+                thumbnail: response.thumbnail
+            )
+        }
+        return PostureAllModel(responses: dataModels)
+    }
 }
 
-struct PoseDetailDTO: Decodable {
+public struct PoseDetailDTO: Decodable {
     let needMachine: Bool
     let category: [String]
     let simpleName, exactName: String
@@ -59,8 +65,8 @@ struct PoseDetailDTO: Decodable {
     }
 }
 
-extension PoseDetailDTO {
-    func toDomain() -> PostureDetailModel_temporary {
+public extension PoseDetailDTO {
+    func toDomain() -> PostureDetailModel {
         return .init(needMachine: needMachine, category: category, simpleName: simpleName, exactName: exactName, thumbnail: thumbnail, video: video, simplePart: simplePart, exactPart: exactPart, startPose: startPose, exerciseWay: exerciseWay, breatheWay: breatheWay, caution: caution, pickleImage: [
             DSKitAsset.Assets.posturePickleTest1.image,
             DSKitAsset.Assets.posturePickleTest2.image,

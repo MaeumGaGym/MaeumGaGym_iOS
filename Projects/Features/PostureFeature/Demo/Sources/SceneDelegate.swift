@@ -9,6 +9,8 @@ import MGNetworks
 
 import MGFlow
 
+import TokenManager
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -22,12 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
-//        
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        let viewModel = PostureDetailViewModel(useCase: useCase)
-//        let viewController = PostureDetailViewController(viewModel)
-//        
-//        window?.rootViewController = viewController
 
         mainFlow = PostureFlow()
 

@@ -10,6 +10,7 @@ import Domain
 public class PosturePartTableViewCell: BaseTableViewCell {
 
     static let identifier: String = "PosturePartTableViewCell"
+    public var id: Int = 0
 
     private let postureImageView = UIImageView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray25.color

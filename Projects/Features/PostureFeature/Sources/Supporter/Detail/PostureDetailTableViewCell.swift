@@ -41,7 +41,7 @@ public class PostureDetailTableViewCell: BaseTableViewCell {
         return collectionView
     }()
     
-    private var detailTextModel: [PostureDetailInfoTextModel] = [] {
+    private var detailTextModel: [String] = [] {
         didSet {
             detailTextCollectionView.reloadData()
         }
@@ -88,18 +88,18 @@ public class PostureDetailTableViewCell: BaseTableViewCell {
 }
 
 public extension PostureDetailTableViewCell {
-    func setup(with model: PostureDetailInfoModel) {
-        switch model.infoText.count {
+    func setup(with model: [String], titleText: String) {
+        switch model.count {
         case 1:
-            contentsLabel.changeText(text: "\(model.infoText[0].text)")
+            contentsLabel.changeText(text: "\(model[0])")
             detailTextCollectionView.isHidden = true
             contentsLabel.isHidden = false
         default:
-            detailTextModel = model.infoText
+            detailTextModel = model
             detailTextCollectionView.isHidden = false
             contentsLabel.isHidden = true
         }
-        titleLabel.changeText(text: model.titleText)
+        titleLabel.changeText(text: titleText)
     }
 }
 
@@ -109,9 +109,9 @@ extension PostureDetailTableViewCell: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let lineCount = detailTextModel[indexPath.row].text.components(separatedBy: "\n").count - 1
+        let lineCount = detailTextModel[indexPath.row].components(separatedBy: "\n").count - 1
 
-        return CGSize(width: self.frame.width, height: 32.0 + (CGFloat(lineCount) * 20.0))
+        return CGSize(width: self.containerView.frame.width, height: 32.0 + (CGFloat(lineCount) * 20.0))
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

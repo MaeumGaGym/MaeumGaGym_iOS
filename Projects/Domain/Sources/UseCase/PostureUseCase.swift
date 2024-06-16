@@ -1,27 +1,39 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
+
+import Core
+import Moya
+
+import MGLogger
+import TokenManager
 
 public protocol PostureUseCase {
     var recommandData: PublishSubject<[PostureRecommandModel]> { get }
     var partData: PublishSubject<PosturePartModel> { get }
     var detailData: PublishSubject<PostureDetailModel> { get }
     var searchData: PublishSubject<PostureSearchModel> { get }
+    var poseAllData: PublishSubject<PostureAllModel> { get }
 
     func getRecommandData()
     func getPartData(type: PosturePartType)
-    func getDetailData(type: PostureDetailType)
+    func getDetailData(id: Int)
     func getSearchData()
+    func getAllPoseData()
 }
 
 public class DefaultPostureUseCase {
     private let repository: PostureRepositoryInterface
     private let disposeBag = DisposeBag()
 
+
+    private let accessToken = TokenManagerImpl().get(key: .accessToken)
     public let recommandData = PublishSubject<[PostureRecommandModel]>()
     public let partData = PublishSubject<PosturePartModel>()
     public let detailData = PublishSubject<PostureDetailModel>()
     public let searchData = PublishSubject<PostureSearchModel>()
+    public let poseAllData = PublishSubject<PostureAllModel>()
 
     public init(repository: PostureRepositoryInterface) {
         self.repository = repository
@@ -50,8 +62,8 @@ extension DefaultPostureUseCase: PostureUseCase {
             }).disposed(by: disposeBag)
     }
 
-    public func getDetailData(type: PostureDetailType) {
-        repository.getDetailData(type: type)
+    public func getDetailData(id: Int) {
+        repository.getDetailData(accessToken: accessToken ?? "", id: id)
             .subscribe(onSuccess: { [weak self] detailData in
                 self?.detailData.onNext(detailData)
             },
@@ -68,5 +80,16 @@ extension DefaultPostureUseCase: PostureUseCase {
             onFailure: { error in
                 print("PostureUseCase getSearchData error occurred: \(error)")
             }).disposed(by: disposeBag)
+    }
+    
+    public func getAllPoseData() {
+        let accessToken = TokenManagerImpl().get(key: .accessToken)
+        repository.getAllPoseData(accessToken: accessToken!, lastUpdated: "2000-01-01T03:12")
+            .subscribe(onSuccess: { [weak self] poseData in
+                MGLogger.debug("좋았쒀 영촤~ : \(poseData.responses)")
+                self?.poseAllData.onNext(poseData)
+        }, onFailure: { error in
+            print("poseData error : \(error)")
+        }).disposed(by: disposeBag)
     }
 }
