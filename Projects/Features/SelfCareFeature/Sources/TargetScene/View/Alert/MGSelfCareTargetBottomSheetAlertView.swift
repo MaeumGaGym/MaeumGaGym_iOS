@@ -60,7 +60,9 @@ public class MGSelfCareTargetBottomSheetAlertView: UIViewController {
 
         targetDeleteButton.rx.tap
             .bind { [weak self] in
-                self?.deleteButtonTap()
+                self?.dismiss(animated: true, completion: {
+                    self?.deleteButtonTap()
+                })
             }.disposed(by: disposeBag)
 
     }
