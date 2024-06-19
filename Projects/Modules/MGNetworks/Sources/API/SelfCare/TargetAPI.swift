@@ -19,7 +19,7 @@ public enum TargetAPI {
     case targetDelete(accessToken: String, id: Int)
     case getTarget(accessToken: String, id: Int)
     case getMonthTarget(accessToken: String, date: String)
-    case getMyTarget(accessToken: String)
+    case getMyTarget(accessToken: String, page: Int)
 }
 
 extension TargetAPI: BaseAPI {
@@ -29,7 +29,7 @@ extension TargetAPI: BaseAPI {
     public var path: String {
         switch self {
         case .targetAdd:
-            return ""
+            return "/"
         case let .targetEdit(_, _, _, _, _, id):
             return "/\(id)"
         case let .targetDelete(_, id):
@@ -45,11 +45,13 @@ extension TargetAPI: BaseAPI {
 
     public var method: Moya.Method {
         switch self {
-        case .targetAdd, .targetEdit:
+        case .targetAdd:
             return .post
+        case .targetEdit:
+            return .put
         case .targetDelete:
             return .delete
-        case .getMonthTarget, .getMyTarget, .getTarget:
+        default:
             return .get
         }
     }
@@ -80,6 +82,11 @@ extension TargetAPI: BaseAPI {
                 "end_date": endDate
             ]
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case let .getMyTarget(_, page):
+            return .requestParameters(
+                parameters: [
+                    "index": page
+                ], encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }
@@ -92,7 +99,7 @@ extension TargetAPI: BaseAPI {
             let .targetEdit(accessToken, _, _, _, _, _),
             let .targetDelete(accessToken, _),
             let .getTarget(accessToken, _),
-            let .getMyTarget(accessToken):
+            let .getMyTarget(accessToken, _):
             return ["Authorization": "\(accessToken)"]
         }
     }
