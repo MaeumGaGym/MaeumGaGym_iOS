@@ -45,7 +45,7 @@ public class SelfCareRepository: SelfCareRepositoryInterface {
         return networkService.addTarget(accessToken: accessToken, title: title, content: content, startDate: startDate, endDate: endDate)
     }
     public func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response> {
-        return networkService.modifyTarget(accessToken: accessToken, title: accessToken, content: content, startDate: startDate, endDate: endDate, id: id)
+        return networkService.modifyTarget(accessToken: accessToken, title: title, content: content, startDate: startDate, endDate: endDate, id: id)
     }
     public func deleteTarget(accessToken: String, id: Int) -> Single<Response> {
         return networkService.deleteTarget(accessToken: accessToken, id: id)
