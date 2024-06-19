@@ -65,7 +65,7 @@ public enum MGStep: Step {
     //target
     case targetHomeRequired
     case addTargetRequired
-    case modifyTargetRequired
+    case modifyTargetRequired(id: Int)
     case detailTargetRequired(id: Int)
     case presentTargetAttribute
     
