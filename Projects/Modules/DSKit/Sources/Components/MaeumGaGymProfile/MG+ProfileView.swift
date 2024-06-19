@@ -1,7 +1,9 @@
 import UIKit
+
 import SnapKit
 import RxCocoa
 import RxSwift
+import Kingfisher
 
 open class MGProfileView: UIView {
     
