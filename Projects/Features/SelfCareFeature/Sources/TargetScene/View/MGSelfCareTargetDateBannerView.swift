@@ -15,17 +15,17 @@ public class MGSelfCareTargetDateBannerView: BaseView {
     private let typeLabel = MGLabel(font: UIFont.Pretendard.bodyMedium, textColor: .gray600)
     private let dateLabel = MGLabel(font: UIFont.Pretendard.bodyMedium, textColor: .gray600)
 
-//    public override func attribute() {
-//        <#code#>
-//    }
+    public func setup(
+        dateText: String
+    ) {
+        self.dateLabel.changeText(text: dateText.changeDateFormatWithInput(input: .fullDate, type: .fullDateKor))
+    }
 
     public init(
-        typeText: String,
-        dateText: String
+        typeText: String
     ) {
         super.init(frame: .zero)
         self.typeLabel.text = typeText
-        self.dateLabel.text = dateText
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

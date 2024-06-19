@@ -18,18 +18,17 @@ import MGNetworks
 import SelfCareFeatureInterface
 
 public class SelfCareTargetMainViewController: BaseViewController<SelfCareTargetMainViewModel> {
+    
+    private let loadTargetRelay = PublishRelay<Void>()
+    private let deleteRelay = PublishRelay<Int>()
+    private let editRelay = PublishRelay<Int>()
 
-    private var targetMainModel: SelfCareTargetMainModel = SelfCareTargetMainModel(
-        titleTextData:
-            TargetTitleTextModel(
-                titleText: "",
-                infoText: ""
-            ), targetData: []
-    )
+    private var targetMainModel = SelfCareTargetMainModel(targetList: [])
 
     private var headerView = UIView()
     private var containerView = UIView()
 
+    let alert = MGAlertOnlyTitleView(title: "목표를 삭제했어요.")
     private let navBar = SelfCareProfileNavigationBar()
 
     private let targetTitleLabel = MGLabel(
@@ -48,6 +47,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
     private var targetMainTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
+        $0.scrollsToTop = true
         $0.backgroundColor = .white
         $0.separatorStyle = .none
         $0.register(
@@ -62,9 +62,10 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         super.attribute()
 
         view.backgroundColor = .white
+        loadTargetRelay.accept(())
 
-        targetTitleLabel.changeText(text: targetMainModel.titleTextData.titleText)
-        targetSubTitleLabel.changeText(text: targetMainModel.titleTextData.infoText)
+        targetTitleLabel.changeText(text: "목표")
+        targetSubTitleLabel.changeText(text: "나만의 목표를 세워보세요.")
         targetMainTableView.delegate = self
         targetMainTableView.dataSource = self
     }
@@ -96,11 +97,17 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         }
 
         view.addSubviews([
+            alert,
             targetMainTableView,
             plusTargetButton,
             navBar
         ])
 
+        alert.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(52)
+        }
         navBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
@@ -119,11 +126,6 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
         }
     }
     public override func bindActions() {
-        navBar.leftButtonTap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-
         plusTargetButton.rx.tap
             .bind(onNext: { [weak self] in
                 let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
@@ -133,18 +135,19 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
     }
     public override func bindViewModel() {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
-
-        viewModel = SelfCareTargetMainViewModel(useCase: useCase)
-
         let input = SelfCareTargetMainViewModel.Input(
-            getTargetMainData: Observable.just(()).asDriver(onErrorDriveWith: .never()))
+            getTargetMainData: loadTargetRelay.asDriver(onErrorJustReturn: ()),
+            deleteTarget: deleteRelay.asDriver(onErrorJustReturn: 0),
+            editTarget: editRelay.asDriver(onErrorJustReturn: 0),
+            popVCButton: navBar.leftButtonTap.asDriver()
+        )
 
-        let output = viewModel.transform(input, action: { output in
+        _ = viewModel.transform(input, action: { output in
             output.targetMainData
                 .subscribe(onNext: { targetMainData in
                     MGLogger.debug("targetMainData: \(targetMainData)")
                     self.targetMainModel = targetMainData
+                    self.targetMainTableView.reloadData()
                 }).disposed(by: disposeBag)
         })
     }
@@ -152,7 +155,7 @@ public class SelfCareTargetMainViewController: BaseViewController<SelfCareTarget
 
 extension SelfCareTargetMainViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == targetMainModel.targetData.count + 1 {
+        if indexPath.row == targetMainModel.targetList.count + 1 {
             return 100
         } else {
             return 94
@@ -162,10 +165,10 @@ extension SelfCareTargetMainViewController: UITableViewDelegate {
 
 extension SelfCareTargetMainViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        targetMainModel.targetData.count + 1
+        targetMainModel.targetList.count
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == targetMainModel.targetData.count {
+        if indexPath.row == targetMainModel.targetList.count {
             let cell = UITableViewCell()
             cell.backgroundColor = .white
             cell.selectionStyle = .none
@@ -174,7 +177,7 @@ extension SelfCareTargetMainViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: TargetMainTableViewCell.identifier,
                 for: indexPath) as? TargetMainTableViewCell
-            let model = targetMainModel.targetData[indexPath.row]
+            let model = targetMainModel.targetList[indexPath.row]
             cell?.setup(with: model)
             cell?.selectionStyle = .none
             cell?.dotButtonTap
@@ -182,9 +185,16 @@ extension SelfCareTargetMainViewController: UITableViewDataSource {
                     let modal = MGSelfCareTargetBottomSheetAlertView(
                         editButtonTap: {
                             print("editButtonTapped")
+                            self?.loadTargetRelay.accept(())
+                            self?.dismiss(animated: true, completion: {
+                                self?.editRelay.accept(self?.targetMainModel.targetList[indexPath.row].id ?? 0)
+                            })
                         },
                         deleteButtonTap: {
                             print("deleteButtonTapped")
+                            self?.deleteRelay.accept(self?.targetMainModel.targetList[indexPath.row].id ?? 0)
+                            self?.loadTargetRelay.accept(())
+                            self?.alert.present(on: self?.view ?? UIView())
                         }
                     )
                     let customDetents = UISheetPresentationController.Detent.custom(
@@ -209,6 +219,7 @@ extension SelfCareTargetMainViewController {
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
         let viewModel = SelfCareDetailTargetViewModel(useCase: useCase)
         let vc = SelfCareDetailTargetViewController(viewModel)
+        vc.targetID = self.targetMainModel.targetList[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

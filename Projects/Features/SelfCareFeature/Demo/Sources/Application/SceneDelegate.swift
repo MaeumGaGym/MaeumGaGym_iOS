@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
         let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
-        let viewModel = SelfCareHomeViewModel()
-        let viewController = SelfCareHomeViewController(viewModel)
+        let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
+        let viewController = SelfCareTargetMainViewController(viewModel)
         window?.configure(withRootViewController: viewController)
         window?.makeKeyAndVisible()
     }
