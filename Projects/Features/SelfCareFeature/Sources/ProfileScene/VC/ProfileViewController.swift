@@ -8,12 +8,15 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
+import Kingfisher
+
 import DSKit
 import Core
+import Data
 
 import MGLogger
 
-final public class SelfCareProfileViewController: BaseViewController<SelfCareProfileViewModel>, Stepper {
+final public class SelfCareProfileViewController: BaseViewController<SelfCareProfileViewModel> {
 
     private lazy var navBar = SelfCareProfileNavigationBar(leftText: "내 프로필")
 
@@ -29,7 +32,7 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
         font: UIFont.Pretendard.titleMedium,
         textColor: .black
     )
-    private var bageView = SelfCareBageView()
+    private lazy var bageView = SelfCareBageView(frame: .init(x: 0, y: 0, width: self.view.frame.width - 40, height: 247))
     private var buttonStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillEqually
@@ -44,7 +47,9 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
         super.bindViewModel()
 
         let input = SelfCareProfileViewModel.Input(
-            getProfileData: Observable.just("조영준").asDriver(onErrorDriveWith: .never())
+            getProfileData: Observable.just("조영준").asDriver(onErrorDriveWith: .never()),
+            popVC: navBar.leftButtonTap.asDriver(),
+            editProfileButton: userInfoChangeButton.rx.tap.asDriver()
         )
         
         _ = viewModel.transform(input, action: { output in
@@ -52,26 +57,15 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
                 .subscribe(onNext: { profileData in
                     self.userNameLabel.changeText(text: profileData.userName)
                     print("userName: \(profileData.userName)")
-                    self.bageView.userTimeLabel.changeText(text: "\(profileData.userWakaTime)")
+                    self.bageView.setup(timeText: profileData.userWakaTime)
+                    let profileImage = URL(string: profileData.userImage ?? "")
+//                    self.userProfileImageView.kf.setImage(with: profileImage)
 //                    self.userProfileImageView.profileImage?.customImage. = profileData.userImage
                 }).disposed(by: disposeBag)
         })
         
     }
     public override func bindActions() {
-        navBar.leftButtonTap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-
-//        userInfoChangeButton.rx.tap
-//            .bind(onNext: { [weak self] in
-//                self?.navigationController?.pushViewController(
-//                    SelfCareProfileEditViewController(SelfCareProfileEditViewModel(useCase: )),
-//                    animated: true
-//                )
-//            }).disposed(by: disposeBag)
-
         logOutButton.rx.tap
             .asObservable()
             .withUnretained(self)

@@ -18,6 +18,8 @@ public class SelfCareProfileViewModel: BaseViewModel {
     
     public struct Input {
         let getProfileData: Driver<String>
+        let popVC: Driver<Void>
+        let editProfileButton: Driver<Void>
     }
     
     public struct Output {
@@ -45,6 +47,16 @@ public class SelfCareProfileViewModel: BaseViewModel {
             .withUnretained(self)
             .subscribe(onNext: { owner, nickName in
                 owner.useCase.getProfileData(nickName: nickName)
+            }).disposed(by: disposeBag)
+        
+        input.popVC.asObservable()
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.popRequired)
+            }).disposed(by: disposeBag)
+        
+        input.editProfileButton.asObservable()
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.editMyProfileRequired)
             }).disposed(by: disposeBag)
         
         return output

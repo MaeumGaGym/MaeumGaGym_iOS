@@ -15,13 +15,24 @@ public class SelfCareBageView: UIView {
         $0.tintColor = .red
     }
 
-    public var bageNameLabel = MGLabel(text: "마음 뱃지",
-                                       font: UIFont.Pretendard.titleMedium,
-                                       textColor: .black)
-    public var userTimeLabel = MGLabel(text: "총 124시간 운동하셨어요!",
-                                       font: UIFont.Pretendard.bodyMedium,
-                                       textColor: .black)
-
+    private var bageNameLabel = MGLabel(
+        text: "마음 뱃지",
+        font: UIFont.Pretendard.titleMedium,
+        textColor: .black
+    )
+    private var userTimeLabel = MGLabel(
+        text: "",
+        font: UIFont.Pretendard.bodyMedium,
+        textColor: .black
+    )
+    
+    public func setup(
+        timeText: Int
+    ) {
+        self.userTimeLabel.text = "총 \(timeText)시간 운동하셨어요!"
+        self.userTimeLabel.changePointColor(targetString: "\(timeText)", color: .blue500)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -33,7 +44,6 @@ public class SelfCareBageView: UIView {
     }
 
     private func setupView() {
-        self.frame = CGRect(x: 0, y: 0, width: 390, height: 247)
 
         setupShadows()
         setupShapes()
@@ -103,6 +113,7 @@ public class SelfCareBageView: UIView {
             $0.centerX.equalToSuperview()
         }
     }
+    
 }
 
 extension UIColor {
