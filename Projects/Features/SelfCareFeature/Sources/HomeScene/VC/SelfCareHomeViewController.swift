@@ -22,7 +22,10 @@ enum SelfCareCell {
     case selfCare
 }
 
-public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewModel> {
+public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewModel>, Stepper {
+    
+    private let clickProfileRelay = PublishRelay<Void>()
+    private let clickTargetRelay = PublishRelay<Void>()
 
     private var cellList: [UITableViewCell] = []
     private var cells: [SelfCareCell] = []
@@ -33,12 +36,12 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
         subText: "나만의 루틴과 목표를 설정하여\n자기관리에 도전해보세요."
     )
 
-//    var profiles = SelfCareDetailProfileModel(
-//        userImage: DSKitAsset.Assets.basicProfileIcon.image,
-//        userName: "박준하",
-//        userTimer: "\(123)",
-//        userBage: DSKitAsset.Assets.profileDotIcon.image
-//    )
+    var profiles = SelfCareDetailProfileModel(
+        userImage: nil,
+        userName: "",
+        userWakaTime: 0,
+        userBageLevel: 0
+    )
 
     var menus = [
         SelfCareMenuModel(menuImage: DSKitAsset.Assets.introIcon.image, menuName: "내 루틴"),
@@ -79,7 +82,23 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
         view.backgroundColor = DSKitAsset.Colors.gray25.color
         addCells()
     }
-
+    public override func bindViewModel() {
+        let input = SelfCareHomeViewModel.Input(
+            loadProfile: Driver.just("조영준"),
+            clickProfileButton: clickProfileRelay.asObservable(),
+            clickTargetButton: clickTargetRelay.asObservable()
+        )
+        
+        _ = viewModel.transform(input, action: { output in
+            print("프로필 데이터 : \(output.profileData)")
+            output.profileData.asObservable()
+                .subscribe(onNext: { data in
+                    print("프로필 데이터 : \(data)")
+                    self.profiles = data
+                    self.tableView.reloadData()
+                }).disposed(by: disposeBag)
+        })
+    }
     public override func layout() {
         view.addSubviews([tableView])
 
@@ -150,7 +169,7 @@ extension SelfCareHomeViewController: UITableViewDataSource {
             ) as? SelfCareProfileTableViewCell else {
                 return UITableViewCell()
             }
-//            cell.configure(with: profiles)
+            cell.configure(with: profiles)
             cell.selectionStyle = .none
 
             return cell
@@ -161,6 +180,9 @@ extension SelfCareHomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.menus = menus
+            cell.cellState = { [weak self] in
+                self?.clickTargetRelay.accept(())
+            }
             cell.selectionStyle = .none
 
             return cell
@@ -168,17 +190,20 @@ extension SelfCareHomeViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
+//        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
         
         switch cells[indexPath.row] {
         case .profile:
-            let viewModel = SelfCareProfileViewModel(useCase: useCase)
-            let viewController = SelfCareProfileViewController(viewModel)
-            self.navigationController?.pushViewController(viewController, animated: true)
+            self.clickProfileRelay.accept(())
+//            let viewModel = SelfCareProfileViewModel(useCase: useCase)
+//            let viewController = SelfCareProfileViewController(viewModel)
+//            self.navigationController?.pushViewController(viewController, animated: true)
             return
-        case .selfCare:
-            let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
-            self.navigationController?.pushViewController(SelfCareTargetMainViewController(viewModel), animated: true)
+//        case .selfCare:
+//            self.rx.d
+//            MGStep.targetHomeRequired
+//            let viewModel = SelfCareTargetMainViewModel(useCase: useCase)
+//            self.navigationController?.pushViewController(SelfCareTargetMainViewController(viewModel), animated: true)
 //            switch menus[indexPath.row].menuImage {
 //            case .goalIcon:
 //                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
