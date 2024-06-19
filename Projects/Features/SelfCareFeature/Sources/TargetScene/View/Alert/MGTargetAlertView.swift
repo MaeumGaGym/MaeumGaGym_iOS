@@ -10,7 +10,7 @@ import MGLogger
 
 public class MGTargetAlertView: UIViewController {
 
-    public var clickDate: (String?) -> Void
+    public var clickDate: ((String?) -> Void)?
 
     private let calendar = UICalendarView().then {
         $0.backgroundColor = .white
@@ -19,16 +19,6 @@ public class MGTargetAlertView: UIViewController {
         $0.locale = .current
         $0.wantsDateDecorations = true
         $0.layer.shadow(color: .black, alpha: 0.25, x: 0, y: 4, blur: 4, spread: 0)
-    }
-
-    public init(
-        clickDate: @escaping (String?) -> Void
-    ) {
-        self.clickDate = clickDate
-        super.init(nibName: nil, bundle: nil)
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     public override func viewDidLoad() {
@@ -50,8 +40,7 @@ public class MGTargetAlertView: UIViewController {
 
         calendar.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.width.equalTo(390)
-            $0.height.equalTo(348)
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
     }
 
@@ -65,7 +54,7 @@ extension MGTargetAlertView: UICalendarSelectionSingleDateDelegate {
         if let date = dateComponents {
             let fullDate = "\(date.year ?? 0)-\(date.month ?? 0)-\(date.day ?? 0)"
             let date = fullDate.changeDateFormatWithInput(input: .fullDate, type: .fullDateKorForCalendar)
-            clickDate(date)
+            clickDate?(date)
             self.dismiss(animated: true)
         } else {
             print("empty date")
