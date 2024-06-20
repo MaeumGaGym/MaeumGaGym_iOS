@@ -12,6 +12,7 @@ import DSKit
 import MGLogger
 
 import AuthFeatureInterface
+import SafariServices
 
 public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, UIGestureRecognizerDelegate {
 
@@ -33,9 +34,10 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
     private let decorateLine1 = MGLine()
     private let allAgreeButton = MGAgreeButton(type: .allAgreeText)
     private let decorateLine2 = MGLine()
-
     private let firstAgreeButton = MGAgreeButton(type: .privacyAgreeText)
+    private let firstSeemoreButton = AuthSeemoreButton()
     private let secondAgreeButton = MGAgreeButton(type: .termsAgreeText)
+    private let secondSeemoreButton = AuthSeemoreButton()
     private let thirdAgreeButton = MGAgreeButton(type: .ageAgreeText)
     private let fourthAgreeButton = MGAgreeButton(type: .marketingAgreeText, chooseType: true)
 
@@ -93,6 +95,8 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
                      secondAgreeButton,
                      thirdAgreeButton,
                      fourthAgreeButton])
+        firstAgreeButton.addSubview(firstSeemoreButton)
+        secondAgreeButton.addSubview(secondSeemoreButton)
 
         decorateLine1.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -115,11 +119,24 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44.0)
         }
+        
+        firstSeemoreButton.snp.makeConstraints {
+            $0.height.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(64.0)
+        }
 
         secondAgreeButton.snp.makeConstraints {
             $0.top.equalTo(firstAgreeButton.snp.bottom).offset(8.0)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(44.0)
+        }
+        
+        secondSeemoreButton.snp.makeConstraints {
+            $0.height.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(64.0)
         }
 
         thirdAgreeButton.snp.makeConstraints {
@@ -144,7 +161,9 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
             navButtonTapped: navButtonTapped,
             allAgreeButtonTap: allAgreeButton.rx.tap.asSignal(),
             firstAgreeButtonTap: firstAgreeButton.rx.tap.asSignal(),
+            firstSeeMoreButtonTap: firstSeemoreButton.rx.tap.asDriver(),
             secondAgreeButtonTap: secondAgreeButton.rx.tap.asSignal(),
+            secondSeeMoreButtonTap: secondSeemoreButton.rx.tap.asSingle(),
             thirdAgreeButtonTap: thirdAgreeButton.rx.tap.asSignal(),
             fourthAgreeButtonTap: fourthAgreeButton.rx.tap.asSignal(),
             nextButtonTap: checkButton.rx.tap.asSignal()
@@ -222,6 +241,26 @@ public class AgreeViewController: BaseViewController<AgreeViewModel>, Stepper, U
                 })
                 .disposed(by: disposeBag)
         })
+    }
+    
+    public override func bindActions() {
+        super.bindActions()
+        
+        firstSeemoreButton.rx.tap
+            .subscribe(onNext: { _ in
+                let url = NSURL(string: "https://info-dsm.notion.site/e9d45a0490674b81a419bbc4cbdd5a9d?pvs=4")
+                
+                let safariView: SFSafariViewController = SFSafariViewController(url: url! as URL)
+                self.present(safariView, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
+        
+        secondSeemoreButton.rx.tap
+            .subscribe(onNext: {
+                let url = NSURL(string: "https://info-dsm.notion.site/2a0474e87f754fbe8f53d58f2003ccb2?pvs=4")
+                
+                let safariView: SFSafariViewController = SFSafariViewController(url: url! as URL)
+                self.present(safariView, animated: true, completion: nil)
+            }).disposed(by: disposeBag)
     }
 
     public var allAgreeButtonState: Bool {

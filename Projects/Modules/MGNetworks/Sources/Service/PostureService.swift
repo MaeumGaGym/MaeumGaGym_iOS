@@ -11,7 +11,8 @@ import Domain
 import TokenManager
 
 public protocol PostureService {
-    func requestRecommandData() -> Single<[PostureRecommandModel]>
+    func requestRecommandData(accessToken: String) ->
+    Single<Response>
     func requestPartData(type: PosturePartType) -> Single<PosturePartModel>
     func requestDetailData(accessToken: String, id: Int) -> Single<Response>
     func requestSearchData() -> Single<PostureSearchModel>
@@ -23,29 +24,9 @@ public class DefaultPostureService: NSObject {
 }
 
 extension DefaultPostureService: PostureService {
-    public func requestRecommandData() ->
-    Single<[PostureRecommandModel]> {
-        let postureRecommandData: [PostureRecommandModel] = [
-            PostureRecommandModel(
-                titleImage: DSKitAsset.Assets.recommandChestIcon.image,
-                titleText: "가슴 운동",
-                exerciseData: [
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.pushUp.image, name: "푸시업", part: "가슴"),
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.bodySplitSqt.image, name: "맨몸 스플릿 스쿼트", part: "하체"),
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.backExtension.image, name: "백 익스텐션", part: "등")
-                ]
-            ),
-            PostureRecommandModel(
-                titleImage: DSKitAsset.Assets.recommandShoulderIcon.image,
-                titleText: "어깨 운동",
-                exerciseData: [
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.deeps.image, name: "딥스", part: "가슴"),
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.benchPress.image, name: "벤치프레스", part: "가슴"),
-                    PostureRecommandExerciseModel(image: DSKitAsset.Assets.runge.image, name: "런지", part: "하체")
-                ]
-            )
-        ]
-        return Single.just(postureRecommandData)
+    public func requestRecommandData(accessToken: String) ->
+    Single<Response> {
+        postureProvider.rx.request(.postureRecommand(accessToken: accessToken)).filterSuccessfulStatusCodes()
     }
 
     public func requestPartData(type: PosturePartType) ->

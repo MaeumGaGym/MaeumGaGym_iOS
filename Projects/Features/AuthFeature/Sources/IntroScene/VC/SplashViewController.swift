@@ -18,10 +18,6 @@ public class SplashViewController: BaseViewController<SplashViewModel>, Stepper 
         $0.image = DSKitAsset.Assets.splashLogo.image
     }
     
-//    public override func viewDidAppear(_ animated: Bool) {
-//        AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
-//    }
-    
     public override func attribute() {
         super.attribute()
     }

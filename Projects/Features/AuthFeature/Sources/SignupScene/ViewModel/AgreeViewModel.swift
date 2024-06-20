@@ -6,6 +6,7 @@ import RxFlow
 
 import Core
 import Domain
+import SafariServices
 
 public class AgreeViewModel: BaseViewModel {
 
@@ -19,7 +20,9 @@ public class AgreeViewModel: BaseViewModel {
         let navButtonTapped: Driver<Void>
         let allAgreeButtonTap: Signal<Void>
         let firstAgreeButtonTap: Signal<Void>
+        let firstSeeMoreButtonTap: Driver<Void>
         let secondAgreeButtonTap: Signal<Void>
+        let secondSeeMoreButtonTap: Single<Void>
         let thirdAgreeButtonTap: Signal<Void>
         let fourthAgreeButtonTap: Signal<Void>
         let nextButtonTap: Signal<Void>
@@ -62,6 +65,13 @@ public class AgreeViewModel: BaseViewModel {
             .drive(onNext: { _ in
                 AuthStepper.shared.steps.accept(MGStep.authBack)
             }).disposed(by: disposeBag)
+        
+        input.firstSeeMoreButtonTap
+            .drive(onNext: { _ in
+                print("sex")
+
+            }).disposed(by: disposeBag)
+        
 
         return output
     }

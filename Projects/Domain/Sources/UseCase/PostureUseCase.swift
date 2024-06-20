@@ -10,7 +10,7 @@ import MGLogger
 import TokenManager
 
 public protocol PostureUseCase {
-    var recommandData: PublishSubject<[PostureRecommandModel]> { get }
+    var recommandData: PublishSubject<PoseRecommandModel> { get }
     var partData: PublishSubject<PosturePartModel> { get }
     var detailData: PublishSubject<PostureDetailModel> { get }
     var searchData: PublishSubject<PostureSearchModel> { get }
@@ -29,7 +29,7 @@ public class DefaultPostureUseCase {
 
 
     private let accessToken = TokenManagerImpl().get(key: .accessToken)
-    public let recommandData = PublishSubject<[PostureRecommandModel]>()
+    public let recommandData = PublishSubject<PoseRecommandModel>()
     public let partData = PublishSubject<PosturePartModel>()
     public let detailData = PublishSubject<PostureDetailModel>()
     public let searchData = PublishSubject<PostureSearchModel>()
@@ -43,7 +43,8 @@ public class DefaultPostureUseCase {
 extension DefaultPostureUseCase: PostureUseCase {
 
     public func getRecommandData() {
-        repository.getRecommandData()
+        let accessToken = TokenManagerImpl().get(key: .accessToken)
+        repository.getRecommandData(accessToken: accessToken!)
             .subscribe(onSuccess: { [weak self] recommandData in
                 self?.recommandData.onNext(recommandData)
             },

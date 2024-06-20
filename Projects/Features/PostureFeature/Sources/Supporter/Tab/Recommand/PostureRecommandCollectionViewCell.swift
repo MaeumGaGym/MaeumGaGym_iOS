@@ -13,6 +13,7 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
     private var postureImageView = UIImageView().then {
         $0.backgroundColor = DSKitAsset.Colors.gray50.color
         $0.layer.cornerRadius = 8.0
+        $0.contentMode = .scaleAspectFit
     }
 
     private var exerciseNameLabel = MGLabel(font: UIFont.Pretendard.labelMedium, 
@@ -51,10 +52,21 @@ public class PostureRecommandCollectionViewCell: UICollectionViewCell {
 }
 
 public extension PostureRecommandCollectionViewCell {
-    func setup(with exerciseData: PostureRecommandExerciseModel) {
-        postureImageView.image = exerciseData.image
+    func setup(with exerciseData: PoseRecommandResponseModel) {
+        
+        let thumbnail = URL(string: exerciseData.thumbnail)
+        postureImageView.imageFrom(url: thumbnail!)
         exerciseNameLabel.changeText(text: exerciseData.name)
-        exercisePartLabel.changeText(text: exerciseData.part)
+        let tweetsOfColumns = exerciseData.category
+        
+//        if tweetsOfColumns.count == 0 {
+//            exercisePartLabel.changeText(text: "가슴")
+//        } else if tweetsOfColumns.count == 1 {
+//            exercisePartLabel.changeText(text: exerciseData.category[0])
+//        } else {
+//            let seperatedColumns = tweetsOfColumns.joined(separator: ", ")
+//            exercisePartLabel.changeText(text: seperatedColumns)
+//        }
 
         layout()
     }

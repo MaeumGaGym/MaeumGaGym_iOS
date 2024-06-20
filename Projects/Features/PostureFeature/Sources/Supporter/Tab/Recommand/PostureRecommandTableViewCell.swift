@@ -7,17 +7,19 @@ import Core
 import DSKit
 import Domain
 
+import RxSwift
+import RxCocoa
+
 public class PostureRecommandTableViewCell: BaseTableViewCell{
 
     static let identifier: String = "PostureRecommandTableViewCell"
+    
+    public var seemoreButtonTap: ControlEvent<Void> {
+         return seemoreButton.rx.tap
+    }
 
     private let containerView = UIView()
-
-    private var titleImageLogo = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.backgroundColor = DSKitAsset.Colors.gray50.color
-        $0.layer.cornerRadius = 8.0
-    }
+    private var currentTitleText: String = ""
 
     private var exerciseTitleLabel = MGLabel(font: UIFont.Pretendard.titleMedium,
                                              textColor: .black,
@@ -45,7 +47,7 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
         return collectionView
     }()
 
-    private var recommandExerciseData: [PostureRecommandExerciseModel] = [] {
+    private var recommandExerciseData: [PoseRecommandResponseModel] = [] {
         didSet {
             exerciseCollectionView.reloadData()
         }
@@ -61,43 +63,40 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
 
     public override func layout() {
         addSubviews([containerView, exerciseCollectionView])
-        containerView.addSubviews([titleImageLogo, exerciseTitleLabel, seemoreButton])
+        containerView.addSubviews([exerciseTitleLabel, seemoreButton])
 
         containerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24.0)
             $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.bottom.equalTo(exerciseCollectionView.snp.top).offset(-12.0)
-        }
-
-        titleImageLogo.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
-            $0.width.height.equalTo(40.0)
+            $0.height.equalTo(32.0)
         }
 
         exerciseTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleImageLogo.snp.bottom).offset(8.0)
-            $0.leading.equalToSuperview()
+            $0.top.leading.equalToSuperview()
+            $0.height.equalTo(32.0)
         }
 
         seemoreButton.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(28.0)
+            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.width.equalTo(74.0)
             $0.height.equalTo(24.0)
         }
 
         exerciseCollectionView.snp.makeConstraints {
+            $0.top.equalTo(containerView.snp.bottom).offset(12.0)
             $0.leading.equalToSuperview().offset(20.0)
-            $0.trailing.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(24.0)
         }
     }
 }
 
 public extension PostureRecommandTableViewCell {
-    func setup(with model: PostureRecommandModel) {
-        titleImageLogo.image = model.titleImage
-        exerciseTitleLabel.changeText(text: model.titleText)
-        recommandExerciseData = model.exerciseData
+    func setup(with model: [PoseRecommandResponseModel], titleText: String) {
+        exerciseTitleLabel.changeText(text: "\(titleText) 운동")
+        recommandExerciseData = model
+        currentTitleText = titleText
     }
 }
 

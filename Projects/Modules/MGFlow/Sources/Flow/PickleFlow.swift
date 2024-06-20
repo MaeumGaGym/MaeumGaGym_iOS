@@ -39,7 +39,7 @@ public class PickleFlow: Flow {
     private func setupPickleScreen() -> FlowContributors {
         rootViewController.tabBarItem.title = "피클"
         rootViewController.tabBarItem.image = DSKitAsset.Assets.baPickleTapBar.image
-        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPeopleTapBar.image
+        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPickleTapBar.image
         rootViewController.isNavigationBarHidden = true
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: PickleStepper.shared))
     }

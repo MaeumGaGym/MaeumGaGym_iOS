@@ -17,6 +17,7 @@ public protocol AuthUseCase {
     func nextButtonTap() -> Bool
     func getIntroData()
     func tokenReIssue()
+    func completeButtonTap()
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
@@ -38,7 +39,7 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-
+    
     public func changeNickname(nickname: String) {
         self.nicknameText = nickname
     }
@@ -90,23 +91,7 @@ extension DefaultAuthUseCase: AuthUseCase {
     
     public func tokenReIssue() {
         let refreshToken = TokenManagerImpl().get(key: .refreshToken)
-        guard let refreshToken = refreshToken else {
-            AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
-            return
-        }
-        authRepository.tokenReIssue(refreshToken: refreshToken)
-            .flatMap { response -> Single<Response> in
-                switch response.statusCode {
-                case 200:
-                    return Single.just(response)
-                case 401:
-                    return Single.error(AuthErrorType.error401)
-                case 500:
-                    return Single.error(AuthErrorType.error500)
-                default:
-                    return Single.just(response)
-                }
-            }
+        authRepository.tokenReIssue(refreshToken: refreshToken ?? "토큰 없음")
             .subscribe(onSuccess: { element in
                 MGLogger.debug("token ReIssue ✅ \(String(describing: element.response))")
                 if let headers = element.response?.headers {
@@ -125,27 +110,16 @@ extension DefaultAuthUseCase: AuthUseCase {
                 AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
             }).disposed(by: disposeBag)
     }
+    
+    public func completeButtonTap() {
+        MGLogger.debug("회원가입 완료 버튼 클릭함")
+        AuthStepper.shared.steps.accept(MGStep.initialization)
+    }
 }
 
 extension DefaultAuthUseCase {
     private func oauthButtonTap(oauthToken: String) {
         authRepository.oauthLogin(accessToken: oauthToken, oauth: oauthType)
-            .flatMap { response -> Single<Response> in
-                switch response.statusCode {
-                case 200:
-                    return Single.just(response)
-                case 400:
-                    return Single.error(AuthErrorType.error400)
-                case 401:
-                    return Single.error(AuthErrorType.error401)
-                case 404:
-                    return Single.error(AuthErrorType.error404)
-                case 500:
-                    return Single.error(AuthErrorType.error500)
-                default:
-                    return Single.just(response)
-                }
-            }
             .subscribe(onSuccess: { element in
                 MGLogger.debug("appleButtonTap login ✅ \(String(describing: element.response))")
                 if let headers = element.response?.headers {
@@ -162,41 +136,9 @@ extension DefaultAuthUseCase {
             }, onFailure: { [self] error in
                 MGLogger.debug("appleButtonTap login ❌ \(error)")
                 authRepository.oauthRecovery(accessToken: oauthToken, oauth: oauthType)
-                    .flatMap { response -> Single<Response> in
-                        switch response.statusCode {
-                        case 200:
-                            return Single.just(response)
-                        case 400:
-                            return Single.error(AuthErrorType.error400)
-                        case 401:
-                            return Single.error(AuthErrorType.error401)
-                        case 404:
-                            return Single.error(AuthErrorType.error404)
-                        case 500:
-                            return Single.error(AuthErrorType.error500)
-                        default:
-                            return Single.just(response)
-                        }
-                    }
                     .subscribe(onSuccess: { [self] element in
                         MGLogger.debug("appleButtonTap recovery ✅ \(element)")
                         authRepository.oauthLogin(accessToken: oauthToken, oauth: oauthType)
-                            .flatMap { response -> Single<Response> in
-                                switch response.statusCode {
-                                case 200:
-                                    return Single.just(response)
-                                case 400:
-                                    return Single.error(AuthErrorType.error400)
-                                case 401:
-                                    return Single.error(AuthErrorType.error401)
-                                case 404:
-                                    return Single.error(AuthErrorType.error404)
-                                case 500:
-                                    return Single.error(AuthErrorType.error500)
-                                default:
-                                    return Single.just(response)
-                                }
-                            }
                             .subscribe(onSuccess: { element in
                                 MGLogger.debug("appleButtonTap login ✅ \(String(describing: element.response))")
                                 if let headers = element.response?.headers {
@@ -222,18 +164,6 @@ extension DefaultAuthUseCase {
     private func nicknameButtonTap(oauthToken: String) -> Bool {
         var nicknameState: Bool = false
         authRepository.nicknameCheck(nickname: nicknameText)
-            .flatMap { response -> Single<Response> in
-                switch response.statusCode {
-                case 200:
-                    return Single.just(response)
-                case 400:
-                    return Single.error(AuthErrorType.error400)
-                case 500:
-                    return Single.error(AuthErrorType.error500)
-                default:
-                    return Single.just(response)
-                }
-            }
             .subscribe(onSuccess: { [self] element in
                 do {
                     if try element.map(Bool.self) == true {
@@ -249,41 +179,9 @@ extension DefaultAuthUseCase {
                 authRepository.oauthSignup(nickname: nicknameText,
                                            accessToken: oauthToken,
                                            oauth: oauthType)
-                .flatMap { response -> Single<Response> in
-                    switch response.statusCode {
-                    case 201:
-                        return Single.just(response)
-                    case 400:
-                        return Single.error(AuthErrorType.error400)
-                    case 401:
-                        return Single.error(AuthErrorType.error401)
-                    case 409:
-                        return Single.error(AuthErrorType.error409)
-                    case 500:
-                        return Single.error(AuthErrorType.error500)
-                    default:
-                        return Single.just(response)
-                    }
-                }
                 .subscribe(onSuccess: { [self] element in
                     MGLogger.debug("nicknameButtonTap Signup ✅ \(element)")
                     authRepository.oauthLogin(accessToken: oauthToken, oauth: oauthType)
-                        .flatMap { response -> Single<Response> in
-                            switch response.statusCode {
-                            case 200:
-                                return Single.just(response)
-                            case 400:
-                                return Single.error(AuthErrorType.error400)
-                            case 401:
-                                return Single.error(AuthErrorType.error401)
-                            case 404:
-                                return Single.error(AuthErrorType.error404)
-                            case 500:
-                                return Single.error(AuthErrorType.error500)
-                            default:
-                                return Single.just(response)
-                            }
-                        }
                         .subscribe(onSuccess: { element in
                             MGLogger.debug("nicknameButtonTap Login ✅ \(element)")
                             if let headers = element.response?.headers {

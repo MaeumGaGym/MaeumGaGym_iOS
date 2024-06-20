@@ -30,15 +30,11 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                                           textColor: DSKitAsset.Colors.gray600.color,
                                           isCenter: false)
 
-    private let cancelButton = MGImageButton(image: DSKitAsset.Assets.circleCancel.image).then {
-        $0.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-    }
-    
     private let nicknameTF = MGTextField(placeholder: "닉네임").then {
         $0.clearButtonMode = .whileEditing
     }
 
-    private var nextButton = MGCheckButton(text: "회원가입").then {
+    public var nextButton = MGCheckButton(text: "회원가입").then {
         $0.isEnabled = true
     }
 
@@ -51,7 +47,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     public override func attribute() {
         super.attribute()
 
-        cancelButtonTap()
         keyboardBind()
 
         NotificationCenter.default.addObserver(self,
@@ -73,7 +68,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
                           textInformation,
                           nicknameTF,
                           nextButton])
-        nicknameTF.addSubviews([cancelButton])
 
         naviBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -96,13 +90,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             $0.top.equalTo(textInformation.snp.bottom).offset(50.0)
             $0.height.equalTo(40.0)
             $0.width.equalTo(390.0)
-        }
-
-        cancelButton.snp.makeConstraints {
-            $0.centerY.equalTo(nicknameTF)
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(24)
-            $0.height.equalTo(24)
         }
 
         nextButton.snp.makeConstraints {
@@ -142,7 +129,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
                 owner.nicknameTFTapped()
-                owner.cancelButtonTap()
             })
             .disposed(by: disposeBag)
     }
@@ -150,20 +136,21 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
     private func nicknameTFTapped() {
         nicknameTF.rx.text
             .map { ($0?.count ?? 0) >= 2 && ($0?.count ?? 0) <= 10 ? true : false }
-            .withUnretained(self)
             .subscribe(
-                onNext: { owner, state in
+                onNext: { [weak self] state in
                     MGLogger.debug(state)
                     switch state {
                     case true:
-                        owner.nextButton.isEnabled = state
-                        owner.nextButton.backgroundColor = DSKitAsset.Colors.blue500.color
-                        owner.nicknameTF.showError = false
+                        self?.nextButton.isEnabled = state
+                        self?.nicknameTF.showError = false
+                        self?.nextButton.backgroundColor = DSKitAsset.Colors.blue500.color
+                        self?.nextButton.changeTextColor(textColor: .white)
                     case false:
-                        owner.nicknameTF.errorMessage = "닉네임은 2~10자로 공백을 포함할 수 없어요."
-                        owner.nicknameTF.showError = true
-                        owner.nextButton.isEnabled = state
-                        owner.nextButton.backgroundColor = DSKitAsset.Colors.gray400.color
+                        self?.nicknameTF.errorMessage = "닉네임은 2~10자로 공백을 포함할 수 없어요."
+                        self?.nicknameTF.showError = true
+                        self?.nextButton.isEnabled = state
+                        self?.nextButton.backgroundColor = DSKitAsset.Colors.gray400.color
+                        self?.nextButton.changeTextColor(textColor: DSKitAsset.Colors.gray200.color)
                     }
                 }).disposed(by: disposeBag)
         
@@ -201,14 +188,6 @@ public class NicknameViewController: BaseViewController<NicknameViewModel>, Step
 
     @objc func dismissKeyboard() {
         view.endEditing(true)
-    }
-
-    func cancelButtonTap() {
-        cancelButton.rx.tap
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.nicknameTF.text = ""
-            }).disposed(by: disposeBag)
     }
 
     private func keyboardBind() {
