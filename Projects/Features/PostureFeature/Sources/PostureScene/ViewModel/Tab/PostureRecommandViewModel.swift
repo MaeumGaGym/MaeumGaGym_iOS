@@ -20,14 +20,14 @@ public class PostureRecommandViewModel: BaseViewModel {
     }
 
     public struct Output {
-        var recommandData: Observable<[PostureRecommandModel]>
+        var recommandData: Observable<PoseRecommandModel>
     }
 
     public init(useCase: PostureUseCase) {
         self.useCase = useCase
     }
     
-    private let recommandDataSubject = PublishSubject<[PostureRecommandModel]>()
+    private let recommandDataSubject = PublishSubject<PoseRecommandModel>()
     
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         let output = Output(

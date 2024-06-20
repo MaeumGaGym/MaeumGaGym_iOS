@@ -1,6 +1,7 @@
 import Foundation
 
-import DSKit
+import UIKit
+//import DSKit
 
 public struct PostureAllDTO: Decodable {
     public let responses: [PostureAllResponse]
@@ -68,33 +69,33 @@ public struct PoseDetailDTO: Decodable {
 public extension PoseDetailDTO {
     func toDomain() -> PostureDetailModel {
         return .init(needMachine: needMachine, category: category, simpleName: simpleName, exactName: exactName, thumbnail: thumbnail, video: video, simplePart: simplePart, exactPart: exactPart, startPose: startPose, exerciseWay: exerciseWay, breatheWay: breatheWay, caution: caution, pickleImage: [
-            DSKitAsset.Assets.posturePickleTest1.image,
-            DSKitAsset.Assets.posturePickleTest2.image,
-            DSKitAsset.Assets.posturePickleTest3.image,
-            DSKitAsset.Assets.posturePickleTest4.image
+            UIImage(),
+            UIImage(),
+            UIImage(),
+            UIImage()
         ])
     }
 }
 
-struct PoseRecommandDTO: Decodable {
-    let poses: PoseRecommandPart
+public struct PoseRecommandDTO: Decodable {
+    public let poses: PoseRecommandPart
 }
 
-struct PoseRecommandPart: Decodable {
-    let 어깨, 복근, 등, 가슴, 팔: PoseRecommandPartResponse
+public struct PoseRecommandPart: Decodable {
+    public let 어깨, 복근, 등, 가슴, 팔: PoseRecommandPartResponse
 }
 
-struct PoseRecommandPartResponse: Decodable {
-    let responses: [PoseRecommandResponse]
+public struct PoseRecommandPartResponse: Decodable {
+    public let responses: [PoseRecommandResponse]
 }
 
-struct PoseRecommandResponse: Decodable {
-    let id: Int
-    let category: [String]
-    let needMachine: Bool
-    let name: String
-    let simplePart, exactPart: [String]
-    let thumbnail: String
+public struct PoseRecommandResponse: Decodable {
+    public let id: Int
+    public let category: [String]
+    public let needMachine: Bool
+    public let name: String
+    public let simplePart, exactPart: [String]
+    public let thumbnail: String
 
     enum CodingKeys: String, CodingKey {
         case id, category
@@ -107,5 +108,31 @@ struct PoseRecommandResponse: Decodable {
 }
 
 extension PoseRecommandDTO {
-    
+    public func toDomain() -> PoseRecommandModel {
+        return .init(poses: poses.toDomain())
+    }
+}
+
+extension PoseRecommandPart {
+    public func toDomain() -> PoseRecommandPartModel {
+        return .init(어깨: 어깨.toDomain(), 복근: 복근.toDomain(), 등: 등.toDomain(), 가슴: 가슴.toDomain(), 팔: 팔.toDomain())
+    }
+}
+
+extension PoseRecommandPartResponse {
+    public func toDomain() -> PoseRecommandPartResponseModel {
+        return .init(responses: responses.toDomain())
+    }
+}
+
+extension PoseRecommandResponse {
+    public func toDomain() -> PoseRecommandResponseModel {
+        return .init(id: id, category: category, needMachine: needMachine, name: name, simplePart: simplePart, exactPart: exactPart, thumbnail: thumbnail)
+    }
+}
+
+extension Array where Element == PoseRecommandResponse {
+    public func toDomain() -> [PoseRecommandResponseModel] {
+        return self.map { $0.toDomain() }
+    }
 }

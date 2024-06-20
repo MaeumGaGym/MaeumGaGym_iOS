@@ -63,7 +63,7 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
     public override func layout() {
         view.addSubviews([navBeforeButton, navAddButton, navEditButton,
                           editView, progressBarView, closeButton, stopButton,
-                          startButton, restartButton, timerCollectionView, alaertView, testView])
+                          startButton, restartButton, timerCollectionView])
 
         navBeforeButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(61.0)
@@ -119,15 +119,15 @@ public class TimerViewController: BaseViewController<TimerViewModel> {
             $0.trailing.equalToSuperview().offset(-83.0)
         }
 
-        alaertView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(77.0)
-            $0.leading.trailing.equalToSuperview().inset(20.0)
-            $0.height.equalTo(152.0)
-        }
-
-        testView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+//        alaertView.snp.makeConstraints {
+//            $0.top.equalToSuperview().offset(77.0)
+//            $0.leading.trailing.equalToSuperview().inset(20.0)
+//            $0.height.equalTo(152.0)
+//        }
+//
+//        testView.snp.makeConstraints {
+//            $0.edges.equalToSuperview()
+//        }
     }
 
     private func buttonTap() {

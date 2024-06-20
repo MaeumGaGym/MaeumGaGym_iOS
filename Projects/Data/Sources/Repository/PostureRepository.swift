@@ -7,8 +7,10 @@ public class PostureRepository: PostureRepositoryInterface {
 
     private let networkService: PostureService
 
-    public func getRecommandData() -> Single<[PostureRecommandModel]> {
-        return networkService.requestRecommandData()
+    public func getRecommandData(accessToken: String) -> Single<PoseRecommandModel> {
+        return networkService.requestRecommandData(accessToken: accessToken)
+            .map(PoseRecommandDTO.self)
+            .map { $0.toDomain() }
     }
 
     public func getPartData(type: PosturePartType) -> Single<PosturePartModel> {

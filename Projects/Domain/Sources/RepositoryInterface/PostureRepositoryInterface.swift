@@ -8,7 +8,7 @@ public enum PosturePartType {
 }
 
 public protocol PostureRepositoryInterface {
-    func getRecommandData() -> Single<[PostureRecommandModel]>
+    func getRecommandData(accessToken: String) -> Single<PoseRecommandModel>
     func getPartData(type: PosturePartType) -> Single<PosturePartModel>
     func getDetailData(accessToken: String, id: Int) -> Single<PostureDetailModel>
     func getSearchData() -> Single<PostureSearchModel>

@@ -17,12 +17,20 @@ import PostureFeatureInterface
 
 public class PostureRecommandViewController: BaseViewController<PostureRecommandViewModel> {
 
-    private var recommandData: [PostureRecommandModel] = []
+    private var recommandData: PoseRecommandModel = PoseRecommandModel(
+        poses: PoseRecommandPartModel(
+            어깨: PoseRecommandPartResponseModel(responses: []),
+            복근:  PoseRecommandPartResponseModel(responses: []),
+            등:  PoseRecommandPartResponseModel(responses: []),
+            가슴:  PoseRecommandPartResponseModel(responses: []),
+            팔:  PoseRecommandPartResponseModel(responses: [])
+        )
+    )
 
     private var recommandTableView: UITableView = UITableView().then {
         $0.register(PostureRecommandTableViewCell.self,
                     forCellReuseIdentifier: PostureRecommandTableViewCell.identifier)
-        $0.rowHeight = 340
+        $0.rowHeight = 292
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -46,9 +54,6 @@ public class PostureRecommandViewController: BaseViewController<PostureRecommand
     public override func bindViewModel() {
         super.bindViewModel()
 
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        viewModel = PostureRecommandViewModel(useCase: useCase)
-
         let input = PostureRecommandViewModel.Input(
             getRecommandData:
                 Observable.just(())
@@ -70,7 +75,7 @@ extension PostureRecommandViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return recommandData.count
+        return 5
     }
 
     public func tableView(
@@ -81,8 +86,21 @@ extension PostureRecommandViewController: UITableViewDataSource {
             withIdentifier: PostureRecommandTableViewCell.identifier,
             for: indexPath
         ) as? PostureRecommandTableViewCell
-        let model = recommandData[indexPath.row]
-        cell?.setup(with: model)
+        let model = recommandData.poses
+        switch indexPath.row {
+        case 0:
+            cell?.setup(with: model.가슴.responses, titleText: "가슴")
+        case 1:
+            cell?.setup(with: model.등.responses, titleText: "등")
+        case 2:
+            cell?.setup(with: model.복근.responses, titleText: "복근")
+        case 3:
+            cell?.setup(with: model.어깨.responses, titleText: "어깨")
+        case 4:
+            cell?.setup(with: model.팔.responses, titleText: "팔")
+        default:
+            cell?.setup(with: model.가슴.responses, titleText: "가슴")
+        }
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
