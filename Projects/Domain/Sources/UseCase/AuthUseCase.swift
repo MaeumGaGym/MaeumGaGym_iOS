@@ -17,6 +17,7 @@ public protocol AuthUseCase {
     func nextButtonTap() -> Bool
     func getIntroData()
     func tokenReIssue()
+    func completeButtonTap()
     var appleSignupResult: PublishSubject<String> { get }
     var introData: PublishSubject<IntroModel> { get }
 }
@@ -38,7 +39,7 @@ public class DefaultAuthUseCase {
 }
 
 extension DefaultAuthUseCase: AuthUseCase {
-
+    
     public func changeNickname(nickname: String) {
         self.nicknameText = nickname
     }
@@ -90,23 +91,7 @@ extension DefaultAuthUseCase: AuthUseCase {
     
     public func tokenReIssue() {
         let refreshToken = TokenManagerImpl().get(key: .refreshToken)
-        guard let refreshToken = refreshToken else {
-            AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
-            return
-        }
-        authRepository.tokenReIssue(refreshToken: refreshToken)
-            .flatMap { response -> Single<Response> in
-                switch response.statusCode {
-                case 200:
-                    return Single.just(response)
-                case 401:
-                    return Single.error(AuthErrorType.error401)
-                case 500:
-                    return Single.error(AuthErrorType.error500)
-                default:
-                    return Single.just(response)
-                }
-            }
+        authRepository.tokenReIssue(refreshToken: refreshToken ?? "토큰 없음")
             .subscribe(onSuccess: { element in
                 MGLogger.debug("token ReIssue ✅ \(String(describing: element.response))")
                 if let headers = element.response?.headers {
@@ -124,6 +109,11 @@ extension DefaultAuthUseCase: AuthUseCase {
                 MGLogger.debug("token ReIssue ❌ \(error)")
                 AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
             }).disposed(by: disposeBag)
+    }
+    
+    public func completeButtonTap() {
+        MGLogger.debug("회원가입 완료 버튼 클릭함")
+        AuthStepper.shared.steps.accept(MGStep.initialization)
     }
 }
 

@@ -9,6 +9,7 @@ import Moya
 
 import Core
 import Domain
+import MGLogger
 
 import TokenManager
 import AuthFeatureInterface
@@ -28,9 +29,9 @@ public class SplashViewModel: AuthViewModelType {
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
         self.disposeBag = DisposeBag()
-        
         useCase.tokenReIssue()
 //        useCase.getAllPoseData()
+
     }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {

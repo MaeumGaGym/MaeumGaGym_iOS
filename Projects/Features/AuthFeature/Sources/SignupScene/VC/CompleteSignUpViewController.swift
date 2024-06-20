@@ -65,4 +65,16 @@ public class CompleteSignUpViewController: BaseViewController<CompleteViewModel>
             $0.height.equalTo(58.0)
         }
     }
+
+    public override func bindActions() {
+        super.bindActions()
+        
+        let input = CompleteViewModel.Input(
+            checkButtonTapped: checkButton.rx.tap.asDriver()
+        )
+        
+        _ = viewModel.transform(input, action: { _ in
+            print("transform 호출")
+        })
+    }
 }

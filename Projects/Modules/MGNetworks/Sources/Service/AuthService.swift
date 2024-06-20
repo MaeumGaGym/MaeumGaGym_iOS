@@ -78,6 +78,7 @@ extension DefaultAuthService: AuthService {
 
     public func tokenReIssue(refreshToken: String) -> Single<Response> {
         return authProvider.rx.request(.reissuanceToken(refreshToken: refreshToken))
+            .filterSuccessfulStatusCodes()
     }
 
     public func kakaoButtonTap() -> Single<OAuthToken?> {

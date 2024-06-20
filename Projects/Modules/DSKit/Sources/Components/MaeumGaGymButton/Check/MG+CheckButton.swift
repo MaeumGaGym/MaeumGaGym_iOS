@@ -53,9 +53,15 @@ open class MGCheckButton: BaseButton {
         textColor: UIColor?,
         backColor: UIColor?
     ) {
-        textLabel.text = text
+        textLabel.changeText(text: text)
         backgroundColor = backColor
-        textLabel.textColor = textColor
+        textLabel.changeTextColor(color: textColor)
         self.makeRounded(radius: radius ?? 8)
+    }
+}
+
+public extension MGCheckButton {
+    func changeTextColor(textColor: UIColor) {
+        textLabel.changeTextColor(color: textColor)
     }
 }

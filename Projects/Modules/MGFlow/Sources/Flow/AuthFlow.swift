@@ -90,7 +90,7 @@ public class AuthFlow: Flow {
     }
 
     private func navigateToCompleteViewScreen() -> FlowContributors {
-        let vc = CompleteSignUpViewController(CompleteViewModel())
+        let vc = CompleteSignUpViewController(CompleteViewModel(authUseCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
         vc.navigationItem.hidesBackButton = true
         MainTabBarContoller.shared.tabBar.isHidden = true
@@ -102,6 +102,8 @@ public class AuthFlow: Flow {
         Flows.use(profileFlow, when: .created) { [weak self] root in
             self?.rootViewController.setViewControllers([root], animated: true)
         }
+        
+        MainTabBarContoller.shared.tabBar.isHidden = false
 
         return .one(flowContributor: .contribute(
             withNextPresentable: profileFlow,
