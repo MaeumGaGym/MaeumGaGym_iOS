@@ -124,7 +124,7 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
     public override func bindActions() {
         plusRoutineButton.rx.tap
             .bind(onNext: { [weak self] in
-                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+                let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
 
                 let viewModel = SelfCareMyRoutineAddViewModel(useCase: useCase)
                 let vc = SelfCareMyRoutineAddViewController(viewModel)
@@ -132,7 +132,7 @@ public class SelfCareMyRoutineViewController: BaseViewController<SelfCareMyRouti
             }).disposed(by: disposeBag)
     }
     public override func bindViewModel() {
-        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
 
         viewModel = SelfCareMyRoutineViewModel(useCase: useCase)
 

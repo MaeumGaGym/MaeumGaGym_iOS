@@ -34,7 +34,6 @@ open class MGSelfCareTextField: UITextField {
         super.init(frame: .zero)
 
         self.typeLabel.text = typeText
-        self.placeholder = typeText
         self.keyboardType = keyboardType
         self.unitLabel.text = unitText
         self.placeholder = placeholderText
@@ -53,6 +52,7 @@ open class MGSelfCareTextField: UITextField {
     }
 
     private func setup() {
+        self.typeLabel.textColor = .black
         self.autocapitalizationType = .none
         self.autocorrectionType = .no
         self.layer.borderColor = DSKitAsset.Colors.gray50.color.cgColor
@@ -87,6 +87,7 @@ extension MGSelfCareTextField {
     private func bind() {
         self.rx.controlEvent(.allEditingEvents)
             .subscribe(onNext: { [weak self] in
+                self?.typeLabel.textColor = .blue500
                 self?.layer.borderColor = DSKitAsset.Colors.blue100.color.cgColor
                 self?.backgroundColor = DSKitAsset.Colors.blue50.color
             }).disposed(by: disposeBag)

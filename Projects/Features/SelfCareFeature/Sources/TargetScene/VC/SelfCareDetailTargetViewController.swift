@@ -17,18 +17,20 @@ import Data
 import SelfCareFeatureInterface
 
 public class SelfCareDetailTargetViewController: BaseViewController<SelfCareDetailTargetViewModel> {
+    
+    private let loadDetailTargetRelay = PublishRelay<Int>()
+    
+    public var targetID: Int = 0
 
     private let navBar = SelfCareProfileNavigationBar()
     private let dotButton = MGImageButton(image: .blackDosActIcon)
     private let targetTitleLabel = MGLabel(
-        text: "공부하기",
         font: UIFont.Pretendard.titleLarge,
         textColor: .black
     )
-    private let startDateBannerView = MGSelfCareTargetDateBannerView(typeText: "시작", dateText: "102200")
-    private let endDateBannerView = MGSelfCareTargetDateBannerView(typeText: "마감", dateText: "ㄹㅇㄴㅁㄹㅇㄴㅁ")
+    private let startDateBannerView = MGSelfCareTargetDateBannerView(typeText: "시작")
+    private let endDateBannerView = MGSelfCareTargetDateBannerView(typeText: "마감")
     private let targetContentLabel = MGLabel(
-        text: "새해가 다가오기 전까지 열심히 공부하자.\n한 해의 끝도 공부와 함께.",
         font: UIFont.Pretendard.bodyMedium,
         textColor: .black,
         isCenter: false,
@@ -45,12 +47,25 @@ public class SelfCareDetailTargetViewController: BaseViewController<SelfCareDeta
         super.attribute()
 
         view.backgroundColor = .white
+        
+        loadDetailTargetRelay.accept(targetID)
     }
-    public override func bindActions() {
-        navBar.leftButtonTap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
+    public override func bindViewModel() {
+        let input = SelfCareDetailTargetViewModel.Input(
+            loadDetailTargetData: loadDetailTargetRelay.asDriver(onErrorJustReturn: 0),
+            popVCButton: navBar.leftButtonTap.asDriver()
+        )
+        
+        _ = viewModel.transform(input, action: { output in
+            output.detailTargetData
+                .withUnretained(self)
+                .subscribe(onNext: { owner, data in
+                    owner.targetTitleLabel.changeText(text: data.targetTitle)
+                    owner.startDateBannerView.setup(dateText: data.targetStartDate)
+                    owner.endDateBannerView.setup(dateText: data.targetEndDate)
+                    owner.targetContentLabel.changeText(text: data.content)
+                }).disposed(by: disposeBag)
+        })
     }
     public override func layout() {
         view.addSubviews([

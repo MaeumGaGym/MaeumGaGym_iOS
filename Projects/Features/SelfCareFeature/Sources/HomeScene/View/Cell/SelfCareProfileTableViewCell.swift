@@ -41,11 +41,11 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
 
     private let arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image)
 
-    public func configure(with message: SelfCareProfileModel) {
-        profileImageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userImage))
+    public func configure(
+        with message: SelfCareDetailProfileModel
+    ) {
         userNameLabel.changeText(text: message.userName)
-        userTimerLabel.changeText(text: message.userTimer)
-        userBageView.configureImage(with: MGProfileImage(type: .custom, customImage: message.userBage))
+        userTimerLabel.changeText(text: "\(message.userWakaTime)시간")
     }
 
     public override func layout() {
@@ -65,8 +65,8 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
         }
 
         userNameLabel.snp.makeConstraints {
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(12.0)
             $0.top.equalTo(profileImageView.snp.top)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(12.0)
         }
 
         userBageView.snp.makeConstraints {

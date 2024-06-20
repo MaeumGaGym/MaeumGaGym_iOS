@@ -5,24 +5,69 @@ import RxCocoa
 import RxSwift
 
 import Core
+import Domain
+import MGLogger
 
 public class SelfCareProfileViewModel: BaseViewModel {
-
+    
     public typealias ViewModel = SelfCareProfileViewModel
-
-    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
-        return Output()
-    }
-
+    
+    private let disposeBag = DisposeBag()
+    
+    private let useCase: SelfCareUseCase
+    
     public struct Input {
-
+        let getProfileData: Driver<String>
+        let popVC: Driver<Void>
+        let editProfileButton: Driver<Void>
     }
-
+    
     public struct Output {
-
+        var profileData: Observable<SelfCareDetailProfileModel>
     }
-
-    public init() {
-
+    
+    private let profileDataSubject = PublishSubject<SelfCareDetailProfileModel>()
+    
+    public init(useCase: SelfCareUseCase) {
+        self.useCase = useCase
     }
+    
+    public func transform(_ input: Input, action: (Output) -> Void) -> Output {
+        let output = Output(
+            profileData:
+                profileDataSubject.asObservable()
+        )
+        
+        action(output)
+        
+        self.bindOutput(output: output)
+        
+        input.getProfileData
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, nickName in
+                owner.useCase.getProfileData(nickName: nickName)
+            }).disposed(by: disposeBag)
+        
+        input.popVC.asObservable()
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.popRequired)
+            }).disposed(by: disposeBag)
+        
+        input.editProfileButton.asObservable()
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.editMyProfileRequired)
+            }).disposed(by: disposeBag)
+        
+        return output
+    }
+    
+    private func bindOutput(output: Output) {
+        useCase.profileData
+            .subscribe(onNext: { profileData in
+                self.profileDataSubject.onNext(profileData)
+                print("profileData: \(profileData)")
+            }).disposed(by: disposeBag)
+    }
+    
 }

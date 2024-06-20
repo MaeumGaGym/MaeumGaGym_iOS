@@ -18,6 +18,9 @@ public class MGDateSelectView: BaseView {
 
     private let todayDate = Date()
 
+    private var typeColor: UIColor {
+        dateSelectButton.isSelected ? .blue500 : .black
+    }
     private var dateButtonBgColor: UIColor {
         dateSelectButton.isSelected ? .blue50 : .gray25
     }
@@ -46,12 +49,20 @@ public class MGDateSelectView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    public func setup(
-        date: [Int]
+    public func setupDate(
+        date: String? = nil
     ) {
-        self.dateSelectButton.setTitle("\(date[0])년 \(date[1])월 \(date[2])일", for: .normal)
+        self.dateSelectButton.setTitle(date, for: .normal)
+    }
+    
+    public func setup(
+        selcect: Bool? = false
+    ) {
+        self.dateSelectButton.isSelected = selcect!
+        self.attribute()
     }
     public override func attribute() {
+        typeLabel.textColor = typeColor
         dateSelectButton.backgroundColor = dateButtonBgColor
         dateSelectButton.layer.borderColor = dateButtonBdColor
     }

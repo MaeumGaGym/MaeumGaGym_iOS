@@ -10,14 +10,18 @@ import Core
 import DSKit
 
 final public class SelfCareProfileEditViewController: BaseViewController<SelfCareProfileEditViewModel> {
+    
+    private var genderType = PublishRelay<String>()
 
     private var bottomConstraint: Constraint?
 
     private lazy var navBar = SelfCareProfileNavigationBar(leftText: "내 정보 변경")
-    private let nameTextField = MGSelfCareTextField(typeText: "이름", keyboardType: .default)
-    private let heightTextField = MGSelfCareTextField(typeText: "키", keyboardType: .numberPad, unitText: "cm")
-    private let weightTextField = MGSelfCareTextField(typeText: "몸무게", keyboardType: .numberPad, unitText: "kg")
-    private let genderDropDown = MGDropDown()
+    private let nameTextField = MGSelfCareTextField(typeText: "이름", keyboardType: .default, placeholderText: "이름")
+    private let heightTextField = MGSelfCareTextField(typeText: "키", keyboardType: .numberPad, unitText: "cm", placeholderText: "키")
+    private let weightTextField = MGSelfCareTextField(typeText: "몸무게", keyboardType: .numberPad, unitText: "kg", placeholderText: "몸무게")
+    private lazy var genderDropDown = MGDropDown(genderData: { gender in
+        self.genderType.accept(gender)
+    })
     private let endButton = MGButton(
         titleText: "확인",
         font: UIFont.Pretendard.labelLarge,
@@ -48,21 +52,26 @@ final public class SelfCareProfileEditViewController: BaseViewController<SelfCar
         setupKeyboardObservers()
     }
     public override func bindActions() {
-        navBar.leftButtonTap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
-
         endButton.rx.tap
             .bind(onNext: { [weak self] in
                 self?.view.endEditing(true)
             }).disposed(by: disposeBag)
-
-        editFinishButton.rx.tap
-            .bind(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }).disposed(by: disposeBag)
     }
+    public override func bindViewModel() {
+        let input = SelfCareProfileEditViewModel.Input(
+            name: nameTextField.rx.text.orEmpty.asDriver(),
+            height: heightTextField.rx.text.orEmpty.asDriver(),
+            weight: weightTextField.rx.text.orEmpty.asDriver(),
+            gender: genderType.asDriver(onErrorJustReturn: ""),
+            profileEditButtonClick: editFinishButton.rx.tap.asDriver(),
+            popVCButton: navBar.leftButtonTap.asDriver()
+        )
+        
+        _ = viewModel.transform(input, action: { output in
+            print(output.nickName)
+        })
+    }
+
     public override func layout() {
         super.layout()
 

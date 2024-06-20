@@ -14,6 +14,8 @@ import Domain
 import MGNetworks
 
 public class SelfCareMenuTableViewCell: BaseTableViewCell {
+    
+    public var cellState: (() -> Void)?
 
     static let identifier: String = "SelfCareMenuTableViewCell"
 
@@ -45,7 +47,16 @@ public class SelfCareMenuTableViewCell: BaseTableViewCell {
             selfCareMenuCollectionView.reloadData()
         }
     }
-
+    
+//    public init(
+//        cellState: @escaping () -> Void
+//    ) {
+//        self.cellState = cellState
+//    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
     public override func attribute() {
         super.attribute()
 
@@ -102,5 +113,12 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
 extension SelfCareMenuTableViewCell: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(menus[indexPath.row])
+        switch indexPath.row {
+        case 1:
+            self.cellState!()
+            return
+        default:
+            return
+        }
     }
 }

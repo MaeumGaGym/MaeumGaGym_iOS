@@ -17,14 +17,16 @@ import MGNetworks
 
 import SelfCareFeatureInterface
 
-final public class SelfCareAddTargetViewController: BaseViewController<SelfCareAddTargetViewModel> {
+final public class SelfCareEditTargetViewController: BaseViewController<SelfCareEditTargetViewModel> {
 
     private var bottomConstraint: Constraint?
+    
+    public var id: Int = 0
     
     private var startDate = BehaviorRelay<String>(value: "")
     private var endDate = BehaviorRelay<String>(value: "")
 
-    private lazy var navBar = SelfCareProfileNavigationBar(leftText: "목표 추가")
+    private lazy var navBar = SelfCareProfileNavigationBar(leftText: "목표 수정")
     private let titleTextField = MGSelfCareTextField(
         typeText: "제목",
         keyboardType: .default,
@@ -52,48 +54,17 @@ final public class SelfCareAddTargetViewController: BaseViewController<SelfCareA
         $0.layer.cornerRadius = 8
     }
 
-    private lazy var startCalendarAlertViewController: MGTargetAlertView = {
-        let viewController = MGTargetAlertView()
-        viewController.view.isHidden = true
-        viewController.clickDate = { [weak self] date in
-            self?.startDate.accept(date ?? "")
-            self?.startDateSelectView.setupDate(date: date ?? "")
-            self?.hideStartCalendar()
-        }
-        return viewController
-    }()
-
-    private lazy var endCalendarAlertViewController: MGTargetAlertView = {
-        let viewController = MGTargetAlertView()
-        viewController.view.isHidden = true
-        viewController.clickDate = { [weak self] date in
-            self?.endDate.accept(date ?? "")
-            self?.endDateSelectView.setupDate(date: date ?? "")
-            self?.hideEndCalendar()
-        }
-        return viewController
-    }()
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        configureNavigationBar()
-        attribute()
-        layout()
-        bindActions()
-        bindViewModel()
-    }
-
     public override func configureNavigationBar() {
         super.configureNavigationBar()
+
         navigationController?.isNavigationBarHidden = true
     }
-
     public override func attribute() {
         super.attribute()
+
         view.backgroundColor = .white
         setupKeyboardObservers()
     }
-
     public override func bindActions() {
         navBar.leftButtonTap
             .bind(onNext: { [weak self] in
@@ -110,31 +81,52 @@ final public class SelfCareAddTargetViewController: BaseViewController<SelfCareA
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
 
-        startDateSelectView.dateButtonTap
-            .bind(onNext: { [weak self] in
-                self?.showStartCalendar()
-            }).disposed(by: disposeBag)
+//        startDateSelectView.dateButtonTap
+//            .bind(onNext: { [weak self] in
+//                let vc = MGTargetAlertView(clickDate: { date in
+////                    self?.startDateSelectView.setup(date: [year!, month!, day!])
+//                    self?.startDate.accept(date ?? "")
+//                    self?.startDateSelectView.setup(date: date ?? "")
+//                    print(date)
+////                    print(self?.startDate.value.changeDateFormat(type: .fullDate))
+//                })
+//                
+//                vc.modalTransitionStyle = .crossDissolve
+//                vc.modalPresentationStyle = .overFullScreen
+//                self?.present(vc, animated: true)
+//            }).disposed(by: disposeBag)
 
         endDateSelectView.dateButtonTap
             .bind(onNext: { [weak self] in
-                self?.showEndCalendar()
+                let vc = MGTargetAlertView()
+                vc.clickDate = { date in
+                    self?.endDate.accept(date ?? "")
+                    self?.endDateSelectView.setupDate(date: date ?? "")
+//                    self?.endDateSelectView.setup(date: [year!, month!, day!])
+//                    self?.endDate.accept("\(year ?? 0)\(month ?? 0)\(day ?? 0)")
+                }
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationStyle = .overFullScreen
+                self?.present(vc, animated: true)
             }).disposed(by: disposeBag)
     }
-
     public override func bindViewModel() {
-        let input = SelfCareAddTargetViewModel.Input(
+//        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
+//
+//        viewModel = SelfCareAddTargetViewModel(useCase: useCase)
+        
+        let input = SelfCareEditTargetViewModel.Input(
+            id: Driver.just(id),
             title: titleTextField.rx.text.orEmpty.asDriver(),
             startDate: startDate.asDriver(onErrorDriveWith: .never()),
             endDate: endDate.asDriver(onErrorDriveWith: .never()),
             content: contentTextView.textView.rx.text.orEmpty.asDriver(),
-            addTargetButton: editFinishButton.rx.tap.asDriver()
+            editTargetButton: editFinishButton.rx.tap.asDriver()
         )
         
         _ = viewModel.transform(input, action: { output in
-            output
         })
     }
-
     public override func layout() {
         super.layout()
 
@@ -179,79 +171,10 @@ final public class SelfCareAddTargetViewController: BaseViewController<SelfCareA
             $0.bottom.equalToSuperview().inset(54)
             $0.height.equalTo(58)
         }
-
-        setupStartCalendarAlertViewController()
-        setupEndCalendarAlertViewController()
-    }
-
-    private func setupStartCalendarAlertViewController() {
-        addChild(startCalendarAlertViewController)
-        view.addSubview(startCalendarAlertViewController.view)
-        startCalendarAlertViewController.didMove(toParent: self)
-        
-        startCalendarAlertViewController.view.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(startDateSelectView.snp.bottom).offset(25)
-            $0.height.equalTo(348)
-        }
-    }
-
-    private func setupEndCalendarAlertViewController() {
-        addChild(endCalendarAlertViewController)
-        view.addSubview(endCalendarAlertViewController.view)
-        endCalendarAlertViewController.didMove(toParent: self)
-        
-        endCalendarAlertViewController.view.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(endDateSelectView.snp.bottom).offset(25)
-            $0.height.equalTo(348)
-        }
-    }
-
-    private func showStartCalendar() {
-        startCalendarAlertViewController.view.isHidden = false
-        startCalendarAlertViewController.view.alpha = 0.0
-        startDateSelectView.setup(selcect: true)
-        
-        UIView.animate(withDuration: 0.3) {
-            self.startCalendarAlertViewController.view.alpha = 1.0
-        }
-    }
-
-    private func hideStartCalendar() {
-        startDateSelectView.setup(selcect: false)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.startCalendarAlertViewController.view.alpha = 0.0
-        }) { _ in
-            self.startCalendarAlertViewController.view.isHidden = true
-        }
-    }
-
-    private func showEndCalendar() {
-        endCalendarAlertViewController.view.isHidden = false
-        endCalendarAlertViewController.view.alpha = 0.0
-        endDateSelectView.setup(selcect: true)
-        
-        UIView.animate(withDuration: 0.3) {
-            self.endCalendarAlertViewController.view.alpha = 1.0
-        }
-    }
-
-    private func hideEndCalendar() {
-//        endDateSelectView.setup(typeTextColor: .black, borderColor: .gray50, backgroundColor: .gray25)
-        endDateSelectView.setup(selcect: false)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.endCalendarAlertViewController.view.alpha = 0.0
-        }) { _ in
-            self.endCalendarAlertViewController.view.isHidden = true
-        }
     }
 }
 
-
-extension SelfCareAddTargetViewController {
+extension SelfCareEditTargetViewController {
     private func setupKeyboardObservers() {
         keyboardBind()
 

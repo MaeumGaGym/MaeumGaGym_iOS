@@ -13,6 +13,7 @@ public enum APIType {
     case apple
 
     //Self Care
+    case profile
     case routine
     case target
     case ounwan
