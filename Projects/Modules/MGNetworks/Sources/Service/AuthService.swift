@@ -46,33 +46,33 @@ extension DefaultAuthService: AuthService {
     public func oauthSingup(nickname: String, accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleSignup(nickname: nickname, accessToken: accessToken)
+            return googleSignup(nickname: nickname, accessToken: accessToken).filterSuccessfulStatusCodes()
         case .kakao:
-            return kakaoSignup(nickname: nickname, accessToken: accessToken)
+            return kakaoSignup(nickname: nickname, accessToken: accessToken).filterSuccessfulStatusCodes()
         case .apple:
-            return appleSignup(nickname: nickname, oauthToken: accessToken)
+            return appleSignup(nickname: nickname, oauthToken: accessToken).filterSuccessfulStatusCodes()
         }
     }
     
     public func oauthLogin(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleLogin(accessToken: accessToken)
+            return googleLogin(accessToken: accessToken).filterSuccessfulStatusCodes()
         case .kakao:
-            return kakaoLogin(accessToken: accessToken)
+            return kakaoLogin(accessToken: accessToken).filterSuccessfulStatusCodes()
         case .apple:
-            return appleLogin(oauthToken: accessToken)
+            return appleLogin(oauthToken: accessToken).filterSuccessfulStatusCodes()
         }
     }
     
     public func oauthRecovery(accessToken: String, oauth: OauthType) -> Single<Response> {
         switch oauth {
         case .google:
-            return googleRecovery(accessToken: accessToken)
+            return googleRecovery(accessToken: accessToken).filterSuccessfulStatusCodes()
         case .kakao:
-            return kakaoRecovery(accessToken: accessToken)
+            return kakaoRecovery(accessToken: accessToken).filterSuccessfulStatusCodes()
         case .apple:
-            return appleRecovery(oauthToken: accessToken)
+            return appleRecovery(oauthToken: accessToken).filterSuccessfulStatusCodes()
         }
     }
 
