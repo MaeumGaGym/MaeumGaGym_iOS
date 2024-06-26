@@ -8,9 +8,7 @@ import Core
 import DSKit
 
 public class AuthSeemoreButton: BaseButton {
-    
-//    private var containerView = UIView()
-    
+        
     private var textLabel = MGLabel(text: "자세히 보기", font: UIFont.Pretendard.labelSmall, textColor: DSKitAsset.Colors.gray300.color, isCenter: true)
     
     private var lineView = MGLine(lineColor: DSKitAsset.Colors.gray300.color, lineWidth: 1.0)
