@@ -24,10 +24,7 @@ public class MotivationMessageTableViewCell: BaseTableViewCell, CollectoionCellI
         $0.changeTextColor(color: DSKitAsset.Colors.blue500.color)
     }
     
-    private let authorLabel = MGLabel(
-        font: UIFont.Pretendard.labelMedium,
-        textColor:  DSKitAsset.Colors.gray500.color
-    ).then {
+    private let authorLabel = MGLabel().then {
         $0.changeFont(font: UIFont.Pretendard.labelMedium)
         $0.changeTextColor(color: DSKitAsset.Colors.gray500.color)
     }
@@ -35,8 +32,6 @@ public class MotivationMessageTableViewCell: BaseTableViewCell, CollectoionCellI
     public func configure(with message: MotivationMessageModel) {
         messageLabel.changeText(text: "\"\(message.text)\"")
         authorLabel.changeText(text: message.author)
-        
-        
     }
     
     public override func attribute() {
