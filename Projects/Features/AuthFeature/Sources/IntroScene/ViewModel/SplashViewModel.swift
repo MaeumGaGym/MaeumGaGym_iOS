@@ -30,8 +30,6 @@ public class SplashViewModel: AuthViewModelType {
         self.useCase = authUseCase
         self.disposeBag = DisposeBag()
         useCase.tokenReIssue()
-//        useCase.getAllPoseData()
-
     }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {

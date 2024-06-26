@@ -48,45 +48,33 @@ public class IntroViewModel: AuthViewModelType {
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
-        let output = Output(introDatas: introModelSubject.asObservable(), showGoogleAlert: showGoogleAlertSubject.asObservable())
+        let output = Output(
+            introDatas: introModelSubject.asObservable(),
+            showGoogleAlert: showGoogleAlertSubject.asObservable()
+        )
 
         action(output)
-
+        bindInputs(input)
         bindOutput(output: output)
 
-        input.goolgeButtonTapped
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.showGoogleAlertSubject.onNext(())
-            })
-            .disposed(by: disposeBag)
-
-        input.kakaoButtonTapped
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.kakaoButtonTap()
-            })
-            .disposed(by: disposeBag)
-
-        input.appleButtonTapped
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.appleButtonTap()
-            })
-            .disposed(by: disposeBag)
-
-        input.getIntroData
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.getIntroData()
-            })
-            .disposed(by: disposeBag)
-
         return output
+    }
+    
+    private func bindButtonTap(_ driver: Driver<Void>, handler: @escaping () -> Void) {
+        driver
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                handler()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindInputs(_ input: Input) {
+        bindButtonTap(input.goolgeButtonTapped, handler: { self.showGoogleAlertSubject.onNext(()) })
+        bindButtonTap(input.appleButtonTapped, handler: { self.useCase.appleButtonTap() })
+        bindButtonTap(input.kakaoButtonTapped, handler: { self.useCase.kakaoButtonTap() })
+        bindButtonTap(input.getIntroData, handler: { self.useCase.getIntroData() })
     }
 
     private func bindOutput(output: Output) {
@@ -103,20 +91,4 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
     }
-}
-
-private extension IntroViewModel {
-    //    func kakaoGetUserInfo() {
-    //        UserApi.shared.me() { (user, error) in
-    //            if let error = error {
-    //                print(error)
-    //            }
-    //
-    //            let userName = user?.kakaoAccount?.name
-    //
-    //            _ = "user name : \(String(describing: userName))"
-    //
-    //            print("user - \(String(describing: user))")
-    //        }
-    //    }
 }
