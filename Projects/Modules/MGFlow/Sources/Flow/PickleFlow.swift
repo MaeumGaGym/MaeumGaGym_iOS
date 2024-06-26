@@ -32,7 +32,7 @@ public class PickleFlow: Flow {
     }
     
     private func setupViewController() {
-        viewController = PicklePreparingViewController(Int())
+        viewController = PicklePreparingViewController()
         rootViewController = UINavigationController(rootViewController: viewController)
     }
     
