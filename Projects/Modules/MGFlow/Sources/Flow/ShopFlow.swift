@@ -33,7 +33,7 @@ public class ShopFlow: Flow {
     }
 
     private func setupViewController() {
-        viewController = ShopViewController(Int())
+        viewController = ShopViewController()
         rootViewController = UINavigationController(rootViewController: viewController)
     }
     
