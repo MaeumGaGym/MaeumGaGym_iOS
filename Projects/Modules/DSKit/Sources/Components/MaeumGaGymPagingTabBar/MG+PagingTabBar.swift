@@ -96,7 +96,6 @@ extension MGPagingTabBar: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let cellWidth = calculateCellWidth(text: categoryTitleList[indexPath.row])
-        print("\(indexPath.row) : height = \(cellWidth)")
         return CGSize(width: cellWidth, height: 56.0)
     }
 }
