@@ -34,7 +34,7 @@ public class ShopViewController: BaseViewController<Any> {
         backgroundView.snp.makeConstraints {
             $0.centerY.equalToSuperview().inset(40.0)
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview()
+            $0.width.equalToSuperview().inset(55.0)
             $0.height.equalTo(228)
         }
         
