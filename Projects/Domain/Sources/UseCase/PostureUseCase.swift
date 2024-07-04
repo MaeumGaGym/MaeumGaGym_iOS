@@ -27,7 +27,6 @@ public class DefaultPostureUseCase {
     private let repository: PostureRepositoryInterface
     private let disposeBag = DisposeBag()
 
-
     private let accessToken = TokenManagerImpl().get(key: .accessToken)
     public let recommandData = PublishSubject<PoseRecommandModel>()
     public let partData = PublishSubject<PosturePartModel>()

@@ -14,6 +14,8 @@ public class HomeViewModel: HomeViewModelType {
 
     private let useCase: HomeUseCase
     
+    private let homeRepository: HomeRepositoryInterface
+
     private let isServiceAvailableSubject = PublishSubject<Bool>()
     private let motivationMessageSubject = PublishSubject<MotivationMessageModel>()
     private let stepNumberSubject = PublishSubject<StepModel>()
@@ -36,8 +38,10 @@ public class HomeViewModel: HomeViewModelType {
         var extras: Observable<[ExtrasModel]>
     }
 
-    public init(useCase: HomeUseCase) {
+    public init(disposeBag: DisposeBag, useCase: HomeUseCase, homeRepository: HomeRepositoryInterface) {
+        self.disposeBag = disposeBag
         self.useCase = useCase
+        self.homeRepository = homeRepository
     }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
@@ -60,6 +64,7 @@ public class HomeViewModel: HomeViewModelType {
             .subscribe(onNext: { owner, _ in
                 HomeStepper.shared.steps.accept(MGStep.homeStepRequired)
                 MGLogger.debug("SeetingButtonTapped")
+                owner.homeRepository.getMotivationMessage()
             }).disposed(by: disposeBag)
 
         input.getStepNumber
