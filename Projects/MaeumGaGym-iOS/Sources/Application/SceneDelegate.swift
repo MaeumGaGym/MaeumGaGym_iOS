@@ -36,9 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        
-        TokenManagerImpl().save(token: "", with: .refreshToken)
-        
+
         window = UIWindow(frame: scene.coordinateSpace.bounds)
         window?.windowScene = scene
 
