@@ -36,7 +36,12 @@ public class SelfCareFlow: Flow {
             return setupSelfCoreScreen()
         case .popRequired:
             return popupViewController()
+//        case .devRequired:
+//            return 
         
+        //routine
+        case .myRoutineRequired:
+            return navigateToMyRoutineHome()
         //target
         case .targetHomeRequired:
             return navigateToTargetHome()
@@ -69,6 +74,13 @@ public class SelfCareFlow: Flow {
             selectedImage: DSKitAsset.Assets.blMuscleTapBar.image)
         rootViewController.setViewControllers([vc], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.rootViewController, withNextStepper: SelfCareStepper.shared))
+    }
+    
+    private func navigateToMyRoutineHome() -> FlowContributors {
+        let vc = SelfCareMyRoutineViewController(SelfCareMyRoutineViewModel(useCase: self.useCase))
+        rootViewController.pushViewController(vc, animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = true
+        return .none
     }
     
     private func navigateToTargetHome() -> FlowContributors {
