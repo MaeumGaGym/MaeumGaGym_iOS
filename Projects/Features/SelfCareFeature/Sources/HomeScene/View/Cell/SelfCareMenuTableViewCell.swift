@@ -15,7 +15,10 @@ import MGNetworks
 
 public class SelfCareMenuTableViewCell: BaseTableViewCell {
     
-    public var cellState: (() -> Void)?
+    public var clickRoutine: (() -> Void)?
+    public var clickTarget: (() -> Void)?
+    public var clickMeal: (() -> Void)?
+    public var clickTodayExe: (() -> Void)?
 
     static let identifier: String = "SelfCareMenuTableViewCell"
 
@@ -113,9 +116,19 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
 extension SelfCareMenuTableViewCell: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(menus[indexPath.row])
+        
         switch indexPath.row {
+        case 0:
+            self.clickRoutine!()
+            return
         case 1:
-            self.cellState!()
+            self.clickTarget!()
+            return
+        case 2:
+            self.clickMeal!()
+            return
+        case 3:
+            self.clickTodayExe!()
             return
         default:
             return

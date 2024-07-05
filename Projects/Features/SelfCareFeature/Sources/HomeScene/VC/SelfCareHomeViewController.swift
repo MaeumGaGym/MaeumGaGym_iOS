@@ -25,7 +25,10 @@ enum SelfCareCell {
 public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewModel>, Stepper {
     
     private let clickProfileRelay = PublishRelay<Void>()
+    private let clickRoutineRelay = PublishRelay<Void>()
     private let clickTargetRelay = PublishRelay<Void>()
+    private let clickMealRelay = PublishRelay<Void>()
+    private let clickTodyExeRelay = PublishRelay<Void>()
 
     private var cellList: [UITableViewCell] = []
     private var cells: [SelfCareCell] = []
@@ -86,7 +89,10 @@ public class SelfCareHomeViewController: BaseViewController<SelfCareHomeViewMode
         let input = SelfCareHomeViewModel.Input(
             loadProfile: Driver.just("조영준"),
             clickProfileButton: clickProfileRelay.asObservable(),
-            clickTargetButton: clickTargetRelay.asObservable()
+            clickRoutineButton: clickRoutineRelay.asObservable(),
+            clickTargetButton: clickTargetRelay.asObservable(),
+            clickMealButton: clickMealRelay.asObservable(),
+            clickTodayExeButton: clickTodyExeRelay.asObservable()
         )
         
         _ = viewModel.transform(input, action: { output in
@@ -180,9 +186,20 @@ extension SelfCareHomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.menus = menus
-            cell.cellState = { [weak self] in
+            
+            cell.clickRoutine = { [weak self] in
+                self?.clickRoutineRelay.accept(())
+            }
+            cell.clickTarget = { [weak self] in
                 self?.clickTargetRelay.accept(())
             }
+            cell.clickMeal = { [weak self] in
+                self?.clickMealRelay.accept(())
+            }
+            cell.clickTodayExe = { [weak self] in
+                self?.clickTodyExeRelay.accept(())
+            }
+            
             cell.selectionStyle = .none
 
             return cell
