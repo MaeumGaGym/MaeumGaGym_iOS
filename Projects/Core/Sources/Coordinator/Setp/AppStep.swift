@@ -61,6 +61,13 @@ public enum MGStep: Step {
     //MARK: selfCare
     case selfCoreHome
     case popRequired
+    case devRequired
+    
+    //routine
+    case myRoutineRequired
+    case detailRoutineRequired(id: Int)
+    case addRoutineRequired
+    case modifyRoutineRequired(id: Int)
     
     //target
     case targetHomeRequired

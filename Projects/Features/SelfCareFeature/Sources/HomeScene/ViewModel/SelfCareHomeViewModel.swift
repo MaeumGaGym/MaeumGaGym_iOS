@@ -23,7 +23,10 @@ public class SelfCareHomeViewModel: BaseViewModel {
     public struct Input {
         let loadProfile: Driver<String>
         let clickProfileButton: Observable<Void>
+        let clickRoutineButton: Observable<Void>
         let clickTargetButton: Observable<Void>
+        let clickMealButton: Observable<Void>
+        let clickTodayExeButton: Observable<Void>
     }
 
     public struct Output {
@@ -50,9 +53,24 @@ public class SelfCareHomeViewModel: BaseViewModel {
                 SelfCareStepper.shared.steps.accept(MGStep.myProfileRequired)
             }).disposed(by: disposeBag)
         
+        input.clickRoutineButton
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.myRoutineRequired)
+            }).disposed(by: disposeBag)
+        
         input.clickTargetButton
             .subscribe(onNext: {
                 SelfCareStepper.shared.steps.accept(MGStep.targetHomeRequired)
+            }).disposed(by: disposeBag)
+        
+        input.clickMealButton
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.devRequired)
+            }).disposed(by: disposeBag)
+        
+        input.clickTodayExeButton
+            .subscribe(onNext: {
+                SelfCareStepper.shared.steps.accept(MGStep.devRequired)
             }).disposed(by: disposeBag)
         
         action(output)

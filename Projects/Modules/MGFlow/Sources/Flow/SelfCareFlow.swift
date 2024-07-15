@@ -36,7 +36,14 @@ public class SelfCareFlow: Flow {
             return setupSelfCoreScreen()
         case .popRequired:
             return popupViewController()
+//        case .devRequired:
+//            return 
         
+        //routine
+        case .myRoutineRequired:
+            return navigateToMyRoutineHome()
+//        case .modifyRoutineRequired(let id):
+//            return
         //target
         case .targetHomeRequired:
             return navigateToTargetHome()
@@ -70,6 +77,19 @@ public class SelfCareFlow: Flow {
         rootViewController.setViewControllers([vc], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.rootViewController, withNextStepper: SelfCareStepper.shared))
     }
+    
+    private func navigateToMyRoutineHome() -> FlowContributors {
+        let vc = SelfCareMyRoutineViewController(SelfCareMyRoutineViewModel(useCase: self.useCase))
+        rootViewController.pushViewController(vc, animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = true
+        return .none
+    }
+//    private func navigateToModifyRoutine(id: Int) -> FlowContributors {
+//        let vc = SelfCareEditTargetViewController(SelfCareEditTargetViewModel(useCase: self.useCase))
+//        vc.id = id
+//        rootViewController.pushViewController(vc, animated: true)
+//        return .none
+//    }
     
     private func navigateToTargetHome() -> FlowContributors {
         let vc = SelfCareTargetMainViewController(SelfCareTargetMainViewModel(useCase: self.useCase))

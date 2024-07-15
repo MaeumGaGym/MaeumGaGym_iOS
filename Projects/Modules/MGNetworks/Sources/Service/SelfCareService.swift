@@ -30,6 +30,7 @@ public protocol SelfCareService {
 }
 
 public class DefaultSelfCareService: NSObject {
+    let routineProvider = MoyaProvider<RoutineAPI>(plugins: [MoyaLoggingPlugin()])
     let targetProvider = MoyaProvider<TargetAPI>(plugins: [MoyaLoggingPlugin()])
     let profileProvider = MoyaProvider<ProfileAPI>(plugins: [MoyaLoggingPlugin()])
 }
@@ -175,6 +176,17 @@ extension DefaultSelfCareService: SelfCareService {
             )
         )
     }
+
+//    public func getMyRoutineData(accessToken: String) -> Single<Response> {
+//        return routineProvider.rx.request(.routineMyAll(accessToken: accessToken))
+//            .filterSuccessfulStatusCodes()
+//    }
+//    public func getMyRoutineDetailData() -> Single<Response> {
+//        return routineProvider.rx.request(.rou)
+//    }
+//    public func getMyRoutineEditData() -> Single<Response> {
+//
+//    }
 
     public func getMyTarget(accessToken: String, page: Int) -> Single<Response> {
         return targetProvider.rx.request(.getMyTarget(accessToken: accessToken, page: page))

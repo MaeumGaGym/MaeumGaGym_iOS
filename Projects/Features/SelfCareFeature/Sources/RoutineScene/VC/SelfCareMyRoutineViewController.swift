@@ -178,11 +178,36 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
             cell?.selectionStyle = .none
             cell?.dotsButtonTap
                 .bind(onNext: { [weak self] in
-                    let modal = MGBottomSheetViewController(type: .plain)
+                    let modal = MGSelfCareRoutineBottomSheet(
+                        editButtonTap: {},
+                        storageButtonTap: {},
+                        shareButtonTap: {},
+                        deleteButtonTap: {})
+                    let customDetents = UISheetPresentationController.Detent.custom(
+                        identifier: .init("sheetHeight")
+                    ) { _ in
+                        return 257
+                    }
+                    
+                    if let sheet = modal.sheetPresentationController {
+                        sheet.detents = [customDetents]
+                        sheet.prefersGrabberVisible = true
+                    }
                     self?.present(modal, animated: true)
                 }).disposed(by: disposeBag)
             
             return cell ?? UITableViewCell()
         }
+    }
+}
+
+extension SelfCareMyRoutineViewController {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
+
+        let viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
+        let vc = SelfCareMyRoutineDetailViewController(viewModel)
+//        vc.routineID = myRoutineModel.myRoutineData[indexPath.row].
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
