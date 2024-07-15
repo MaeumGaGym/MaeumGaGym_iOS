@@ -52,7 +52,7 @@ public class HomeFlow: Flow {
         homeService = HomeService()
         homeRepository = HomeRepository(networkService: homeService)
         useCase = DefaultHomeUseCase(repository: homeRepository)
-        viewModel = HomeViewModel(useCase: useCase)
+        viewModel = HomeViewModel(useCase: useCase, homeRepository: homeRepository)
     }
 
     private func setupViewController() {

@@ -42,6 +42,8 @@ public class SelfCareFlow: Flow {
         //routine
         case .myRoutineRequired:
             return navigateToMyRoutineHome()
+//        case .modifyRoutineRequired(let id):
+//            return
         //target
         case .targetHomeRequired:
             return navigateToTargetHome()
@@ -82,6 +84,12 @@ public class SelfCareFlow: Flow {
         MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
+//    private func navigateToModifyRoutine(id: Int) -> FlowContributors {
+//        let vc = SelfCareEditTargetViewController(SelfCareEditTargetViewModel(useCase: self.useCase))
+//        vc.id = id
+//        rootViewController.pushViewController(vc, animated: true)
+//        return .none
+//    }
     
     private func navigateToTargetHome() -> FlowContributors {
         let vc = SelfCareTargetMainViewController(SelfCareTargetMainViewModel(useCase: self.useCase))

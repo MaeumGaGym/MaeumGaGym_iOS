@@ -40,7 +40,7 @@ extension RoutineAPI: BaseAPI {
         case .routineAdd:
             return ""
         case .routineMyAll:
-            return "/me/all"
+            return "/my"
         case .routineTodayMyAll:
             return "/today"
         case let .routineDelete(accessToken, id):

@@ -18,6 +18,8 @@ import MGNetworks
 import SelfCareFeatureInterface
 
 public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareMyRoutineDetailViewModel>, Stepper, UIGestureRecognizerDelegate {
+    
+    public var routineID: Int = 0
 
     private var myRoutineDetailModel: SelfCareMyRoutineDetailModel = SelfCareMyRoutineDetailModel(
         routineTitleData: SelfCareRoutineModel(routineNameText: "",
@@ -66,7 +68,12 @@ public class SelfCareMyRoutineDetailViewController: BaseViewController<SelfCareM
 
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
-
+    public override func bindActions() {
+        naviBar.leftButtonTap
+            .bind(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }).disposed(by: disposeBag)
+    }
     public override func layout() {
         super.layout()
 

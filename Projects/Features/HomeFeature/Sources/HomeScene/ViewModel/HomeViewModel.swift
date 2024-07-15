@@ -38,8 +38,7 @@ public class HomeViewModel: HomeViewModelType {
         var extras: Observable<[ExtrasModel]>
     }
 
-    public init(disposeBag: DisposeBag, useCase: HomeUseCase, homeRepository: HomeRepositoryInterface) {
-        self.disposeBag = disposeBag
+    public init(useCase: HomeUseCase, homeRepository: HomeRepositoryInterface) {
         self.useCase = useCase
         self.homeRepository = homeRepository
     }

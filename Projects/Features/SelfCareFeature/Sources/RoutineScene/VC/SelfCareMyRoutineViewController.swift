@@ -200,3 +200,14 @@ extension SelfCareMyRoutineViewController: UITableViewDataSource {
         }
     }
 }
+
+extension SelfCareMyRoutineViewController {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: DefaultSelfCareService()))
+
+        let viewModel = SelfCareMyRoutineDetailViewModel(useCase: useCase)
+        let vc = SelfCareMyRoutineDetailViewController(viewModel)
+//        vc.routineID = myRoutineModel.myRoutineData[indexPath.row].
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}

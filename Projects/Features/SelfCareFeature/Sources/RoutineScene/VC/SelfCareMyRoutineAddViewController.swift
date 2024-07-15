@@ -147,6 +147,11 @@ public class SelfCareMyRoutineAddViewController: BaseViewController<SelfCareMyRo
             .bind(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
+        
+        self.plusPostureButton.rx.tap
+            .bind(onNext: { [weak self] in
+                self?.navigationController?.pushViewController(SelfCarePostureAddViewController(), animated: true)
+            }).disposed(by: disposeBag)
     }
 //    public override func bindViewModel() {
 //        let useCase = DefaultSelfCareUseCase(repository: SelfCareRepository(networkService: SelfCareService()))

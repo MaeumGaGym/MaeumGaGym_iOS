@@ -65,7 +65,9 @@ public enum MGStep: Step {
     
     //routine
     case myRoutineRequired
-//    case
+    case detailRoutineRequired(id: Int)
+    case addRoutineRequired
+    case modifyRoutineRequired(id: Int)
     
     //target
     case targetHomeRequired
