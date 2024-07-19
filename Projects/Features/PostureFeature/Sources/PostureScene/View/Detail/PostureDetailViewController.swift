@@ -17,7 +17,7 @@ import PostureFeatureInterface
 
 public class PostureDetailViewController: BaseViewController<PostureDetailViewModel>, UIGestureRecognizerDelegate {
 
-    public var id: Int = 112
+    public var id: Int = 1
     
     private var naviBar = PostureDetailNavigationBar()
 
