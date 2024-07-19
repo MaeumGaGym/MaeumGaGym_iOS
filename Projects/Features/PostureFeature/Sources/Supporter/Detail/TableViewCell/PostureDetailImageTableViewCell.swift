@@ -1,11 +1,9 @@
 import UIKit
-
 import SnapKit
 import Then
-
 import Core
-import AVKit
 import DSKit
+import ImageIO
 
 public class PostureDetailVideoTableViewCell: BaseTableViewCell {
     
@@ -15,8 +13,7 @@ public class PostureDetailVideoTableViewCell: BaseTableViewCell {
         $0.backgroundColor = DSKitAsset.Colors.gray25.color
     }
     
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
+    private var gifImageView = UIImageView()
     
     public override func layout() {
         super.layout()
@@ -26,39 +23,42 @@ public class PostureDetailVideoTableViewCell: BaseTableViewCell {
         videoContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        videoContainerView.addSubview(gifImageView)
+        gifImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        gifImageView.contentMode = .scaleAspectFit
     }
     
     public func setup(with url: String) {
+        guard let gifURL = URL(string: url) else { return }
         
-        let dummyURL = URL(string: "https://maeumgagym-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A5%E1%84%89%E1%85%B5%E1%84%8B%E1%85%A1%E1%86%AB+%E1%84%90%E1%85%B3%E1%84%8B%E1%85%B1%E1%84%89%E1%85%B3%E1%84%90%E1%85%B3/06871201-Russian-Twist_waist.hevc.mp4")!
-        let videoURL = URL(string: url)
-        player?.pause()
-        
-        player = AVPlayer(url: videoURL ?? dummyURL)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerItemDidReachEnd(notification:)),
-                                               name: .AVPlayerItemDidPlayToEndTime,
-                                               object: player?.currentItem)
-        
-        playerLayer?.removeFromSuperlayer()
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.videoGravity = .resizeAspect
-        
-        if let playerLayer = playerLayer {
-            videoContainerView.layer.addSublayer(playerLayer)
-            playerLayer.frame = videoContainerView.bounds
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: gifURL), let imageSource = CGImageSourceCreateWithData(data as CFData, nil) {
+                var images = [UIImage]()
+                var durations = [Double]()
+                let count = CGImageSourceGetCount(imageSource)
+                for i in 0..<count {
+                    if let cgImage = CGImageSourceCreateImageAtIndex(imageSource, i, nil) {
+                        images.append(UIImage(cgImage: cgImage))
+                        
+                        // Get frame duration
+                        let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, i, nil) as? [CFString: Any]
+                        let gifInfo = properties?[kCGImagePropertyGIFDictionary] as? [CFString: Any]
+                        let frameDuration = gifInfo?[kCGImagePropertyGIFUnclampedDelayTime] as? Double ?? gifInfo?[kCGImagePropertyGIFDelayTime] as? Double ?? 0.1
+                        durations.append(frameDuration)
+                    }
+                }
+                
+                let totalDuration = durations.reduce(0, +)
+                
+                DispatchQueue.main.async {
+                    self.gifImageView.animationImages = images
+                    self.gifImageView.animationDuration = totalDuration
+                    self.gifImageView.startAnimating()
+                }
+            }
         }
-        
-        player?.play()
-    }
-    
-    @objc func playerItemDidReachEnd(notification: Notification) {
-        player?.seek(to: CMTime.zero)
-        player?.play()
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        playerLayer?.frame = videoContainerView.bounds
     }
 }

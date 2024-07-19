@@ -35,11 +35,13 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     )
     
     private var mainTitle = MGLabel(
+        text: "이제 운동을 시작해 보세요!",
         font: UIFont.Pretendard.titleMedium,
         isCenter: true
     )
     
     private var subTitle = MGLabel(
+        text: "마음가짐 서비스를 통해 규칙적인 생활을\n실천해 보세요!",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color,
         numberOfLineCount: 2
@@ -78,12 +80,12 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
         
         mainTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(introImageView.snp.bottom).offset(30.0 * height)
+            $0.top.equalTo(introImageView.snp.bottom).offset(30.0)
         }
         
         subTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(mainTitle.snp.bottom).offset(10.0 * height)
+            $0.top.equalTo(mainTitle.snp.bottom).offset(10.0)
         }
         
         googleButton.snp.makeConstraints {

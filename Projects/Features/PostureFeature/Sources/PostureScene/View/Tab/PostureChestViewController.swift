@@ -21,7 +21,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     private var secondButton = MGToggleButton(type: .machine)
 
     private var headerView = UIView()
-    public let modelID = [112, 114, 115, 116, 117, 118, 119, 120, 121, 122]
+    public let modelID = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -90,9 +90,6 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
 
         let secondButtonTapped = secondButton.rx.tap
             .asDriver(onErrorDriveWith: .never())
-
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        viewModel = PostureChestViewModel(useCase: useCase)
 
         let input = PostureChestViewModel.Input(
             firstButtonTapped: firstButtonTapped,
