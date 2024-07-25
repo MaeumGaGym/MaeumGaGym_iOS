@@ -17,14 +17,14 @@ public class PostureSearchViewModel: BaseViewModel {
     private let useCase: PostureUseCase
 
     public struct Input {
-        let getSearchData: Driver<Void>
+        let getSearchData: Driver<String>
     }
 
     public struct Output {
-        var searchData: Observable<PostureSearchModel>
+        var searchData: Observable<PosePartModel>
     }
 
-    private let searchDataSubject = PublishSubject<PostureSearchModel>()
+    private let searchDataSubject = PublishSubject<PosePartModel>()
 
     public init(useCase: PostureUseCase) {
         self.useCase = useCase
@@ -43,8 +43,8 @@ public class PostureSearchViewModel: BaseViewModel {
         input.getSearchData
             .asObservable()
             .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.getSearchData()
+            .subscribe(onNext: { owner, category in
+                owner.useCase.getSearchData(category: category)
             }).disposed(by: disposeBag)
 
         return output

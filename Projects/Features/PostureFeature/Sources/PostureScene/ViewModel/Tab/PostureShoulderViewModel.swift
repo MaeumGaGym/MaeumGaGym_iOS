@@ -8,20 +8,20 @@ import Core
 import Domain
 import MGLogger
 
-public enum BackToggleButtonState {
+public enum ShoulderToggleButtonState {
     case checked
     case unChecked
 }
 
-public enum PostureBackModelState {
+public enum PostureSholderModelState {
     case all
     case body
     case machine
 }
 
-public class PostureBackViewModel: BaseViewModel {
+public class PostureShoulderViewModel: BaseViewModel {
     
-    public typealias ViewModel = PostureBackViewModel
+    public typealias ViewModel = PostureShoulderViewModel
 
     private let disposeBag = DisposeBag()
 
@@ -106,14 +106,14 @@ public class PostureBackViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                owner.useCase.getBackData()
+                owner.useCase.getShoulderData()
             }).disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
-        useCase.categoryBackData
+        useCase.categoryShoulderData
             .subscribe(onNext: { partData in
                 self.backDataSubject.onNext(partData)
             }).disposed(by: disposeBag)

@@ -13,14 +13,16 @@ import MGLogger
 
 import Domain
 
-public class PostureBackViewController: BaseViewController<PostureBackViewModel> {
+import PostureFeatureInterface
+
+public class PostureLegViewController: BaseViewController<PostureLegViewModel> {
 
     private var firstButton = MGToggleButton(type: .bareBody)
     private var secondButton = MGToggleButton(type: .machine)
 
     private var headerView = UIView()
 
-    private var postureBackTableView = UITableView().then {
+    private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
         $0.backgroundColor = .white
         $0.separatorStyle = .none
@@ -28,15 +30,14 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var backData: PosePartModel = PosePartModel(responses: [])
+    private var chestData: PosePartModel = PosePartModel(responses: [])
 
-    private var backExerciesData:  PosePartModel = PosePartModel(responses: [])
-
+    private var chestExerciesData:PosePartModel = PosePartModel(responses: [])
     public override func attribute() {
         super.attribute()
 
-        postureBackTableView.dataSource = self
-        postureBackTableView.delegate = self
+        postureChestTableView.dataSource = self
+        postureChestTableView.delegate = self
     }
 
     public override func layout() {
@@ -60,10 +61,10 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
             $0.height.equalTo(36.0)
         }
 
-        postureBackTableView.tableHeaderView = headerView
-        view.addSubviews([postureBackTableView])
+        postureChestTableView.tableHeaderView = headerView
+        view.addSubview(postureChestTableView)
 
-        postureBackTableView.snp.makeConstraints {
+        postureChestTableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
             $0.height.equalToSuperview()
@@ -80,51 +81,50 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         let secondButtonTapped = secondButton.rx.tap
             .asDriver(onErrorDriveWith: .never())
 
-
-        let input = PostureBackViewModel.Input(
+        let input = PostureLegViewModel.Input(
             firstButtonTapped: firstButtonTapped,
             secondButtonTapped: secondButtonTapped,
-            getBackData:
+            getChestData:
                 Observable.just(())
                 .asDriver(onErrorDriveWith: .never())
         )
 
         _ = viewModel.transform(input, action: { output in
-            output.backData
-                .subscribe(onNext: { backData in
-                    MGLogger.debug("backData: \(backData)")
-                    self.backData = backData
-                    self.backExerciesData = backData
-                    self.postureBackTableView.reloadData()
+            output.chestData
+                .subscribe(onNext: { chestData in
+                    MGLogger.debug("Chest Data: \(chestData)")
+                    self.chestData = chestData
+                    self.chestExerciesData = chestData
+                    self.postureChestTableView.reloadData()
                 }).disposed(by: disposeBag)
-            
-            output.backModelState
+
+            output.chestModelState
                 .subscribe(onNext: { chestModelState in
                     MGLogger.debug("Chest Model State: \(chestModelState)")
-                    self.backData = self.backExerciesData
+                    self.chestData = self.chestExerciesData
                     switch chestModelState {
                     case .all:
-                        self.backData = self.backExerciesData
+                        self.chestData = self.chestExerciesData
                     case .body:
                         var poseData: PosePartModel = PosePartModel(responses: [])
-                        for pose in self.backData.responses {
+                        for pose in self.chestData.responses {
                             if pose.needMachine == false {
                                 poseData.responses.append(pose)
                             }
                         }
                         print("맨몸 : \(poseData.responses)")
-                        self.backData = poseData
+                        self.chestData = poseData
                     case .machine:
                         var poseData: PosePartModel = PosePartModel(responses: [])
-                        for pose in self.backData.responses {
+                        for pose in self.chestData.responses {
                             if pose.needMachine == true {
                                 poseData.responses.append(pose)
                             }
                         }
                         print("기구 : \(poseData.responses)")
-                        self.backData = poseData
+                        self.chestData = poseData
                     }
-                    self.postureBackTableView.reloadData()
+                    self.postureChestTableView.reloadData()
                 }).disposed(by: disposeBag)
 
             output.firstButtonState
@@ -146,13 +146,12 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
-            
             }
         )
     }
 }
 
-extension PostureBackViewController: UITableViewDelegate {
+extension PostureLegViewController: UITableViewDelegate {
     public func tableView(
         _ tableView: UITableView,
         heightForRowAt indexPath: IndexPath
@@ -161,12 +160,12 @@ extension PostureBackViewController: UITableViewDelegate {
     }
 }
 
-extension PostureBackViewController: UITableViewDataSource {
+extension PostureLegViewController: UITableViewDataSource {
     public func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return backData.responses.count
+        return chestData.responses.count
     }
 
     public func tableView(
@@ -176,14 +175,13 @@ extension PostureBackViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: PosturePartTableViewCell.identifier,
             for: indexPath) as? PosturePartTableViewCell
-        let exercise = backData.responses[indexPath.row]
+        let exercise = chestData.responses[indexPath.row]
         cell?.setup(with: exercise)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: backData.responses[indexPath.row].id))
+        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: chestData.responses[indexPath.row].id))
     }
 }
-

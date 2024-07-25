@@ -21,7 +21,6 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
     private var secondButton = MGToggleButton(type: .machine)
 
     private var headerView = UIView()
-    public let modelID = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     private var postureChestTableView = UITableView().then {
         $0.showsVerticalScrollIndicator = false
@@ -31,18 +30,9 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var chestData: PosturePartModel = PosturePartModel(exerciseType: [], 
-                                                               allExerciseData: [],
-                                                               bodyExerciseData: [],
-                                                               machineExerciseData: []
-    )
+    private var chestData: PosePartModel = PosePartModel(responses: [])
 
-    private var chestExerciesData: [PosturePartExerciseModel] = [] {
-        didSet {
-            postureChestTableView.reloadData()
-        }
-    }
-
+    private var chestExerciesData:PosePartModel = PosePartModel(responses: [])
     public override func attribute() {
         super.attribute()
 
@@ -78,7 +68,7 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
             $0.height.equalToSuperview()
-            $0.top.equalToSuperview().offset(12.0)
+            $0.top.equalToSuperview()
         }
     }
 
@@ -104,19 +94,35 @@ public class PostureChestViewController: BaseViewController<PostureChestViewMode
                 .subscribe(onNext: { chestData in
                     MGLogger.debug("Chest Data: \(chestData)")
                     self.chestData = chestData
-                    self.chestExerciesData = chestData.allExerciseData
+                    self.chestExerciesData = chestData
+                    self.postureChestTableView.reloadData()
                 }).disposed(by: disposeBag)
 
             output.chestModelState
                 .subscribe(onNext: { chestModelState in
                     MGLogger.debug("Chest Model State: \(chestModelState)")
+                    self.chestData = self.chestExerciesData
                     switch chestModelState {
                     case .all:
-                        self.chestExerciesData = self.chestData.allExerciseData
+                        self.chestData = self.chestExerciesData
                     case .body:
-                        self.chestExerciesData = self.chestData.bodyExerciseData
+                        var poseData: PosePartModel = PosePartModel(responses: [])
+                        for pose in self.chestData.responses {
+                            if pose.needMachine == false {
+                                poseData.responses.append(pose)
+                            }
+                        }
+                        print("맨몸 : \(poseData.responses)")
+                        self.chestData = poseData
                     case .machine:
-                        self.chestExerciesData = self.chestData.machineExerciseData
+                        var poseData: PosePartModel = PosePartModel(responses: [])
+                        for pose in self.chestData.responses {
+                            if pose.needMachine == true {
+                                poseData.responses.append(pose)
+                            }
+                        }
+                        print("기구 : \(poseData.responses)")
+                        self.chestData = poseData
                     }
                     self.postureChestTableView.reloadData()
                 }).disposed(by: disposeBag)
@@ -159,7 +165,7 @@ extension PostureChestViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return chestExerciesData.count
+        return chestData.responses.count
     }
 
     public func tableView(
@@ -169,15 +175,14 @@ extension PostureChestViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: PosturePartTableViewCell.identifier,
             for: indexPath) as? PosturePartTableViewCell
-        let exercise = chestExerciesData[indexPath.row]
+        let exercise = chestData.responses[indexPath.row]
         cell?.setup(with: exercise)
-//        cell?.id = modelID[indexPath.row]
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: modelID[indexPath.row]))
+        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: chestData.responses[indexPath.row].id))
     }
 }
 

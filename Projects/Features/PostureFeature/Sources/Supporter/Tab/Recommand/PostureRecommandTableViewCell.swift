@@ -14,12 +14,13 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
 
     static let identifier: String = "PostureRecommandTableViewCell"
     
-    public var seemoreButtonTap: ControlEvent<Void> {
-         return seemoreButton.rx.tap
-    }
-
-    private let containerView = UIView()
     private var currentTitleText: String = ""
+    
+    public var seemoreButtonIsTap: ((String) -> Void)?
+    
+    public var poseIsClicked: ((Int) -> Void)?
+    
+    private let containerView = UIView()
 
     private var exerciseTitleLabel = MGLabel(font: UIFont.Pretendard.titleMedium,
                                              textColor: .black,
@@ -59,6 +60,10 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
         backgroundColor = .white
         exerciseCollectionView.delegate = self
         exerciseCollectionView.dataSource = self
+        
+        seemoreButton.rx.tap.subscribe(onNext:  { [weak self] in
+            self?.seemoreButtonIsTap?(self?.currentTitleText ?? "")
+        }).disposed(by: disposeBag)
     }
 
     public override func layout() {
@@ -93,9 +98,9 @@ public class PostureRecommandTableViewCell: BaseTableViewCell{
 }
 
 public extension PostureRecommandTableViewCell {
-    func setup(with model: [PoseRecommandResponseModel], titleText: String) {
+    func setup(with model: PoseRecommandPartModel, titleText: String) {
         exerciseTitleLabel.changeText(text: "\(titleText) 운동")
-        recommandExerciseData = model
+        recommandExerciseData = model.poses
         currentTitleText = titleText
     }
 }
@@ -106,7 +111,12 @@ extension PostureRecommandTableViewCell: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(width: 148.0, height: 200.0)
+        return CGSize(width: 148.0, height: 220.0)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = recommandExerciseData[indexPath.row]
+        poseIsClicked?(model.id)
     }
 }
 
@@ -128,6 +138,9 @@ extension PostureRecommandTableViewCell: UICollectionViewDataSource {
         ) as? PostureRecommandCollectionViewCell
         let model = recommandExerciseData[indexPath.row]
         cell?.setup(with: model)
+        
         return cell ?? UICollectionViewCell()
     }
 }
+
+

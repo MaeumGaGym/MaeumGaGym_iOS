@@ -50,6 +50,7 @@ open class BaseViewController<T>: UIViewController {
     /// View가 메모리에 로드된 후 호출됩니다.
     open override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         bindActions()
         bindViewModel()
         layout()

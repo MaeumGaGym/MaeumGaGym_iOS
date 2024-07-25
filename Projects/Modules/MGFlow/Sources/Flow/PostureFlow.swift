@@ -96,7 +96,7 @@ public class PostureFlow: Flow {
     }
 
     private func popupViewController() -> FlowContributors {
-        rootViewController.popToRootViewController(animated: true)
+        rootViewController.popViewController(animated: true)
         if rootViewController.viewControllers.count == 1 {
             MainTabBarContoller.shared.tabBar.isHidden = false
         }

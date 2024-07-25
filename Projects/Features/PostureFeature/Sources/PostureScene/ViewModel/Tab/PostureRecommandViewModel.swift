@@ -16,6 +16,7 @@ public class PostureRecommandViewModel: BaseViewModel {
     private let useCase: PostureUseCase
 
     public struct Input {
+        let poseIsClicked: Driver<Int>
         let getRecommandData: Driver<Void>
     }
 
@@ -45,6 +46,13 @@ public class PostureRecommandViewModel: BaseViewModel {
                 owner.useCase.getRecommandData()
             }).disposed(by: disposeBag)
         
+        input.poseIsClicked
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, id in
+                PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: id))
+            }).disposed(by: disposeBag)
+            
         return output
     }
     

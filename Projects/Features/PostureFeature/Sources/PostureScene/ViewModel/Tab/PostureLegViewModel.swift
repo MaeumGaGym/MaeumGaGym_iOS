@@ -8,20 +8,20 @@ import Core
 import Domain
 import MGLogger
 
-public enum BackToggleButtonState {
+public enum LegToggleButtonState {
     case checked
     case unChecked
 }
 
-public enum PostureBackModelState {
+public enum PostureLegModelState {
     case all
     case body
     case machine
 }
 
-public class PostureBackViewModel: BaseViewModel {
+public class PostureLegViewModel: BaseViewModel {
     
-    public typealias ViewModel = PostureBackViewModel
+    public typealias ViewModel = PostureLegViewModel
 
     private let disposeBag = DisposeBag()
 
@@ -30,22 +30,22 @@ public class PostureBackViewModel: BaseViewModel {
     public struct Input {
         let firstButtonTapped: Driver<Void>
         let secondButtonTapped: Driver<Void>
-        let getBackData: Driver<Void>
-      }
+        let getChestData: Driver<Void>
+    }
 
-      public struct Output {
-          let firstButtonState: Observable<BackToggleButtonState>
-          let secondButtonState: Observable<BackToggleButtonState>
-          let backModelState:
-          Observable<PostureBackModelState>
-          var backData: Observable<PosePartModel>
-      }
+    public struct Output {
+        let firstButtonState: Observable<ChestToggleButtonState>
+        let secondButtonState: Observable<ChestToggleButtonState>
+        let chestModelState:
+        Observable<PostureChestModelState>
+        var chestData: Observable<PosePartModel>
+    }
 
-    private let firstButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
-    private let secondButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
-    private let backModelStateSubject = BehaviorSubject<PostureBackModelState>(value: .all)
+    private let firstButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
+    private let secondButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
+    private let chestModelStateSubject = BehaviorSubject<PostureChestModelState>(value: .all)
 
-    private let backDataSubject = PublishSubject<PosePartModel>()
+    private let chestDataSubject = PublishSubject<PosePartModel>()
 
     public init(useCase: PostureUseCase) {
         self.useCase = useCase
@@ -56,8 +56,8 @@ public class PostureBackViewModel: BaseViewModel {
             firstButtonState: firstButtonStateSubject.asObservable(),
             secondButtonState:
                 secondButtonStateSubject.asObservable(),
-            backModelState: backModelStateSubject.asObservable(),
-            backData: backDataSubject.asObservable()
+            chestModelState: chestModelStateSubject.asObservable(),
+            chestData: chestDataSubject.asObservable()
         )
 
         action(output)
@@ -74,10 +74,10 @@ public class PostureBackViewModel: BaseViewModel {
                 case .unChecked:
                     owner.firstButtonStateSubject.onNext(.checked)
                     owner.secondButtonStateSubject.onNext(.unChecked)
-                    owner.backModelStateSubject.onNext(.body)
+                    owner.chestModelStateSubject.onNext(.body)
                 case .checked:
                     owner.firstButtonStateSubject.onNext(.unChecked)
-                    owner.backModelStateSubject.onNext(.all)
+                    owner.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
@@ -93,30 +93,29 @@ public class PostureBackViewModel: BaseViewModel {
                 case .unChecked:
                     owner.secondButtonStateSubject.onNext(.checked)
                     owner.firstButtonStateSubject.onNext(.unChecked)
-                    owner.backModelStateSubject.onNext(.machine)
+                    owner.chestModelStateSubject.onNext(.machine)
                 case .checked:
                     owner.secondButtonStateSubject.onNext(.unChecked)
-                    owner.backModelStateSubject.onNext(.all)
+                    owner.chestModelStateSubject.onNext(.all)
                 case .none:
                     break
                 }
             }).disposed(by: disposeBag)
 
-        input.getBackData
+        input.getChestData
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                owner.useCase.getBackData()
+                owner.useCase.getLegData()
             }).disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
-        useCase.categoryBackData
+        useCase.categoryLegData
             .subscribe(onNext: { partData in
-                self.backDataSubject.onNext(partData)
+                self.chestDataSubject.onNext(partData)
             }).disposed(by: disposeBag)
     }
 }
-

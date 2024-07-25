@@ -31,7 +31,6 @@ open class MGLabel: BaseLabel {
     }
 
     private func setupUI(text: String?, font: UIFont?, textColor: UIColor?, isCencter: Bool, numberOfLineCount: Int) {
-
         if isCencter == true {
             textLabel.setTextAlignmentAndNumberOfLines(alignment: .center)
         } else {
@@ -46,6 +45,8 @@ open class MGLabel: BaseLabel {
         }
 
         textLabel.setTextAlignmentAndNumberOfLines(numberOfLines: numberOfLineCount)
+        
+        textLabel.lineBreakMode = .byCharWrapping
     }
 
     public func changeText(text: String?) {
