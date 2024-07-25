@@ -77,25 +77,27 @@ public extension PoseDetailDTO {
     }
 }
 
-public struct PoseRecommandDTO: Decodable {
-    public let poses: PoseRecommandPart
+protocol DomainConvertible {
+    associatedtype DomainType
+    func toDomain() -> DomainType
 }
 
-public struct PoseRecommandPart: Decodable {
-    public let 어깨, 복근, 등, 가슴, 팔: PoseRecommandPartResponse
+public struct PoseRecommandDTO: Codable {
+    let responses: [PoseRecommandPart]
 }
 
-public struct PoseRecommandPartResponse: Decodable {
-    public let responses: [PoseRecommandResponse]
+public struct PoseRecommandPart: Codable {
+    let category: String
+    let poses: [PoseRecommandResponse]
 }
 
-public struct PoseRecommandResponse: Decodable {
-    public let id: Int
-    public let category: [String]
-    public let needMachine: Bool
-    public let name: String
-    public let simplePart, exactPart: [String]
-    public let thumbnail: String
+public struct PoseRecommandResponse: Codable {
+    let id: Int
+    let category: [String]
+    let needMachine: Bool
+    let name: String
+    let simplePart, exactPart: [String]
+    let thumbnail: String
 
     enum CodingKeys: String, CodingKey {
         case id, category
@@ -107,32 +109,61 @@ public struct PoseRecommandResponse: Decodable {
     }
 }
 
-extension PoseRecommandDTO {
+extension PoseRecommandDTO: DomainConvertible {
     public func toDomain() -> PoseRecommandModel {
-        return .init(poses: poses.toDomain())
-    }
-}
-
-extension PoseRecommandPart {
-    public func toDomain() -> PoseRecommandPartModel {
-        return .init(어깨: 어깨.toDomain(), 복근: 복근.toDomain(), 등: 등.toDomain(), 가슴: 가슴.toDomain(), 팔: 팔.toDomain())
-    }
-}
-
-extension PoseRecommandPartResponse {
-    public func toDomain() -> PoseRecommandPartResponseModel {
         return .init(responses: responses.toDomain())
     }
 }
 
-extension PoseRecommandResponse {
+extension PoseRecommandPart: DomainConvertible {
+    public func toDomain() -> PoseRecommandPartModel {
+        return .init(category: category, poses: poses.toDomain())
+    }
+}
+
+extension PoseRecommandResponse: DomainConvertible {
     public func toDomain() -> PoseRecommandResponseModel {
         return .init(id: id, category: category, needMachine: needMachine, name: name, simplePart: simplePart, exactPart: exactPart, thumbnail: thumbnail)
     }
 }
 
-extension Array where Element == PoseRecommandResponse {
-    public func toDomain() -> [PoseRecommandResponseModel] {
+
+extension Array where Element: DomainConvertible {
+    func toDomain() -> [Element.DomainType] {
         return self.map { $0.toDomain() }
+    }
+}
+
+public struct PosePartDTO: Codable {
+    let responses: [PosePartResponse]
+}
+
+public struct PosePartResponse: Codable {
+    let id: Int
+    let category: [String]
+    let needMachine: Bool
+    let name: String
+    let simplePart, exactPart: [String]
+    let thumbnail: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, category
+        case needMachine = "need_machine"
+        case name
+        case simplePart = "simple_part"
+        case exactPart = "exact_part"
+        case thumbnail
+    }
+}
+
+extension PosePartDTO: DomainConvertible {
+    public func toDomain() -> PosePartModel {
+        return .init(responses: responses.toDomain())
+    }
+}
+
+extension PosePartResponse: DomainConvertible {
+    public func toDomain() -> PosePartResponseModel {
+        return .init(id: id, category: category, needMachine: needMachine, name: name, simplePart: simplePart, exactPart: exactPart, thumbnail: thumbnail)
     }
 }
