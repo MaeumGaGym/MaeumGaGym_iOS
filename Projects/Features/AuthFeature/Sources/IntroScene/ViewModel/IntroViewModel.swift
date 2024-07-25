@@ -22,11 +22,9 @@ public class IntroViewModel: AuthViewModelType {
 
     public typealias ViewModel = IntroViewModel
 
-    public var disposeBag: RxSwift.DisposeBag
+    public var disposeBag: DisposeBag
 
     private let useCase: AuthUseCase
-
-    let keychainCSRF = KeychainType.CSRFToken
 
     public struct Input {
         let goolgeButtonTapped: Driver<Void>
@@ -37,9 +35,11 @@ public class IntroViewModel: AuthViewModelType {
 
     public struct Output {
         var introDatas: Observable<IntroModel>
+        var showGoogleAlert: Observable<Void>
     }
 
     private let introModelSubject = PublishSubject<IntroModel>()
+    private let showGoogleAlertSubject = PublishSubject<Void>()
 
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
@@ -48,43 +48,33 @@ public class IntroViewModel: AuthViewModelType {
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
 
-        let output = Output(introDatas: introModelSubject.asObservable())
+        let output = Output(
+            introDatas: introModelSubject.asObservable(),
+            showGoogleAlert: showGoogleAlertSubject.asObservable()
+        )
 
         action(output)
-
+        bindInputs(input)
         bindOutput(output: output)
 
-        input.goolgeButtonTapped
-            .drive(onNext: { _ in
-                AuthStepper.shared.steps.accept(MGStep.authAgreeIsRequired)
-            })
-            .disposed(by: disposeBag)
-
-        input.kakaoButtonTapped
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.kakaoButtonTap()
-            })
-            .disposed(by: disposeBag)
-
-        input.appleButtonTapped
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.appleButtonTap()
-            })
-            .disposed(by: disposeBag)
-
-        input.getIntroData
-            .asObservable()
-            .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.getIntroData()
-            })
-            .disposed(by: disposeBag)
-
         return output
+    }
+    
+    private func bindButtonTap(_ driver: Driver<Void>, handler: @escaping () -> Void) {
+        driver
+            .asObservable()
+            .withUnretained(self)
+            .subscribe(onNext: { owner, _ in
+                handler()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindInputs(_ input: Input) {
+        bindButtonTap(input.goolgeButtonTapped, handler: { self.showGoogleAlertSubject.onNext(()) })
+        bindButtonTap(input.appleButtonTapped, handler: { self.useCase.appleButtonTap() })
+        bindButtonTap(input.kakaoButtonTapped, handler: { self.useCase.kakaoButtonTap() })
+        bindButtonTap(input.getIntroData, handler: { self.useCase.getIntroData() })
     }
 
     private func bindOutput(output: Output) {
@@ -101,20 +91,4 @@ public class IntroViewModel: AuthViewModelType {
             })
             .disposed(by: disposeBag)
     }
-}
-
-private extension IntroViewModel {
-    //    func kakaoGetUserInfo() {
-    //        UserApi.shared.me() { (user, error) in
-    //            if let error = error {
-    //                print(error)
-    //            }
-    //
-    //            let userName = user?.kakaoAccount?.name
-    //
-    //            _ = "user name : \(String(describing: userName))"
-    //
-    //            print("user - \(String(describing: user))")
-    //        }
-    //    }
 }

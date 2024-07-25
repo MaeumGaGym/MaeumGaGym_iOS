@@ -15,10 +15,15 @@ import Core
 public class SplashViewController: BaseViewController<SplashViewModel>, Stepper {
 
     private let iconImageView = UIImageView().then {
-        $0.image = DSKitAsset.Assets.bodySplitSqt.image
+        $0.image = DSKitAsset.Assets.splashLogo.image
+    }
+    
+    public override func attribute() {
+        super.attribute()
     }
 
     public override func layout() {
+        super.layout()
         view.addSubviews([iconImageView])
 
         iconImageView.snp.makeConstraints {

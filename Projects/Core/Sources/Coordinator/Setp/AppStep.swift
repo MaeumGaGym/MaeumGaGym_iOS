@@ -7,6 +7,7 @@ public enum MGStep: Step {
     case TabBarIsRequired
 
     // Auth
+    case authSplashIsRequired
     case authIntroIsRequired
     case authAgreeIsRequired
     case authNickNameIsRequired
@@ -48,7 +49,7 @@ public enum MGStep: Step {
     case postureStomachIsRequired
     case postureFrontlegIsRequired
 
-    //pickle
+    // pickle
     case pickle
     case pickleRequired
     
@@ -57,9 +58,27 @@ public enum MGStep: Step {
     
     case initialization
     
-    // selfCore
+    //MARK: selfCare
     case selfCoreHome
+    case popRequired
+    case devRequired
+    
+    //routine
+    case myRoutineRequired
+    case detailRoutineRequired(id: Int)
+    case addRoutineRequired
+    case modifyRoutineRequired(id: Int)
+    
+    //target
+    case targetHomeRequired
+    case addTargetRequired
+    case modifyTargetRequired(id: Int)
+    case detailTargetRequired(id: Int)
+    case presentTargetAttribute
+    
+    //profile
     case myProfileRequired
+    case editMyProfileRequired
     
     case postureIsRequired
     case shopIsRequired

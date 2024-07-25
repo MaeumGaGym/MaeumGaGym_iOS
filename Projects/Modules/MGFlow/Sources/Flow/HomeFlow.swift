@@ -39,6 +39,8 @@ public class HomeFlow: Flow {
             return setupHomeScreen()
         case .homeStepRequired:
             return navigateToStepViewScreen()
+        case .homeTimerRequired:
+            return navigateToTimerViewScreen()
         case .homeBack:
             return popupViewController()
         default:
@@ -50,7 +52,7 @@ public class HomeFlow: Flow {
         homeService = HomeService()
         homeRepository = HomeRepository(networkService: homeService)
         useCase = DefaultHomeUseCase(repository: homeRepository)
-        viewModel = HomeViewModel(useCase: useCase)
+        viewModel = HomeViewModel(useCase: useCase, homeRepository: homeRepository)
     }
 
     private func setupViewController() {
@@ -76,6 +78,15 @@ public class HomeFlow: Flow {
         return .none
     }
     
+    private func navigateToTimerViewScreen() -> FlowContributors {
+
+        let vc = TimerViewController(TimerViewModel())
+        rootViewController.pushViewController(vc, animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = true
+
+        return .none
+    }
+
     private func popupViewController() -> FlowContributors {
         rootViewController.popToRootViewController(animated: true)
         if rootViewController.viewControllers.count == 1 {

@@ -13,7 +13,7 @@ final class HomeNavigationBar: BaseView {
      }
 
     private let logoImageView = UIImageView().then {
-        $0.image = DSKitAsset.Assets.mainLogo.image.withRenderingMode(.alwaysOriginal)
+        $0.image = DSKitAsset.Assets.mainTextLogo.image.withRenderingMode(.alwaysOriginal)
         $0.contentMode = .scaleToFill
     }
 
@@ -45,7 +45,8 @@ final class HomeNavigationBar: BaseView {
         logoImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
-            $0.width.height.equalTo(42)
+            $0.height.equalTo(42)
+            $0.width.equalTo(129)
         }
 
         rightItemsStackView.snp.makeConstraints {

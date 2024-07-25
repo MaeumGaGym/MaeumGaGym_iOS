@@ -10,7 +10,7 @@ import Core
 public class PickleFlow: Flow {
 
     private var rootViewController: UINavigationController!
-    var viewController: PickleViewController!
+    var viewController: PicklePreparingViewController!
 
     public var root: Presentable {
         return self.rootViewController
@@ -24,7 +24,7 @@ public class PickleFlow: Flow {
         guard let step = step as? MGStep else { return .none }
 
         switch step {
-        case .pickle:
+        case .pickleRequired:
             return setupPickleScreen()
         default:
             return .none
@@ -32,14 +32,15 @@ public class PickleFlow: Flow {
     }
     
     private func setupViewController() {
-        viewController = PickleViewController()
+        viewController = PicklePreparingViewController()
         rootViewController = UINavigationController(rootViewController: viewController)
     }
     
     private func setupPickleScreen() -> FlowContributors {
         rootViewController.tabBarItem.title = "피클"
         rootViewController.tabBarItem.image = DSKitAsset.Assets.baPickleTapBar.image
-        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPeopleTapBar.image
+        rootViewController.tabBarItem.selectedImage = DSKitAsset.Assets.blPickleTapBar.image
+        rootViewController.isNavigationBarHidden = true
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: PickleStepper.shared))
     }
 }

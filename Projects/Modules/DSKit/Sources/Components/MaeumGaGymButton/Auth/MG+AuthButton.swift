@@ -13,7 +13,7 @@ open class MGAuthButton: BaseButton {
         $0.contentMode = .scaleAspectFit
     }
 
-    public let textLabel = MGLabel(font: UIFont.Pretendard.bodyMedium,
+    public let textLabel = MGLabel(font: UIFont.Pretendard.labelMedium,
                                       isCenter: true,
                                       numberOfLineCount: 1
     )
@@ -53,7 +53,7 @@ private extension MGAuthButton {
     func setup(type: AuthLogoType,
                          spacing: CGFloat?,
                          radius: Double?) {
-        self.textLabel.text = type.logoTitle
+        self.textLabel.changeText(text: type.logoTitle)
         self.iconImageView.image = type.imageLogo
         self.backgroundColor = type.backgroundColor
         self.layer.cornerRadius = radius ?? 8

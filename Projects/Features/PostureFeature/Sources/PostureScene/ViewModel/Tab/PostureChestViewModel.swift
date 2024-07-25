@@ -38,14 +38,14 @@ public class PostureChestViewModel: BaseViewModel {
         let secondButtonState: Observable<ChestToggleButtonState>
         let chestModelState:
         Observable<PostureChestModelState>
-        var chestData: Observable<PosturePartModel>
+        var chestData: Observable<PosePartModel>
     }
 
     private let firstButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
     private let secondButtonStateSubject = BehaviorSubject<ChestToggleButtonState>(value: .unChecked)
     private let chestModelStateSubject = BehaviorSubject<PostureChestModelState>(value: .all)
 
-    private let chestDataSubject = PublishSubject<PosturePartModel>()
+    private let chestDataSubject = PublishSubject<PosePartModel>()
 
     public init(useCase: PostureUseCase) {
         self.useCase = useCase
@@ -68,7 +68,6 @@ public class PostureChestViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                MGLogger.debug("firstButtonTapped")
                 let currentState = try? owner.firstButtonStateSubject.value()
 
                 switch currentState {
@@ -88,7 +87,6 @@ public class PostureChestViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                MGLogger.debug("firstButtonTapped")
                 let currentState = try? owner.secondButtonStateSubject.value()
 
                 switch currentState {
@@ -108,14 +106,14 @@ public class PostureChestViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                owner.useCase.getPartData(type: .chest)
+                owner.useCase.getChestData()
             }).disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
-        useCase.partData
+        useCase.categoryChestData
             .subscribe(onNext: { partData in
                 self.chestDataSubject.onNext(partData)
             }).disposed(by: disposeBag)

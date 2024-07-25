@@ -38,13 +38,8 @@ extension AuthAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case .delete, .nickname:
+        case .delete, .reissuanceToken, .nickname:
             return .requestPlain
-        case let .reissuanceToken(refreshToken):
-            let parameters: [String: Any] = [
-                "refresh_token": refreshToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }
     }
 
@@ -52,6 +47,8 @@ extension AuthAPI: BaseAPI {
         switch self {
         case let .delete(accessToken):
             return ["Authorization": "\(accessToken)"]
+        case let .reissuanceToken(refreshToken):
+            return ["RF-TOKEN": "\(refreshToken)"]
         default:
             return nil
         }

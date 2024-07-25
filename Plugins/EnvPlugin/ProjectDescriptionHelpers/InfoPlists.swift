@@ -6,7 +6,7 @@ public extension Project {
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
         "CFBundleIdentifier": "com.maeumGaGym-health-iOS.release",
-        "CFBundleDisplayName": "Maeumgajim",
+        "CFBundleDisplayName": "마음가짐",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
             "UIApplicationSupportsMultipleScenes": false,
@@ -41,8 +41,8 @@ public extension Project {
         "CFBundleURLTypes": [
             [
                 "CFBundleTypeRole": "Editor",
-                "CFBundleURLName": "kakao44df4ecfe4e1218c17550a6ab201d87d",
-                "CFBundleURLSchemes": ["kakao44df4ecfe4e1218c17550a6ab201d87d"]
+                "CFBundleURLName": "kakaodcfcd3ab4a997c5a53e2ab26a8ec2a63",
+                "CFBundleURLSchemes": ["kakaodcfcd3ab4a997c5a53e2ab26a8ec2a63"]
             ]
         ],
         "UIBackgroundModes": ["remote-notification"],
@@ -102,8 +102,8 @@ public extension Project {
       "CFBundleURLTypes": [
           [
               "CFBundleTypeRole": "Editor",
-              "CFBundleURLName": "kakao44df4ecfe4e1218c17550a6ab201d87d",
-              "CFBundleURLSchemes": ["kakao44df4ecfe4e1218c17550a6ab201d87d"]
+              "CFBundleURLName": "kakaodcfcd3ab4a997c5a53e2ab26a8ec2a63",
+              "CFBundleURLSchemes": ["kakaodcfcd3ab4a997c5a53e2ab26a8ec2a63"]
           ]
       ],
       

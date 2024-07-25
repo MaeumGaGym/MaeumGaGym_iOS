@@ -14,34 +14,52 @@ import Domain
 import MGNetworks
 
 public class SelfCareMenuTableViewCell: BaseTableViewCell {
+    
+    public var clickRoutine: (() -> Void)?
+    public var clickTarget: (() -> Void)?
+    public var clickMeal: (() -> Void)?
+    public var clickTodayExe: (() -> Void)?
 
     static let identifier: String = "SelfCareMenuTableViewCell"
 
-    private var nameTitle = MGLabel(text: "자기관리",
-                                    font: UIFont.Pretendard.titleMedium,
-                                    textColor: .black
+    private var nameTitle = MGLabel(
+        text: "자기관리",
+        font: UIFont.Pretendard.titleMedium,
+        textColor: .black
     )
 
-    private var selfCareMenuCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 8.0
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.register(
+    private lazy var collectoinViewFlowLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumInteritemSpacing = 8.0
+        $0.itemSize.width = self.frame.width
+    }
+    private lazy var selfCareMenuCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: collectoinViewFlowLayout
+    ).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.backgroundColor = .clear
+        $0.register(
             SelfCareMenuCollectionCell.self,
             forCellWithReuseIdentifier: SelfCareMenuCollectionCell.identifier
         )
-        return collectionView
-    }()
+    }
 
     var menus: [SelfCareMenuModel] = [] {
         didSet {
             selfCareMenuCollectionView.reloadData()
         }
     }
-
+    
+//    public init(
+//        cellState: @escaping () -> Void
+//    ) {
+//        self.cellState = cellState
+//    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
     public override func attribute() {
         super.attribute()
 
@@ -89,13 +107,31 @@ extension SelfCareMenuTableViewCell: UICollectionViewDataSource {
         }
 
         cell.configure(with: menus[indexPath.item])
+        cell.frame.size.width = self.frame.width
+
         return cell
     }
 }
 
 extension SelfCareMenuTableViewCell: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 현재 이미지를 눌렀을 때만 이동하는 문제 해결해야함
         print(menus[indexPath.row])
+        
+        switch indexPath.row {
+        case 0:
+            self.clickRoutine!()
+            return
+        case 1:
+            self.clickTarget!()
+            return
+        case 2:
+            self.clickMeal!()
+            return
+        case 3:
+            self.clickTodayExe!()
+            return
+        default:
+            return
+        }
     }
 }

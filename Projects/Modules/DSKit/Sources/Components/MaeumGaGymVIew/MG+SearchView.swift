@@ -23,7 +23,7 @@ open class MGSearchView: BaseView {
         $0.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: placeholderAttributes)
     }
 
-    private var cancelButton = UIButton().then {
+    public var cancelButton = UIButton().then {
         $0.setImage(DSKitAsset.Assets.blackCancel.image, for: .normal)
         $0.isHidden = true
     }

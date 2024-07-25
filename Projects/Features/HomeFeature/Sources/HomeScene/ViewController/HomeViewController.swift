@@ -6,16 +6,14 @@ import RxSwift
 import RxCocoa
 import RxFlow
 
-import Then
 import SnapKit
+import Then
 
+import Domain
 import Core
 import DSKit
 
-import Domain
-
 import HomeFeatureInterface
-
 import HealthKit
 
 public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
@@ -90,9 +88,6 @@ public class HomeViewController: BaseViewController<HomeViewModel>, Stepper {
 
         let myPageButtonTapped = naviBar.rightButtonTap
             .asDriver(onErrorDriveWith: .never())
-
-//        let useCase = DefaultHomeUseCase(repository: HomeRepository(networkService: HomeService()))
-//        viewModel = HomeViewModel(useCase: useCase)
 
            let input = HomeViewModel.Input(
                settingButtonTapped: myPageButtonTapped,
@@ -179,6 +174,7 @@ extension HomeViewController: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
+        
 
         switch cells[indexPath.item] {
         case .motivationMessage:
@@ -188,6 +184,7 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.configure(with: quotes!)
+            cell.selectionStyle = .none
 
             return cell
         case .stepNumber:
@@ -199,6 +196,7 @@ extension HomeViewController: UITableViewDataSource {
             }
             cell.configure(with: stepModels ?? StepModel(stepCount: 0))
             cell.layer.cornerRadius = 16.0
+            cell.selectionStyle = .none
 
             return cell
         case .routine:
@@ -210,6 +208,7 @@ extension HomeViewController: UITableViewDataSource {
             }
             cell.routines = routines!
             cell.layer.cornerRadius = 16.0
+            cell.selectionStyle = .none
 
             return cell
         case .extra:
@@ -219,6 +218,7 @@ extension HomeViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.extras = extras!
+            cell.selectionStyle = .none
 
             return cell
         }

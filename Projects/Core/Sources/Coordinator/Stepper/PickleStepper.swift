@@ -8,7 +8,7 @@ public class PickleStepper: Stepper {
     public var steps = PublishRelay<Step>()
     
     public var initialStep: Step {
-        return MGStep.home
+        return MGStep.pickleRequired
     }
     
     public init() {

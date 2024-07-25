@@ -10,6 +10,8 @@ import Domain
 public class PostureSearchTableViewCell: BaseTableViewCell {
 
     public static let identifier: String = "PostureSearchTableViewCell"
+    
+    public var id: Int = 0
 
     private var containerView = BaseView()
 
@@ -61,9 +63,12 @@ public class PostureSearchTableViewCell: BaseTableViewCell {
 }
 
 public extension PostureSearchTableViewCell {
-    func setup(with model: PostureSearchContentModel) {
-        searchImageView.image = model.exerciseImage
-        exerciseNameLabel.changeText(text: model.exerciseName)
-        exercisePartLabel.changeText(text: model.exercisePart)
+    func setup(with model: PosePartResponseModel) {
+        let text = model.exactPart.joined(separator: ", ")
+        let thumbnail = URL(string: model.thumbnail)
+        searchImageView.imageFrom(url: thumbnail!)
+        exerciseNameLabel.changeText(text: model.name)
+        exercisePartLabel.changeText(text: text)
+        id = model.id
     }
 }

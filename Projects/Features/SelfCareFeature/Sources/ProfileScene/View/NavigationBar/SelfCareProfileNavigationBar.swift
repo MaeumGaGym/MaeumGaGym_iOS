@@ -10,25 +10,30 @@ import MGNetworks
 
 final public class SelfCareProfileNavigationBar: UIView {
 
+    private var leftText: String?
+
     public var leftButtonTap: ControlEvent<Void> {
         return leftButton.rx.tap
     }
 
     private let leftButton = MGImageButton(image: DSKitAsset.Assets.leftBarArrow.image.withTintColor(.black))
 
-    private let leftLabel = MGLabel(text: "내 정보 변경",
+    private lazy var leftLabel = MGLabel(
+        text: leftText,
         font: UIFont.Pretendard.labelLarge,
-                                            textColor: .black
+        textColor: .black
     )
 
     private lazy var leftItemsStackView = UIStackView(arrangedSubviews: [leftButton, leftLabel]).then {
         $0.axis = .horizontal
-        $0.spacing = 0
-        $0.distribution = .fillEqually
+        $0.spacing = 24
     }
 
-    public init() {
+    public init(
+        leftText: String? = nil
+    ) {
         super.init(frame: .zero)
+        self.leftText = leftText
         setUI()
         setLayout()
     }
@@ -52,7 +57,7 @@ private extension SelfCareProfileNavigationBar {
 
         leftItemsStackView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().offset(-10.0)
+            $0.leading.equalToSuperview().inset(10.0)
         }
     }
 }

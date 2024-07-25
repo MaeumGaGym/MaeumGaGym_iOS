@@ -16,7 +16,7 @@ public protocol HomeUseCase {
 }
 
 public class DefaultHomeUseCase {
-  
+    
     private let repository: HomeRepositoryInterface
     private let disposeBag = DisposeBag()
     

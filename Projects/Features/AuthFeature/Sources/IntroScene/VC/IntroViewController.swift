@@ -14,27 +14,34 @@ import DSKit
 import Domain
 import MGLogger
 
-
 import BaseFeatureDependency
 import AuthenticationServices
 
 public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
-
+    
     private var introModel: IntroModel?
-
+    
+    private let alertView1 = MGAlertOnlyTitleView(title: "구글 로그인은 준비중입니다!").then {
+        $0.titleLabel?.font = UIFont.Pretendard.labelMedium
+        $0.titleLabel?.textColor = .black
+        $0.backgroundColor = DSKitAsset.Colors.gray100.color
+    }
+    
     private var introImageView = MGProfileView(
         profileImage: MGProfileImage(
             type: .custom,
             customImage: nil),
         profileType: .intro
     )
-
+    
     private var mainTitle = MGLabel(
+        text: "이제 운동을 시작해 보세요!",
         font: UIFont.Pretendard.titleMedium,
         isCenter: true
     )
     
     private var subTitle = MGLabel(
+        text: "마음가짐 서비스를 통해 규칙적인 생활을\n실천해 보세요!",
         font: UIFont.Pretendard.bodyMedium,
         textColor: DSKitAsset.Colors.gray600.color,
         numberOfLineCount: 2
@@ -73,12 +80,12 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
         
         mainTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(introImageView.snp.bottom).offset(30.0 * height)
+            $0.top.equalTo(introImageView.snp.bottom).offset(30.0)
         }
         
         subTitle.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(mainTitle.snp.bottom).offset(10.0 * height)
+            $0.top.equalTo(mainTitle.snp.bottom).offset(10.0)
         }
         
         googleButton.snp.makeConstraints {
@@ -107,10 +114,7 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
     
     public override func bindViewModel() {
         super.bindViewModel()
-        
-//        let useCase = DefaultAuthUseCase(authRepository: AuthRepository(networkService: AuthService()))
-//        viewModel = IntroViewModel(authUseCase: useCase)
-        
+
         let input = IntroViewModel.Input(
             goolgeButtonTapped: googleButton.rx.tap.asDriver(),
             appleButtonTapped: appleButton.rx.tap.asDriver(),
@@ -127,6 +131,13 @@ public class IntroViewController: BaseViewController<IntroViewModel>, Stepper {
                     owner.subTitle.changeText(text: owner.introModel?.subTitle)
                 })
                 .disposed(by: disposeBag)
+            
+            output.showGoogleAlert
+                    .withUnretained(self)
+                    .subscribe(onNext: { owner, _ in
+                        owner.alertView1.present(on: owner.view)
+                    })
+                    .disposed(by: disposeBag)
         })
     }
 }

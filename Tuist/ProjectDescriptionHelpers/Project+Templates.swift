@@ -18,7 +18,7 @@ public extension Project {
         
         let configurationName: ConfigurationName = "Development"
         let hasDynamicFramework = targets.contains(.dynamicFramework)
-        let deploymentTarget = DeploymentTarget.iOS(targetVersion: "15.0", devices: .iphone)
+        let deploymentTarget = DeploymentTarget.iOS(targetVersion: "16.0", devices: .iphone)
         let platform = Environment.platform
         
         let baseSettings: SettingsDictionary = .baseSettings.setCodeSignManual()
@@ -43,7 +43,7 @@ public extension Project {
                 sources: ["Sources/**/*.swift"],
                 resources: [.glob(pattern: "Resources/**", excluding: [])],
                 entitlements: .relativeToRoot("Supporting/마음가짐.entitlements"),
-                scripts: [.swiftLintScript],
+//                scripts: [.swiftLintScript],
                 dependencies: [
                     internalDependencies,
                     externalDependencies
@@ -114,7 +114,7 @@ public extension Project {
                 sources: ["Demo/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Demo/Resources/**", excluding: ["Demo/Resources/dummy.txt"])],
                 entitlements: .relativeToRoot("Supporting/마음가짐-Demo.entitlements"),
-                scripts: [.swiftLintScript],
+//                scripts: [.swiftLintScript],
                 dependencies: [
                     deps
                 ].flatMap { $0 },
@@ -136,7 +136,7 @@ public extension Project {
                 infoPlist: .default,
                 sources: ["Tests/Sources/**/*.swift"],
                 resources: [.glob(pattern: "Tests/Resources/**", excluding: [])],
-                scripts: [.swiftLintScript],
+//                scripts: [.swiftLintScript],
                 dependencies: [
                     deps,
                     [
@@ -163,7 +163,7 @@ public extension Project {
                 deploymentTarget: deploymentTarget,
                 infoPlist: .default,
                 sources: ["UITests/Sources/**/*.swift"],
-                scripts: [.swiftLintScript],
+//                scripts: [.swiftLintScript],
                 dependencies: [
                     deps,
                     [

@@ -1,33 +1,29 @@
-import UIKit
+import Foundation
 
-public struct PosturePartModel {
-    public var exerciseType: [PosturePartExerciseTypeModel]
-    public var allExerciseData: [PosturePartExerciseModel]
-    public var bodyExerciseData: [PosturePartExerciseModel]
-    public var machineExerciseData: [PosturePartExerciseModel]
-
-    public init(exerciseType: [PosturePartExerciseTypeModel], allExerciseData: [PosturePartExerciseModel], bodyExerciseData: [PosturePartExerciseModel], machineExerciseData: [PosturePartExerciseModel]) {
-        self.exerciseType = exerciseType
-        self.allExerciseData = allExerciseData
-        self.bodyExerciseData = bodyExerciseData
-        self.machineExerciseData = machineExerciseData
+public struct PosePartModel {
+    public var responses: [PosePartResponseModel]
+    
+    public init(responses: [PosePartResponseModel]) {
+        self.responses = responses
     }
 }
 
-public struct PosturePartExerciseModel {
-    public var image: UIImage
+public struct PosePartResponseModel {
+    public var id: Int
+    public var category: [String]
+    public var needMachine: Bool
     public var name: String
+    public var simplePart, exactPart: [String]
+    public var thumbnail: String
 
-    public init(image: UIImage, name: String) {
-        self.image = image
+    init(id: Int, category: [String], needMachine: Bool, name: String, simplePart: [String], exactPart: [String], thumbnail: String) {
+        self.id = id
+        self.category = category
+        self.needMachine = needMachine
         self.name = name
+        self.simplePart = simplePart
+        self.exactPart = exactPart
+        self.thumbnail = thumbnail
     }
 }
 
-public struct PosturePartExerciseTypeModel {
-    public var exerciseName: String
-
-    public init(exerciseName: String) {
-        self.exerciseName = exerciseName
-    }
-}

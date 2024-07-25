@@ -1,25 +1,38 @@
 import UIKit
 
-public struct PostureRecommandModel {
-    public var titleImage: UIImage
-    public var titleText: String
-    public var exerciseData: [PostureRecommandExerciseModel]
-
-    public init(titleImage: UIImage, titleText: String, exerciseData: [PostureRecommandExerciseModel]) {
-        self.titleImage = titleImage
-        self.titleText = titleText
-        self.exerciseData = exerciseData
+public struct PoseRecommandModel {
+    public var responses: [PoseRecommandPartModel]
+    
+    public init(responses: [PoseRecommandPartModel]) {
+        self.responses = responses
     }
 }
 
-public struct PostureRecommandExerciseModel {
-    public var image: UIImage
-    public var name: String
-    public var part: String
+public struct PoseRecommandPartModel {
+    public var category: String
+    public var poses: [PoseRecommandResponseModel]
+    
+    public init(category: String, poses: [PoseRecommandResponseModel]) {
+        self.category = category
+        self.poses = poses
+    }
+}
 
-    public init(image: UIImage, name: String, part: String) {
-        self.image = image
+public struct PoseRecommandResponseModel {
+    public var id: Int
+    public var category: [String]
+    public var needMachine: Bool
+    public var name: String
+    public var simplePart, exactPart: [String]
+    public var thumbnail: String
+    
+    public init(id: Int, category: [String], needMachine: Bool, name: String, simplePart: [String], exactPart: [String], thumbnail: String) {
+        self.id = id
+        self.category = category
+        self.needMachine = needMachine
         self.name = name
-        self.part = part
+        self.simplePart = simplePart
+        self.exactPart = exactPart
+        self.thumbnail = thumbnail
     }
 }

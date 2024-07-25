@@ -22,8 +22,8 @@ public class PostureDetailTagCollectionViewCell: UICollectionViewCell {
 }
 
 public extension PostureDetailTagCollectionViewCell {
-    func setup(with model: PostureDetailExerciseKindModel) {
-        tagLabel.updateData(text: model.exerciseTag)
+    func setup(with text: String) {
+        tagLabel.updateData(text: text)
 
         layout()
     }

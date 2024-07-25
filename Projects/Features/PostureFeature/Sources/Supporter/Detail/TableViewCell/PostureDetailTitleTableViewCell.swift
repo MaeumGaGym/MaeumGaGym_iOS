@@ -48,8 +48,8 @@ public class PostureDetailTitleTableViewCell: BaseTableViewCell {
 }
 
 public extension PostureDetailTitleTableViewCell {
-    func setup(with model: PostureDetailTitleTextModel) {
-        englishTitle.changeText(text: model.englishName)
-        koreanTitle.changeText(text: model.koreanName)
+    func setup(with model: [String]) {
+        englishTitle.changeText(text: model[0])
+        koreanTitle.changeText(text: model[1])
     }
 }

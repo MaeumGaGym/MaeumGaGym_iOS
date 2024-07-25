@@ -1,13 +1,43 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 
-import Domain
+import RxMoya
+import Moya
+
 import DSKit
+import Domain
+import TokenManager
 
-public class SelfCareService {
+import MGLogger
 
-    public func requestMyRoutineData() ->
+public protocol SelfCareService {
+    func getMyRoutineData() -> Single<SelfCareMyRoutineModel>
+    func getMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel>
+    func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel>
+    //MARK: Target
+    func getMyTarget(accessToken: String, page: Int) -> Single<Response>
+    func getMonthTarget(accessToken: String, date: String) -> Single<Response>
+    func getDetailTarget(accessToken: String, id: Int) -> Single<Response>
+    func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response>
+    func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response>
+    func deleteTarget(accessToken: String, id: Int) -> Single<Response>
+//    func requestDeleteTarget() -> Single<Response>
+    //MARK: Profile
+    func getProfileData(accessToken: String, userName: String) -> Single<Response>
+    func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response>
+}
+
+public class DefaultSelfCareService: NSObject {
+    let routineProvider = MoyaProvider<RoutineAPI>(plugins: [MoyaLoggingPlugin()])
+    let targetProvider = MoyaProvider<TargetAPI>(plugins: [MoyaLoggingPlugin()])
+    let profileProvider = MoyaProvider<ProfileAPI>(plugins: [MoyaLoggingPlugin()])
+}
+
+extension DefaultSelfCareService: SelfCareService {
+
+    public func getMyRoutineData() ->
     Single<SelfCareMyRoutineModel> {
         return Single.just(
             SelfCareMyRoutineModel(
@@ -67,7 +97,7 @@ public class SelfCareService {
         )
     }
 
-    public func requestMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
+    public func getMyRoutineDetailData() -> Single<SelfCareMyRoutineDetailModel> {
         return Single.just(
             SelfCareMyRoutineDetailModel(
                 routineTitleData: SelfCareRoutineModel(
@@ -98,7 +128,7 @@ public class SelfCareService {
         )
     }
 
-    public func requestMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
+    public func getMyRoutineEditData() -> Single<SelfCareMyRoutineEditModel> {
         return Single.just(
             SelfCareMyRoutineEditModel(
                 textFieldData: MyRoutineEditTextFieldModel(
@@ -147,37 +177,51 @@ public class SelfCareService {
         )
     }
 
-    public func requestTargetMainData() -> Single<SelfCareTargetMainModel> {
-        return Single.just(SelfCareTargetMainModel(
-            titleTextData:
-                TargetTitleTextModel(
-                    titleText: "목표",
-                    infoText: "나만의 목표를 세워보세요."
-                ),
-            targetData: [
-                TargetContentModel(
-                    targetTitle: "디자인 완성하기",
-                    targetStartData: "12월 17일",
-                    targetEndData: "12월 18일"),
-                TargetContentModel(
-                    targetTitle: "공부하기",
-                    targetStartData: "12월 17일",
-                    targetEndData: "2024년 01월 28일"),
-                ]
-            )
-        )
-    }
+//    public func getMyRoutineData(accessToken: String) -> Single<Response> {
+//        return routineProvider.rx.request(.routineMyAll(accessToken: accessToken))
+//            .filterSuccessfulStatusCodes()
+//    }
+//    public func getMyRoutineDetailData() -> Single<Response> {
+//        return routineProvider.rx.request(.rou)
+//    }
+//    public func getMyRoutineEditData() -> Single<Response> {
+//
+//    }
 
-    public func requestTargetDtailData() -> Single<SelfCareTargetDetailModel> {
-        return Single.just(SelfCareTargetDetailModel(titleTextData: "공부하기",
-                                                     startDateData: "12월 26일 (화) 오전 8:00",
-                                                     endDateData: "2024년 01월 01일 (월) 오후 9:00",
-                                                     textData: "새해가 다가오기 전까지 열심히 공부하자.\n한 해의 끝도 공부와 함께.")
-        )
+    public func getMyTarget(accessToken: String, page: Int) -> Single<Response> {
+        return targetProvider.rx.request(.getMyTarget(accessToken: accessToken, page: page))
+            .filterSuccessfulStatusCodes()
     }
-
-    public init() {
-
+    public func getMonthTarget(accessToken: String, date: String) -> Single<Response> {
+        return targetProvider.rx.request(.getMonthTarget(accessToken: accessToken, date: date))
+            .filterSuccessfulStatusCodes()
     }
+    public func getDetailTarget(accessToken: String, id: Int) -> Single<Response> {
+        return targetProvider.rx.request(.getTarget(accessToken: accessToken, id: id))
+            .filterSuccessfulStatusCodes()
+    }
+    public func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response> {
+        return targetProvider.rx.request(.targetAdd(accessToken: accessToken, title: title, content: content, startDate: startDate, endDate: endDate))
+            .filterSuccessfulStatusCodes()
+    }
+    public func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response> {
+        return targetProvider.rx.request(.targetEdit(accessToken: accessToken, title: title, content: content, startDate: startDate, endDate: endDate, id: id))
+            .filterSuccessfulStatusCodes()
+    }
+    public func deleteTarget(accessToken: String, id: Int) -> Single<Response> {
+        return targetProvider.rx.request(.targetDelete(accessToken: accessToken, id: id))
+            .filterSuccessfulStatusCodes()
+    }
+    
+    public func getProfileData(accessToken: String, userName: String) -> Single<Response> {
+        return profileProvider.rx.request(.profileCheck(accessToken: accessToken, userName: userName))
+            .filterSuccessfulStatusCodes()
+    }
+    
+    public func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response> {
+        return profileProvider.rx.request(.profileInfoModify(accessToken: accessToken, nickName: nickName, height: height, weight: weight, gender: gender))
+            .filterSuccessfulStatusCodes()
+    }
+    
 }
 

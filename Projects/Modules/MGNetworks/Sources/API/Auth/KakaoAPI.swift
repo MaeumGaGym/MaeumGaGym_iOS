@@ -5,9 +5,9 @@ import Core
 import Alamofire
 
 public enum KakaoAPI {
-    case kakaoSignup(nickname: String, accessToken: String)
-    case kakaoLogin(accessToken: String)
-    case kakaoRecovery(accessToken: String)
+    case kakaoSignup(nickname: String, oauthToken: String)
+    case kakaoLogin(oauthToken: String)
+    case kakaoRecovery(oauthToken: String)
 }
 
 extension KakaoAPI: BaseAPI {
@@ -38,28 +38,24 @@ extension KakaoAPI: BaseAPI {
 
     public var task: Moya.Task {
         switch self {
-        case let .kakaoSignup(nickname, accessToken):
+        case let .kakaoSignup(nickname, _):
             let bodyParameters: [String: Any] = [
                 "nickname": nickname
             ]
-            let urlParameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: JSONEncoding.default, urlParameters: urlParameters)
-        case let .kakaoLogin(accessToken):
-            let parameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
-        case let .kakaoRecovery(accessToken):
-            let parameters: [String: Any] = [
-                "access_token": accessToken
-            ]
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: bodyParameters, encoding: JSONEncoding.default)
+        case .kakaoLogin, .kakaoRecovery:
+            return .requestPlain
         }
     }
 
     public var headers: [String : String]? {
-        return nil
+        switch self {
+        case let .kakaoSignup(_, oauthToken):
+            return ["OAUTH-TOKEN": "\(oauthToken)"]
+        case let .kakaoLogin(oauthToken):
+            return ["OAUTH-TOKEN": "\(oauthToken)"]
+        case let .kakaoRecovery(oauthToken):
+            return ["OAUTH-TOKEN": "\(oauthToken)"]
+        }
     }
 }

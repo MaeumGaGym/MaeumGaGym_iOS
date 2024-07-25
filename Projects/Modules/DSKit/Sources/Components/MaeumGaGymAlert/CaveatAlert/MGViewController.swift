@@ -37,18 +37,37 @@ public extension UIViewController {
         }
     
     func showCaveatPopUp(
-        contentView: UIView,
-        leftActionTitle: String? = "취소",
-        rightActionTitle: String = "확인",
-        leftActionCompletion: (() -> Void)? = nil,
-        rightActionCompletion: (() -> Void)? = nil) {
-            let popUpViewController = MGCaveatAlertViewController(contentView: contentView)
-            
-            showCaveatPopUp(popUpViewController: popUpViewController,
-                            leftActionTitle: leftActionTitle,
-                            rightActionTitle: rightActionTitle,
-                            leftActionCompletion: leftActionCompletion,
-                            rightActionCompletion: rightActionCompletion)
+            title: String? = nil,
+            message: String? = nil,
+            attributedMessage: NSAttributedString? = nil,
+            contentView: UIView? = nil,
+            leftActionTitle: String? = "취소",
+            rightActionTitle: String = "확인",
+            leftActionCompletion: (() -> Void)? = nil,
+            rightActionCompletion: (() -> Void)? = nil) {
+                
+                let popUpViewController: MGCaveatAlertViewController
+                if let contentView = contentView {
+                    popUpViewController = MGCaveatAlertViewController(contentView: contentView)
+                } else {
+                    popUpViewController = MGCaveatAlertViewController(titleText: title,
+                                                                      messageText: message,
+                                                                      attributedMessageText: attributedMessage)
+                }
+                
+                popUpViewController.addActionToButton(title: leftActionTitle,
+                                                      titleColor: DSKitAsset.Colors.red500.color,
+                                                      backgroundColor: DSKitAsset.Colors.red50.color) {
+                    popUpViewController.dismiss(animated: false, completion: leftActionCompletion)
+                }
+                
+                popUpViewController.addActionToButton(title: rightActionTitle,
+                                                      titleColor: .white,
+                                                      backgroundColor: DSKitAsset.Colors.red500.color) {
+                    popUpViewController.dismiss(animated: false, completion: rightActionCompletion)
+                }
+                
+                present(popUpViewController, animated: false, completion: nil)
         }
 
     private func showCaveatPopUp(
@@ -57,17 +76,20 @@ public extension UIViewController {
         rightActionTitle: String,
         leftActionCompletion: (() -> Void)?,
         rightActionCompletion: (() -> Void)?) {
-            popUpViewController.addActionToButton(title: leftActionTitle,
-                                                  titleColor: DSKitAsset.Colors.red500.color,
-                                                  backgroundColor: DSKitAsset.Colors.red50.color) {
-                popUpViewController.dismiss(animated: false, completion: leftActionCompletion)
-            }
             
-            popUpViewController.addActionToButton(title: rightActionTitle,
-                                                  titleColor: .white,
-                                                  backgroundColor: DSKitAsset.Colors.red500.color) {
-                popUpViewController.dismiss(animated: false, completion: rightActionCompletion)
-            }
-            present(popUpViewController, animated: false, completion: nil)
+        popUpViewController.addActionToButton(title: leftActionTitle,
+                                              titleColor: DSKitAsset.Colors.red500.color,
+                                              backgroundColor: DSKitAsset.Colors.red50.color) {
+            leftActionCompletion?()
         }
+        
+        popUpViewController.addActionToButton(title: rightActionTitle,
+                                              titleColor: .white,
+                                              backgroundColor: DSKitAsset.Colors.red500.color) {
+            rightActionCompletion?()
+        }
+        
+        present(popUpViewController, animated: false, completion: nil)
+    }
+    
 }

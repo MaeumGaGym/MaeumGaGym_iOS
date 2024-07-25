@@ -8,7 +8,7 @@ import Core
 import Domain
 import MGLogger
 
-public class PostureDetailViewModel: BaseViewModel {
+public class PostureDetailViewModel: PostureViewModelType {
     
     public typealias ViewModel = PostureDetailViewModel
 
@@ -17,7 +17,7 @@ public class PostureDetailViewModel: BaseViewModel {
     private let useCase: PostureUseCase
 
     public struct Input {
-        let getDetailData: Driver<Void>
+        let getDetailData: Driver<Int>
     }
 
     public struct Output {
@@ -43,8 +43,8 @@ public class PostureDetailViewModel: BaseViewModel {
         input.getDetailData
             .asObservable()
             .withUnretained(self)
-            .subscribe(onNext: { owner, _ in
-                owner.useCase.getDetailData(type: .pushUp)
+            .subscribe(onNext: { owner, id in
+                owner.useCase.getDetailData(id: id)
             }).disposed(by: disposeBag)
 
         return output

@@ -28,17 +28,9 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                     forCellReuseIdentifier: PosturePartTableViewCell.identifier)
     }
 
-    private var backData: PosturePartModel = PosturePartModel(exerciseType: [], 
-                                                              allExerciseData: [],
-                                                              bodyExerciseData: [],
-                                                              machineExerciseData: []
-    )
+    private var backData: PosePartModel = PosePartModel(responses: [])
 
-    private var backExerciesData: [PosturePartExerciseModel] = [] {
-        didSet {
-            postureBackTableView.reloadData()
-        }
-    }
+    private var backExerciesData:  PosePartModel = PosePartModel(responses: [])
 
     public override func attribute() {
         super.attribute()
@@ -75,7 +67,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.width.equalToSuperview().inset(8.0)
             $0.height.equalToSuperview()
-            $0.top.equalToSuperview().offset(12.0)
+            $0.top.equalToSuperview()
         }
     }
 
@@ -88,8 +80,6 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
         let secondButtonTapped = secondButton.rx.tap
             .asDriver(onErrorDriveWith: .never())
 
-//        let useCase = DefaultPostureUseCase(repository: PostureRepository(networkService: PostureService()))
-//        viewModel = PostureBackViewModel(useCase: useCase)
 
         let input = PostureBackViewModel.Input(
             firstButtonTapped: firstButtonTapped,
@@ -104,19 +94,35 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                 .subscribe(onNext: { backData in
                     MGLogger.debug("backData: \(backData)")
                     self.backData = backData
-                    self.backExerciesData = backData.allExerciseData
+                    self.backExerciesData = backData
+                    self.postureBackTableView.reloadData()
                 }).disposed(by: disposeBag)
-
+            
             output.backModelState
-                .subscribe(onNext: { backModelState in
-                    MGLogger.debug("backModelState: \(backModelState)")
-                    switch backModelState {
+                .subscribe(onNext: { chestModelState in
+                    MGLogger.debug("Chest Model State: \(chestModelState)")
+                    self.backData = self.backExerciesData
+                    switch chestModelState {
                     case .all:
-                        self.backExerciesData = self.backData.allExerciseData
+                        self.backData = self.backExerciesData
                     case .body:
-                        self.backExerciesData = self.backData.bodyExerciseData
+                        var poseData: PosePartModel = PosePartModel(responses: [])
+                        for pose in self.backData.responses {
+                            if pose.needMachine == false {
+                                poseData.responses.append(pose)
+                            }
+                        }
+                        print("맨몸 : \(poseData.responses)")
+                        self.backData = poseData
                     case .machine:
-                        self.backExerciesData = self.backData.machineExerciseData
+                        var poseData: PosePartModel = PosePartModel(responses: [])
+                        for pose in self.backData.responses {
+                            if pose.needMachine == true {
+                                poseData.responses.append(pose)
+                            }
+                        }
+                        print("기구 : \(poseData.responses)")
+                        self.backData = poseData
                     }
                     self.postureBackTableView.reloadData()
                 }).disposed(by: disposeBag)
@@ -140,6 +146,7 @@ public class PostureBackViewController: BaseViewController<PostureBackViewModel>
                         self.secondButton.buttonNoChecked(type: .machine)
                     }
                 }).disposed(by: disposeBag)
+            
             }
         )
     }
@@ -159,7 +166,7 @@ extension PostureBackViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return backExerciesData.count
+        return backData.responses.count
     }
 
     public func tableView(
@@ -169,10 +176,14 @@ extension PostureBackViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: PosturePartTableViewCell.identifier,
             for: indexPath) as? PosturePartTableViewCell
-        let exercise = backExerciesData[indexPath.row]
+        let exercise = backData.responses[indexPath.row]
         cell?.setup(with: exercise)
         cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
+    }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: backData.responses[indexPath.row].id))
     }
 }
 

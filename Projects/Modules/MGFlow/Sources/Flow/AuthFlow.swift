@@ -15,11 +15,11 @@ import Core
 public class AuthFlow: Flow {
 
     private var rootViewController: UINavigationController!
-    var authService: AuthService!
+    var authService: DefaultAuthService!
     var authRepository: AuthRepository!
     var useCase: DefaultAuthUseCase!
-    var viewModel: IntroViewModel!
-    var viewController: IntroViewController!
+    var viewModel: SplashViewModel!
+    var viewController: SplashViewController!
 
     public var root: Presentable {
         return self.rootViewController
@@ -33,8 +33,10 @@ public class AuthFlow: Flow {
     public func navigate(to step: Step) -> FlowContributors {
         guard let step = step as? MGStep else { return .none }
         switch step {
-        case .authIntroIsRequired:
+        case .authSplashIsRequired:
             return setupAuthMainScreen()
+        case .authIntroIsRequired:
+            return navigateToIntroViewScreen()
         case .authAgreeIsRequired:
             return navigateToAgreeViewScreen()
         case .authNickNameIsRequired:
@@ -51,14 +53,14 @@ public class AuthFlow: Flow {
     }
 
     private func setupService() {
-        authService = AuthService()
+        authService = DefaultAuthService()
         authRepository = AuthRepository(networkService: authService)
         useCase = DefaultAuthUseCase(authRepository: authRepository)
-        viewModel = IntroViewModel(authUseCase: useCase)
+        viewModel = SplashViewModel(authUseCase: useCase)
     }
 
     private func setupViewController() {
-        viewController = IntroViewController(viewModel)
+        viewController = SplashViewController(viewModel)
         rootViewController = UINavigationController(rootViewController: viewController)
     }
 
@@ -66,6 +68,13 @@ public class AuthFlow: Flow {
         rootViewController.view.backgroundColor = .white
         rootViewController.setViewControllers([viewController], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: self.root, withNextStepper: AuthStepper.shared))
+    }
+    
+    private func navigateToIntroViewScreen() -> FlowContributors {
+        let vc = IntroViewController(IntroViewModel(authUseCase: self.useCase))
+        rootViewController.pushViewController(vc, animated: false)
+        vc.navigationItem.hidesBackButton = true
+        return .none
     }
 
     private func navigateToAgreeViewScreen() -> FlowContributors {
@@ -81,7 +90,7 @@ public class AuthFlow: Flow {
     }
 
     private func navigateToCompleteViewScreen() -> FlowContributors {
-        let vc = CompleteSignUpViewController(CompleteViewModel())
+        let vc = CompleteSignUpViewController(CompleteViewModel(authUseCase: self.useCase))
         rootViewController.pushViewController(vc, animated: true)
         vc.navigationItem.hidesBackButton = true
         MainTabBarContoller.shared.tabBar.isHidden = true
@@ -93,6 +102,8 @@ public class AuthFlow: Flow {
         Flows.use(profileFlow, when: .created) { [weak self] root in
             self?.rootViewController.setViewControllers([root], animated: true)
         }
+        
+        MainTabBarContoller.shared.tabBar.isHidden = false
 
         return .one(flowContributor: .contribute(
             withNextPresentable: profileFlow,

@@ -1,8 +1,7 @@
 import Foundation
 
 public enum KeychainType: String {
-    case authorizationToken
+    case oauthToken
+    case accessToken
     case refreshToken
-    case CSRFToken
-    case test
 }

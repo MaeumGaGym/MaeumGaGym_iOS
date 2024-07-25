@@ -23,7 +23,7 @@ public enum SelfCareButtonType {
         case .posturePlus:
             return DSKitAsset.Assets.blackPlus.image
         case .plusTarget:
-            return DSKitAsset.Assets.blackPlus.image
+            return DSKitAsset.Assets.whiteAdd.image
         default:
             return nil
         }
