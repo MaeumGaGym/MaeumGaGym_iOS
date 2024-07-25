@@ -6,7 +6,7 @@ public extension Project {
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleVersion": "1",
         "CFBundleIdentifier": "com.maeumGaGym-health-iOS.release",
-        "CFBundleDisplayName": "Maeumgajim",
+        "CFBundleDisplayName": "마음가짐",
         "UILaunchStoryboardName": "LaunchScreen",
         "UIApplicationSceneManifest": [
             "UIApplicationSupportsMultipleScenes": false,
