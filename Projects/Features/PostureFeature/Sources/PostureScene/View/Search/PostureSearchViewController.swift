@@ -47,16 +47,17 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     }
     
     public override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParent || navigationController?.isBeingDismissed == true {
+            navigationController?.setNavigationBarHidden(false, animated: animated)
         }
-        
-        public override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            if isMovingFromParent || navigationController?.isBeingDismissed == true {
-                navigationController?.setNavigationBarHidden(false, animated: animated)
-            }
-        }
+        tabBarController?.tabBar.isHidden = false
+    }
     
     override public func layout() {
         super.layout()
