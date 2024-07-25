@@ -5,7 +5,7 @@ import Then
 import SnapKit
 
 public class MGPagingTabBar: UIView {
-
+    
     private var categoryTitleList: [String]
     
     public let selectedIndex = PublishSubject<Int>()
@@ -75,14 +75,17 @@ public class MGPagingTabBar: UIView {
         }).disposed(by: self.disposeBag)
         
         collectionView.rx.setDelegate(self)
-                    .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    public func selectItem(at index: Int) {
+        collectionView.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .centeredHorizontally)
+        selectedIndex.onNext(index)
+    }
 }
 
 extension MGPagingTabBar: UICollectionViewDelegateFlowLayout {
@@ -125,8 +128,9 @@ private extension MGPagingTabBar {
         }
         
         grayUnderline.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(2.0)
+            $0.width.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(2)
         }
     }
 }

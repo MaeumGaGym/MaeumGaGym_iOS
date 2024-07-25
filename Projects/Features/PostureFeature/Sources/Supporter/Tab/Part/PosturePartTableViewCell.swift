@@ -42,8 +42,10 @@ public class PosturePartTableViewCell: BaseTableViewCell {
 }
 
 public extension PosturePartTableViewCell {
-    func setup(with exerciseData: PosturePartExerciseModel) {
-        postureImageView.image = exerciseData.image
+    func setup(with exerciseData: PosePartResponseModel) {
+        let thumbnail = URL(string: exerciseData.thumbnail)
+        postureImageView.imageFrom(url: thumbnail!)
         exerciseNameLabel.changeText(text: exerciseData.name)
+        id = exerciseData.id
     }
 }

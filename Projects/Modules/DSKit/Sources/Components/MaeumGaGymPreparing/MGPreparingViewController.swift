@@ -39,9 +39,9 @@ open class PreparingViewController: BaseViewController<Any> {
 
     private func layoutSubviews() {
         backgroundView.snp.makeConstraints {
-            $0.centerY.equalToSuperview().inset(40.0)
+            $0.centerY.equalToSuperview().offset(-49)
             $0.centerX.equalToSuperview()
-            $0.width.equalToSuperview().inset(55.0)
+            $0.width.equalToSuperview()
             $0.height.equalTo(228)
         }
 
