@@ -13,8 +13,10 @@ public class PostureRepository: PostureRepositoryInterface {
             .map { $0.toDomain() }
     }
 
-    public func getPartData(type: PosturePartType) -> Single<PosturePartModel> {
-        return networkService.requestPartData(type: type)
+    public func getPartData(accessToken: String, category: String) -> Single<PosePartModel> {
+        return networkService.requestPartData(category: category, accessToken: accessToken)
+            .map(PosePartDTO.self)
+            .map { $0.toDomain() }
     }
 
     public func getDetailData(accessToken: String, id: Int) -> Single<PostureDetailModel> {
