@@ -15,7 +15,7 @@ import MGLogger
 
 import PostureFeatureInterface
 
-public class PostureDetailViewController: BaseViewController<PostureDetailViewModel>, UIGestureRecognizerDelegate {
+public class PostureDetailViewController: BaseViewController<PostureDetailViewModel> {
 
     public var id: Int = 1
     
@@ -63,6 +63,12 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         postureDetailTableView.delegate = self
         
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
     }
 
     public override func layout() {
@@ -149,6 +155,8 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
 
         return CGFloat(80 + (modelCount * 48) + (lineCount * 20) + middleDistance)
     }
+    
+    
 }
 
 extension PostureDetailViewController: UITableViewDelegate {
@@ -173,8 +181,6 @@ extension PostureDetailViewController: UITableViewDelegate {
             return calculateCellHeight(text: postureDetailModel.breatheWay)
         case 7:
             return calculateCellHeight(text: postureDetailModel.caution)
-        case 8:
-            return 360
         default:
             return 0
         }
@@ -186,7 +192,7 @@ extension PostureDetailViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return 9
+        return 8
     }
 
     public func tableView(
@@ -258,16 +264,14 @@ extension PostureDetailViewController: UITableViewDataSource {
             cell?.setup(with: model, titleText: "주의 사항")
             cell?.selectionStyle = .none
             return cell ?? UITableViewCell()
-        case 8:
-            let cell = postureDetailTableView.dequeueReusableCell(
-                withIdentifier: PostureDetailPickeTableViewCell.identifier,
-                for: indexPath) as? PostureDetailPickeTableViewCell
-            let model = postureDetailModel.pickleImage
-            cell?.setup(with: model)
-            cell?.selectionStyle = .none
-            return cell ?? UITableViewCell()
         default:
             return UITableViewCell()
         }
+    }
+}
+
+extension PostureDetailViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
