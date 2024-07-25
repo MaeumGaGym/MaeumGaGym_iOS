@@ -25,10 +25,6 @@ public class PostureRepository: PostureRepositoryInterface {
             .map { $0.toDomain() }
     }
 
-    public func getSearchData() -> Single<PostureSearchModel> {
-        return networkService.requestSearchData()
-    }
-
     public func getAllPoseData(accessToken: String, lastUpdated: String) -> Single<PostureAllModel> {
         return networkService.getAllPoseData(accessToken: accessToken, lastUpdated: lastUpdated)
             .map(PostureAllDTO.self)
