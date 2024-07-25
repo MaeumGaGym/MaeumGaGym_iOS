@@ -1,30 +1,20 @@
 import UIKit
 
 public struct PoseRecommandModel {
-    public var poses: PoseRecommandPartModel
+    public var responses: [PoseRecommandPartModel]
     
-    public init(poses: PoseRecommandPartModel) {
-        self.poses = poses
+    public init(responses: [PoseRecommandPartModel]) {
+        self.responses = responses
     }
 }
 
 public struct PoseRecommandPartModel {
-    public var 어깨, 복근, 등, 가슴, 팔: PoseRecommandPartResponseModel
+    public var category: String
+    public var poses: [PoseRecommandResponseModel]
     
-    public init(어깨: PoseRecommandPartResponseModel, 복근: PoseRecommandPartResponseModel, 등: PoseRecommandPartResponseModel, 가슴: PoseRecommandPartResponseModel, 팔: PoseRecommandPartResponseModel) {
-        self.어깨 = 어깨
-        self.복근 = 복근
-        self.등 = 등
-        self.가슴 = 가슴
-        self.팔 = 팔
-    }
-}
-
-public struct PoseRecommandPartResponseModel {
-    public var responses: [PoseRecommandResponseModel]
-    
-    public init(responses: [PoseRecommandResponseModel]) {
-        self.responses = responses
+    public init(category: String, poses: [PoseRecommandResponseModel]) {
+        self.category = category
+        self.poses = poses
     }
 }
 
