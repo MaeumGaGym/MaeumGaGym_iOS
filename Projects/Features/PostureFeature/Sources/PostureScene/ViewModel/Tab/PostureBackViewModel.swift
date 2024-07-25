@@ -38,14 +38,14 @@ public class PostureBackViewModel: BaseViewModel {
           let secondButtonState: Observable<BackToggleButtonState>
           let backModelState:
           Observable<PostureBackModelState>
-          var backData: Observable<PosturePartModel>
+          var backData: Observable<PosePartModel>
       }
 
     private let firstButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
     private let secondButtonStateSubject = BehaviorSubject<BackToggleButtonState>(value: .unChecked)
     private let backModelStateSubject = BehaviorSubject<PostureBackModelState>(value: .all)
 
-    private let backDataSubject = PublishSubject<PosturePartModel>()
+    private let backDataSubject = PublishSubject<PosePartModel>()
 
     public init(useCase: PostureUseCase) {
         self.useCase = useCase
@@ -68,7 +68,6 @@ public class PostureBackViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                MGLogger.debug("PostureBack firstButtonTapped")
                 let currentState = try? owner.firstButtonStateSubject.value()
 
                 switch currentState {
@@ -88,7 +87,6 @@ public class PostureBackViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                MGLogger.debug("PostureBack secondButtonTapped")
                 let currentState = try? owner.secondButtonStateSubject.value()
 
                 switch currentState {
@@ -108,14 +106,14 @@ public class PostureBackViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, _ in
-                owner.useCase.getPartData(type: .back)
+                owner.useCase.getBackData()
             }).disposed(by: disposeBag)
 
         return output
     }
 
     private func bindOutput(output: Output) {
-        useCase.partData
+        useCase.categoryBackData
             .subscribe(onNext: { partData in
                 self.backDataSubject.onNext(partData)
             }).disposed(by: disposeBag)
