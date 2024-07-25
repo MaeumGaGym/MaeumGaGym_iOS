@@ -11,15 +11,26 @@ import TokenManager
 
 public protocol PostureUseCase {
     var recommandData: PublishSubject<PoseRecommandModel> { get }
-    var partData: PublishSubject<PosturePartModel> { get }
+    var categoryChestData: PublishSubject<PosePartModel> { get }
+    var categoryBackData: PublishSubject<PosePartModel> { get }
+    var categoryShoulderData: PublishSubject<PosePartModel> { get }
+    var categoryArmData: PublishSubject<PosePartModel> { get }
+    var categoryLegData: PublishSubject<PosePartModel> { get }
+
+
     var detailData: PublishSubject<PostureDetailModel> { get }
-    var searchData: PublishSubject<PostureSearchModel> { get }
+    var searchData: PublishSubject<PosePartModel> { get }
     var poseAllData: PublishSubject<PostureAllModel> { get }
 
     func getRecommandData()
-    func getPartData(type: PosturePartType)
+    func getChestData()
+    func getBackData()
+    func getShoulderData()
+    func getArmData()
+    func getLegData()
+
     func getDetailData(id: Int)
-    func getSearchData()
+    func getSearchData(category: String)
     func getAllPoseData()
 }
 
@@ -29,9 +40,15 @@ public class DefaultPostureUseCase {
 
     private let accessToken = TokenManagerImpl().get(key: .accessToken)
     public let recommandData = PublishSubject<PoseRecommandModel>()
-    public let partData = PublishSubject<PosturePartModel>()
+    public let categoryChestData = PublishSubject<PosePartModel>()
+    public let categoryBackData = PublishSubject<PosePartModel>()
+    public let categoryShoulderData = PublishSubject<PosePartModel>()
+    public let categoryArmData = PublishSubject<PosePartModel>()
+    public let categoryLegData = PublishSubject<PosePartModel>()
+
+
     public let detailData = PublishSubject<PostureDetailModel>()
-    public let searchData = PublishSubject<PostureSearchModel>()
+    public let searchData = PublishSubject<PosePartModel>()
     public let poseAllData = PublishSubject<PostureAllModel>()
 
     public init(repository: PostureRepositoryInterface) {
@@ -52,16 +69,56 @@ extension DefaultPostureUseCase: PostureUseCase {
             }).disposed(by: disposeBag)
     }
 
-    public func getPartData(type: PosturePartType) {
-        repository.getPartData(type: type)
+    public func getChestData() {
+        repository.getPartData(accessToken: accessToken ?? "", category: "가슴")
             .subscribe(onSuccess: { [weak self] partData in
-                self?.partData.onNext(partData)
+                self?.categoryChestData.onNext(partData)
             },
             onFailure: { error in
-                print("PostureUseCase getPartData error occurred: \(error)")
+                print("PostureUseCase getChestData error occurred: \(error)")
             }).disposed(by: disposeBag)
     }
-
+    
+    public func getBackData() {
+        repository.getPartData(accessToken: accessToken ?? "", category: "등")
+            .subscribe(onSuccess: { [weak self] partData in
+                self?.categoryBackData.onNext(partData)
+            },
+            onFailure: { error in
+                print("PostureUseCase getBacktData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
+    public func getShoulderData() {
+        repository.getPartData(accessToken: accessToken ?? "", category: "어깨")
+            .subscribe(onSuccess: { [weak self] partData in
+                self?.categoryShoulderData.onNext(partData)
+            },
+            onFailure: { error in
+                print("PostureUseCase getShoulderData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
+    public func getArmData() {
+        repository.getPartData(accessToken: accessToken ?? "", category: "팔")
+            .subscribe(onSuccess: { [weak self] partData in
+                self?.categoryArmData.onNext(partData)
+            },
+            onFailure: { error in
+                print("PostureUseCase getArmData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
+    public func getLegData() {
+        repository.getPartData(accessToken: accessToken ?? "", category: "하체")
+            .subscribe(onSuccess: { [weak self] partData in
+                self?.categoryLegData.onNext(partData)
+            },
+            onFailure: { error in
+                print("PostureUseCase getLegData error occurred: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
     public func getDetailData(id: Int) {
         repository.getDetailData(accessToken: accessToken ?? "", id: id)
             .subscribe(onSuccess: { [weak self] detailData in
@@ -72,13 +129,12 @@ extension DefaultPostureUseCase: PostureUseCase {
             }).disposed(by: disposeBag)
     }
 
-    public func getSearchData() {
-        repository.getSearchData()
+    public func getSearchData(category: String) {
+        repository.getPartData(accessToken: accessToken ?? "", category: category)
             .subscribe(onSuccess: { [weak self] searchData in
                 self?.searchData.onNext(searchData)
-            },
-            onFailure: { error in
-                print("PostureUseCase getSearchData error occurred: \(error)")
+            }, onFailure: { _ in 
+                self.searchData.onNext(PosePartModel(responses: []))
             }).disposed(by: disposeBag)
     }
     
