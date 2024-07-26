@@ -1,9 +1,15 @@
-//
-//  SelfCareProfileInfoModel.swift
-//  Domain
-//
-//  Created by 이은호 on 7/25/24.
-//  Copyright © 2024 MaeumGaGym-iOS. All rights reserved.
-//
-
 import Foundation
+
+public struct SelfCareProfileInfoModel {
+    public var nickname: String
+    public var profileImage: String?
+    public var level: Int
+    public var wakaTime: Int
+    
+    public init(nickname: String, profileImage: String? = nil, level: Int, wakaTime: Int) {
+        self.nickname = nickname
+        self.profileImage = profileImage
+        self.level = level
+        self.wakaTime = wakaTime
+    }
+}
