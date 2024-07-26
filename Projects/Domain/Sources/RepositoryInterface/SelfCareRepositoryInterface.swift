@@ -21,6 +21,8 @@ public protocol SelfCareRepositoryInterface {
 
     //MARK: Profile
     func getProfileData(accessToken: String, userName: String) -> Single<SelfCareDetailProfileModel>
-    func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<SelfCareModifyProfileModel>
+    func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response>
+    func requestInfoShow(accessToken: String) -> Single<SelfCareProfileInfoModel>
+    func requestUserDel(accessToken: String) -> Single<Response>
     
 }
