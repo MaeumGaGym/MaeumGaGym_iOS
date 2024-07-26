@@ -33,9 +33,12 @@ public protocol SelfCareUseCase {
     //MARK: Profile
     var profileData: PublishSubject<SelfCareDetailProfileModel> { get }
     var nickNameData: PublishSubject<SelfCareModifyProfileModel> { get }
+    var profileInfoData: PublishSubject<SelfCareProfileInfoModel> { get }
     
     func getProfileData(nickName: String)
     func requestProfileModify(nickName: String, height: Double, weight: Double, gender: String)
+    func getProfileInfoData()
+    func deleteUser()
 }
 
 public class DefaultSelfCareUseCase {
@@ -52,6 +55,8 @@ public class DefaultSelfCareUseCase {
     
     public let profileData = PublishSubject<SelfCareDetailProfileModel>()
     public let nickNameData = PublishSubject<SelfCareModifyProfileModel>()
+    public let profileInfoData = PublishSubject<SelfCareProfileInfoModel>()
+
 
     public init(repository: SelfCareRepositoryInterface) {
         self.repository = repository
@@ -59,7 +64,6 @@ public class DefaultSelfCareUseCase {
 }
 
 extension DefaultSelfCareUseCase: SelfCareUseCase {
-    
     public func getMyRoutineData() {
         repository.getMyRoutineData()
             .subscribe(onSuccess: { [weak self] myRoutineData in
@@ -177,11 +181,36 @@ extension DefaultSelfCareUseCase: SelfCareUseCase {
     public func requestProfileModify(nickName: String, height: Double, weight: Double, gender: String) {
         guard let token = TokenManagerImpl().get(key: .accessToken) else { return }
         repository.requestProfileModify(accessToken: token, nickName: nickName, height: height, weight: weight, gender: gender)
-            .subscribe(onSuccess: { [weak self] nickNameData in
-                self?.nickNameData.onNext(nickNameData)
+            .subscribe(onSuccess: { _ in
+                SelfCareStepper.shared.steps.accept(MGStep.selfCarePopRoot)
             }, onFailure: { error in
                 print("SelfCareUseCase profileModify error occured: \(error)")
             }).disposed(by: disposeBag)
         }
-
+    
+    public func getProfileInfoData() {
+        guard let token = TokenManagerImpl().get(key: .accessToken) else { return }
+        repository.requestInfoShow(accessToken: token)
+            .subscribe(onSuccess: { [weak self] profileInfoData in
+                self?.profileInfoData.onNext(profileInfoData)
+            }, onFailure: { error in
+                print("SelfCareUseCase ProfileInfoData error occured: \(error)")
+            }).disposed(by: disposeBag)
+    }
+    
+    public func deleteUser() {
+        guard let token = TokenManagerImpl().get(key: .accessToken) else { return }
+        repository.requestUserDel(accessToken: token)
+            .subscribe(onSuccess: { response in
+                MGLogger.debug(response)
+                TokenManagerImpl().save(token: "", with: .accessToken)
+                TokenManagerImpl().save(token: "", with: .refreshToken)
+                TokenManagerImpl().save(token: "", with: .oauthToken)
+                SelfCareStepper.shared.steps.accept(MGStep.selfCarePopRoot)
+                AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
+                exit(0)
+            }, onFailure: { error in
+                print("SelfCareUseCase deleteUser error occured: \(error)")
+            }).disposed(by: disposeBag)
+    }
 }
