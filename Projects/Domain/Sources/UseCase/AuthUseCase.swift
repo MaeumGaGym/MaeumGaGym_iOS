@@ -151,6 +151,7 @@ extension DefaultAuthUseCase {
                                         TokenManagerImpl().save(token: refreshToken, with: .refreshToken)
                                     }
                                 }
+                                AuthStepper.shared.steps.accept(MGStep.initialization)
                             }, onFailure: { error in
                                 MGLogger.debug("appleButtonTap login(여기서 절대 에러가 나면 안됩니다...) ❌ \(error)")
                             }).disposed(by: disposeBag)
