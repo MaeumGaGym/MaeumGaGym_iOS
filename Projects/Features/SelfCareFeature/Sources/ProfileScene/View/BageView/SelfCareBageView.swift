@@ -9,6 +9,7 @@ public class SelfCareBageView: UIView {
     private let shadows = UIView()
     private let shapes = UIView()
     private let gradientLayer = CAGradientLayer()
+    private var containerView = UIView()
     private let heartImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(systemName: "heart.fill")
@@ -18,19 +19,21 @@ public class SelfCareBageView: UIView {
     private var bageNameLabel = MGLabel(
         text: "마음 뱃지",
         font: UIFont.Pretendard.titleMedium,
-        textColor: .black
+        textColor: .black,
+        isCenter: true
     )
     private var userTimeLabel = MGLabel(
         text: "",
         font: UIFont.Pretendard.bodyMedium,
-        textColor: .black
+        textColor: .black,
+        isCenter: true
     )
     
     public func setup(
         timeText: Int
     ) {
-        self.userTimeLabel.text = "총 \(timeText)시간 운동하셨어요!"
-        self.userTimeLabel.changePointColor(targetString: "\(timeText)", color: .blue500)
+        self.userTimeLabel.changeText(text: "총 \(timeText)시간 운동하셨어요!")
+        self.userTimeLabel.changePointColor(targetString: "\(timeText)", color: DSKitAsset.Colors.blue500.color)
     }
     
     override init(frame: CGRect) {
@@ -106,11 +109,13 @@ public class SelfCareBageView: UIView {
         bageNameLabel.snp.makeConstraints {
             $0.top.equalTo(heartImageView.snp.bottom).offset(32.0)
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
         }
         
         userTimeLabel.snp.makeConstraints {
             $0.top.equalTo(bageNameLabel.snp.bottom).offset(6.0)
             $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
         }
     }
     
