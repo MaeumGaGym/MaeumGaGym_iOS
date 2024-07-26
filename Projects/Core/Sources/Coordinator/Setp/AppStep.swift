@@ -61,6 +61,7 @@ public enum MGStep: Step {
     //MARK: selfCare
     case selfCoreHome
     case popRequired
+    case selfCarePopRoot
     case devRequired
     
     //routine
@@ -77,7 +78,7 @@ public enum MGStep: Step {
     case presentTargetAttribute
     
     //profile
-    case myProfileRequired
+    case myProfileRequired(nickname: String)
     case editMyProfileRequired
     
     case postureIsRequired
