@@ -1,22 +1,27 @@
 import UIKit
-import SelfCareFeatureInterface
 
-import MGNetworks
-import Domain
+import SnapKit
+import Then
 
 import RxSwift
 import RxCocoa
 import RxFlow
-
-import Kingfisher
 
 import DSKit
 import Core
 import Data
 
 import MGLogger
+import MGNetworks
+import Domain
 
-final public class SelfCareProfileViewController: BaseViewController<SelfCareProfileViewModel> {
+import Kingfisher
+import TokenManager
+import SelfCareFeatureInterface
+
+final public class SelfCareProfileViewController: BaseViewController<SelfCareProfileViewModel>, UIGestureRecognizerDelegate {
+    
+    public var nickname: String = ""
 
     private lazy var navBar = SelfCareProfileNavigationBar(leftText: "내 프로필")
 
@@ -42,12 +47,23 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
     private var userInfoChangeButton = MGProfileButton(buttonTitle: "내 정보 변경")
     private var logOutButton = MGProfileButton(buttonTitle: "로그아웃")
     private var withdrawalButton = MGProfileButton(buttonTitle: "회원탈퇴")
+    
+    public override func attribute() {
+        super.attribute()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
 
     public override func bindViewModel() {
         super.bindViewModel()
 
         let input = SelfCareProfileViewModel.Input(
-            getProfileData: Observable.just("조영준").asDriver(onErrorDriveWith: .never()),
+            getProfileData: Observable.just(nickname).asDriver(onErrorDriveWith: .never()),
             popVC: navBar.leftButtonTap.asDriver(),
             editProfileButton: userInfoChangeButton.rx.tap.asDriver()
         )
@@ -56,11 +72,14 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
             output.profileData
                 .subscribe(onNext: { profileData in
                     self.userNameLabel.changeText(text: profileData.userName)
-                    print("userName: \(profileData.userName)")
                     self.bageView.setup(timeText: profileData.userWakaTime)
-                    let profileImage = URL(string: profileData.userImage ?? "")
-//                    self.userProfileImageView.kf.setImage(with: profileImage)
-//                    self.userProfileImageView.profileImage?.customImage. = profileData.userImage
+                    let profileImageData = profileData.userImage
+                    guard let profileImageData = profileImageData else {
+                        self.userProfileImageView.profileImageView.image = DSKitAsset.Assets.basicProfileIcon.image
+                        return
+                    }
+                    let profileImage = URL(string: (profileImageData))
+                    self.userProfileImageView.profileImageView.imageFrom(url: profileImage!)
                 }).disposed(by: disposeBag)
         })
         
@@ -75,10 +94,15 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
                     message: "로그아웃 하실건가요?",
                     leftActionTitle: "취소",
                     rightActionTitle: "확인",
-                    leftActionCompletion: {
-                        MGLogger.debug("leftButtonClick")
-                    },
-                    rightActionCompletion: { }
+                    leftActionCompletion: {},
+                    rightActionCompletion: {
+                        TokenManagerImpl().save(token: "", with: .accessToken)
+                        TokenManagerImpl().save(token: "", with: .refreshToken)
+
+                        SelfCareStepper.shared.steps.accept(MGStep.selfCarePopRoot)
+                        AuthStepper.shared.steps.accept(MGStep.authIntroIsRequired)
+                        exit(0)
+                    }
                 )
                 MGLogger.debug("logOutButton")
             }).disposed(by: disposeBag)
@@ -96,7 +120,7 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
                         leftActionTitle: "취소",
                         rightActionTitle: "탈퇴",
                         leftActionCompletion: { },
-                        rightActionCompletion: {}
+                        rightActionCompletion: { self?.viewModel.deleteUser() }
                     )}
                 )
             }).disposed(by: disposeBag)
@@ -140,7 +164,7 @@ final public class SelfCareProfileViewController: BaseViewController<SelfCarePro
         bageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(userNameLabel.snp.bottom).offset(32.0)
-            $0.leading.trailing.equalTo(20)
+            $0.width.equalToSuperview().inset(20.0)
         }
 
         buttonStackView.snp.makeConstraints {

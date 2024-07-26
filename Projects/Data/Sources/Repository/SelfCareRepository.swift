@@ -57,10 +57,18 @@ public class SelfCareRepository: SelfCareRepositoryInterface {
             .map { $0.toDomain() }
     }
     
-    public func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<SelfCareModifyProfileModel> {
+    public func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response> {
         return networkService.requestProfileModify(accessToken: accessToken, nickName: nickName, height: height, weight: weight, gender: gender)
-            .map(SelfCareNicknameDTO.self)
+    }
+    
+    public func requestInfoShow(accessToken: String) -> Single<SelfCareProfileInfoModel> {
+        return networkService.requestProfileInfo(accessToken: accessToken)
+            .map(SelfCareProfileInfoDTO.self)
             .map { $0.toDomain() }
+    }
+    
+    public func requestUserDel(accessToken: String) -> Single<Response> {
+        return networkService.requestUserDel(accessToken: accessToken)
     }
 
     public init(networkService: DefaultSelfCareService) {

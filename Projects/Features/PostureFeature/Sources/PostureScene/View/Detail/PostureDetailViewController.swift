@@ -15,7 +15,7 @@ import MGLogger
 
 import PostureFeatureInterface
 
-public class PostureDetailViewController: BaseViewController<PostureDetailViewModel> {
+public class PostureDetailViewController: BaseViewController<PostureDetailViewModel>, UIGestureRecognizerDelegate {
 
     public var id: Int = 1
     
@@ -65,10 +65,9 @@ public class PostureDetailViewController: BaseViewController<PostureDetailViewMo
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        tabBarController?.tabBar.isHidden = false
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
 
     public override func layout() {
@@ -267,11 +266,5 @@ extension PostureDetailViewController: UITableViewDataSource {
         default:
             return UITableViewCell()
         }
-    }
-}
-
-extension PostureDetailViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }

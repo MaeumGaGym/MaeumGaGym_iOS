@@ -11,6 +11,9 @@ open class MGCaveatAlertViewController: UIViewController {
     private var messageText: String?
     private var attributedMessageText: NSAttributedString?
     private var contentView: UIView?
+    
+    public var leftButtonTap: (() -> Void)?
+    public var rightButtonTap: (() -> Void)?
 
     private lazy var containerView = UIView().then {
         $0.backgroundColor = .white
@@ -78,6 +81,8 @@ open class MGCaveatAlertViewController: UIViewController {
         setupViews()
         addSubviews()
         makeConstraints()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutside(_:)))
+                view.addGestureRecognizer(tapGesture)
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -99,28 +104,32 @@ open class MGCaveatAlertViewController: UIViewController {
     }
 
     public func addActionToButton(title: String? = nil,
-                                  titleColor: UIColor = .white,
-                                  backgroundColor: UIColor = .blue,
-                                  completion: (() -> Void)? = nil) {
-        guard let title = title else { return }
+                                     titleColor: UIColor = .white,
+                                     backgroundColor: UIColor = .blue,
+                                     completion: (() -> Void)? = nil) {
+           guard let title = title else { return }
 
-        let button = MGButton(
-            titleText: title,
-            font: .systemFont(ofSize: 16.0, weight: .bold),
-            textColor: titleColor
-        ).then {
-            $0.setBackgroundImage(backgroundColor.image(), for: .normal)
-            $0.setBackgroundImage(UIColor.gray.image(), for: .disabled)
+           let button = MGButton(
+               titleText: title,
+               font: .systemFont(ofSize: 16.0, weight: .bold),
+               textColor: titleColor
+           ).then {
+               $0.setBackgroundImage(backgroundColor.image(), for: .normal)
+               $0.setBackgroundImage(UIColor.gray.image(), for: .disabled)
 
-            $0.layer.cornerRadius = 8.0
-            $0.layer.masksToBounds = true
+               $0.layer.cornerRadius = 8.0
+               $0.layer.masksToBounds = true
 
-            $0.addAction(for: .touchUpInside) { _ in
-                completion?()
-            }
-        }
+               $0.addAction(for: .touchUpInside) { _ in
+                   completion?()
+               }
+           }
 
-        buttonStackView.addArrangedSubview(button)
+           buttonStackView.addArrangedSubview(button)
+       }
+    
+    @objc func buttonClicked() {
+        print("제발제발제발")
     }
 
     private func setupViews() {
@@ -172,6 +181,14 @@ open class MGCaveatAlertViewController: UIViewController {
             $0.width.equalTo(containerStackView.snp.width)
         }
     }
+    
+    @objc private func handleTapOutside(_ gestureRecognizer: UITapGestureRecognizer) {
+           let location = gestureRecognizer.location(in: view)
+           
+           if !containerView.frame.contains(location) {
+               dismiss(animated: false, completion: nil)
+           }
+       }
 }
 
 extension UIColor {
@@ -182,3 +199,5 @@ extension UIColor {
         }
     }
 }
+
+

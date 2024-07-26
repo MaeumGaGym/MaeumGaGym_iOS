@@ -13,7 +13,7 @@ public extension UIViewController {
                                                                 buttonImage: buttonImages,
                                                                 buttonText: buttonTexts,
                                                                 attributedMessageText: attributedMessage)
-
+        
         present(popUpViewController, animated: false, completion: nil)
     }
     
@@ -37,39 +37,39 @@ public extension UIViewController {
         }
     
     func showCaveatPopUp(
-            title: String? = nil,
-            message: String? = nil,
-            attributedMessage: NSAttributedString? = nil,
-            contentView: UIView? = nil,
-            leftActionTitle: String? = "취소",
-            rightActionTitle: String = "확인",
-            leftActionCompletion: (() -> Void)? = nil,
-            rightActionCompletion: (() -> Void)? = nil) {
-                
-                let popUpViewController: MGCaveatAlertViewController
-                if let contentView = contentView {
-                    popUpViewController = MGCaveatAlertViewController(contentView: contentView)
-                } else {
-                    popUpViewController = MGCaveatAlertViewController(titleText: title,
-                                                                      messageText: message,
-                                                                      attributedMessageText: attributedMessage)
-                }
-                
-                popUpViewController.addActionToButton(title: leftActionTitle,
-                                                      titleColor: DSKitAsset.Colors.red500.color,
-                                                      backgroundColor: DSKitAsset.Colors.red50.color) {
-                    popUpViewController.dismiss(animated: false, completion: leftActionCompletion)
-                }
-                
-                popUpViewController.addActionToButton(title: rightActionTitle,
-                                                      titleColor: .white,
-                                                      backgroundColor: DSKitAsset.Colors.red500.color) {
-                    popUpViewController.dismiss(animated: false, completion: rightActionCompletion)
-                }
-                
-                present(popUpViewController, animated: false, completion: nil)
+        title: String? = nil,
+        message: String? = nil,
+        attributedMessage: NSAttributedString? = nil,
+        contentView: UIView? = nil,
+        leftActionTitle: String? = "취소",
+        rightActionTitle: String = "확인",
+        leftActionCompletion: (() -> Void)? = nil,
+        rightActionCompletion: (() -> Void)? = nil) {
+            
+            let popUpViewController: MGCaveatAlertViewController
+            if let contentView = contentView {
+                popUpViewController = MGCaveatAlertViewController(contentView: contentView)
+            } else {
+                popUpViewController = MGCaveatAlertViewController(titleText: title,
+                                                                  messageText: message,
+                                                                  attributedMessageText: attributedMessage)
+            }
+            
+            popUpViewController.addActionToButton(title: leftActionTitle,
+                                                  titleColor: DSKitAsset.Colors.red500.color,
+                                                  backgroundColor: DSKitAsset.Colors.red50.color) {
+                popUpViewController.dismiss(animated: false, completion: leftActionCompletion)
+            }
+            
+            popUpViewController.addActionToButton(title: rightActionTitle,
+                                                  titleColor: .white,
+                                                  backgroundColor: DSKitAsset.Colors.red500.color) {
+                popUpViewController.dismiss(animated: false, completion: rightActionCompletion)
+            }
+            
+            present(popUpViewController, animated: false, completion: nil)
         }
-
+    
     private func showCaveatPopUp(
         popUpViewController: MGCaveatAlertViewController,
         leftActionTitle: String?,
@@ -77,19 +77,20 @@ public extension UIViewController {
         leftActionCompletion: (() -> Void)?,
         rightActionCompletion: (() -> Void)?) {
             
-        popUpViewController.addActionToButton(title: leftActionTitle,
-                                              titleColor: DSKitAsset.Colors.red500.color,
-                                              backgroundColor: DSKitAsset.Colors.red50.color) {
-            leftActionCompletion?()
+            popUpViewController.addActionToButton(title: leftActionTitle,
+                                                  titleColor: DSKitAsset.Colors.red500.color,
+                                                  backgroundColor: DSKitAsset.Colors.red50.color) {
+                popUpViewController.dismiss(animated: false, completion: leftActionCompletion)
+            }
+            
+            popUpViewController.addActionToButton(title: rightActionTitle,
+                                                  titleColor: .white,
+                                                  backgroundColor: DSKitAsset.Colors.red500.color) {
+                popUpViewController.dismiss(animated: false, completion: nil)
+                rightActionCompletion?()
+            }
+            
+            present(popUpViewController, animated: false, completion: nil)
         }
-        
-        popUpViewController.addActionToButton(title: rightActionTitle,
-                                              titleColor: .white,
-                                              backgroundColor: DSKitAsset.Colors.red500.color) {
-            rightActionCompletion?()
-        }
-        
-        present(popUpViewController, animated: false, completion: nil)
-    }
     
 }

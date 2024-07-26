@@ -67,8 +67,7 @@ final public class SelfCareProfileEditViewController: BaseViewController<SelfCar
             popVCButton: navBar.leftButtonTap.asDriver()
         )
         
-        _ = viewModel.transform(input, action: { output in
-            print(output.nickName)
+        _ = viewModel.transform(input, action: { _ in
         })
     }
 

@@ -15,7 +15,7 @@ import MGLogger
 
 import PostureFeatureInterface
 
-public class PostureSearchViewController: BaseViewController<PostureSearchViewModel>, Stepper, UITextFieldDelegate {
+public class PostureSearchViewController: BaseViewController<PostureSearchViewModel>, Stepper, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     private var searchModel = PosePartModel(responses: [])
     
@@ -49,14 +49,13 @@ public class PostureSearchViewController: BaseViewController<PostureSearchViewMo
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        tabBarController?.tabBar.isHidden = true
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if isMovingFromParent || navigationController?.isBeingDismissed == true {
-            navigationController?.setNavigationBarHidden(false, animated: animated)
-        }
-        tabBarController?.tabBar.isHidden = false
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+
     }
     
     override public func layout() {
@@ -144,11 +143,5 @@ extension PostureSearchViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         PostureStepper.shared.steps.accept(MGStep.postureDetailIsRequired(withDetailId: searchModel.responses[indexPath.row].id))
-    }
-}
-
-extension PostureSearchViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }

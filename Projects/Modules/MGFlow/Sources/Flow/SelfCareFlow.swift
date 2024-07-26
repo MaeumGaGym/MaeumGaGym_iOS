@@ -56,10 +56,12 @@ public class SelfCareFlow: Flow {
 //        case .presentTargetAttribute:
 //        
         //profile
-        case .myProfileRequired:
-            return navigateToMyProfile()
+        case .myProfileRequired(let nickname):
+            return navigateToMyProfile(nickname: nickname)
         case .editMyProfileRequired:
             return navigateToEditTarget()
+        case .selfCarePopRoot:
+            return popupRootViewController()
             
         default:
             return .none
@@ -84,12 +86,6 @@ public class SelfCareFlow: Flow {
         MainTabBarContoller.shared.tabBar.isHidden = true
         return .none
     }
-//    private func navigateToModifyRoutine(id: Int) -> FlowContributors {
-//        let vc = SelfCareEditTargetViewController(SelfCareEditTargetViewModel(useCase: self.useCase))
-//        vc.id = id
-//        rootViewController.pushViewController(vc, animated: true)
-//        return .none
-//    }
     
     private func navigateToTargetHome() -> FlowContributors {
         let vc = SelfCareTargetMainViewController(SelfCareTargetMainViewModel(useCase: self.useCase))
@@ -124,8 +120,9 @@ public class SelfCareFlow: Flow {
         return .none
     }
     
-    private func navigateToMyProfile() -> FlowContributors {
+    private func navigateToMyProfile(nickname: String) -> FlowContributors {
         let vc = SelfCareProfileViewController(SelfCareProfileViewModel(useCase: self.useCase))
+        vc.nickname = nickname
         MainTabBarContoller.shared.tabBar.isHidden = true
         rootViewController.pushViewController(vc, animated: true)
         return .none
@@ -139,4 +136,9 @@ public class SelfCareFlow: Flow {
         return .none
     }
 
+    private func popupRootViewController() -> FlowContributors {
+        rootViewController.popToRootViewController(animated: true)
+        MainTabBarContoller.shared.tabBar.isHidden = false
+        return .none
+    }
 }

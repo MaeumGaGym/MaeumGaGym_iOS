@@ -23,19 +23,26 @@ public protocol SelfCareService {
     func addTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String) -> Single<Response>
     func modifyTarget(accessToken: String, title: String, content: String, startDate: String, endDate: String, id: Int) -> Single<Response>
     func deleteTarget(accessToken: String, id: Int) -> Single<Response>
-//    func requestDeleteTarget() -> Single<Response>
+
     //MARK: Profile
     func getProfileData(accessToken: String, userName: String) -> Single<Response>
     func requestProfileModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String) -> Single<Response>
+    func requestProfileInfo(accessToken: String) -> Single<Response>
+    func requestUserDel(accessToken: String) -> Single<Response>
 }
 
 public class DefaultSelfCareService: NSObject {
     let routineProvider = MoyaProvider<RoutineAPI>(plugins: [MoyaLoggingPlugin()])
     let targetProvider = MoyaProvider<TargetAPI>(plugins: [MoyaLoggingPlugin()])
     let profileProvider = MoyaProvider<ProfileAPI>(plugins: [MoyaLoggingPlugin()])
+    let authProvider = MoyaProvider<AuthAPI>()
 }
 
 extension DefaultSelfCareService: SelfCareService {
+    public func requestProfileInfo(accessToken: String) -> Single<Response> {
+        return profileProvider.rx.request(.profileInfoShow(accessToken: accessToken)).filterSuccessfulStatusCodes()
+    }
+    
 
     public func getMyRoutineData() ->
     Single<SelfCareMyRoutineModel> {
@@ -223,5 +230,8 @@ extension DefaultSelfCareService: SelfCareService {
             .filterSuccessfulStatusCodes()
     }
     
+    public func requestUserDel(accessToken: String) -> Single<Response> {
+        return authProvider.rx.request(.delete(accessToken: accessToken)).filterSuccessfulStatusCodes()
+    }
 }
 

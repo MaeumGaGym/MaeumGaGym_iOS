@@ -60,6 +60,17 @@ open class MGLabel: BaseLabel {
     public func changeTextColor(color: UIColor?) {
         textLabel.textColor = color
     }
+    
+    public func changePointColor(targetString: String, color: UIColor) {
+        guard let fullText = textLabel.text else { return }
+        let attributedString = NSMutableAttributedString(string: fullText)
+        let range = (fullText as NSString).range(of: targetString)
+        
+        if range.location != NSNotFound {
+            attributedString.addAttribute(.foregroundColor, value: color, range: range)
+            textLabel.attributedText = attributedString
+        }
+    }
 
     public override func layout() {
         super.layout()

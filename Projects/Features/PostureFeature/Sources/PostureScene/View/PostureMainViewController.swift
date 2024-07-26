@@ -17,7 +17,7 @@ import MGLogger
 
 import PostureFeatureInterface
 
-public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper {
+public class PostureMainViewController: BaseViewController<PostureMainViewModel>, Stepper, UIGestureRecognizerDelegate {
     
     private lazy var naviBar = PostureMainNavigationBar()
     
@@ -39,6 +39,10 @@ public class PostureMainViewController: BaseViewController<PostureMainViewModel>
                                     textColor: .black,
                                     isCenter: false
     )
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
     
     public override func configureNavigationBar() {
         super.configureNavigationBar()

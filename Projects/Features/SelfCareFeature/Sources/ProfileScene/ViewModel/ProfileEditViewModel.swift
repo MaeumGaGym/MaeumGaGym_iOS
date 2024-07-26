@@ -29,15 +29,11 @@ public class SelfCareProfileEditViewModel: BaseViewModel {
         let popVCButton: Driver<Void>
     }
 
-    public struct Output {
-        let nickName: Observable<SelfCareModifyProfileModel>
-    }
-    
-    let nickNameSubject = PublishSubject<SelfCareModifyProfileModel>()
-    
+    public struct Output { }
+        
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         
-        let output = Output(nickName: nickNameSubject.asObservable())
+        let output = Output()
         
         let info = Driver.combineLatest(
             input.name,
@@ -69,11 +65,6 @@ public class SelfCareProfileEditViewModel: BaseViewModel {
         return output
     }
     
-    private func bindOutput(output: Output) {
-        useCase.nickNameData
-            .subscribe(onNext: { profileData in
-                self.nickNameSubject.onNext(profileData)
-            }).disposed(by: disposeBag)
-    }
+    private func bindOutput(output: Output) { }
 
 }

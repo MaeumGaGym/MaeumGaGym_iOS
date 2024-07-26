@@ -29,7 +29,6 @@ public class SplashViewModel: AuthViewModelType {
     public init(authUseCase: AuthUseCase) {
         self.useCase = authUseCase
         self.disposeBag = DisposeBag()
-        useCase.tokenReIssue()
     }
 
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
@@ -37,6 +36,11 @@ public class SplashViewModel: AuthViewModelType {
         let ouput = Output()
         action(ouput)
 
+
         return Output()
+    }
+    
+    public func tokenReIssue() {
+        useCase.tokenReIssue()
     }
 }

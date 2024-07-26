@@ -13,7 +13,6 @@ public struct SelfCareProfileDTO: Decodable {
         case userWakaTime = "total_wakatime"
         case userBageLevel = "level"
     }
-    
 }
 
 public extension SelfCareProfileDTO {
@@ -27,12 +26,31 @@ public extension SelfCareProfileDTO {
     }
 }
 
-public struct SelfCareNicknameDTO: Decodable {
-    public let nickname: String
+//public struct SelfCareNicknameDTO: Decodable {
+//    public let nickname: String
+//}
+//
+//public extension SelfCareNicknameDTO {
+//    func toDomain() -> SelfCareModifyProfileModel {
+//        return .init(name: nickname)
+//    }
+//}
+
+public struct SelfCareProfileInfoDTO: Codable {
+    let nickname: String
+    let profileImage: String?
+    let level: Int
+    let wakaTime: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case nickname, level
+        case profileImage = "profile_image"
+        case wakaTime = "total_wakatime"
+    }
 }
 
-public extension SelfCareNicknameDTO {
-    func toDomain() -> SelfCareModifyProfileModel {
-        return .init(name: nickname)
+extension SelfCareProfileInfoDTO {
+    public func toDomain() -> SelfCareProfileInfoModel {
+        return .init(nickname: nickname, profileImage: profileImage, level: level, wakaTime: wakaTime)
     }
 }

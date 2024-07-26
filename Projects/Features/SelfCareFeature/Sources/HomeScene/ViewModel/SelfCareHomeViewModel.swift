@@ -21,8 +21,8 @@ public class SelfCareHomeViewModel: BaseViewModel {
     }
 
     public struct Input {
-        let loadProfile: Driver<String>
-        let clickProfileButton: Observable<Void>
+        let loadProfile: Driver<Void>
+        let clickProfileButton: Observable<String>
         let clickRoutineButton: Observable<Void>
         let clickTargetButton: Observable<Void>
         let clickMealButton: Observable<Void>
@@ -30,10 +30,10 @@ public class SelfCareHomeViewModel: BaseViewModel {
     }
 
     public struct Output {
-        let profileData: Observable<SelfCareDetailProfileModel>
+        let profileData: Observable<SelfCareProfileInfoModel>
     }
     
-    let profileSubject = PublishSubject<SelfCareDetailProfileModel>()
+    let profileSubject = PublishSubject<SelfCareProfileInfoModel>()
     
     public func transform(_ input: Input, action: (Output) -> Void) -> Output {
         
@@ -45,12 +45,12 @@ public class SelfCareHomeViewModel: BaseViewModel {
             .asObservable()
             .withUnretained(self)
             .subscribe(onNext: { owner, nickName in
-                owner.useCase.getProfileData(nickName: nickName)
+                owner.useCase.getProfileInfoData()
             }).disposed(by: disposeBag)
         
         input.clickProfileButton
-            .subscribe(onNext: {
-                SelfCareStepper.shared.steps.accept(MGStep.myProfileRequired)
+            .subscribe(onNext: { nickname in
+                SelfCareStepper.shared.steps.accept(MGStep.myProfileRequired(nickname: nickname))
             }).disposed(by: disposeBag)
         
         input.clickRoutineButton
@@ -79,10 +79,9 @@ public class SelfCareHomeViewModel: BaseViewModel {
     }
     
     private func bindOutput(output: Output) {
-        useCase.profileData
+        useCase.profileInfoData
             .subscribe(onNext: { data in
                 self.profileSubject.onNext(data)
             }).disposed(by: disposeBag)
     }
-
 }

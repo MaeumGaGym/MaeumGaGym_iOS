@@ -18,6 +18,11 @@ public class SplashViewController: BaseViewController<SplashViewModel>, Stepper 
         $0.image = DSKitAsset.Assets.splashLogo.image
     }
     
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.tokenReIssue()
+    }
+    
     public override func attribute() {
         super.attribute()
     }
