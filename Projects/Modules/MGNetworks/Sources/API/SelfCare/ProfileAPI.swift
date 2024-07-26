@@ -7,6 +7,7 @@ import TokenManager
 public enum ProfileAPI {
     case profileCheck(accessToken: String, userName: String)
     case profileInfoModify(accessToken: String, nickName: String, height: Double, weight: Double, gender: String)
+    case profileInfoShow(accessToken: String)
 }
 
 extension ProfileAPI: BaseAPI {
@@ -18,6 +19,8 @@ extension ProfileAPI: BaseAPI {
             return "/\(userName)"
         case .profileInfoModify:
             return ""
+        case .profileInfoShow:
+            return ""
         }
     }
 
@@ -27,6 +30,8 @@ extension ProfileAPI: BaseAPI {
             return .get
         case .profileInfoModify:
             return .put
+        case .profileInfoShow:
+            return .get
         }
     }
 
@@ -47,7 +52,8 @@ extension ProfileAPI: BaseAPI {
     public var headers: [String : String]? {
         switch self {
         case let .profileCheck(accessToken, _),
-            let .profileInfoModify(accessToken, _, _ , _, _):
+            let .profileInfoModify(accessToken, _, _ , _, _),
+            let .profileInfoShow(accessToken):
             return ["Authorization": "\(accessToken)"]
         }
     }
