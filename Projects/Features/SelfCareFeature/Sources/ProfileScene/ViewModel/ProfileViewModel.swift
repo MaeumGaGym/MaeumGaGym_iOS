@@ -45,8 +45,8 @@ public class SelfCareProfileViewModel: BaseViewModel {
         input.getProfileData
             .asObservable()
             .withUnretained(self)
-            .subscribe(onNext: { owner, nickName in
-                owner.useCase.getProfileData(nickName: nickName)
+            .subscribe(onNext: { owner, nickname in
+                owner.useCase.getProfileData(nickName: nickname)
             }).disposed(by: disposeBag)
         
         input.popVC.asObservable()
@@ -68,6 +68,10 @@ public class SelfCareProfileViewModel: BaseViewModel {
                 self.profileDataSubject.onNext(profileData)
                 print("profileData: \(profileData)")
             }).disposed(by: disposeBag)
+    }
+    
+    public func deleteUser() {
+        useCase.deleteUser()
     }
     
 }

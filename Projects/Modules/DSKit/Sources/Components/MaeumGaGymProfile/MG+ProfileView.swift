@@ -7,7 +7,7 @@ import Kingfisher
 
 open class MGProfileView: UIView {
     
-    private var profileImageView = UIImageView()
+    public var profileImageView = UIImageView()
     public private(set) var profileImage: MGProfileImage?
     private let profileType: MGProfileType
     

@@ -42,10 +42,10 @@ public class SelfCareProfileTableViewCell: BaseTableViewCell {
     private let arrowImageView = UIImageView(image: DSKitAsset.Assets.rightArrow.image)
 
     public func configure(
-        with message: SelfCareDetailProfileModel
+        with message: SelfCareProfileInfoModel
     ) {
-        userNameLabel.changeText(text: message.userName)
-        userTimerLabel.changeText(text: "\(message.userWakaTime)시간")
+        userNameLabel.changeText(text: message.nickname)
+        userTimerLabel.changeText(text: "\(message.wakaTime)시간")
     }
 
     public override func layout() {
